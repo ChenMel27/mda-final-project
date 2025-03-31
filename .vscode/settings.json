@@ -1,0 +1,31 @@
+{
+    "files.associations": {
+        ".fantomasignore": "ignore",
+        "stdlib.h": "c",
+        "player.h": "c",
+        "logic.h": "c",
+        "stdio.h": "c",
+        "start.h": "c",
+        "game.h": "c",
+        "hold.h": "c",
+        "stronger.h": "c",
+        "sloper.h": "c",
+        "foreground.h": "c",
+        "background.h": "c",
+        "sprites.h": "c",
+        "bgonecm.h": "c",
+        "mode4.h": "c",
+        "mode0.h": "c",
+        "gba.h": "c",
+        "tilesetone.h": "c",
+        "phaseone.h": "c",
+        "gamestate.h": "c",
+        "towncm.h": "c",
+        "hiker.h": "c",
+        "startphaseplayer.h": "c",
+        "phaseoneplayer.h": "c",
+        "bgone.h": "c",
+        "startinstructions.h": "c",
+        "splashscreen.h": "c"
+    }
+}
