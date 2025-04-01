@@ -179,12 +179,8 @@ drawStartInstructionsDialouge:
 	ldr	r3, .L54+28
 	ldrh	r3, [r3]
 	tst	r3, #8
-	bne	.L4
-	mov	lr, pc
-	bx	r5
-	ldr	r3, .L54+68
-	mov	lr, pc
-	bx	r3
+	moveq	r3, #1
+	streq	r3, [r6, #4]
 	b	.L4
 .L55:
 	.align	2
@@ -206,8 +202,10 @@ drawStartInstructionsDialouge:
 	.word	.LC7
 	.word	.LC8
 	.word	.LC9
-	.word	goToPhaseOne
 	.size	drawStartInstructionsDialouge, .-drawStartInstructionsDialouge
+	.comm	winPhaseOne,4,4
+	.comm	gameOver,4,4
+	.global	begin
 	.global	startPage
 	.bss
 	.align	2
@@ -215,5 +213,9 @@ drawStartInstructionsDialouge:
 	.type	startPage, %object
 	.size	startPage, 4
 startPage:
+	.space	4
+	.type	begin, %object
+	.size	begin, 4
+begin:
 	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

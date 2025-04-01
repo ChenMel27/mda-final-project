@@ -1,7 +1,7 @@
 #include "hiker.h"
 #include "gba.h"
 #include "mode0.h"
-#include "bgOneCM.h"
+#include "bgOneFrontCM.h"
 #include "sprites.h"
 #include "phaseOne.h"
 
@@ -174,5 +174,5 @@ void drawPlayer() {
 }
 
 inline unsigned char colorAt(int x, int y) {
-    return ((unsigned char*) bgOneCMBitmap)[OFFSET(x, y, MAPWIDTH)];
+    return ((unsigned char*) bgOneFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
 }

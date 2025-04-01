@@ -5,6 +5,7 @@ void goToStartInstructions();
 void drawStartInstructionsDialouge();
 
 int startPage;
+int begin;
 
 #endif
 

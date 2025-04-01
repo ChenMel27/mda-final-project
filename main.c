@@ -45,7 +45,8 @@ Date:       [Insert Date Here]
 
 // ============================= [ GRAPHICS ASSETS ] =============================
 
-#include "bgOne.h"
+#include "bgOneFront.h"
+#include "bgOneBack.h"
 #include "bgOneCM.h"
 #include "tilesetOne.h"
 #include "phaseOne.h"
@@ -55,6 +56,7 @@ Date:       [Insert Date Here]
 #include "snowtiles.h"
 #include "townCM.h"
 #include "town.h"
+#include "foreground.h"
 
 // ============================= [ FUNCTION DECLARATIONS ] =======================
 
@@ -200,41 +202,61 @@ void goToStartInstructions() {
 
 void startInstructions() {
     drawStartInstructionsDialouge();
+    if (begin) {
+        goToPhaseOne();
+    }
 }
 
 // ============================= [ PHASE ONE STATE ] ============================
 
+#define BG_PRIORITY(n) ((n) & 3)
+
 void goToPhaseOne() {
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(22) | BG_SIZE_WIDE;
+    REG_DISPCTL = 0;  // Clear all display settings before changing mode
 
-    DMANow(3, tilesetOnePal, BG_PALETTE, tilesetOnePalLen / 2);
-    DMANow(3, tilesetOneTiles, &CHARBLOCK[1], tilesetOneTilesLen / 2);
-    DMANow(3, bgOneMap, &SCREENBLOCK[22], 4096);
+    // Enable both BG0 and BG1
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
 
+    // Configure BG0 (main layer)
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    // Configure BG1 (parallax background) – note: same tileset, different screen block
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+
+    DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+    
+    // Load BG0’s map and BG1’s map (bgOneFront)
+    DMANow(3, bgOneFrontMap, &SCREENBLOCK[28], bgOneFrontLen / 2);
+    DMANow(3, bgOneBackMap, &SCREENBLOCK[30], bgOneBackLen / 2);
+    
     initPlayer();
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASEONE;
 }
 
+
 void phaseOne() {
     updatePlayer(&hOff, &vOff);
+    // Main background scrolls normally:
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
+    // Parallax background scrolls slower (adjust the divisor as desired):
+    REG_BG1HOFF = hOff / 2;
+    REG_BG1VOFF = vOff / 2;
+    
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
-
     drawPlayer();
     DMANow(3, shadowOAM, OAM, 512);
-
+    
     if (gameOver) {
         goToLose();
     }
-
     if (winPhaseOne) {
         goToPhaseTwo();
     }
 }
+
 
 // ============================= [ PHASE TWO STATE ] ============================
 
@@ -244,7 +266,7 @@ void goToPhaseTwo() {
 
     DMANow(3, tilesetOnePal, BG_PALETTE, tilesetOnePalLen / 2);
     DMANow(3, tilesetOneTiles, &CHARBLOCK[2], tilesetOneTilesLen / 2);
-    DMANow(3, bgOneMap, &SCREENBLOCK[24], 2048);
+    DMANow(3, bgOneFrontMap, &SCREENBLOCK[24], 2048);
 
     initPlayer();
     hOff = 0;
@@ -269,7 +291,7 @@ void goToPhaseThree() {
 
     DMANow(3, tilesetOnePal, BG_PALETTE, tilesetOnePalLen / 2);
     DMANow(3, tilesetOneTiles, &CHARBLOCK[3], tilesetOneTilesLen / 2);
-    DMANow(3, bgOneMap, &SCREENBLOCK[26], 2048);
+    DMANow(3, bgOneFrontMap, &SCREENBLOCK[26], 2048);
 
     initPlayer();
     hOff = 0;
@@ -309,6 +331,7 @@ void goToLose() {
 }
 
 void lose() {
+    REG_DISPCTL = 0;
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     fillScreen4(0);
 

@@ -4,6 +4,7 @@
 #include "phaseOne.h"
 
 int startPage = 0;
+int begin = 0;
 
 void drawStartInstructionsDialouge() {
     waitForVBlank();
@@ -34,8 +35,7 @@ void drawStartInstructionsDialouge() {
         drawString4(5, 60, "Let's begin.", 1);
         if (BUTTON_PRESSED(BUTTON_START)) {
             // After the dialogue ends, then go to the first phase of the game
-            waitForVBlank();
-            goToPhaseOne();
+            begin = 1;
         }
     }
     waitForVBlank();

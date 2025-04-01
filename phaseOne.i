@@ -61,9 +61,9 @@ typedef struct {
  u16 tilemap[1024];
 } SB;
 # 4 "phaseOne.c" 2
-# 1 "bgOneCM.h" 1
-# 20 "bgOneCM.h"
-extern const unsigned short bgOneCMBitmap[65536];
+# 1 "bgOneFrontCM.h" 1
+# 20 "bgOneFrontCM.h"
+extern const unsigned short bgOneFrontCMBitmap[65536];
 # 5 "phaseOne.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -307,5 +307,5 @@ void drawPlayer() {
 }
 
 inline unsigned char colorAt(int x, int y) {
-    return ((unsigned char*) bgOneCMBitmap)[((y) * (512) + (x))];
+    return ((unsigned char*) bgOneFrontCMBitmap)[((y) * (512) + (x))];
 }

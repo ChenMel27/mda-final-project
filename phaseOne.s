@@ -324,7 +324,7 @@ updatePlayer:
 	.word	player
 	.word	buttons
 	.word	.LANCHOR0
-	.word	bgOneCMBitmap
+	.word	bgOneFrontCMBitmap
 	.word	oldButtons
 	.word	.LANCHOR1
 	.word	510
@@ -418,7 +418,7 @@ drawPlayer:
 	.align	2
 .L101:
 	.word	player
-	.word	bgOneCMBitmap
+	.word	bgOneFrontCMBitmap
 	.word	hOff
 	.word	vOff
 	.word	.LANCHOR0
@@ -443,7 +443,7 @@ colorAt:
 .L105:
 	.align	2
 .L104:
-	.word	bgOneCMBitmap
+	.word	bgOneFrontCMBitmap
 	.size	colorAt, .-colorAt
 	.global	sbb
 	.comm	player,60,4

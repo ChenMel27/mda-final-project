@@ -62,11 +62,87 @@ void goToStartInstructions();
 void drawStartInstructionsDialouge();
 
 int startPage;
+int begin;
 # 4 "startInstructions.c" 2
 # 1 "phaseOne.h" 1
+
+
+
+
+# 1 "sprites.h" 1
+# 10 "sprites.h"
+typedef struct {
+  u16 attr0;
+  u16 attr1;
+  u16 attr2;
+  u16 fill;
+} OBJ_ATTR;
+
+
+
+extern OBJ_ATTR shadowOAM[128];
+
+struct attr0 {
+  u16 regular;
+  u16 affine;
+  u16 hide;
+  u16 double_affine;
+  u16 enable_alpha;
+  u16 enable_window;
+  u16 enable_mosaic;
+  u16 fourBpp;
+  u16 eightBpp;
+  u16 square;
+  u16 wide;
+  u16 tall;
+};
+
+struct attr1 {
+  u16 hflip;
+  u16 vflip;
+  u16 tiny;
+  u16 small;
+  u16 medium;
+  u16 large;
+};
+
+struct oam_attrs {
+  struct attr0 attr0;
+  struct attr1 attr1;
+};
+# 93 "sprites.h"
+void hideSprites();
+
+
+typedef struct {
+    int x;
+    int y;
+    int xVel;
+    int yVel;
+    int worldX, worldY;
+    int width;
+    int height;
+    int timeUntilNextFrame;
+    int direction;
+    int isAnimating;
+    int currentFrame;
+    int numFrames;
+    int active;
+    u8 oamIndex;
+} SPRITE;
+# 6 "phaseOne.h" 2
+# 21 "phaseOne.h"
+extern SPRITE player;
+int gameOver;
+int winPhaseOne;
+unsigned char colorAt(int x, int y);
+void initPlayer();
+void updatePlayer(int* hOff, int* vOff);
+void drawPlayer();
 # 5 "startInstructions.c" 2
 
 int startPage = 0;
+int begin = 0;
 
 void drawStartInstructionsDialouge() {
     waitForVBlank();
@@ -97,8 +173,7 @@ void drawStartInstructionsDialouge() {
         drawString4(5, 60, "Let's begin.", 1);
         if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
 
-            waitForVBlank();
-            goToPhaseOne();
+            begin = 1;
         }
     }
     waitForVBlank();
