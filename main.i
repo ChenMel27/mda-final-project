@@ -232,7 +232,30 @@ extern const unsigned short foregroundTiles[12800];
 
 extern const unsigned short foregroundPal[256];
 # 60 "main.c" 2
+# 1 "topdownrpg.h" 1
+# 21 "topdownrpg.h"
+extern const unsigned short topdownrpgTiles[32768];
 
+
+extern const unsigned short topdownrpgPal[256];
+# 61 "main.c" 2
+# 1 "sTM.h" 1
+
+
+
+
+
+
+
+extern const unsigned short sTMMap[4096];
+# 62 "main.c" 2
+# 1 "sTS.h" 1
+# 21 "sTS.h"
+extern const unsigned short sTSTiles[32768];
+
+
+extern const unsigned short sTSPal[256];
+# 63 "main.c" 2
 
 
 void initialize();
@@ -318,7 +341,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToPhaseOne();
+    goToStart();
 }
 
 void goToSplashScreen() {
@@ -339,11 +362,11 @@ void splashScreen() {
 
 void goToStart() {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
-    (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (0 << 14) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
-    DMANow(3, snowtilesPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, snowtilesTiles, &((CB*) 0x6000000)[0], 7680 / 2);
-    DMANow(3, townMap, &((SB*) 0x6000000)[18], (2048) / 2);
+    DMANow(3, sTSPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, sTSTiles, &((CB*) 0x6000000)[0], 65536 / 2);
+    DMANow(3, sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
 
     initStartPlayer();
     initGuideSprite();

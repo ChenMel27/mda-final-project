@@ -4,12 +4,13 @@
 #include "bgOneFrontCM.h"
 #include "sprites.h"
 #include "phaseOne.h"
+#include "player.h"
 
 // Animation variables
 int hikerFrameDelay = 4;
 int hikerFrameCounter = 0;
 int hikerFrame = 0;
-int hikerFrames[] = {12, 16, 20};
+int hikerFrames[] = {20, 22, 24};
 extern int hOff, vOff;
 int isDucking = 0;
 int gameOver = 0;
@@ -36,8 +37,8 @@ void initPlayer() {
     player.xVel = 1;
     player.yVel = 0;
     
-    DMANow(3, (void*) hikerPal, SPRITE_PAL, hikerPalLen / 2);
-    DMANow(3, (void*) hikerTiles, &CHARBLOCK[4], hikerTilesLen / 2);
+    DMANow(3, (void*) playerPal, SPRITE_PAL, playerPalLen / 2);
+    DMANow(3, (void*) playerTiles, &CHARBLOCK[4], playerTilesLen / 2);
 }
 
 void updatePlayer(int* hOff, int* vOff) {
@@ -58,6 +59,7 @@ void updatePlayer(int* hOff, int* vOff) {
     
     if (BUTTON_HELD(BUTTON_LEFT)) {
         player.isAnimating = 1;
+        player.direction = 1;
         if (player.worldX > 0 &&
             colorAt(leftX - player.xVel, topY) != 0 &&
             colorAt(leftX - player.xVel, bottomY) != 0) {
@@ -66,6 +68,7 @@ void updatePlayer(int* hOff, int* vOff) {
     }
     if (BUTTON_HELD(BUTTON_RIGHT)) {
         player.isAnimating = 1;
+        player.direction = 0;
         if (player.worldX < MAPWIDTH - player.width &&
             colorAt(rightX + player.xVel, topY) != 0 &&
             colorAt(rightX + player.xVel, bottomY) != 0) {
@@ -160,13 +163,17 @@ void drawPlayer() {
     
     if (player.active) {
         shadowOAM[player.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
-        shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_LARGE;
+        if (player.direction == 0) {
+            shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        } else if (player.direction == 1) {
+            shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
+        }
         
         // If ducking use the duck tile otherwise animate and use the regular animated frame
         if (isDucking) {
-            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(20, 24);
+            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
         } else {
-            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 15);
+            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 0);
         }
     } else {
         gameOver = 1;

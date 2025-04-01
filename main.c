@@ -57,7 +57,9 @@ Date:       [Insert Date Here]
 #include "townCM.h"
 #include "town.h"
 #include "foreground.h"
-
+#include "topdownrpg.h"
+#include "sTM.h"
+#include "sTS.h"
 // ============================= [ FUNCTION DECLARATIONS ] =======================
 
 void initialize();
@@ -143,7 +145,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToSplashScreen();
+    goToStart();
 }
 
 void goToSplashScreen() {
@@ -164,11 +166,11 @@ void splashScreen() {
 
 void goToStart() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
-    REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_SMALL | BG_8BPP;
+    REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
-    DMANow(3, snowtilesPal, BG_PALETTE, snowtilesPalLen / 2);
-    DMANow(3, snowtilesTiles, &CHARBLOCK[0], snowtilesTilesLen / 2);
-    DMANow(3, townMap, &SCREENBLOCK[18], townLen / 2);
+    DMANow(3, sTSPal, BG_PALETTE, sTSPalLen / 2);
+    DMANow(3, sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
+    DMANow(3, sTMMap, &SCREENBLOCK[18], sTMLen / 2);
 
     initStartPlayer();
     initGuideSprite();

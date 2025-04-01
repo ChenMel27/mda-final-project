@@ -137,12 +137,19 @@ void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 # 7 "phaseOne.c" 2
+# 1 "player.h" 1
+# 21 "player.h"
+extern const unsigned short playerTiles[16384];
+
+
+extern const unsigned short playerPal[256];
+# 8 "phaseOne.c" 2
 
 
 int hikerFrameDelay = 4;
 int hikerFrameCounter = 0;
 int hikerFrame = 0;
-int hikerFrames[] = {12, 16, 20};
+int hikerFrames[] = {20, 22, 24};
 extern int hOff, vOff;
 int isDucking = 0;
 int gameOver = 0;
@@ -169,8 +176,8 @@ void initPlayer() {
     player.xVel = 1;
     player.yVel = 0;
 
-    DMANow(3, (void*) hikerPal, ((u16 *)0x5000200), 512 / 2);
-    DMANow(3, (void*) hikerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
+    DMANow(3, (void*) playerPal, ((u16 *)0x5000200), 512 / 2);
+    DMANow(3, (void*) playerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
 }
 
 void updatePlayer(int* hOff, int* vOff) {
@@ -191,6 +198,7 @@ void updatePlayer(int* hOff, int* vOff) {
 
     if ((~(buttons) & ((1<<5)))) {
         player.isAnimating = 1;
+        player.direction = 1;
         if (player.worldX > 0 &&
             colorAt(leftX - player.xVel, topY) != 0 &&
             colorAt(leftX - player.xVel, bottomY) != 0) {
@@ -199,6 +207,7 @@ void updatePlayer(int* hOff, int* vOff) {
     }
     if ((~(buttons) & ((1<<4)))) {
         player.isAnimating = 1;
+        player.direction = 0;
         if (player.worldX < 512 - player.width &&
             colorAt(rightX + player.xVel, topY) != 0 &&
             colorAt(rightX + player.xVel, bottomY) != 0) {
@@ -293,13 +302,17 @@ void drawPlayer() {
 
     if (player.active) {
         shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
-        shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (3<<14);
+        if (player.direction == 0) {
+            shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
+        } else if (player.direction == 1) {
+            shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
+        }
 
 
         if (isDucking) {
-            shadowOAM[player.oamIndex].attr2 = ((((24) * (32) + (20))) & 0x3FF);
+            shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
         } else {
-            shadowOAM[player.oamIndex].attr2 = ((((15) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
+            shadowOAM[player.oamIndex].attr2 = ((((0) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
         }
     } else {
         gameOver = 1;
