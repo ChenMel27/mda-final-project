@@ -50,6 +50,8 @@ Date:       [Insert Date Here]
 #include "bgOneCM.h"
 #include "tilesetOne.h"
 #include "phaseOne.h"
+#include "phaseTwo.h"
+#include "phaseThree.h"
 #include "startInstructions.h"
 #include "start.h"
 #include "splashScreen.h"
@@ -78,6 +80,8 @@ void goToPause();
 void pause();
 void goToLose();
 void lose();
+void goToWin();
+void win();
 
 // ============================= [ GLOBAL VARIABLES ] ============================
 
@@ -95,7 +99,8 @@ typedef enum {
     PHASETWO,
     PHASETHREE,
     PAUSE,
-    LOSE
+    LOSE,
+    WIN
 } GameState;
 
 GameState state;
@@ -136,6 +141,9 @@ int main() {
             case LOSE:
                 lose();
                 break;
+            case WIN:
+                lose();
+                break;
         }
 
         waitForVBlank();
@@ -151,10 +159,22 @@ void initialize() {
 
 void goToSplashScreen() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
+    videoBuffer = FRONTBUFFER; // 🔥 fix black screen on re-entry
+
     DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
     drawFullscreenImage4(splashScreenBitmap);
+
+    // Optional: reset any game progress flags
+    gameOver = 0;
+    winPhaseOne = 0;
+    winPhaseTwo = 0;
+    winPhaseThree = 0;
+    next = 0;
+    begin = 0;
+
     state = SPLASH;
 }
+
 
 void splashScreen() {
     if (BUTTON_PRESSED(BUTTON_START)) {
@@ -166,6 +186,7 @@ void splashScreen() {
 // ============================= [ START PHASE STATE ] ===========================
 
 void goToStart() {
+    REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
@@ -291,54 +312,104 @@ void phaseOne() {
 }
 
 
-// ============================= [ PHASE TWO STATE ] ============================
+// ============================= [ PHASE ONE STATE ] ============================
+
+#define BG_PRIORITY(n) ((n) & 3)
 
 void goToPhaseTwo() {
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
-    REG_BG0CNT = BG_CHARBLOCK(2) | BG_SCREENBLOCK(24) | BG_SIZE_WIDE;
+    REG_DISPCTL = 0;  // Clear all display settings before changing mode
 
-    DMANow(3, tilesetOnePal, BG_PALETTE, tilesetOnePalLen / 2);
-    DMANow(3, tilesetOneTiles, &CHARBLOCK[2], tilesetOneTilesLen / 2);
-    DMANow(3, bgOneFrontMap, &SCREENBLOCK[24], 2048);
+    // Enable both BG0 and BG1
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
 
-    initPlayer();
+    // Configure BG0 (main layer)
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    // Configure BG1 (parallax background) – note: same tileset, different screen block
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+
+    DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+    
+    // Load BG0’s map and BG1’s map (bgOneFront)
+    DMANow(3, bgOneFrontMap, &SCREENBLOCK[28], bgOneFrontLen / 2);
+    DMANow(3, bgOneBackMap, &SCREENBLOCK[30], bgOneBackLen / 2);
+    
+    initPlayerTwo();
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASETWO;
 }
 
+
 void phaseTwo() {
-    updatePlayer(&hOff, &vOff);
+    updatePlayerTwo(&hOff, &vOff);
+    // Main background scrolls normally:
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
+    // Parallax background scrolls slower (adjust the divisor as desired):
+    REG_BG1HOFF = hOff / 2;
+    REG_BG1VOFF = vOff / 2;
+    
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
-    drawPlayer();
+    drawPlayerTwo();
     DMANow(3, shadowOAM, OAM, 512);
+    
+    if (gameOver) {
+        goToLose();
+    }
+    if (winPhaseTwo) {
+        goToPhaseThree();
+    }
 }
 
-// ============================= [ PHASE THREE STATE ] ==========================
+// ============================= [ PHASE THREE STATE ] ============================
+
+#define BG_PRIORITY(n) ((n) & 3)
 
 void goToPhaseThree() {
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
-    REG_BG0CNT = BG_CHARBLOCK(3) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE;
+    REG_DISPCTL = 0;  // Clear all display settings before changing mode
 
-    DMANow(3, tilesetOnePal, BG_PALETTE, tilesetOnePalLen / 2);
-    DMANow(3, tilesetOneTiles, &CHARBLOCK[3], tilesetOneTilesLen / 2);
-    DMANow(3, bgOneFrontMap, &SCREENBLOCK[26], 2048);
+    // Enable both BG0 and BG1
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
 
-    initPlayer();
+    // Configure BG0 (main layer)
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    // Configure BG1 (parallax background) – note: same tileset, different screen block
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+
+    DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+    
+    // Load BG0’s map and BG1’s map (bgOneFront)
+    DMANow(3, bgOneFrontMap, &SCREENBLOCK[28], bgOneFrontLen / 2);
+    DMANow(3, bgOneBackMap, &SCREENBLOCK[30], bgOneBackLen / 2);
+    
+    initPlayerThree();
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASETHREE;
 }
 
+
 void phaseThree() {
-    updatePlayer(&hOff, &vOff);
+    updatePlayerThree(&hOff, &vOff);
+    // Main background scrolls normally:
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
+    // Parallax background scrolls slower (adjust the divisor as desired):
+    REG_BG1HOFF = hOff / 2;
+    REG_BG1VOFF = vOff / 2;
+    
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
-    drawPlayer();
+    drawPlayerThree();
     DMANow(3, shadowOAM, OAM, 512);
+    
+    if (gameOver) {
+        goToLose();
+    }
+    if (winPhaseThree) {
+        goToWin();
+    }
 }
 
 // ============================= [ PAUSE STATE ] ================================
@@ -364,6 +435,23 @@ void goToLose() {
 }
 
 void lose() {
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
+    fillScreen4(0);
+
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToSplashScreen();
+        state = SPLASH;
+    }
+}
+
+// ============================= [ WIN STATE ] =================================
+
+void goToWin() {
+    state = WIN;
+}
+
+void win() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     fillScreen4(0);

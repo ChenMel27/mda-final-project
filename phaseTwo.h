@@ -15,10 +15,8 @@
 #define MAX_VOFF (BG_HEIGHT - SCREEN_HEIGHT)
 
 
-extern SPRITE player;
-int gameOver;
-int winPhaseOne;
-unsigned char colorAt(int x, int y);
-void initPlayer();
-void updatePlayer(int* hOff, int* vOff);
-void drawPlayer();
+unsigned char colorAtTwo(int x, int y);
+void initPlayerTwo();
+void updatePlayerTwo(int* hOff, int* vOff);
+void drawPlayerTwo();
+int winPhaseTwo;
