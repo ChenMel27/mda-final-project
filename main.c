@@ -82,6 +82,7 @@ void lose();
 // ============================= [ GLOBAL VARIABLES ] ============================
 
 extern SPRITE guide;
+extern SPRITE startPlayer;
 
 unsigned short buttons;
 unsigned short oldButtons;
@@ -145,7 +146,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToStart();
+    goToSplashScreen();
 }
 
 void goToSplashScreen() {
@@ -180,6 +181,24 @@ void goToStart() {
     state = START;
 }
 
+void goToStartTwo() {
+    REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
+    REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
+
+    DMANow(3, sTSPal, BG_PALETTE, sTSPalLen / 2);
+    DMANow(3, sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
+    DMANow(3, sTMMap, &SCREENBLOCK[18], sTMLen / 2);
+
+    initStartPlayer();
+    initGuideSprite();
+    startPlayer.worldX = 134;
+    startPlayer.worldX = 436;
+
+    hOff = 0;
+    vOff = MAX_VOFF;
+    state = START;
+}
+
 void start() {
     updateStartPlayer(&hOff, &vOff);
     REG_BG1HOFF = hOff;
@@ -201,13 +220,24 @@ void start() {
 // ============================= [ DIALOGUE STATE ] =============================
 
 void goToStartInstructions() {
+    waitForVBlank();
+    REG_DISPCTL = 0;
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
+    videoBuffer = BACKBUFFER;
     startPage = 0;
     state = DIALOGUE;
 }
 
+
+
 void startInstructions() {
     drawStartInstructionsDialouge();
+
+    if (begin == 1) {
+        begin = 0;
+        goToStartTwo();
+        state = START;
+    }
 }
 
 // ============================= [ PHASE ONE STATE ] ============================

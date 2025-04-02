@@ -97,10 +97,13 @@ void drawString4(int x, int y, char* str, u8 colorIndex) {
 
 // Flips page being displayed and page being drawn to
 void flipPages() {
-    if (REG_DISPCTL & DISP_BACKBUFFER) {
-        videoBuffer = BACKBUFFER;
-    } else {
-        videoBuffer = FRONTBUFFER;
-    }
+    // Toggle the backbuffer bit to switch visible page
     REG_DISPCTL ^= DISP_BACKBUFFER;
+
+    // Now set videoBuffer to the back page (the one NOT being shown)
+    if (REG_DISPCTL & DISP_BACKBUFFER) {
+        videoBuffer = FRONTBUFFER;
+    } else {
+        videoBuffer = BACKBUFFER;
+    }
 }

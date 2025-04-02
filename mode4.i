@@ -161,10 +161,13 @@ void drawString4(int x, int y, char* str, u8 colorIndex) {
 
 
 void flipPages() {
-    if ((*(volatile unsigned short *)0x4000000) & (1 << 4)) {
-        videoBuffer = ((unsigned short*) 0x0600A000);
-    } else {
-        videoBuffer = ((unsigned short*) 0x06000000);
-    }
+
     (*(volatile unsigned short *)0x4000000) ^= (1 << 4);
+
+
+    if ((*(volatile unsigned short *)0x4000000) & (1 << 4)) {
+        videoBuffer = ((unsigned short*) 0x06000000);
+    } else {
+        videoBuffer = ((unsigned short*) 0x0600A000);
+    }
 }

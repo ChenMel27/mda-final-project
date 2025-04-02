@@ -280,6 +280,7 @@ void lose();
 
 
 extern SPRITE guide;
+extern SPRITE startPlayer;
 
 unsigned short buttons;
 unsigned short oldButtons;
@@ -343,7 +344,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToStart();
+    goToSplashScreen();
 }
 
 void goToSplashScreen() {
@@ -378,6 +379,24 @@ void goToStart() {
     state = START;
 }
 
+void goToStartTwo() {
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
+    (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
+
+    DMANow(3, sTSPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
+    DMANow(3, sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+
+    initStartPlayer();
+    initGuideSprite();
+    startPlayer.worldX = 134;
+    startPlayer.worldX = 436;
+
+    hOff = 0;
+    vOff = (256 - 160);
+    state = START;
+}
+
 void start() {
     updateStartPlayer(&hOff, &vOff);
     (*(volatile unsigned short*) 0x04000014) = hOff;
@@ -399,13 +418,24 @@ void start() {
 
 
 void goToStartInstructions() {
+    waitForVBlank();
+    (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+    videoBuffer = ((unsigned short*) 0x0600A000);
     startPage = 0;
     state = DIALOGUE;
 }
 
+
+
 void startInstructions() {
     drawStartInstructionsDialouge();
+
+    if (begin == 1) {
+        begin = 0;
+        goToStartTwo();
+        state = START;
+    }
 }
 
 

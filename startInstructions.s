@@ -13,34 +13,49 @@
 	.section	.rodata.str1.4,"aMS",%progbits,1
 	.align	2
 .LC0:
-	.ascii	"Hello...\000"
+	.ascii	"Hello and welcome\000"
 	.align	2
 .LC1:
-	.ascii	"You are here to summit mount rainier...\000"
+	.ascii	"to our mountain town...\000"
 	.align	2
 .LC2:
-	.ascii	"If you want to give\000"
-	.align	2
-.LC3:
-	.ascii	"survival your best shot...\000"
-	.align	2
-.LC4:
 	.ascii	"My name is Brady,\000"
 	.align	2
-.LC5:
+.LC3:
 	.ascii	"I've led tours for 30 years...\000"
 	.align	2
+.LC4:
+	.ascii	"You are here to summit mount rainier...\000"
+	.align	2
+.LC5:
+	.ascii	"If you want to give\000"
+	.align	2
 .LC6:
-	.ascii	"Three sections await with difficulty...\000"
+	.ascii	"survival your best shot\000"
 	.align	2
 .LC7:
-	.ascii	"We begin with the Ascent\000"
+	.ascii	"you have come to the right person.\000"
 	.align	2
 .LC8:
-	.ascii	"to Camp Muir...\000"
+	.ascii	"Three sections await with difficulty and\000"
 	.align	2
 .LC9:
-	.ascii	"Let's begin.\000"
+	.ascii	"I will be there to guide you in between\000"
+	.align	2
+.LC10:
+	.ascii	" sections, but it's up to you to survive.\000"
+	.align	2
+.LC11:
+	.ascii	"Three sections await with difficulty...\000"
+	.align	2
+.LC12:
+	.ascii	"We begin with the first Ascent\000"
+	.align	2
+.LC13:
+	.ascii	"to Camp Muir...\000"
+	.align	2
+.LC14:
+	.ascii	"Continue down the bridge to begin.\000"
 	.text
 	.align	2
 	.global	drawStartInstructionsDialouge
@@ -53,155 +68,189 @@ drawStartInstructionsDialouge:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, r7, r8, lr}
-	ldr	r5, .L54
-	ldr	r6, .L54+4
-	mov	lr, pc
-	bx	r5
+	push	{r4, r5, r6, lr}
+	ldr	r5, .L58
 	mov	r0, #0
-	ldr	r3, .L54+8
+	ldr	r3, .L58+4
 	mov	lr, pc
 	bx	r3
-	ldr	r4, [r6]
+	ldr	r4, [r5]
 	cmp	r4, #0
-	beq	.L47
-	cmp	r4, #1
-	beq	.L48
-	cmp	r4, #2
-	beq	.L49
-	cmp	r4, #3
-	beq	.L50
-	cmp	r4, #4
 	beq	.L51
-	cmp	r4, #5
+	cmp	r4, #1
 	beq	.L52
-	cmp	r4, #6
+	cmp	r4, #2
 	beq	.L53
-.L4:
-	mov	lr, pc
-	bx	r5
-	ldr	r3, .L54+12
-	mov	lr, pc
-	bx	r3
-	pop	{r4, r5, r6, r7, r8, lr}
-	bx	lr
-.L47:
+	cmp	r4, #3
+	beq	.L54
+	cmp	r4, #4
+	beq	.L55
+	cmp	r4, #5
+	beq	.L56
+	cmp	r4, #6
+	beq	.L57
+	cmp	r4, #7
+	bne	.L4
 	mov	r3, #1
 	mov	r1, #60
-	mov	r0, #7
-	ldr	r2, .L54+16
-.L45:
-	ldr	r4, .L54+20
-.L43:
+	mov	r0, #5
+	ldr	r2, .L58+8
+	ldr	r4, .L58+12
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L54+24
+	ldr	r3, .L58+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L4
-.L33:
-	ldr	r3, .L54+28
+	ldr	r3, .L58+20
 	ldrh	r3, [r3]
 	tst	r3, #8
-	ldreq	r3, [r6]
-	addeq	r3, r3, #1
-	streq	r3, [r6]
+	moveq	r3, #1
+	streq	r3, [r5, #4]
 	b	.L4
-.L49:
-	mov	r3, #1
-	ldr	r2, .L54+32
-	mov	r1, #55
-	mov	r0, #5
-	ldr	r4, .L54+20
-	mov	lr, pc
-	bx	r4
-	mov	r3, #1
-	ldr	r2, .L54+36
-.L41:
-	mov	r1, #65
-	mov	r0, #5
-	b	.L43
-.L48:
-	mov	r3, r4
-	mov	r1, #60
-	mov	r0, #5
-	ldr	r2, .L54+40
-	ldr	r4, .L54+20
-	b	.L43
-.L50:
-	mov	r3, #1
-	ldr	r2, .L54+44
-	mov	r1, #55
-	mov	r0, #5
-	ldr	r4, .L54+20
-	mov	lr, pc
-	bx	r4
-	mov	r3, #1
-	ldr	r2, .L54+48
-	b	.L41
 .L51:
 	mov	r3, #1
-	mov	r1, #60
-	mov	r0, #5
-	ldr	r2, .L54+52
-	b	.L45
-.L52:
-	mov	r3, #1
 	mov	r1, #55
-	mov	r0, r4
-	ldr	r2, .L54+56
-	ldr	r7, .L54+20
+	mov	r0, #7
+	ldr	r2, .L58+24
+	ldr	r4, .L58+12
 	mov	lr, pc
-	bx	r7
+	bx	r4
 	mov	r3, #1
-	mov	r0, r4
 	mov	r1, #65
-	ldr	r2, .L54+60
+	mov	r0, #7
+	ldr	r2, .L58+28
+.L44:
 	mov	lr, pc
-	bx	r7
-	ldr	r3, .L54+24
+	bx	r4
+	ldr	r3, .L58+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L4
-	b	.L33
+.L37:
+	ldr	r3, .L58+20
+	ldrh	r3, [r3]
+	tst	r3, #8
+	ldreq	r3, [r5]
+	addeq	r3, r3, #1
+	streq	r3, [r5]
+.L4:
+	ldr	r3, .L58+32
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L58+36
+	mov	lr, pc
+	bx	r3
+	pop	{r4, r5, r6, lr}
+	bx	lr
 .L53:
 	mov	r3, #1
 	mov	r1, #60
 	mov	r0, #5
-	ldr	r2, .L54+64
-	ldr	r4, .L54+20
+	ldr	r2, .L58+40
+	ldr	r4, .L58+12
+	b	.L44
+.L52:
+	mov	r3, r4
+	mov	r1, #55
+	mov	r0, #5
+	ldr	r2, .L58+44
+	ldr	r6, .L58+12
 	mov	lr, pc
-	bx	r4
-	ldr	r3, .L54+24
+	bx	r6
+	mov	r3, r4
+	mov	r1, #65
+	mov	r0, #5
+	ldr	r2, .L58+48
+	mov	lr, pc
+	bx	r6
+	ldr	r3, .L58+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L4
-	ldr	r3, .L54+28
-	ldrh	r3, [r3]
-	tst	r3, #8
-	moveq	r3, #1
-	streq	r3, [r6, #4]
-	b	.L4
-.L55:
-	.align	2
+	b	.L37
 .L54:
-	.word	waitForVBlank
+	mov	r3, #1
+	mov	r1, #55
+	mov	r0, #5
+	ldr	r2, .L58+52
+	ldr	r4, .L58+12
+	mov	lr, pc
+	bx	r4
+	mov	r3, #1
+	mov	r1, #65
+	ldr	r2, .L58+56
+	mov	r0, #5
+	mov	lr, pc
+	bx	r4
+	mov	r3, #1
+	mov	r1, #75
+	ldr	r2, .L58+60
+.L46:
+	mov	r0, #5
+	b	.L44
+.L55:
+	mov	r3, #1
+	mov	r1, #55
+	mov	r0, #5
+	ldr	r2, .L58+64
+	ldr	r4, .L58+12
+	mov	lr, pc
+	bx	r4
+	mov	r3, #1
+	mov	r1, #65
+	ldr	r2, .L58+68
+	mov	r0, #5
+	mov	lr, pc
+	bx	r4
+	mov	r3, #1
+	mov	r1, #75
+	ldr	r2, .L58+72
+	b	.L46
+.L56:
+	mov	r0, r4
+	mov	r3, #1
+	mov	r1, #60
+	ldr	r2, .L58+76
+	ldr	r4, .L58+12
+	b	.L44
+.L57:
+	mov	r3, #1
+	mov	r1, #55
+	ldr	r2, .L58+80
+	mov	r0, #5
+	ldr	r4, .L58+12
+	mov	lr, pc
+	bx	r4
+	mov	r3, #1
+	mov	r1, #65
+	ldr	r2, .L58+84
+	b	.L46
+.L59:
+	.align	2
+.L58:
 	.word	.LANCHOR0
 	.word	fillScreen4
-	.word	flipPages
-	.word	.LC0
+	.word	.LC14
 	.word	drawString4
 	.word	oldButtons
 	.word	buttons
+	.word	.LC0
+	.word	.LC1
+	.word	waitForVBlank
+	.word	flipPages
+	.word	.LC4
 	.word	.LC2
 	.word	.LC3
-	.word	.LC1
-	.word	.LC4
 	.word	.LC5
 	.word	.LC6
 	.word	.LC7
 	.word	.LC8
 	.word	.LC9
+	.word	.LC10
+	.word	.LC11
+	.word	.LC12
+	.word	.LC13
 	.size	drawStartInstructionsDialouge, .-drawStartInstructionsDialouge
 	.comm	winPhaseOne,4,4
 	.comm	gameOver,4,4

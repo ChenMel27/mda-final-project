@@ -1034,7 +1034,7 @@ sTMMap:
 	.short	185
 	.short	186
 	.short	187
-	.short	188
+	.short	0
 	.short	0
 	.short	360
 	.short	1
@@ -2090,7 +2090,7 @@ sTMMap:
 	.short	217
 	.short	218
 	.short	219
-	.short	220
+	.short	0
 	.short	0
 	.short	392
 	.short	1

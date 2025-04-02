@@ -360,15 +360,15 @@ flipPages:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r3, #67108864
-	ldrh	r1, [r3]
-	tst	r1, #16
-	ldr	r2, .L63
-	moveq	r2, #100663296
-	ldr	r1, .L63+4
-	str	r2, [r1]
 	ldrh	r2, [r3]
 	eor	r2, r2, #16
 	strh	r2, [r3]	@ movhi
+	ldrh	r2, [r3]
+	tst	r2, #16
+	ldr	r3, .L63
+	movne	r3, #100663296
+	ldr	r2, .L63+4
+	str	r3, [r2]
 	bx	lr
 .L64:
 	.align	2
