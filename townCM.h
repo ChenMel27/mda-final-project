@@ -3,11 +3,11 @@
 
 //======================================================================
 //
-//	townCM, 256x256@8, 
+//	townCM, 512x512@8, 
 //	+ bitmap not compressed
-//	Total size: 65536 = 65536
+//	Total size: 262144 = 262144
 //
-//	Time-stamp: 2025-03-26, 16:34:30
+//	Time-stamp: 2025-04-02, 06:24:28
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.3
 //	( http://www.coranac.com/projects/#grit )
 //
@@ -16,8 +16,8 @@
 #ifndef GRIT_TOWNCM_H
 #define GRIT_TOWNCM_H
 
-#define townCMBitmapLen 65536
-extern const unsigned short townCMBitmap[32768];
+#define townCMBitmapLen 262144
+extern const unsigned char townCMBitmap[262144];
 
 #endif // GRIT_TOWNCM_H
 

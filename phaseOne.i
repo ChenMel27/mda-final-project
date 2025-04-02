@@ -165,8 +165,8 @@ void initPlayer() {
     player.worldY = 101;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
-    player.width = 30;
-    player.height = 50;
+    player.width = 16;
+    player.height = 28;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -312,7 +312,7 @@ void drawPlayer() {
         if (isDucking) {
             shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
         } else {
-            shadowOAM[player.oamIndex].attr2 = ((((0) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
+            shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
         }
     } else {
         gameOver = 1;

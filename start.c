@@ -2,14 +2,24 @@
 #include "gba.h"
 #include "mode0.h"
 #include "townCM.h"
-#include "hiker.h"
+#include "player.h"
 #include "sprites.h"
 
 // Animation vars for the starting
 int startHikerFrameDelay = 4;
 int startHikerFrameCounter = 0;
 int startHikerFrame = 0;
-int startHikerFrames[] = {12, 16, 20};
+int startHikerFramesHorizontal[] = {20, 22, 24};
+int startHikerFramesUp[] = {0, 2, 4};
+int startHikerFramesDown[] = {10, 12, 14};
+int next = 0;
+
+typedef enum {
+    RIGHT,
+    LEFT,
+    UP,
+    DOWN
+} Direction;
 
 extern int hOff, vOff;
 
@@ -22,32 +32,32 @@ extern int sbb;
 
 // Collision map function for the townCMBitmap
 inline unsigned char startColorAt(int x, int y) {
-    return ((unsigned char*)townCMBitmap)[OFFSET(x, y, 512 / 2)];
+    return townCMBitmap[OFFSET(x, y, 512)];
 }
 
 void initStartPlayer() {
     startPlayer.worldX = 0;
-    startPlayer.worldY = 42;
+    startPlayer.worldY = 165;
     startPlayer.x = SCREENWIDTH / 2 - 8;
     startPlayer.y = SCREENHEIGHT / 2 - 8;
-    startPlayer.width = 32;
-    startPlayer.height = 64;
+    startPlayer.width = 16;
+    startPlayer.height = 16;
     startPlayer.oamIndex = 0;
     startPlayer.numFrames = 3;
     startPlayer.currentFrame = 0;
     startPlayer.isAnimating = 1;
-    startPlayer.direction = 0;
+    startPlayer.direction = RIGHT;
     startPlayer.yVel = 0;
 
-    DMANow(3, (void*)hikerPal, SPRITE_PAL, hikerPalLen / 2);
-    DMANow(3, (void*)hikerTiles, &CHARBLOCK[4], hikerTilesLen / 2);
+    DMANow(3, (void*)playerPal, SPRITE_PAL, playerPalLen / 2);
+    DMANow(3, (void*)playerTiles, &CHARBLOCK[4], playerTilesLen / 2);
 }
 
 void initGuideSprite() {
-    guide.worldX = 10;
-    guide.worldY = 166;
-    guide.width = 30;
-    guide.height = 50;
+    guide.worldX = 436;
+    guide.worldY = 127;
+    guide.width = 16;
+    guide.height = 32;
     // Sprite uses 0
     guide.oamIndex = 1;
     guide.numFrames = 1;
@@ -67,8 +77,24 @@ void updateStartPlayer(int* hOff, int* vOff) {
     int topY    = startPlayer.worldY;
     int bottomY = startPlayer.worldY + startPlayer.height - 1;
     
+    if (BUTTON_HELD(BUTTON_RIGHT)) {
+        startPlayer.isAnimating = 1;
+        startPlayer.direction = RIGHT;
+        int newX = startPlayer.worldX + speed;
+        if (startPlayer.worldX + startPlayer.width < MAPWIDTH &&
+            startColorAt(newX + startPlayer.width - 1, topY) != 0 &&
+            startColorAt(newX + startPlayer.width - 1, bottomY) != 0) {
+            startPlayer.worldX = newX;
+        }
+        if (startColorAt(newX + startPlayer.width - 1, topY) == 2 ||
+            startColorAt(newX + startPlayer.width - 1, bottomY) == 2) {
+            next = 1;
+        }
+    }
+
     if (BUTTON_HELD(BUTTON_LEFT)) {
         startPlayer.isAnimating = 1;
+        startPlayer.direction = LEFT;
         int newX = startPlayer.worldX - speed;
         if (newX >= 0 &&
             startColorAt(newX, topY) != 0 &&
@@ -77,18 +103,9 @@ void updateStartPlayer(int* hOff, int* vOff) {
         }
     }
     
-    if (BUTTON_HELD(BUTTON_RIGHT)) {
-        startPlayer.isAnimating = 1;
-        int newX = startPlayer.worldX + speed;
-        if (startPlayer.worldX + startPlayer.width < MAPWIDTH &&
-            startColorAt(newX + startPlayer.width - 1, topY) != 0 &&
-            startColorAt(newX + startPlayer.width - 1, bottomY) != 0) {
-            startPlayer.worldX = newX;
-        }
-    }
-    
     if (BUTTON_HELD(BUTTON_UP)) {
         startPlayer.isAnimating = 1;
+        startPlayer.direction = UP;
         int newY = startPlayer.worldY - speed;
         if (newY >= 0 &&
             startColorAt(leftX, newY) != 0 &&
@@ -99,6 +116,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
     
     if (BUTTON_HELD(BUTTON_DOWN)) {
         startPlayer.isAnimating = 1;
+        startPlayer.direction = DOWN;
         int newY = startPlayer.worldY + speed;
         if (startPlayer.worldY < MAPHEIGHT - startPlayer.height &&
             startColorAt(leftX, newY + startPlayer.height - 1) != 0 &&
@@ -128,7 +146,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
     if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
     
     // Update screen block index 20–23
-    sbb = 20 + (*hOff / 256);
+    sbb = 20 + (*hOff / 512);
 }
 
 void updateGuideSprite() {
@@ -139,16 +157,27 @@ void drawStartPlayer() {
     int screenX = startPlayer.worldX - hOff;
     int screenY = startPlayer.worldY - vOff;
     shadowOAM[startPlayer.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
-    shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_LARGE;
-    shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFrames[startHikerFrame], 15);
+    if (startPlayer.direction == RIGHT) {
+        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
+    } else if (startPlayer.direction == LEFT) {
+        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
+        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
+    } else if (startPlayer.direction == UP) {
+        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesUp[startHikerFrame], 1);
+    } else if (startPlayer.direction == DOWN) {
+        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesDown[startHikerFrame], 1);
+    }
 }
 
 void drawGuideSprite() {
     int screenX = guide.worldX - hOff;
     int screenY = guide.worldY - vOff;
     shadowOAM[guide.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
-    shadowOAM[guide.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_LARGE | ATTR1_HFLIP;
-    shadowOAM[guide.oamIndex].attr2 = ATTR2_TILEID(24, 14);
+    shadowOAM[guide.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+    shadowOAM[guide.oamIndex].attr2 = ATTR2_TILEID(0, 9);
 }
 
 // Checks collision with the guide sprite

@@ -8,7 +8,7 @@
 //	+ 1024 tiles not compressed
 //	Total size: 512 + 32768 = 33280
 //
-//	Time-stamp: 2025-04-01, 09:53:20
+//	Time-stamp: 2025-04-02, 06:42:14
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.3
 //	( http://www.coranac.com/projects/#grit )
 //
@@ -18,10 +18,10 @@
 #define GRIT_PLAYER_H
 
 #define playerTilesLen 32768
-extern const unsigned short playerTiles[16384];
+extern const unsigned char playerTiles[32768];
 
 #define playerPalLen 512
-extern const unsigned short playerPal[256];
+extern const unsigned char playerPal[512];
 
 #endif // GRIT_PLAYER_H
 

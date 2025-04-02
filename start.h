@@ -3,8 +3,10 @@
 
 #include "gba.h"
 
-#define MAPWIDTH 256
-#define MAPHEIGHT 256
+#define MAPWIDTH 512
+#define MAPHEIGHT 512
+
+int next;
 
 void initStartPlayer();
 void initGuideSprite();

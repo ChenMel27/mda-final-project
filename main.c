@@ -192,6 +192,10 @@ void start() {
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
     }
+
+    if (next == 1) {
+        goToPhaseOne();
+    }
 }
 
 // ============================= [ DIALOGUE STATE ] =============================
@@ -204,9 +208,6 @@ void goToStartInstructions() {
 
 void startInstructions() {
     drawStartInstructionsDialouge();
-    if (begin) {
-        goToPhaseOne();
-    }
 }
 
 // ============================= [ PHASE ONE STATE ] ============================

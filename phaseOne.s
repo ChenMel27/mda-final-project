@@ -25,8 +25,8 @@ initPlayer:
 	mov	r1, #0
 	mov	r4, #3
 	mov	r5, #64
-	mov	r3, #30
-	mov	r2, #50
+	mov	r3, #16
+	mov	r2, #28
 	mov	lr, #1
 	mov	r7, #101
 	mov	r6, #112
@@ -404,6 +404,7 @@ drawPlayer:
 	ldreq	r3, .L103+28
 	addeq	r3, r3, r2, lsl #2
 	ldreq	r3, [r3, #8]
+	addeq	r3, r3, #32
 	lsleq	r3, r3, #22
 	addne	r1, r1, ip
 	addeq	r1, r1, ip

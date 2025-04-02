@@ -189,6 +189,8 @@ int begin;
 # 54 "main.c" 2
 # 1 "start.h" 1
 # 9 "start.h"
+int next;
+
 void initStartPlayer();
 void initGuideSprite();
 void updateStartPlayer(int* hOff, int* vOff);
@@ -213,7 +215,7 @@ extern unsigned char snowtilesPal[512];
 # 57 "main.c" 2
 # 1 "townCM.h" 1
 # 20 "townCM.h"
-extern const unsigned short townCMBitmap[32768];
+extern const unsigned char townCMBitmap[262144];
 # 58 "main.c" 2
 # 1 "town.h" 1
 
@@ -251,7 +253,7 @@ extern const unsigned short sTMMap[4096];
 # 62 "main.c" 2
 # 1 "sTS.h" 1
 # 21 "sTS.h"
-extern const unsigned short sTSTiles[32768];
+extern const unsigned short sTSTiles[8192];
 
 
 extern const unsigned short sTSPal[256];
@@ -365,7 +367,7 @@ void goToStart() {
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
     DMANow(3, sTSPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, sTSTiles, &((CB*) 0x6000000)[0], 65536 / 2);
+    DMANow(3, sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
     DMANow(3, sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
 
     initStartPlayer();
@@ -388,6 +390,10 @@ void start() {
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
     }
+
+    if (next == 1) {
+        goToPhaseOne();
+    }
 }
 
 
@@ -400,9 +406,6 @@ void goToStartInstructions() {
 
 void startInstructions() {
     drawStartInstructionsDialouge();
-    if (begin) {
-        goToPhaseOne();
-    }
 }
 
 

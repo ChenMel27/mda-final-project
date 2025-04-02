@@ -26,8 +26,8 @@ void initPlayer() {
     player.worldY = 101;
     player.x = SCREENWIDTH / 2 - 8;   // Center horizontally (16x32 sprite)
     player.y = SCREENHEIGHT / 2 - 16; // Center vertically
-    player.width = 30;
-    player.height = 50;
+    player.width = 16;
+    player.height = 28;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -173,7 +173,7 @@ void drawPlayer() {
         if (isDucking) {
             shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
         } else {
-            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 0);
+            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
         }
     } else {
         gameOver = 1;
