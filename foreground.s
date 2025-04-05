@@ -17,7 +17,7 @@
 	.type	foregroundPal, %object
 	.size	foregroundPal, 512
 foregroundPal:
-	.short	0
+	.short	32534
 	.short	6564
 	.short	13080
 	.short	1221
@@ -7732,38 +7732,38 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
 	.short	0
 	.short	0
 	.short	0
@@ -8524,14 +8524,14 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	7196
-	.short	7196
-	.short	7196
-	.short	7196
-	.short	13107
-	.short	13107
-	.short	13107
-	.short	13107
+	.short	7453
+	.short	7453
+	.short	7453
+	.short	7453
+	.short	3598
+	.short	3598
+	.short	3598
+	.short	3598
 	.short	13107
 	.short	13107
 	.short	13107

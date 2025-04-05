@@ -90,17 +90,37 @@ extern const unsigned short bgOneFrontMap[2048];
 
 extern const unsigned short bgOneBackMap[2048];
 # 50 "main.c" 2
+# 1 "bgTwoFront.h" 1
+
+
+
+
+
+
+
+extern const unsigned short bgTwoFrontMap[2048];
+# 51 "main.c" 2
+# 1 "bgTwoBack.h" 1
+
+
+
+
+
+
+
+extern const unsigned short bgTwoBackMap[2048];
+# 52 "main.c" 2
 # 1 "bgOneCM.h" 1
 # 20 "bgOneCM.h"
 extern const unsigned short bgOneCMBitmap[65536];
-# 51 "main.c" 2
+# 53 "main.c" 2
 # 1 "tilesetOne.h" 1
 # 21 "tilesetOne.h"
 extern const unsigned short tilesetOneTiles[4096];
 
 
 extern const unsigned short tilesetOnePal[256];
-# 52 "main.c" 2
+# 54 "main.c" 2
 # 1 "phaseOne.h" 1
 
 # 1 "sprites.h" 1
@@ -165,7 +185,7 @@ typedef struct {
     u8 oamIndex;
 } SPRITE;
 # 3 "phaseOne.h" 2
-# 18 "phaseOne.h"
+# 17 "phaseOne.h"
 extern SPRITE player;
 int gameOver;
 int winPhaseOne;
@@ -173,7 +193,11 @@ unsigned char colorAt(int x, int y);
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
-# 53 "main.c" 2
+void resetPlayerState();
+void initHealth();
+void updateHealth();
+void drawHealth();
+# 55 "main.c" 2
 # 1 "phaseTwo.h" 1
 # 18 "phaseTwo.h"
 unsigned char colorAtTwo(int x, int y);
@@ -181,7 +205,7 @@ void initPlayerTwo();
 void updatePlayerTwo(int* hOff, int* vOff);
 void drawPlayerTwo();
 int winPhaseTwo;
-# 54 "main.c" 2
+# 56 "main.c" 2
 # 1 "phaseThree.h" 1
 # 17 "phaseThree.h"
 int winPhaseThree;
@@ -189,7 +213,7 @@ unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
-# 55 "main.c" 2
+# 57 "main.c" 2
 # 1 "startInstructions.h" 1
 
 
@@ -199,7 +223,7 @@ void drawStartInstructionsDialouge();
 
 int startPage;
 int begin;
-# 56 "main.c" 2
+# 58 "main.c" 2
 # 1 "start.h" 1
 # 9 "start.h"
 int next;
@@ -211,25 +235,25 @@ void updateGuideSprite();
 void drawStartPlayer();
 void drawGuideSprite();
 int checkPlayerGuideCollision();
-# 57 "main.c" 2
+# 59 "main.c" 2
 # 1 "splashScreen.h" 1
 # 21 "splashScreen.h"
 extern const unsigned short splashScreenBitmap[19200];
 
 
 extern const unsigned short splashScreenPal[256];
-# 58 "main.c" 2
+# 60 "main.c" 2
 # 1 "snowtiles.h" 1
 # 21 "snowtiles.h"
 extern unsigned char snowtilesTiles[7680];
 
 
 extern unsigned char snowtilesPal[512];
-# 59 "main.c" 2
+# 61 "main.c" 2
 # 1 "townCM.h" 1
 # 20 "townCM.h"
 extern const unsigned char townCMBitmap[262144];
-# 60 "main.c" 2
+# 62 "main.c" 2
 # 1 "town.h" 1
 
 
@@ -239,21 +263,21 @@ extern const unsigned char townCMBitmap[262144];
 
 
 extern unsigned short townMap[1024];
-# 61 "main.c" 2
+# 63 "main.c" 2
 # 1 "foreground.h" 1
 # 21 "foreground.h"
 extern const unsigned short foregroundTiles[12800];
 
 
 extern const unsigned short foregroundPal[256];
-# 62 "main.c" 2
+# 64 "main.c" 2
 # 1 "topdownrpg.h" 1
 # 21 "topdownrpg.h"
 extern const unsigned short topdownrpgTiles[32768];
 
 
 extern const unsigned short topdownrpgPal[256];
-# 63 "main.c" 2
+# 65 "main.c" 2
 # 1 "sTM.h" 1
 
 
@@ -263,14 +287,24 @@ extern const unsigned short topdownrpgPal[256];
 
 
 extern const unsigned short sTMMap[4096];
-# 64 "main.c" 2
+# 66 "main.c" 2
 # 1 "sTS.h" 1
 # 21 "sTS.h"
 extern const unsigned short sTSTiles[8192];
 
 
 extern const unsigned short sTSPal[256];
-# 65 "main.c" 2
+# 67 "main.c" 2
+# 1 "dayTM.h" 1
+
+
+
+
+
+
+
+extern const unsigned short dayTMMap[2048];
+# 68 "main.c" 2
 
 
 void initialize();
@@ -363,7 +397,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {
@@ -478,21 +512,25 @@ void goToPhaseOne() {
     (*(volatile unsigned short *)0x4000000) = 0;
 
 
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << 12);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
 
-    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
 
-    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
+
 
     DMANow(3, foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
 
 
+    DMANow(3, dayTMMap, &((SB*) 0x6000000)[26], (4096) / 2);
     DMANow(3, bgOneFrontMap, &((SB*) 0x6000000)[28], (4096) / 2);
     DMANow(3, bgOneBackMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
     initPlayer();
+    initHealth();
     hOff = 0;
     vOff = (256 - 160);
     state = PHASEONE;
@@ -501,15 +539,17 @@ void goToPhaseOne() {
 
 void phaseOne() {
     updatePlayer(&hOff, &vOff);
+    updateHealth();
 
-    (*(volatile unsigned short*) 0x04000010) = hOff;
-    (*(volatile unsigned short*) 0x04000012) = vOff;
+    (*(volatile unsigned short*) 0x04000014) = hOff;
+    (*(volatile unsigned short*) 0x04000016) = vOff;
 
-    (*(volatile unsigned short*) 0x04000014) = hOff / 2;
-    (*(volatile unsigned short*) 0x04000016) = vOff / 2;
+    (*(volatile unsigned short*) 0x04000018) = hOff / 2;
+    (*(volatile unsigned short*) 0x0400001A) = vOff / 2;
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);
     drawPlayer();
+    drawHealth();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
     if (gameOver) {
@@ -529,19 +569,22 @@ void goToPhaseTwo() {
     (*(volatile unsigned short *)0x4000000) = 0;
 
 
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << 12);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
 
-    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
 
-    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
+
 
     DMANow(3, foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
 
 
-    DMANow(3, bgOneFrontMap, &((SB*) 0x6000000)[28], (4096) / 2);
-    DMANow(3, bgOneBackMap, &((SB*) 0x6000000)[30], (4096) / 2);
+    DMANow(3, dayTMMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, bgTwoFrontMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, bgTwoBackMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
     initPlayerTwo();
     hOff = 0;
@@ -629,7 +672,6 @@ void goToPause() {
 
 void pause() {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
-    videoBuffer = ((unsigned short*) 0x06000000);
     fillScreen4(0);
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
@@ -637,7 +679,6 @@ void pause() {
         state = START;
     }
 }
-
 
 
 

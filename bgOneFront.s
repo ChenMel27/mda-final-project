@@ -653,7 +653,7 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -709,8 +709,8 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	153
@@ -791,8 +791,8 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -813,9 +813,9 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	258
-	.short	258
-	.short	258
+	.short	233
+	.short	233
+	.short	233
 	.short	2
 	.short	2
 	.short	2
@@ -1626,6 +1626,7 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -1635,8 +1636,7 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -1712,26 +1712,26 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	257
-	.short	256
-	.short	257
-	.short	257
-	.short	256
-	.short	257
-	.short	256
-	.short	257
-	.short	257
-	.short	256
-	.short	257
-	.short	257
-	.short	257
-	.short	256
-	.short	257
-	.short	257
-	.short	257
-	.short	256
-	.short	257
-	.short	257
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
+	.short	255
 	.short	51
 	.short	52
 	.short	26
@@ -1744,28 +1744,28 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
 	.short	26
 	.short	26
 	.short	26
@@ -1776,28 +1776,28 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
 	.short	26
 	.short	26
 	.short	26
@@ -1808,18 +1808,18 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
 	.short	26
 	.short	26
 	.short	26
@@ -1841,13 +1841,13 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
 	.short	26
 	.short	26
 	.short	26
@@ -1873,13 +1873,13 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
+	.short	233
 	.short	26
 	.short	26
 	.short	26

@@ -1,10 +1,11 @@
 #include "hiker.h"
 #include "gba.h"
 #include "mode0.h"
-#include "bgOneFrontCM.h"
+#include "bgTwoFrontCM.h"
 #include "sprites.h"
 #include "phaseTwo.h"
 #include "player.h"
+#include "CM2.h"
 
 // Animation variables
 extern int hikerFrameDelay;
@@ -16,14 +17,15 @@ extern int isDucking;
 extern int gameOver;
 int winPhaseTwo = 0;
 extern SPRITE player;
-extern int sbb ;
+extern int sbb;
 
 void initPlayerTwo() {
+    resetPlayerState();
     player.worldX = 0;
     player.worldY = 101;
     player.x = SCREENWIDTH / 2 - 8;   // Center horizontally (16x32 sprite)
     player.y = SCREENHEIGHT / 2 - 16; // Center vertically
-    player.width = 16;
+    player.width = 18;
     player.height = 28;
     player.oamIndex = 0;
     player.numFrames = 3;
@@ -58,8 +60,8 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 1;
         if (player.worldX > 0 &&
-            colorAt(leftX - player.xVel, topY) != 0 &&
-            colorAt(leftX - player.xVel, bottomY) != 0) {
+            colorAtTwo(leftX - player.xVel, topY) != 0x02 &&
+            colorAtTwo(leftX - player.xVel, bottomY) != 0x02) {
             player.worldX -= player.xVel;
         }
     }
@@ -67,8 +69,8 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 0;
         if (player.worldX < MAPWIDTH - player.width &&
-            colorAt(rightX + player.xVel, topY) != 0 &&
-            colorAt(rightX + player.xVel, bottomY) != 0) {
+            colorAtTwo(rightX + player.xVel, topY) != 0x02 &&
+            colorAtTwo(rightX + player.xVel, bottomY) != 0x02) {
             player.worldX += player.xVel;
         }
     }
@@ -89,8 +91,8 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
             if (topY - 1 >= 0 &&
-                colorAt(leftX, topY - 1) != 0 &&
-                colorAt(rightX, topY - 1) != 0) {
+                colorAtTwo(leftX, topY - 1) != 0x02 &&
+                colorAtTwo(rightX, topY - 1) != 0x02) {
                 player.worldY--;
             } else {
                 player.yVel = 0;  // ceiling
@@ -101,8 +103,8 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         for (int i = 0; i < player.yVel; i++) {
             bottomY = player.worldY + player.height - 1;
             if (bottomY + 1 < MAPHEIGHT &&
-                colorAt(leftX, bottomY + 1) != 0 &&
-                colorAt(rightX, bottomY + 1) != 0) {
+                colorAtTwo(leftX, bottomY + 1) != 0x02 &&
+                colorAtTwo(rightX, bottomY + 1) != 0x02) {
                 player.worldY++;
             } else {
                 player.yVel = 0;  // landed ground
@@ -147,11 +149,11 @@ void drawPlayerTwo() {
     int topY    = player.worldY;
     int bottomY = player.worldY + player.height - 1;
     
-    // If any corner is over the bad tile (0x02) hide the sprite
-    if (colorAt(leftX, topY) == 0x02 ||
-        colorAt(rightX, topY) == 0x02 ||
-        colorAt(leftX, bottomY) == 0x02 ||
-        colorAt(rightX, bottomY) == 0x02) {
+    // If any corner is over the bad tile (1) hide the sprite
+    if (colorAtTwo(leftX, topY) == 0x01 ||
+        colorAtTwo(rightX, topY) == 0x01 ||
+        colorAtTwo(leftX, bottomY) == 0x01 ||
+        colorAtTwo(rightX, bottomY) == 0x01) {
         player.active = 0;
     }
     
@@ -177,6 +179,9 @@ void drawPlayerTwo() {
     }
 }
 
+#define COLLISION_Y_OFFSET -52  // adjust this based on how much the map is "off"
+
 inline unsigned char colorAtTwo(int x, int y) {
-    return ((unsigned char*) bgOneFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
+    return ((unsigned char*) bgTwoFrontCMBitmap)[OFFSET(x, y + COLLISION_Y_OFFSET, MAPWIDTH)];
 }
+

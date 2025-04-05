@@ -47,6 +47,8 @@ Date:       [Insert Date Here]
 
 #include "bgOneFront.h"
 #include "bgOneBack.h"
+#include "bgTwoFront.h"
+#include "bgTwoBack.h"
 #include "bgOneCM.h"
 #include "tilesetOne.h"
 #include "phaseOne.h"
@@ -62,6 +64,7 @@ Date:       [Insert Date Here]
 #include "topdownrpg.h"
 #include "sTM.h"
 #include "sTS.h"
+#include "dayTM.h"
 // ============================= [ FUNCTION DECLARATIONS ] =======================
 
 void initialize();
@@ -154,7 +157,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {
@@ -269,21 +272,25 @@ void goToPhaseOne() {
     REG_DISPCTL = 0;  // Clear all display settings before changing mode
 
     // Enable both BG0 and BG1
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    // Configure BG2 (parallax background) – note: same tileset, different screen block
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     // Configure BG0 (main layer)
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     // Configure BG1 (parallax background) – note: same tileset, different screen block
-    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
 
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
     // Load BG0’s map and BG1’s map (bgOneFront)
+    DMANow(3, dayTMMap, &SCREENBLOCK[26], dayTMLen / 2);
     DMANow(3, bgOneFrontMap, &SCREENBLOCK[28], bgOneFrontLen / 2);
     DMANow(3, bgOneBackMap, &SCREENBLOCK[30], bgOneBackLen / 2);
     
     initPlayer();
+    initHealth();
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASEONE;
@@ -292,15 +299,17 @@ void goToPhaseOne() {
 
 void phaseOne() {
     updatePlayer(&hOff, &vOff);
+    updateHealth();
     // Main background scrolls normally:
-    REG_BG0HOFF = hOff;
-    REG_BG0VOFF = vOff;
+    REG_BG1HOFF = hOff;
+    REG_BG1VOFF = vOff;
     // Parallax background scrolls slower (adjust the divisor as desired):
-    REG_BG1HOFF = hOff / 2;
-    REG_BG1VOFF = vOff / 2;
+    REG_BG2HOFF = hOff / 2;
+    REG_BG2VOFF = vOff / 2;
     
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayer();
+    drawHealth();
     DMANow(3, shadowOAM, OAM, 512);
     
     if (gameOver) {
@@ -320,19 +329,22 @@ void goToPhaseTwo() {
     REG_DISPCTL = 0;  // Clear all display settings before changing mode
 
     // Enable both BG0 and BG1
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    // Configure BG2 (parallax background) – note: same tileset, different screen block
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     // Configure BG0 (main layer)
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     // Configure BG1 (parallax background) – note: same tileset, different screen block
-    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
 
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
     // Load BG0’s map and BG1’s map (bgOneFront)
-    DMANow(3, bgOneFrontMap, &SCREENBLOCK[28], bgOneFrontLen / 2);
-    DMANow(3, bgOneBackMap, &SCREENBLOCK[30], bgOneBackLen / 2);
+    DMANow(3, dayTMMap, &SCREENBLOCK[26], dayTMLen / 2);
+    DMANow(3, bgTwoFrontMap, &SCREENBLOCK[28], bgTwoFrontLen / 2);
+    DMANow(3, bgTwoBackMap, &SCREENBLOCK[30], bgTwoBackLen / 2);
     
     initPlayerTwo();
     hOff = 0;

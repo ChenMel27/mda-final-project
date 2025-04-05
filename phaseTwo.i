@@ -61,9 +61,9 @@ typedef struct {
  u16 tilemap[1024];
 } SB;
 # 4 "phaseTwo.c" 2
-# 1 "bgOneFrontCM.h" 1
-# 20 "bgOneFrontCM.h"
-extern const unsigned short bgOneFrontCMBitmap[65536];
+# 1 "bgTwoFrontCM.h" 1
+# 20 "bgTwoFrontCM.h"
+extern const unsigned short bgTwoFrontCMBitmap[65536];
 # 5 "phaseTwo.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -137,11 +137,15 @@ int winPhaseTwo;
 # 7 "phaseTwo.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
-extern const unsigned char playerTiles[32768];
+extern const unsigned short playerTiles[16384];
 
 
-extern const unsigned char playerPal[512];
+extern const unsigned short playerPal[256];
 # 8 "phaseTwo.c" 2
+# 1 "CM2.h" 1
+# 20 "CM2.h"
+extern const unsigned short CM2Bitmap[65536];
+# 9 "phaseTwo.c" 2
 
 
 extern int hikerFrameDelay;
@@ -153,14 +157,15 @@ extern int isDucking;
 extern int gameOver;
 int winPhaseTwo = 0;
 extern SPRITE player;
-extern int sbb ;
+extern int sbb;
 
 void initPlayerTwo() {
+    resetPlayerState();
     player.worldX = 0;
     player.worldY = 101;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
-    player.width = 16;
+    player.width = 18;
     player.height = 28;
     player.oamIndex = 0;
     player.numFrames = 3;
@@ -195,8 +200,8 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 1;
         if (player.worldX > 0 &&
-            colorAt(leftX - player.xVel, topY) != 0 &&
-            colorAt(leftX - player.xVel, bottomY) != 0) {
+            colorAtTwo(leftX - player.xVel, topY) != 0x02 &&
+            colorAtTwo(leftX - player.xVel, bottomY) != 0x02) {
             player.worldX -= player.xVel;
         }
     }
@@ -204,8 +209,8 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 0;
         if (player.worldX < 512 - player.width &&
-            colorAt(rightX + player.xVel, topY) != 0 &&
-            colorAt(rightX + player.xVel, bottomY) != 0) {
+            colorAtTwo(rightX + player.xVel, topY) != 0x02 &&
+            colorAtTwo(rightX + player.xVel, bottomY) != 0x02) {
             player.worldX += player.xVel;
         }
     }
@@ -226,8 +231,8 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
             if (topY - 1 >= 0 &&
-                colorAt(leftX, topY - 1) != 0 &&
-                colorAt(rightX, topY - 1) != 0) {
+                colorAtTwo(leftX, topY - 1) != 0x02 &&
+                colorAtTwo(rightX, topY - 1) != 0x02) {
                 player.worldY--;
             } else {
                 player.yVel = 0;
@@ -238,8 +243,8 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         for (int i = 0; i < player.yVel; i++) {
             bottomY = player.worldY + player.height - 1;
             if (bottomY + 1 < 256 &&
-                colorAt(leftX, bottomY + 1) != 0 &&
-                colorAt(rightX, bottomY + 1) != 0) {
+                colorAtTwo(leftX, bottomY + 1) != 0x02 &&
+                colorAtTwo(rightX, bottomY + 1) != 0x02) {
                 player.worldY++;
             } else {
                 player.yVel = 0;
@@ -285,10 +290,10 @@ void drawPlayerTwo() {
     int bottomY = player.worldY + player.height - 1;
 
 
-    if (colorAt(leftX, topY) == 0x02 ||
-        colorAt(rightX, topY) == 0x02 ||
-        colorAt(leftX, bottomY) == 0x02 ||
-        colorAt(rightX, bottomY) == 0x02) {
+    if (colorAtTwo(leftX, topY) == 0x01 ||
+        colorAtTwo(rightX, topY) == 0x01 ||
+        colorAtTwo(leftX, bottomY) == 0x01 ||
+        colorAtTwo(rightX, bottomY) == 0x01) {
         player.active = 0;
     }
 
@@ -314,6 +319,8 @@ void drawPlayerTwo() {
     }
 }
 
+
+
 inline unsigned char colorAtTwo(int x, int y) {
-    return ((unsigned char*) bgOneFrontCMBitmap)[((y) * (512) + (x))];
+    return ((unsigned char*) bgTwoFrontCMBitmap)[((y + -52) * (512) + (x))];
 }

@@ -128,7 +128,7 @@ typedef struct {
 } SPRITE;
 # 6 "phaseOne.c" 2
 # 1 "phaseOne.h" 1
-# 21 "phaseOne.h"
+# 17 "phaseOne.h"
 extern SPRITE player;
 int gameOver;
 int winPhaseOne;
@@ -136,6 +136,10 @@ unsigned char colorAt(int x, int y);
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
+void resetPlayerState();
+void initHealth();
+void updateHealth();
+void drawHealth();
 # 7 "phaseOne.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
@@ -144,6 +148,10 @@ extern const unsigned short playerTiles[16384];
 
 extern const unsigned short playerPal[256];
 # 8 "phaseOne.c" 2
+
+
+
+
 
 
 int hikerFrameDelay = 4;
@@ -155,7 +163,15 @@ int isDucking = 0;
 int gameOver = 0;
 int winPhaseOne = 0;
 
+
+int healthBarFrames[9][2] = {
+    {6, 5}, {6, 6}, {6, 7},
+    {10, 5}, {10, 6}, {10, 7},
+    {14, 5}, {14, 6}, {14, 7}
+};
+
 SPRITE player;
+SPRITE health;
 
 
 int sbb = 20;
@@ -166,7 +182,7 @@ void initPlayer() {
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
     player.width = 16;
-    player.height = 28;
+    player.height = 25;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -178,6 +194,36 @@ void initPlayer() {
 
     DMANow(3, (void*) playerPal, ((u16 *)0x5000200), 512 / 2);
     DMANow(3, (void*) playerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
+}
+
+void initHealth() {
+    health.worldX = 10;
+    health.worldY = 10;
+    health.width = 32;
+    health.height = 8;
+    health.oamIndex = 100;
+    health.numFrames = 9;
+    health.currentFrame = 0;
+    health.isAnimating = 0;
+    health.direction = 0;
+    health.active = 9;
+}
+
+void updateHealth() {
+    health.isAnimating = 0;
+}
+
+void drawHealth() {
+    int frameIndex = 9 - health.active;
+    if (frameIndex < 0) frameIndex = 0;
+    if (frameIndex > 8) frameIndex = 8;
+
+    int row = healthBarFrames[frameIndex][0];
+    int col = healthBarFrames[frameIndex][1];
+
+    shadowOAM[health.oamIndex].attr0 = ((health.worldY) & 0xFF) | (0<<8) | (0<<13) | (1<<14);
+    shadowOAM[health.oamIndex].attr1 = ((health.worldX) & 0x1FF) | (1<<14);
+    shadowOAM[health.oamIndex].attr2 = ((((col) * (32) + (row))) & 0x3FF);
 }
 
 void updatePlayer(int* hOff, int* vOff) {
@@ -294,31 +340,56 @@ void drawPlayer() {
         colorAt(rightX, topY) == 0x02 ||
         colorAt(leftX, bottomY) == 0x02 ||
         colorAt(rightX, bottomY) == 0x02) {
-        player.active = 0;
+
+
+        if (health.active > 0) {
+            health.active--;
+            if (health.active == 0) {
+                gameOver = 1;
+            }
+        }
+
+
+        player.worldX = 0;
+        player.worldY = 101;
+        player.yVel = 0;
+
+
+        hOff = 0;
+        vOff = 0;
+
+
+        return;
     }
 
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
 
-    if (player.active) {
-        shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
-        if (player.direction == 0) {
-            shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
-        } else if (player.direction == 1) {
-            shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
-        }
+
+    shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
+    if (player.direction == 0) {
+        shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
+    } else if (player.direction == 1) {
+        shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
+    }
 
 
-        if (isDucking) {
+    if (isDucking) {
             shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
-        } else {
-            shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
-        }
     } else {
-        gameOver = 1;
+        shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
     }
 }
 
 inline unsigned char colorAt(int x, int y) {
     return ((unsigned char*) bgOneFrontCMBitmap)[((y) * (512) + (x))];
+}
+
+void resetPlayerState() {
+    hikerFrameDelay = 4;
+    hikerFrameCounter = 0;
+    hikerFrame = 0;
+    isDucking = 0;
+    gameOver = 0;
+    sbb = 20;
 }
