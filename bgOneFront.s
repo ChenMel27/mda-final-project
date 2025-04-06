@@ -653,7 +653,7 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	257
+	.short	0
 	.short	0
 	.short	0
 	.short	0
@@ -709,8 +709,8 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	257
-	.short	257
+	.short	0
+	.short	316
 	.short	0
 	.short	0
 	.short	153
@@ -791,8 +791,8 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	257
-	.short	257
+	.short	0
+	.short	316
 	.short	0
 	.short	0
 	.short	0
@@ -1626,7 +1626,7 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	257
+	.short	316
 	.short	0
 	.short	0
 	.short	0
@@ -1636,7 +1636,7 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	257
+	.short	316
 	.short	0
 	.short	0
 	.short	0

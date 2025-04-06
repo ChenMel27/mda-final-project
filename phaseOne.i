@@ -63,7 +63,7 @@ typedef struct {
 # 4 "phaseOne.c" 2
 # 1 "bgOneFrontCM.h" 1
 # 20 "bgOneFrontCM.h"
-extern const unsigned short bgOneFrontCMBitmap[65536];
+extern const unsigned char bgOneFrontCMBitmap[131072];
 # 5 "phaseOne.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -181,7 +181,7 @@ void initPlayer() {
     player.worldY = 101;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
-    player.width = 16;
+    player.width = 12;
     player.height = 25;
     player.oamIndex = 0;
     player.numFrames = 3;
@@ -246,8 +246,8 @@ void updatePlayer(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 1;
         if (player.worldX > 0 &&
-            colorAt(leftX - player.xVel, topY) != 0 &&
-            colorAt(leftX - player.xVel, bottomY) != 0) {
+            colorAt(leftX - player.xVel, topY) != 0x04 &&
+            colorAt(leftX - player.xVel, bottomY) != 0x04) {
             player.worldX -= player.xVel;
         }
     }
@@ -255,8 +255,8 @@ void updatePlayer(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 0;
         if (player.worldX < 512 - player.width &&
-            colorAt(rightX + player.xVel, topY) != 0 &&
-            colorAt(rightX + player.xVel, bottomY) != 0) {
+            colorAt(rightX + player.xVel, topY) != 0x04 &&
+            colorAt(rightX + player.xVel, bottomY) != 0x04) {
             player.worldX += player.xVel;
         }
     }
@@ -277,8 +277,8 @@ void updatePlayer(int* hOff, int* vOff) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
             if (topY - 1 >= 0 &&
-                colorAt(leftX, topY - 1) != 0 &&
-                colorAt(rightX, topY - 1) != 0) {
+                colorAt(leftX, topY - 1) != 0x04 &&
+                colorAt(rightX, topY - 1) != 0x04) {
                 player.worldY--;
             } else {
                 player.yVel = 0;
@@ -289,8 +289,8 @@ void updatePlayer(int* hOff, int* vOff) {
         for (int i = 0; i < player.yVel; i++) {
             bottomY = player.worldY + player.height - 1;
             if (bottomY + 1 < 256 &&
-                colorAt(leftX, bottomY + 1) != 0 &&
-                colorAt(rightX, bottomY + 1) != 0) {
+                colorAt(leftX, bottomY + 1) != 0x04 &&
+                colorAt(rightX, bottomY + 1) != 0x04) {
                 player.worldY++;
             } else {
                 player.yVel = 0;
@@ -336,10 +336,10 @@ void drawPlayer() {
     int bottomY = player.worldY + player.height - 1;
 
 
-    if (colorAt(leftX, topY) == 0x02 ||
-        colorAt(rightX, topY) == 0x02 ||
-        colorAt(leftX, bottomY) == 0x02 ||
-        colorAt(rightX, bottomY) == 0x02) {
+    if (colorAt(leftX, topY) == 0x05 ||
+        colorAt(rightX, topY) == 0x05 ||
+        colorAt(leftX, bottomY) == 0x05 ||
+        colorAt(rightX, bottomY) == 0x05) {
 
 
         if (health.active > 0) {
