@@ -164,12 +164,6 @@ int gameOver = 0;
 int winPhaseOne = 0;
 
 
-int healthBarFrames[9][2] = {
-    {6, 5}, {6, 6}, {6, 7},
-    {10, 5}, {10, 6}, {10, 7},
-    {14, 5}, {14, 6}, {14, 7}
-};
-
 SPRITE player;
 SPRITE health;
 
@@ -194,36 +188,6 @@ void initPlayer() {
 
     DMANow(3, (void*) playerPal, ((u16 *)0x5000200), 512 / 2);
     DMANow(3, (void*) playerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
-}
-
-void initHealth() {
-    health.worldX = 10;
-    health.worldY = 10;
-    health.width = 32;
-    health.height = 8;
-    health.oamIndex = 100;
-    health.numFrames = 9;
-    health.currentFrame = 0;
-    health.isAnimating = 0;
-    health.direction = 0;
-    health.active = 9;
-}
-
-void updateHealth() {
-    health.isAnimating = 0;
-}
-
-void drawHealth() {
-    int frameIndex = 9 - health.active;
-    if (frameIndex < 0) frameIndex = 0;
-    if (frameIndex > 8) frameIndex = 8;
-
-    int row = healthBarFrames[frameIndex][0];
-    int col = healthBarFrames[frameIndex][1];
-
-    shadowOAM[health.oamIndex].attr0 = ((health.worldY) & 0xFF) | (0<<8) | (0<<13) | (1<<14);
-    shadowOAM[health.oamIndex].attr1 = ((health.worldX) & 0x1FF) | (1<<14);
-    shadowOAM[health.oamIndex].attr2 = ((((col) * (32) + (row))) & 0x3FF);
 }
 
 void updatePlayer(int* hOff, int* vOff) {

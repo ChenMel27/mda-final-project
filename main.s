@@ -419,6 +419,27 @@ goToPhaseOne:
 	.word	.LANCHOR0
 	.size	goToPhaseOne, .-goToPhaseOne
 	.align	2
+	.global	initialize
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	initialize, %function
+initialize:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, lr}
+	ldr	r3, .L42
+	mov	lr, pc
+	bx	r3
+	pop	{r4, lr}
+	b	goToPhaseOne
+.L43:
+	.align	2
+.L42:
+	.word	mgba_open
+	.size	initialize, .-initialize
+	.align	2
 	.global	start
 	.syntax unified
 	.arm
@@ -430,8 +451,8 @@ start:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
 	mov	r5, #67108864
-	ldr	r4, .L49
-	ldr	r3, .L49+4
+	ldr	r4, .L53
+	ldr	r3, .L53+4
 	mov	r0, r4
 	add	r1, r4, #4
 	mov	lr, pc
@@ -440,57 +461,57 @@ start:
 	ldrh	r3, [r4]
 	strh	r3, [r5, #20]	@ movhi
 	strh	r2, [r5, #22]	@ movhi
-	ldr	r3, .L49+8
+	ldr	r3, .L53+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L49+12
+	ldr	r3, .L53+12
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L49+16
+	ldr	r4, .L53+16
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L49+20
+	ldr	r1, .L53+20
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L49+24
+	ldr	r3, .L53+24
 	mov	lr, pc
 	bx	r3
 	cmp	r0, #0
-	bne	.L47
-	ldr	r3, .L49+28
+	bne	.L51
+	ldr	r3, .L53+28
 	ldr	r3, [r3]
 	cmp	r3, #1
-	beq	.L48
-.L40:
+	beq	.L52
+.L44:
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L47:
-	ldr	r3, .L49+32
+.L51:
+	ldr	r3, .L53+32
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	mov	ip, #2
-	ldr	r1, .L49+36
-	ldr	lr, .L49+40
+	ldr	r1, .L53+36
+	ldr	lr, .L53+40
 	strh	r3, [r5]	@ movhi
 	strh	r1, [r5]	@ movhi
 	str	r3, [lr]
-	ldr	r3, .L49+28
+	ldr	r3, .L53+28
 	ldr	r3, [r3]
-	ldr	r0, .L49+44
-	ldr	r2, .L49+48
-	ldr	r1, .L49+52
+	ldr	r0, .L53+44
+	ldr	r2, .L53+48
+	ldr	r1, .L53+52
 	cmp	r3, #1
 	strb	ip, [r0]
 	str	r1, [r2]
-	bne	.L40
-.L48:
+	bne	.L44
+.L52:
 	pop	{r4, r5, r6, lr}
 	b	goToPhaseOne
-.L50:
+.L54:
 	.align	2
-.L49:
+.L53:
 	.word	.LANCHOR0
 	.word	updateStartPlayer
 	.word	drawStartPlayer
@@ -520,60 +541,60 @@ goToPhaseTwo:
 	mov	r0, #67108864
 	mov	r5, #0
 	mov	r3, #5888
-	ldr	ip, .L53
-	ldr	r2, .L53+4
-	ldr	r1, .L53+8
+	ldr	ip, .L57
+	ldr	r2, .L57+4
+	ldr	r1, .L57+8
 	strh	r5, [r0]	@ movhi
-	ldr	r4, .L53+12
+	ldr	r4, .L57+12
 	strh	r3, [r0]	@ movhi
 	strh	r2, [r0, #8]	@ movhi
 	mov	r3, #256
 	strh	r1, [r0, #10]	@ movhi
 	mov	r2, #83886080
 	strh	ip, [r0, #12]	@ movhi
-	ldr	r1, .L53+16
+	ldr	r1, .L57+16
 	mov	r0, #3
 	mov	lr, pc
 	bx	r4
 	mov	r3, #12800
 	mov	r0, #3
-	ldr	r2, .L53+20
-	ldr	r1, .L53+24
+	ldr	r2, .L57+20
+	ldr	r1, .L57+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L53+28
-	ldr	r1, .L53+32
+	ldr	r2, .L57+28
+	ldr	r1, .L57+32
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L53+36
-	ldr	r1, .L53+40
+	ldr	r2, .L57+36
+	ldr	r1, .L57+40
 	mov	lr, pc
 	bx	r4
 	mov	r0, #3
-	ldr	r2, .L53+44
-	ldr	r1, .L53+48
+	ldr	r2, .L57+44
+	ldr	r1, .L57+48
 	mov	r3, #2048
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L53+52
+	ldr	r3, .L57+52
 	mov	lr, pc
 	bx	r3
 	mov	r1, #4
 	mov	r0, #96
-	ldr	r2, .L53+56
-	ldr	r3, .L53+60
+	ldr	r2, .L57+56
+	ldr	r3, .L57+60
 	strb	r1, [r2]
 	str	r5, [r3]
 	str	r0, [r3, #4]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L54:
+.L58:
 	.align	2
-.L53:
+.L57:
 	.word	24196
 	.word	23174
 	.word	23685
@@ -591,27 +612,6 @@ goToPhaseTwo:
 	.word	state
 	.word	.LANCHOR0
 	.size	goToPhaseTwo, .-goToPhaseTwo
-	.align	2
-	.global	initialize
-	.syntax unified
-	.arm
-	.fpu softvfp
-	.type	initialize, %function
-initialize:
-	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	ldr	r3, .L57
-	mov	lr, pc
-	bx	r3
-	pop	{r4, lr}
-	b	goToPhaseTwo
-.L58:
-	.align	2
-.L57:
-	.word	mgba_open
-	.size	initialize, .-initialize
 	.align	2
 	.global	phaseOne
 	.syntax unified
@@ -815,24 +815,27 @@ phaseTwo:
 	strh	r1, [lr, #26]	@ movhi
 	strh	r0, [lr, #20]	@ movhi
 	strh	r2, [lr, #22]	@ movhi
-	strh	r4, [r5, r3]	@ movhi
 	ldr	r2, .L81+16
+	strh	r4, [r5, r3]	@ movhi
 	mov	lr, pc
 	bx	r2
+	ldr	r3, .L81+20
+	mov	lr, pc
+	bx	r3
 	mov	r3, r4
 	mov	r2, #117440512
 	mov	r1, r5
 	mov	r0, #3
-	ldr	r4, .L81+20
+	ldr	r4, .L81+24
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L81+24
+	ldr	r3, .L81+28
 	ldr	r3, [r3]
 	cmp	r3, #0
 	movne	r2, #7
-	ldrne	r3, .L81+28
+	ldrne	r3, .L81+32
 	strbne	r2, [r3]
-	ldr	r3, .L81+32
+	ldr	r3, .L81+36
 	ldr	r3, [r3]
 	cmp	r3, #0
 	bne	.L80
@@ -849,6 +852,7 @@ phaseTwo:
 	.word	guide
 	.word	shadowOAM
 	.word	drawPlayerTwo
+	.word	drawHealth
 	.word	DMANow
 	.word	gameOver
 	.word	state
@@ -1156,7 +1160,7 @@ main:
 	.align	2
 .L130:
 	.word	mgba_open
-	.word	goToPhaseTwo
+	.word	goToPhaseOne
 	.word	buttons
 	.word	oldButtons
 	.word	state
@@ -1245,6 +1249,7 @@ win:
 	.comm	state,1,1
 	.comm	oldButtons,2,2
 	.comm	buttons,2,2
+	.comm	healthBarFrames,72,4
 	.comm	next,4,4
 	.comm	begin,4,4
 	.comm	startPage,4,4

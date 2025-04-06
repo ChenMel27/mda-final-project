@@ -146,6 +146,18 @@ extern const unsigned short playerPal[256];
 # 20 "CM2.h"
 extern const unsigned short CM2Bitmap[65536];
 # 9 "phaseTwo.c" 2
+# 1 "health.h" 1
+
+
+extern SPRITE health;
+void initHealth();
+void updateHealth();
+void drawHealth();
+int healthBarFrames[9][2];
+# 10 "phaseTwo.c" 2
+
+
+
 
 
 extern int hikerFrameDelay;
@@ -294,7 +306,24 @@ void drawPlayerTwo() {
         colorAtTwo(rightX, topY) == 0x01 ||
         colorAtTwo(leftX, bottomY) == 0x01 ||
         colorAtTwo(rightX, bottomY) == 0x01) {
-        player.active = 0;
+
+
+        if (health.active > 0) {
+            health.active--;
+            if (health.active == 0) {
+                gameOver = 1;
+            }
+        }
+
+
+        player.worldX = 0;
+        player.worldY = 101;
+        player.yVel = 0;
+
+
+        hOff = 0;
+        vOff = 0;
+        return;
     }
 
     int screenX = player.worldX - hOff;

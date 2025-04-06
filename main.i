@@ -305,6 +305,15 @@ extern const unsigned short sTSPal[256];
 
 extern const unsigned short dayTMMap[2048];
 # 68 "main.c" 2
+# 1 "health.h" 1
+
+
+extern SPRITE health;
+void initHealth();
+void updateHealth();
+void drawHealth();
+int healthBarFrames[9][2];
+# 69 "main.c" 2
 
 
 void initialize();
@@ -397,7 +406,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToPhaseTwo();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {
@@ -601,6 +610,7 @@ void phaseTwo() {
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);
     drawPlayerTwo();
+    drawHealth();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
     if (gameOver) {

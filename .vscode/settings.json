@@ -28,6 +28,8 @@
         "startinstructions.h": "c",
         "splashscreen.h": "c",
         "phasethree.h": "c",
-        "phasetwo.h": "c"
+        "phasetwo.h": "c",
+        "health.h": "c",
+        "cm2.h": "c"
     }
 }

@@ -6,7 +6,11 @@
 #include "phaseTwo.h"
 #include "player.h"
 #include "CM2.h"
+#include "health.h"
 
+// Starting position definitions
+#define PLAYER_START_X 0
+#define PLAYER_START_Y 101
 // Animation variables
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
@@ -154,7 +158,24 @@ void drawPlayerTwo() {
         colorAtTwo(rightX, topY) == 0x01 ||
         colorAtTwo(leftX, bottomY) == 0x01 ||
         colorAtTwo(rightX, bottomY) == 0x01) {
-        player.active = 0;
+        
+        // Lose a life
+        if (health.active > 0) {
+            health.active--;
+            if (health.active == 0) {
+                gameOver = 1;
+            }
+        }
+        
+        // Reset player's position back to starting point
+        player.worldX = PLAYER_START_X;
+        player.worldY = PLAYER_START_Y;
+        player.yVel = 0;
+        
+        // Reset the camera offsets
+        hOff = 0;
+        vOff = 0;
+        return;
     }
     
     int screenX = player.worldX - hOff;

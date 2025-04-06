@@ -350,104 +350,125 @@ drawPlayerTwo:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r1, .L102
-	push	{r4, lr}
-	add	r2, r1, #16
-	ldm	r2, {r2, r3}
+	ldr	r2, .L102
+	push	{r4, r5, lr}
+	ldr	ip, [r2, #16]
+	ldr	r0, [r2, #20]
 	ldr	lr, .L102+4
-	add	r0, r2, r3, lsl #9
-	ldrb	r0, [r0, lr]	@ zero_extendqisi2
-	cmp	r0, #1
+	add	r3, ip, r0, lsl #9
+	ldrb	r1, [r3, lr]	@ zero_extendqisi2
+	ldr	r3, [r2, #24]
+	cmp	r1, #1
+	add	r3, ip, r3
 	beq	.L82
-	ldr	r0, [r1, #24]
-	add	r0, r2, r0
-	lsl	ip, r3, #9
-	sub	r0, r0, #1
-	add	ip, r0, ip
-	ldrb	ip, [ip, lr]	@ zero_extendqisi2
-	cmp	ip, #1
+	sub	r3, r3, #1
+	lsl	r1, r0, #9
+	add	r1, r3, r1
+	ldrb	r1, [r1, lr]	@ zero_extendqisi2
+	cmp	r1, #1
 	beq	.L82
-	ldr	ip, [r1, #28]
-	add	ip, r3, ip
-	sub	ip, ip, #1
-	add	r4, r2, ip, lsl #9
+	ldr	r1, [r2, #28]
+	add	r1, r0, r1
+	sub	r1, r1, #1
+	add	r4, ip, r1, lsl #9
 	ldrb	r4, [r4, lr]	@ zero_extendqisi2
 	cmp	r4, #1
-	lsl	ip, ip, #9
+	lsl	r1, r1, #9
 	beq	.L82
-	add	r0, r0, ip
-	ldrb	r0, [r0, lr]	@ zero_extendqisi2
-	cmp	r0, #1
+	add	r3, r3, r1
+	ldrb	r3, [r3, lr]	@ zero_extendqisi2
+	cmp	r3, #1
 	beq	.L82
-	ldr	ip, .L102+8
-	ldr	r0, .L102+12
-	ldr	lr, [r1, #52]
-	ldr	ip, [ip]
-	ldr	r0, [r0]
-	cmp	lr, #0
-	sub	r2, r2, ip
-	sub	r3, r3, r0
-	beq	.L84
-	ldrb	r0, [r1, #56]	@ zero_extendqisi2
-	ldr	lr, [r1, #36]
-	ldr	r4, .L102+16
-	ldr	r1, .L102+20
-	and	r3, r3, #255
-	lsl	ip, r0, #3
-	orr	r3, r3, r4
-	cmp	lr, #0
-	strh	r3, [r1, ip]	@ movhi
-	add	r0, r1, r0, lsl #3
-	bne	.L85
-	lsl	r2, r2, #23
-	lsr	r2, r2, #23
-	orr	r2, r2, r4
-	strh	r2, [r0, #2]	@ movhi
-.L86:
-	ldr	r3, .L102+24
-	ldr	r3, [r3]
+	ldr	r3, [r2, #52]
 	cmp	r3, #0
-	movne	r3, #132
-	ldreq	r2, .L102+28
-	ldreq	r3, .L102+32
-	ldreq	r2, [r2]
-	ldreq	r3, [r3, r2, lsl #2]
-	addeq	r3, r3, #32
-	lsleq	r3, r3, #22
-	addne	r1, r1, ip
-	addeq	r1, r1, ip
-	lsreq	r3, r3, #22
-	strh	r3, [r1, #4]	@ movhi
-	pop	{r4, lr}
+	beq	.L88
+	ldr	r3, .L102+8
+	ldr	r3, [r3]
+	ldr	r5, .L102+12
+	ldrb	r1, [r2, #56]	@ zero_extendqisi2
+	ldr	lr, [r2, #36]
+	sub	r0, r0, r3
+	ldr	r4, .L102+16
+	ldr	r3, .L102+20
+	ldr	r5, [r5]
+	and	r0, r0, #255
+	lsl	r2, r1, #3
+	orr	r0, r0, r4
+	cmp	lr, #0
+	strh	r0, [r3, r2]	@ movhi
+	add	r1, r3, r1, lsl #3
+	sub	ip, ip, r5
+	bne	.L89
+	lsl	ip, ip, #23
+	lsr	ip, ip, #23
+	orr	ip, ip, r4
+	strh	ip, [r1, #2]	@ movhi
+.L90:
+	ldr	r1, .L102+24
+	ldr	r1, [r1]
+	cmp	r1, #0
+	movne	r1, #132
+	ldreq	r0, .L102+28
+	ldreq	r1, .L102+32
+	ldreq	r0, [r0]
+	ldreq	r1, [r1, r0, lsl #2]
+	addeq	r1, r1, #32
+	lsleq	r1, r1, #22
+	addne	r3, r3, r2
+	addeq	r3, r3, r2
+	lsreq	r1, r1, #22
+	strh	r1, [r3, #4]	@ movhi
+	pop	{r4, r5, lr}
 	bx	lr
 .L82:
-	mov	r3, #0
+	ldr	r1, .L102+36
+	ldr	r3, [r1, #52]
+	cmp	r3, #0
+	ble	.L85
+	sub	r3, r3, #1
+	cmp	r3, #0
 	str	r3, [r1, #52]
-.L84:
+	moveq	r1, #1
+	ldreq	r3, .L102+40
+	streq	r1, [r3]
+.L85:
+	mov	r3, #0
+	mov	r1, #101
+	ldr	ip, .L102+12
+	ldr	r0, .L102+8
+	str	r3, [r2, #16]
+	str	r3, [r2, #12]
+	str	r3, [ip]
+	str	r3, [r0]
+	str	r1, [r2, #20]
+	pop	{r4, r5, lr}
+	bx	lr
+.L88:
 	mov	r2, #1
-	ldr	r3, .L102+36
-	pop	{r4, lr}
+	ldr	r3, .L102+40
+	pop	{r4, r5, lr}
 	str	r2, [r3]
 	bx	lr
-.L85:
+.L89:
 	cmp	lr, #1
-	lsleq	r2, r2, #23
-	lsreq	r2, r2, #23
-	orreq	r2, r2, #36864
-	strheq	r2, [r0, #2]	@ movhi
-	b	.L86
+	lsleq	ip, ip, #23
+	lsreq	ip, ip, #23
+	orreq	ip, ip, #36864
+	strheq	ip, [r1, #2]	@ movhi
+	b	.L90
 .L103:
 	.align	2
 .L102:
 	.word	player
 	.word	bgTwoFrontCMBitmap
-	.word	hOff
 	.word	vOff
+	.word	hOff
 	.word	-32768
 	.word	shadowOAM
 	.word	isDucking
 	.word	hikerFrame
 	.word	hikerFrames
+	.word	health
 	.word	gameOver
 	.size	drawPlayerTwo, .-drawPlayerTwo
 	.align	2
@@ -470,6 +491,7 @@ colorAtTwo:
 .L105:
 	.word	bgTwoFrontCMBitmap
 	.size	colorAtTwo, .-colorAtTwo
+	.comm	healthBarFrames,72,4
 	.global	winPhaseTwo
 	.bss
 	.align	2

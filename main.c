@@ -65,6 +65,7 @@ Date:       [Insert Date Here]
 #include "sTM.h"
 #include "sTS.h"
 #include "dayTM.h"
+#include "health.h"
 // ============================= [ FUNCTION DECLARATIONS ] =======================
 
 void initialize();
@@ -157,7 +158,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToPhaseTwo();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {
@@ -361,6 +362,7 @@ void phaseTwo() {
     
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayerTwo();
+    drawHealth();
     DMANow(3, shadowOAM, OAM, 512);
     
     if (gameOver) {
