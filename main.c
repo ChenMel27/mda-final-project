@@ -157,7 +157,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToPhaseOne();
+    goToPhaseTwo();
 }
 
 void goToSplashScreen() {
@@ -331,20 +331,17 @@ void goToPhaseTwo() {
     // Enable both BG0 and BG1
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
-    // Configure BG2 (parallax background) – note: same tileset, different screen block
-    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
-    // Configure BG0 (main layer)
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
-    // Configure BG1 (parallax background) – note: same tileset, different screen block
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
 
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
     // Load BG0’s map and BG1’s map (bgOneFront)
     DMANow(3, dayTMMap, &SCREENBLOCK[26], dayTMLen / 2);
-    DMANow(3, bgTwoFrontMap, &SCREENBLOCK[28], bgTwoFrontLen / 2);
-    DMANow(3, bgTwoBackMap, &SCREENBLOCK[30], bgTwoBackLen / 2);
+    DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgTwoBackLen / 2);
+    DMANow(3, bgTwoFrontMap, &SCREENBLOCK[30], bgTwoFrontLen / 2);
     
     initPlayerTwo();
     hOff = 0;
@@ -356,8 +353,8 @@ void goToPhaseTwo() {
 void phaseTwo() {
     updatePlayerTwo(&hOff, &vOff);
     // Main background scrolls normally:
-    REG_BG0HOFF = hOff;
-    REG_BG0VOFF = vOff;
+    REG_BG2HOFF = hOff;
+    REG_BG2VOFF = vOff;
     // Parallax background scrolls slower (adjust the divisor as desired):
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;

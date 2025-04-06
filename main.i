@@ -397,7 +397,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToPhaseOne();
+    goToPhaseTwo();
 }
 
 void goToSplashScreen() {
@@ -571,20 +571,17 @@ void goToPhaseTwo() {
 
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
-    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
-
-    (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
-
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
-
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
 
     DMANow(3, foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
 
 
     DMANow(3, dayTMMap, &((SB*) 0x6000000)[26], (4096) / 2);
-    DMANow(3, bgTwoFrontMap, &((SB*) 0x6000000)[28], (4096) / 2);
-    DMANow(3, bgTwoBackMap, &((SB*) 0x6000000)[30], (4096) / 2);
+    DMANow(3, bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, bgTwoFrontMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
     initPlayerTwo();
     hOff = 0;
@@ -596,8 +593,8 @@ void goToPhaseTwo() {
 void phaseTwo() {
     updatePlayerTwo(&hOff, &vOff);
 
-    (*(volatile unsigned short*) 0x04000010) = hOff;
-    (*(volatile unsigned short*) 0x04000012) = vOff;
+    (*(volatile unsigned short*) 0x04000018) = hOff;
+    (*(volatile unsigned short*) 0x0400001A) = vOff;
 
     (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff / 2;

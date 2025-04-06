@@ -63,7 +63,7 @@ typedef struct {
 # 4 "phaseTwo.c" 2
 # 1 "bgTwoFrontCM.h" 1
 # 20 "bgTwoFrontCM.h"
-extern const unsigned short bgTwoFrontCMBitmap[65536];
+extern const unsigned char bgTwoFrontCMBitmap[131072];
 # 5 "phaseTwo.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -165,8 +165,8 @@ void initPlayerTwo() {
     player.worldY = 101;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
-    player.width = 18;
-    player.height = 28;
+    player.width = 17;
+    player.height = 23;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -319,8 +319,6 @@ void drawPlayerTwo() {
     }
 }
 
-
-
 inline unsigned char colorAtTwo(int x, int y) {
-    return ((unsigned char*) bgTwoFrontCMBitmap)[((y + -52) * (512) + (x))];
+    return ((unsigned char*) bgTwoFrontCMBitmap)[((y) * (512) + (x))];
 }

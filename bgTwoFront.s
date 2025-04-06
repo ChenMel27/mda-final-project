@@ -669,23 +669,23 @@ bgTwoFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
 	.short	7
+	.short	8
 	.short	8
 	.short	9
 	.short	0
 	.short	0
 	.short	0
 	.short	0
-	.short	0
 	.short	7
+	.short	8
 	.short	8
 	.short	9
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	11
+	.short	361
+	.short	361
 	.short	0
 	.short	0
 	.short	0
@@ -701,23 +701,23 @@ bgTwoFrontMap:
 	.short	258
 	.short	258
 	.short	258
-	.short	258
 	.short	32
+	.short	33
 	.short	33
 	.short	34
 	.short	258
 	.short	258
 	.short	258
 	.short	258
-	.short	258
 	.short	32
+	.short	33
 	.short	33
 	.short	34
 	.short	258
 	.short	258
 	.short	258
-	.short	258
-	.short	36
+	.short	361
+	.short	361
 	.short	258
 	.short	258
 	.short	113
@@ -733,23 +733,23 @@ bgTwoFrontMap:
 	.short	258
 	.short	258
 	.short	258
-	.short	258
 	.short	57
+	.short	58
 	.short	58
 	.short	59
 	.short	258
 	.short	258
 	.short	258
 	.short	258
-	.short	258
 	.short	57
+	.short	58
 	.short	58
 	.short	59
 	.short	258
 	.short	258
 	.short	258
-	.short	258
-	.short	61
+	.short	361
+	.short	361
 	.short	258
 	.short	258
 	.short	138
@@ -1414,17 +1414,80 @@ bgTwoFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	286
-	.short	287
-	.short	288
-	.short	289
-	.short	290
-	.short	291
-	.short	292
-	.short	291
-	.short	292
-	.short	291
 	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -1456,37 +1519,6 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
 	.short	383
 	.short	0
 	.short	0
@@ -1509,39 +1541,7 @@ bgTwoFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
 	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
 	.short	383
 	.short	383
 	.short	383
@@ -1570,8 +1570,7 @@ bgTwoFrontMap:
 	.short	108
 	.short	109
 	.short	110
-	.short	111
-	.short	0
+	.short	361
 	.short	0
 	.short	0
 	.short	383
@@ -1584,6 +1583,7 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
+	.short	383
 	.short	0
 	.short	0
 	.short	0
@@ -1605,7 +1605,7 @@ bgTwoFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	383
 	.short	383
 	.short	383
 	.short	383
@@ -1626,40 +1626,7 @@ bgTwoFrontMap:
 	.short	108
 	.short	109
 	.short	110
-	.short	111
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	383
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	361
 	.short	0
 	.short	0
 	.short	0
@@ -1680,10 +1647,42 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
+	.short	383
 	.short	0
 	.short	0
-	.short	11
-	.short	258
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	383
+	.short	383
+	.short	383
+	.short	383
+	.short	383
+	.short	383
+	.short	383
+	.short	383
+	.short	383
+	.short	383
+	.short	383
+	.short	0
+	.short	361
+	.short	361
 	.short	258
 	.short	258
 	.short	258
@@ -1712,10 +1711,10 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	258
-	.short	258
-	.short	36
+	.short	383
 	.short	258
+	.short	361
+	.short	361
 	.short	258
 	.short	258
 	.short	258
@@ -1744,10 +1743,10 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	258
-	.short	258
-	.short	61
+	.short	383
 	.short	258
+	.short	361
+	.short	361
 	.short	258
 	.short	258
 	.short	258
@@ -1776,7 +1775,7 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	258
+	.short	383
 	.short	258
 	.short	258
 	.short	258
@@ -1808,7 +1807,7 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	258
+	.short	383
 	.short	258
 	.short	258
 	.short	258
@@ -1840,7 +1839,7 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	258
+	.short	383
 	.short	258
 	.short	258
 	.short	258
@@ -1872,7 +1871,7 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	258
+	.short	383
 	.short	258
 	.short	258
 	.short	258
@@ -1904,7 +1903,7 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	258
+	.short	383
 	.short	258
 	.short	258
 	.short	258
@@ -1936,7 +1935,7 @@ bgTwoFrontMap:
 	.short	383
 	.short	383
 	.short	383
-	.short	258
+	.short	383
 	.short	258
 	.short	258
 	.short	258
@@ -1958,6 +1957,7 @@ bgTwoFrontMap:
 	.short	258
 	.short	258
 	.short	258
+	.short	383
 	.short	383
 	.short	383
 	.short	383

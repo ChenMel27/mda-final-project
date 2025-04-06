@@ -25,8 +25,8 @@ void initPlayerTwo() {
     player.worldY = 101;
     player.x = SCREENWIDTH / 2 - 8;   // Center horizontally (16x32 sprite)
     player.y = SCREENHEIGHT / 2 - 16; // Center vertically
-    player.width = 18;
-    player.height = 28;
+    player.width = 17;
+    player.height = 23;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -179,9 +179,7 @@ void drawPlayerTwo() {
     }
 }
 
-#define COLLISION_Y_OFFSET -52  // adjust this based on how much the map is "off"
-
 inline unsigned char colorAtTwo(int x, int y) {
-    return ((unsigned char*) bgTwoFrontCMBitmap)[OFFSET(x, y + COLLISION_Y_OFFSET, MAPWIDTH)];
+    return ((unsigned char*) bgTwoFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
 }
 
