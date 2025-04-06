@@ -583,10 +583,13 @@ goToPhaseTwo:
 	ldr	r3, .L57+52
 	mov	lr, pc
 	bx	r3
+	ldr	r3, .L57+56
+	mov	lr, pc
+	bx	r3
 	mov	r1, #4
 	mov	r0, #96
-	ldr	r2, .L57+56
-	ldr	r3, .L57+60
+	ldr	r2, .L57+60
+	ldr	r3, .L57+64
 	strb	r1, [r2]
 	str	r5, [r3]
 	str	r0, [r3, #4]
@@ -609,6 +612,7 @@ goToPhaseTwo:
 	.word	100724736
 	.word	bgTwoFrontMap
 	.word	initPlayerTwo
+	.word	initSnow
 	.word	state
 	.word	.LANCHOR0
 	.size	goToPhaseTwo, .-goToPhaseTwo
@@ -791,17 +795,23 @@ phaseTwo:
 	add	r1, r5, #4
 	mov	lr, pc
 	bx	r3
+	ldr	r3, .L81+8
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L81+12
+	mov	lr, pc
+	bx	r3
 	mov	r4, #512
 	mov	lr, #67108864
 	ldr	ip, [r5]
 	ldr	r1, [r5, #4]
-	ldr	r3, .L81+8
+	ldr	r3, .L81+16
 	add	r0, ip, ip, lsr #31
 	add	r2, r1, r1, lsr #31
 	ldrb	r3, [r3, #56]	@ zero_extendqisi2
 	asr	r0, r0, #1
 	asr	r2, r2, #1
-	ldr	r5, .L81+12
+	ldr	r5, .L81+20
 	lsl	r0, r0, #16
 	lsl	ip, ip, #16
 	lsl	r1, r1, #16
@@ -815,27 +825,30 @@ phaseTwo:
 	strh	r1, [lr, #26]	@ movhi
 	strh	r0, [lr, #20]	@ movhi
 	strh	r2, [lr, #22]	@ movhi
-	ldr	r2, .L81+16
+	ldr	r2, .L81+24
 	strh	r4, [r5, r3]	@ movhi
 	mov	lr, pc
 	bx	r2
-	ldr	r3, .L81+20
+	ldr	r3, .L81+28
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L81+32
 	mov	lr, pc
 	bx	r3
 	mov	r3, r4
 	mov	r2, #117440512
 	mov	r1, r5
 	mov	r0, #3
-	ldr	r4, .L81+24
+	ldr	r4, .L81+36
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L81+28
+	ldr	r3, .L81+40
 	ldr	r3, [r3]
 	cmp	r3, #0
 	movne	r2, #7
-	ldrne	r3, .L81+32
+	ldrne	r3, .L81+44
 	strbne	r2, [r3]
-	ldr	r3, .L81+36
+	ldr	r3, .L81+48
 	ldr	r3, [r3]
 	cmp	r3, #0
 	bne	.L80
@@ -849,9 +862,12 @@ phaseTwo:
 .L81:
 	.word	.LANCHOR0
 	.word	updatePlayerTwo
+	.word	updateSnow
+	.word	updateHealth
 	.word	guide
 	.word	shadowOAM
 	.word	drawPlayerTwo
+	.word	drawSnow
 	.word	drawHealth
 	.word	DMANow
 	.word	gameOver
@@ -1255,6 +1271,7 @@ win:
 	.comm	startPage,4,4
 	.comm	winPhaseThree,4,4
 	.comm	winPhaseTwo,4,4
+	.comm	snows,180,4
 	.comm	winPhaseOne,4,4
 	.comm	gameOver,4,4
 	.bss

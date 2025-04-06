@@ -200,6 +200,71 @@ void drawPlayerTwo() {
     }
 }
 
+void initSnow() {
+    for (int i = 0; i < MAX_SNOW; i++) {
+        snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
+        snows[i].worldY = rand() % 60 - 80; // start above screen
+        snows[i].width = SNOW_WIDTH;
+        snows[i].height = SNOW_HEIGHT;
+        snows[i].oamIndex = 120 + i;
+        snows[i].active = 1;
+        snows[i].yVel = SNOW_SPEED;
+    }
+}
+
+void updateSnow() {
+    for (int i = 0; i < MAX_SNOW; i++) {
+        if (snows[i].active) {
+            snows[i].worldY += snows[i].yVel;
+
+
+            if (collision(snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
+                player.worldX, player.worldY, player.width, player.height)) {
+                // Reset the snow to the top of the screen (just above the visible area)
+                snows[i].worldY = -SNOW_HEIGHT;  // or use a small random offset: - (rand() % 10 + SNOW_HEIGHT)
+                snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
+            
+                // Reduce player's health
+                if (health.active > 0) {
+                    health.active--;
+                    if (health.active == 0) {
+                        gameOver = 1;
+                    }
+                }
+                // Reset player's position back to starting point
+                player.worldX = PLAYER_START_X;
+                player.worldY = PLAYER_START_Y;
+                player.yVel = 0;
+                
+                // Reset the camera offsets
+                hOff = 0;
+                vOff = 0;
+            }
+  
+
+            // Reset if off screen
+            if (snows[i].worldY > MAPHEIGHT) {
+                snows[i].worldY = rand() % 60 - 80;
+                snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
+            }
+        }
+    }
+}
+
+void drawSnow() {
+    for (int i = 0; i < MAX_SNOW; i++) {
+        if (snows[i].active) {
+            int screenX = snows[i].worldX - hOff;
+            int screenY = snows[i].worldY - vOff;
+
+            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_SQUARE;
+            shadowOAM[snows[i].oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_SMALL;
+            shadowOAM[snows[i].oamIndex].attr2 = ATTR2_TILEID(SNOW_TILE_COL, SNOW_TILE_ROW);
+        }
+    }
+}
+
+
 inline unsigned char colorAtTwo(int x, int y) {
     return ((unsigned char*) bgTwoFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
 }

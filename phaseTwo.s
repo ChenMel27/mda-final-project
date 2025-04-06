@@ -472,6 +472,238 @@ drawPlayerTwo:
 	.word	gameOver
 	.size	drawPlayerTwo, .-drawPlayerTwo
 	.align	2
+	.global	initSnow
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	initSnow, %function
+initSnow:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, r7, r8, r9, r10, lr}
+	mov	r8, #120
+	mov	r9, #16
+	ldr	r4, .L108
+	ldr	r5, .L108+4
+	ldr	r7, .L108+8
+	ldr	r6, .L108+12
+.L105:
+	mov	lr, pc
+	bx	r5
+	smull	r3, r2, r7, r0
+	asr	r3, r0, #31
+	add	r2, r2, r0
+	rsb	r3, r3, r2, asr #8
+	rsb	r3, r3, r3, lsl #5
+	sub	r0, r0, r3, lsl #4
+	str	r0, [r4, #16]
+	mov	lr, pc
+	bx	r5
+	mov	r1, #1
+	smull	r3, r2, r6, r0
+	asr	r3, r0, #31
+	add	r2, r2, r0
+	rsb	r3, r3, r2, asr #5
+	rsb	r3, r3, r3, lsl #4
+	add	r2, r8, r1
+	strb	r8, [r4, #56]
+	sub	r0, r0, r3, lsl #2
+	and	r8, r2, #255
+	sub	r0, r0, #80
+	cmp	r8, #123
+	str	r9, [r4, #24]
+	str	r9, [r4, #28]
+	str	r0, [r4, #20]
+	str	r1, [r4, #52]
+	str	r1, [r4, #12]
+	add	r4, r4, #60
+	bne	.L105
+	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
+	bx	lr
+.L109:
+	.align	2
+.L108:
+	.word	snows
+	.word	rand
+	.word	-2078209981
+	.word	-2004318071
+	.size	initSnow, .-initSnow
+	.align	2
+	.global	updateSnow
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	updateSnow, %function
+updateSnow:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+	ldr	r4, .L126
+	ldr	r5, .L126+4
+	ldr	r7, .L126+8
+	ldr	r8, .L126+12
+	ldr	fp, .L126+16
+	ldr	r9, .L126+20
+	ldr	r10, .L126+24
+	sub	sp, sp, #20
+	add	r6, r4, #180
+.L118:
+	ldr	r3, [r4, #52]
+	cmp	r3, #0
+	bne	.L124
+.L112:
+	add	r4, r4, #60
+	cmp	r4, r6
+	bne	.L118
+	add	sp, sp, #20
+	@ sp needed
+	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+	bx	lr
+.L124:
+	mov	r3, #16
+	add	r2, r5, #24
+	ldm	r2, {r2, ip}
+	ldr	r0, [r4, #20]
+	ldr	r1, [r4, #12]
+	str	r2, [sp, #8]
+	add	r1, r0, r1
+	ldr	r2, [r5, #16]
+	ldr	r0, [r5, #20]
+	str	r2, [sp]
+	str	r0, [sp, #4]
+	mov	r2, r3
+	str	ip, [sp, #12]
+	ldr	r0, [r4, #16]
+	str	r1, [r4, #20]
+	mov	lr, pc
+	bx	r7
+	cmp	r0, #0
+	bne	.L125
+.L113:
+	ldr	r3, [r4, #20]
+	cmp	r3, #256
+	ble	.L112
+	mov	lr, pc
+	bx	r8
+	smull	r3, r2, fp, r0
+	asr	r3, r0, #31
+	add	r2, r2, r0
+	rsb	r3, r3, r2, asr #5
+	rsb	r3, r3, r3, lsl #4
+	sub	r0, r0, r3, lsl #2
+	sub	r0, r0, #80
+	str	r0, [r4, #20]
+	mov	lr, pc
+	bx	r8
+	smull	r3, r2, r9, r0
+	asr	r3, r0, #31
+	add	r2, r2, r0
+	rsb	r3, r3, r2, asr #8
+	rsb	r3, r3, r3, lsl #5
+	sub	r0, r0, r3, lsl #4
+	str	r0, [r4, #16]
+	b	.L112
+.L125:
+	mvn	r3, #15
+	str	r3, [r4, #20]
+	mov	lr, pc
+	bx	r8
+	smull	r3, r2, r9, r0
+	asr	r3, r0, #31
+	add	r2, r2, r0
+	rsb	r3, r3, r2, asr #8
+	mov	r2, #0
+	ldr	r1, [r10, #52]
+	rsb	r3, r3, r3, lsl #5
+	sub	r0, r0, r3, lsl #4
+	cmp	r1, r2
+	mov	lr, #101
+	str	r0, [r4, #16]
+	sub	ip, r1, #1
+	ble	.L115
+	cmp	ip, r2
+	moveq	r1, #1
+	ldreq	r3, .L126+28
+	str	ip, [r10, #52]
+	streq	r1, [r3]
+.L115:
+	ldr	r1, .L126+32
+	ldr	r3, .L126+36
+	str	r2, [r5, #16]
+	str	lr, [r5, #20]
+	str	r2, [r5, #12]
+	str	r2, [r1]
+	str	r2, [r3]
+	b	.L113
+.L127:
+	.align	2
+.L126:
+	.word	snows
+	.word	player
+	.word	collision
+	.word	rand
+	.word	-2004318071
+	.word	-2078209981
+	.word	health
+	.word	gameOver
+	.word	hOff
+	.word	vOff
+	.size	updateSnow, .-updateSnow
+	.align	2
+	.global	drawSnow
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	drawSnow, %function
+drawSnow:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, r7, r8, lr}
+	mov	r6, #384
+	ldr	r1, .L136
+	ldr	r2, .L136+4
+	ldr	r3, .L136+8
+	ldr	r5, [r1]
+	ldr	r4, [r2]
+	ldr	ip, .L136+12
+	ldr	lr, .L136+16
+	add	r0, r3, #180
+.L130:
+	ldr	r2, [r3, #52]
+	cmp	r2, #0
+	beq	.L129
+	ldr	r2, [r3, #16]
+	ldr	r1, [r3, #20]
+	ldrb	r7, [r3, #56]	@ zero_extendqisi2
+	sub	r2, r2, r5
+	and	r2, r2, lr
+	sub	r1, r1, r4
+	add	r8, ip, r7, lsl #3
+	orr	r2, r2, #16384
+	lsl	r7, r7, #3
+	and	r1, r1, #255
+	strh	r2, [r8, #2]	@ movhi
+	strh	r6, [r8, #4]	@ movhi
+	strh	r1, [ip, r7]	@ movhi
+.L129:
+	add	r3, r3, #60
+	cmp	r3, r0
+	bne	.L130
+	pop	{r4, r5, r6, r7, r8, lr}
+	bx	lr
+.L137:
+	.align	2
+.L136:
+	.word	hOff
+	.word	vOff
+	.word	snows
+	.word	shadowOAM
+	.word	511
+	.size	drawSnow, .-drawSnow
+	.align	2
 	.global	colorAtTwo
 	.syntax unified
 	.arm
@@ -482,17 +714,18 @@ colorAtTwo:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r3, .L105
+	ldr	r3, .L139
 	add	r0, r0, r1, lsl #9
 	ldrb	r0, [r3, r0]	@ zero_extendqisi2
 	bx	lr
-.L106:
+.L140:
 	.align	2
-.L105:
+.L139:
 	.word	bgTwoFrontCMBitmap
 	.size	colorAtTwo, .-colorAtTwo
 	.comm	healthBarFrames,72,4
 	.global	winPhaseTwo
+	.comm	snows,180,4
 	.bss
 	.align	2
 	.set	.LANCHOR0,. + 0

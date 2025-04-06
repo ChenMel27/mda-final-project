@@ -199,11 +199,17 @@ void updateHealth();
 void drawHealth();
 # 55 "main.c" 2
 # 1 "phaseTwo.h" 1
-# 18 "phaseTwo.h"
+# 23 "phaseTwo.h"
+SPRITE snows[3];
+
+
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
 void updatePlayerTwo(int* hOff, int* vOff);
 void drawPlayerTwo();
+void initSnow();
+void updateSnow();
+void drawSnow();
 int winPhaseTwo;
 # 56 "main.c" 2
 # 1 "phaseThree.h" 1
@@ -593,6 +599,7 @@ void goToPhaseTwo() {
     DMANow(3, bgTwoFrontMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
     initPlayerTwo();
+    initSnow();
     hOff = 0;
     vOff = (256 - 160);
     state = PHASETWO;
@@ -601,6 +608,8 @@ void goToPhaseTwo() {
 
 void phaseTwo() {
     updatePlayerTwo(&hOff, &vOff);
+    updateSnow();
+    updateHealth();
 
     (*(volatile unsigned short*) 0x04000018) = hOff;
     (*(volatile unsigned short*) 0x0400001A) = vOff;
@@ -610,6 +619,7 @@ void phaseTwo() {
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);
     drawPlayerTwo();
+    drawSnow();
     drawHealth();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 

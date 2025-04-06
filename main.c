@@ -345,6 +345,7 @@ void goToPhaseTwo() {
     DMANow(3, bgTwoFrontMap, &SCREENBLOCK[30], bgTwoFrontLen / 2);
     
     initPlayerTwo();
+    initSnow();
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASETWO;
@@ -353,6 +354,8 @@ void goToPhaseTwo() {
 
 void phaseTwo() {
     updatePlayerTwo(&hOff, &vOff);
+    updateSnow();             // <- Update snow position and logic
+    updateHealth();
     // Main background scrolls normally:
     REG_BG2HOFF = hOff;
     REG_BG2VOFF = vOff;
@@ -362,6 +365,7 @@ void phaseTwo() {
     
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayerTwo();
+    drawSnow();
     drawHealth();
     DMANow(3, shadowOAM, OAM, 512);
     
