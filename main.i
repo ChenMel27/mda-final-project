@@ -214,11 +214,11 @@ int winPhaseTwo;
 # 56 "main.c" 2
 # 1 "phaseThree.h" 1
 # 17 "phaseThree.h"
-int winPhaseThree;
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
+int winPhaseThree;
 # 57 "main.c" 2
 # 1 "startInstructions.h" 1
 
@@ -320,6 +320,16 @@ void updateHealth();
 void drawHealth();
 int healthBarFrames[9][2];
 # 69 "main.c" 2
+# 1 "bgThreeFront.h" 1
+
+
+
+
+
+
+
+extern const unsigned short bgThreeFrontMap[2048];
+# 70 "main.c" 2
 
 
 void initialize();
@@ -421,6 +431,7 @@ void goToSplashScreen() {
 
     DMANow(3, (volatile void*)splashScreenPal, ((unsigned short *)0x5000000), 256 | (1 << 31));
     drawFullscreenImage4(splashScreenBitmap);
+    drawString4(100, 70, "SPLASH", 15);
 
 
     gameOver = 0;
@@ -634,24 +645,23 @@ void phaseTwo() {
 
 
 
-
 void goToPhaseThree() {
     (*(volatile unsigned short *)0x4000000) = 0;
 
 
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << 12);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
-
-    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
-
-    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
 
     DMANow(3, foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
 
 
-    DMANow(3, bgOneFrontMap, &((SB*) 0x6000000)[28], (4096) / 2);
-    DMANow(3, bgOneBackMap, &((SB*) 0x6000000)[30], (4096) / 2);
+    DMANow(3, dayTMMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, bgThreeFrontMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
     initPlayerThree();
     hOff = 0;
@@ -662,15 +672,17 @@ void goToPhaseThree() {
 
 void phaseThree() {
     updatePlayerThree(&hOff, &vOff);
+    updateHealth();
 
-    (*(volatile unsigned short*) 0x04000010) = hOff;
-    (*(volatile unsigned short*) 0x04000012) = vOff;
+    (*(volatile unsigned short*) 0x04000018) = hOff;
+    (*(volatile unsigned short*) 0x0400001A) = vOff;
 
     (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff / 2;
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);
     drawPlayerThree();
+    drawHealth();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
     if (gameOver) {
@@ -690,6 +702,7 @@ void goToPause() {
 void pause() {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
     fillScreen4(0);
+    drawString4(7, 55, "PAUSE", 1);
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToStart();
@@ -700,14 +713,16 @@ void pause() {
 
 
 void goToLose() {
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
+    videoBuffer = ((unsigned short*) 0x06000000);
+
+    DMANow(3, (volatile void*)splashScreenPal, ((unsigned short *)0x5000000), 256 | (1 << 31));
+    drawFullscreenImage4(splashScreenBitmap);
+    drawString4(100, 70, "LOSE", 15);
     state = LOSE;
 }
 
 void lose() {
-    (*(volatile unsigned short *)0x4000000) = 0;
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
-    fillScreen4(0);
-
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToSplashScreen();
         state = SPLASH;
@@ -716,17 +731,20 @@ void lose() {
 
 
 
+
 void goToWin() {
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
+    videoBuffer = ((unsigned short*) 0x06000000);
+
+    DMANow(3, (volatile void*)splashScreenPal, ((unsigned short *)0x5000000), 256 | (1 << 31));
+    drawFullscreenImage4(splashScreenBitmap);
+    drawString4(100, 70, "WIN", 15);
     state = WIN;
 }
 
 void win() {
-    (*(volatile unsigned short *)0x4000000) = 0;
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
-    fillScreen4(0);
-
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToStart();
-        state = START;
+        goToSplashScreen();
+        state = SPLASH;
     }
 }

@@ -66,6 +66,7 @@ Date:       [Insert Date Here]
 #include "sTS.h"
 #include "dayTM.h"
 #include "health.h"
+#include "bgThreeFront.h"
 // ============================= [ FUNCTION DECLARATIONS ] =======================
 
 void initialize();
@@ -167,6 +168,7 @@ void goToSplashScreen() {
 
     DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
     drawFullscreenImage4(splashScreenBitmap);
+    drawString4(100, 70, "SPLASH", 15);
 
     // Optional: reset any game progress flags
     gameOver = 0;
@@ -379,25 +381,24 @@ void phaseTwo() {
 
 // ============================= [ PHASE THREE STATE ] ============================
 
-#define BG_PRIORITY(n) ((n) & 3)
 
 void goToPhaseThree() {
     REG_DISPCTL = 0;  // Clear all display settings before changing mode
 
     // Enable both BG0 and BG1
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    // Configure BG0 (main layer)
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
-    // Configure BG1 (parallax background) – note: same tileset, different screen block
-    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
 
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
     // Load BG0’s map and BG1’s map (bgOneFront)
-    DMANow(3, bgOneFrontMap, &SCREENBLOCK[28], bgOneFrontLen / 2);
-    DMANow(3, bgOneBackMap, &SCREENBLOCK[30], bgOneBackLen / 2);
+    DMANow(3, dayTMMap, &SCREENBLOCK[26], dayTMLen / 2);
+    DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgTwoBackLen / 2);
+    DMANow(3, bgThreeFrontMap, &SCREENBLOCK[30], bgTwoFrontLen / 2);
     
     initPlayerThree();
     hOff = 0;
@@ -408,15 +409,17 @@ void goToPhaseThree() {
 
 void phaseThree() {
     updatePlayerThree(&hOff, &vOff);
+    updateHealth();
     // Main background scrolls normally:
-    REG_BG0HOFF = hOff;
-    REG_BG0VOFF = vOff;
+    REG_BG2HOFF = hOff;
+    REG_BG2VOFF = vOff;
     // Parallax background scrolls slower (adjust the divisor as desired):
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
     
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayerThree();
+    drawHealth();
     DMANow(3, shadowOAM, OAM, 512);
     
     if (gameOver) {
@@ -436,6 +439,7 @@ void goToPause() {
 void pause() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     fillScreen4(0);
+    drawString4(7, 55, "PAUSE", 1);
 
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToStart();
@@ -446,33 +450,38 @@ void pause() {
 // ============================= [ LOSE STATE ] =================================
 
 void goToLose() {
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
+    videoBuffer = FRONTBUFFER; // 🔥 fix black screen on re-entry
+
+    DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
+    drawFullscreenImage4(splashScreenBitmap);
+    drawString4(100, 70, "LOSE", 15);
     state = LOSE;
 }
 
 void lose() {
-    REG_DISPCTL = 0;
-    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    fillScreen4(0);
-
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToSplashScreen();
         state = SPLASH;
     }
 }
 
+
 // ============================= [ WIN STATE ] =================================
 
 void goToWin() {
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
+    videoBuffer = FRONTBUFFER; // 🔥 fix black screen on re-entry
+
+    DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
+    drawFullscreenImage4(splashScreenBitmap);
+    drawString4(100, 70, "WIN", 15);
     state = WIN;
 }
 
 void win() {
-    REG_DISPCTL = 0;
-    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    fillScreen4(0);
-
     if (BUTTON_PRESSED(BUTTON_START)) {
-        goToStart();
-        state = START;
+        goToSplashScreen();
+        state = SPLASH;
     }
 }

@@ -61,9 +61,9 @@ typedef struct {
  u16 tilemap[1024];
 } SB;
 # 4 "phaseThree.c" 2
-# 1 "bgOneFrontCM.h" 1
-# 20 "bgOneFrontCM.h"
-extern const unsigned short bgOneFrontCMBitmap[65536];
+# 1 "bgThreeFrontCM.h" 1
+# 20 "bgThreeFrontCM.h"
+extern const unsigned char bgThreeFrontCMBitmap[131072];
 # 5 "phaseThree.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -129,19 +129,35 @@ typedef struct {
 # 6 "phaseThree.c" 2
 # 1 "phaseThree.h" 1
 # 17 "phaseThree.h"
-int winPhaseThree;
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
+int winPhaseThree;
 # 7 "phaseThree.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
-extern const unsigned char playerTiles[32768];
+extern const unsigned short playerTiles[16384];
 
 
-extern const unsigned char playerPal[512];
+extern const unsigned short playerPal[256];
 # 8 "phaseThree.c" 2
+# 1 "CM2.h" 1
+# 20 "CM2.h"
+extern const unsigned short CM2Bitmap[65536];
+# 9 "phaseThree.c" 2
+# 1 "health.h" 1
+
+
+extern SPRITE health;
+void initHealth();
+void updateHealth();
+void drawHealth();
+int healthBarFrames[9][2];
+# 10 "phaseThree.c" 2
+
+
+
 
 
 extern int hikerFrameDelay;
@@ -153,15 +169,16 @@ extern int isDucking;
 extern int gameOver;
 int winPhaseThree = 0;
 extern SPRITE player;
-extern int sbb ;
+extern int sbb;
 
 void initPlayerThree() {
+    resetPlayerState();
     player.worldX = 0;
     player.worldY = 101;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
-    player.width = 16;
-    player.height = 28;
+    player.width = 17;
+    player.height = 23;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -195,8 +212,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 1;
         if (player.worldX > 0 &&
-            colorAt(leftX - player.xVel, topY) != 0 &&
-            colorAt(leftX - player.xVel, bottomY) != 0) {
+            colorAtThree(leftX - player.xVel, topY) != 0x01 &&
+            colorAtThree(leftX - player.xVel, bottomY) != 0x01) {
             player.worldX -= player.xVel;
         }
     }
@@ -204,8 +221,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 0;
         if (player.worldX < 512 - player.width &&
-            colorAt(rightX + player.xVel, topY) != 0 &&
-            colorAt(rightX + player.xVel, bottomY) != 0) {
+            colorAtThree(rightX + player.xVel, topY) != 0x01 &&
+            colorAtThree(rightX + player.xVel, bottomY) != 0x01) {
             player.worldX += player.xVel;
         }
     }
@@ -226,8 +243,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
             if (topY - 1 >= 0 &&
-                colorAt(leftX, topY - 1) != 0 &&
-                colorAt(rightX, topY - 1) != 0) {
+                colorAtThree(leftX, topY - 1) != 0x01 &&
+                colorAtThree(rightX, topY - 1) != 0x01) {
                 player.worldY--;
             } else {
                 player.yVel = 0;
@@ -238,8 +255,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
         for (int i = 0; i < player.yVel; i++) {
             bottomY = player.worldY + player.height - 1;
             if (bottomY + 1 < 256 &&
-                colorAt(leftX, bottomY + 1) != 0 &&
-                colorAt(rightX, bottomY + 1) != 0) {
+                colorAtThree(leftX, bottomY + 1) != 0x01 &&
+                colorAtThree(rightX, bottomY + 1) != 0x01) {
                 player.worldY++;
             } else {
                 player.yVel = 0;
@@ -285,35 +302,50 @@ void drawPlayerThree() {
     int bottomY = player.worldY + player.height - 1;
 
 
-    if (colorAt(leftX, topY) == 0x02 ||
-        colorAt(rightX, topY) == 0x02 ||
-        colorAt(leftX, bottomY) == 0x02 ||
-        colorAt(rightX, bottomY) == 0x02) {
-        player.active = 0;
+    if (colorAtThree(leftX, topY) == 0x01 ||
+    colorAtThree(rightX, topY) == 0x01 ||
+    colorAtThree(leftX, bottomY) == 0x01 ||
+    colorAtThree(rightX, bottomY) == 0x01) {
+
+
+        if (health.active > 0) {
+            health.active--;
+            if (health.active == 0) {
+                gameOver = 1;
+            }
+        }
+
+
+        player.worldX = 0;
+        player.worldY = 101;
+        player.yVel = 0;
+
+
+        hOff = 0;
+        vOff = 0;
     }
 
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
 
-    if (player.active) {
-        shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
-        if (player.direction == 0) {
-            shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
-        } else if (player.direction == 1) {
-            shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
-        }
 
-
-        if (isDucking) {
-            shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
-        } else {
-            shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
-        }
-    } else {
-        gameOver = 1;
+    shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
+    if (player.direction == 0) {
+        shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
+    } else if (player.direction == 1) {
+        shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
     }
-}
+
+
+    if (isDucking) {
+        shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
+    } else {
+        shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
+    }
+    }
+
+
 
 inline unsigned char colorAtThree(int x, int y) {
-    return ((unsigned char*) bgOneFrontCMBitmap)[((y) * (512) + (x))];
+    return ((unsigned char*) bgThreeFrontCMBitmap)[((y) * (512) + (x))];
 }

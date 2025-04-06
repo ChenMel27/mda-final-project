@@ -22,7 +22,7 @@ playerPal:
 	.short	10570
 	.short	0
 	.short	15
-	.short	17969
+	.short	26425
 	.short	6213
 	.short	7273
 	.short	11506
@@ -6423,35 +6423,35 @@ playerTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	-13312
+	.short	21760
 	.short	0
-	.short	-4404
-	.short	-16384
-	.short	-4370
-	.short	-5120
-	.short	-4370
-	.short	-5120
-	.short	-4370
-	.short	-4416
-	.short	-4370
-	.short	-4416
-	.short	-4370
+	.short	-17579
+	.short	20480
+	.short	-17477
+	.short	-19200
+	.short	-17477
+	.short	-19200
+	.short	-17477
+	.short	-17584
+	.short	-17477
+	.short	-17584
+	.short	-17477
 	.short	0
 	.short	0
-	.short	204
+	.short	85
 	.short	0
-	.short	-13074
+	.short	21947
 	.short	0
-	.short	-4370
-	.short	12
-	.short	-4370
-	.short	206
-	.short	-4370
-	.short	206
-	.short	-4370
-	.short	3310
-	.short	-4370
-	.short	3310
+	.short	-17477
+	.short	5
+	.short	-17477
+	.short	91
+	.short	-17477
+	.short	91
+	.short	-17477
+	.short	1467
+	.short	-17477
+	.short	1467
 	.short	0
 	.short	0
 	.short	0
@@ -6932,35 +6932,35 @@ playerTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	-4416
-	.short	-4370
-	.short	-4416
-	.short	-4370
-	.short	-5120
-	.short	-4370
-	.short	-5120
-	.short	-4370
-	.short	-16384
-	.short	-4370
+	.short	-17584
+	.short	-17477
+	.short	-16816
+	.short	-17477
+	.short	-19200
+	.short	-17477
+	.short	-19200
+	.short	-17477
+	.short	20480
+	.short	-17477
 	.short	0
-	.short	-4404
+	.short	-17579
 	.short	0
-	.short	-13312
+	.short	21760
 	.short	0
 	.short	0
-	.short	-4370
-	.short	3310
-	.short	-4370
-	.short	3310
-	.short	-4370
-	.short	206
-	.short	-4370
-	.short	206
-	.short	-4370
-	.short	12
-	.short	-13074
+	.short	-17477
+	.short	1467
+	.short	-17477
+	.short	1467
+	.short	-17477
+	.short	91
+	.short	-17477
+	.short	91
+	.short	-17477
+	.short	5
+	.short	21947
 	.short	0
-	.short	204
+	.short	85
 	.short	0
 	.short	0
 	.short	0

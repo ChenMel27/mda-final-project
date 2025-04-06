@@ -1,11 +1,16 @@
 #include "hiker.h"
 #include "gba.h"
 #include "mode0.h"
-#include "bgOneFrontCM.h"
+#include "bgThreeFrontCM.h"
 #include "sprites.h"
 #include "phaseThree.h"
 #include "player.h"
+#include "CM2.h"
+#include "health.h"
 
+// Starting position definitions
+#define PLAYER_START_X 0
+#define PLAYER_START_Y 101
 // Animation variables
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
@@ -16,15 +21,16 @@ extern int isDucking;
 extern int gameOver;
 int winPhaseThree = 0;
 extern SPRITE player;
-extern int sbb ;
+extern int sbb;
 
 void initPlayerThree() {
+    resetPlayerState();
     player.worldX = 0;
     player.worldY = 101;
     player.x = SCREENWIDTH / 2 - 8;   // Center horizontally (16x32 sprite)
     player.y = SCREENHEIGHT / 2 - 16; // Center vertically
-    player.width = 16;
-    player.height = 28;
+    player.width = 17;
+    player.height = 23;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -58,8 +64,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 1;
         if (player.worldX > 0 &&
-            colorAt(leftX - player.xVel, topY) != 0 &&
-            colorAt(leftX - player.xVel, bottomY) != 0) {
+            colorAtThree(leftX - player.xVel, topY) != 0x01 &&
+            colorAtThree(leftX - player.xVel, bottomY) != 0x01) {
             player.worldX -= player.xVel;
         }
     }
@@ -67,8 +73,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
         player.isAnimating = 1;
         player.direction = 0;
         if (player.worldX < MAPWIDTH - player.width &&
-            colorAt(rightX + player.xVel, topY) != 0 &&
-            colorAt(rightX + player.xVel, bottomY) != 0) {
+            colorAtThree(rightX + player.xVel, topY) != 0x01 &&
+            colorAtThree(rightX + player.xVel, bottomY) != 0x01) {
             player.worldX += player.xVel;
         }
     }
@@ -89,8 +95,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
             if (topY - 1 >= 0 &&
-                colorAt(leftX, topY - 1) != 0 &&
-                colorAt(rightX, topY - 1) != 0) {
+                colorAtThree(leftX, topY - 1) != 0x01 &&
+                colorAtThree(rightX, topY - 1) != 0x01) {
                 player.worldY--;
             } else {
                 player.yVel = 0;  // ceiling
@@ -101,8 +107,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
         for (int i = 0; i < player.yVel; i++) {
             bottomY = player.worldY + player.height - 1;
             if (bottomY + 1 < MAPHEIGHT &&
-                colorAt(leftX, bottomY + 1) != 0 &&
-                colorAt(rightX, bottomY + 1) != 0) {
+                colorAtThree(leftX, bottomY + 1) != 0x01 &&
+                colorAtThree(rightX, bottomY + 1) != 0x01) {
                 player.worldY++;
             } else {
                 player.yVel = 0;  // landed ground
@@ -147,36 +153,52 @@ void drawPlayerThree() {
     int topY    = player.worldY;
     int bottomY = player.worldY + player.height - 1;
     
-    // If any corner is over the bad tile (0x02) hide the sprite
-    if (colorAt(leftX, topY) == 0x02 ||
-        colorAt(rightX, topY) == 0x02 ||
-        colorAt(leftX, bottomY) == 0x02 ||
-        colorAt(rightX, bottomY) == 0x02) {
-        player.active = 0;
+    // If any corner is over the bad tile (1) hide the sprite
+    if (colorAtThree(leftX, topY) == 0x01 ||
+    colorAtThree(rightX, topY) == 0x01 ||
+    colorAtThree(leftX, bottomY) == 0x01 ||
+    colorAtThree(rightX, bottomY) == 0x01) {
+        
+        // Lose a life
+        if (health.active > 0) {
+            health.active--;
+            if (health.active == 0) {
+                gameOver = 1;
+            }
+        }
+        
+        // Reset player's position back to starting point
+        player.worldX = PLAYER_START_X;
+        player.worldY = PLAYER_START_Y;
+        player.yVel = 0;
+        
+        // Reset the camera offsets
+        hOff = 0;
+        vOff = 0;
     }
     
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
     
-    if (player.active) {
-        shadowOAM[player.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
-        if (player.direction == 0) {
-            shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-        } else if (player.direction == 1) {
-            shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
-        }
-        
-        // If ducking use the duck tile otherwise animate and use the regular animated frame
-        if (isDucking) {
-            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
-        } else {
-            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
-        }
-    } else {
-        gameOver = 1;
+
+    shadowOAM[player.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
+    if (player.direction == 0) {
+        shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+    } else if (player.direction == 1) {
+        shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
     }
-}
+        
+    // If ducking use the duck tile otherwise animate and use the regular animated frame
+    if (isDucking) {
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
+    } else {
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
+    }
+    }
+
+
 
 inline unsigned char colorAtThree(int x, int y) {
-    return ((unsigned char*) bgOneFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
+    return ((unsigned char*) bgThreeFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
 }
+

@@ -1,5 +1,6 @@
 #include "gba.h"
 #include "sprites.h"
+
 #define MAPWIDTH 512
 #define MAPHEIGHT 256
 #define SCREENWIDTH 240
@@ -13,9 +14,8 @@
 #define MAX_HOFF (BG_WIDTH - SCREEN_WIDTH)
 #define MAX_VOFF (BG_HEIGHT - SCREEN_HEIGHT)
 
-
-int winPhaseThree;
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
+int winPhaseThree;
