@@ -131,7 +131,6 @@ typedef struct {
 # 25 "phaseTwo.h"
 SPRITE snows[3];
 
-
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
 void updatePlayerTwo(int* hOff, int* vOff);
@@ -1177,6 +1176,7 @@ void drawPlayerTwo() {
 void initSnow() {
     for (int i = 0; i < 3; i++) {
         snows[i].worldX = rand() % (512 - 16);
+
         snows[i].worldY = rand() % 60 - 80;
         snows[i].width = 16;
         snows[i].height = 16;

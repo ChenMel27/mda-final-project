@@ -199,9 +199,8 @@ void resetPlayerState();
 unsigned char colorAt(int x, int y);
 # 36 "main.c" 2
 # 1 "phaseTwo.h" 1
-# 23 "phaseTwo.h"
+# 25 "phaseTwo.h"
 SPRITE snows[3];
-
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
@@ -213,7 +212,7 @@ void drawSnow();
 int winPhaseTwo;
 # 37 "main.c" 2
 # 1 "phaseThree.h" 1
-# 17 "phaseThree.h"
+# 21 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
@@ -441,6 +440,7 @@ void goToSplashScreen() {
     winPhaseThree = 0;
     next = 0;
     begin = 0;
+    initHealth();
 
     state = SPLASH;
 }

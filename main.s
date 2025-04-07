@@ -26,47 +26,50 @@ goToSplashScreen:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
+	mov	ip, #100663296
 	mov	r3, #67108864
-	push	{r4, lr}
-	mov	lr, #100663296
+	push	{r4, r5, r6, lr}
+	mov	r4, #0
 	ldr	r2, .L4
-	ldr	ip, .L4+4
+	ldr	r0, .L4+4
 	strh	r2, [r3]	@ movhi
 	ldr	r1, .L4+8
+	str	ip, [r0]
 	mov	r2, #83886080
 	mov	r0, #3
 	ldr	r3, .L4+12
-	ldr	r4, .L4+16
-	str	lr, [ip]
+	ldr	r5, .L4+16
 	mov	lr, pc
-	bx	r4
+	bx	r5
 	ldr	r0, .L4+20
 	ldr	r3, .L4+24
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L4+28
+	ldr	r5, .L4+28
 	mov	r3, #15
 	mov	r1, #70
 	mov	r0, #100
 	ldr	r2, .L4+32
 	mov	lr, pc
-	bx	r4
-	mov	r3, #0
+	bx	r5
 	ldr	r2, .L4+36
-	ldr	r1, .L4+40
-	str	r3, [r2]
-	ldr	r2, .L4+44
-	ldr	lr, .L4+48
-	str	r3, [r1]
-	ldr	ip, .L4+52
-	ldr	r0, .L4+56
-	ldr	r1, .L4+60
-	strb	r3, [r2]
-	str	r3, [lr]
-	str	r3, [ip]
-	str	r3, [r0]
-	str	r3, [r1]
-	pop	{r4, lr}
+	ldr	r3, .L4+40
+	str	r4, [r2]
+	ldr	ip, .L4+44
+	ldr	r0, .L4+48
+	ldr	r1, .L4+52
+	ldr	r2, .L4+56
+	str	r4, [r3]
+	ldr	r3, .L4+60
+	str	r4, [ip]
+	str	r4, [r0]
+	str	r4, [r1]
+	str	r4, [r2]
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L4+64
+	strb	r4, [r3]
+	pop	{r4, r5, r6, lr}
 	bx	lr
 .L5:
 	.align	2
@@ -80,13 +83,14 @@ goToSplashScreen:
 	.word	drawFullscreenImage4
 	.word	drawString4
 	.word	.LC0
-	.word	winPhaseOne
 	.word	gameOver
-	.word	state
+	.word	winPhaseOne
 	.word	winPhaseTwo
 	.word	winPhaseThree
 	.word	next
 	.word	begin
+	.word	initHealth
+	.word	state
 	.size	goToSplashScreen, .-goToSplashScreen
 	.align	2
 	.global	initialize

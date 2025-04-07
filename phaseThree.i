@@ -128,7 +128,7 @@ typedef struct {
 } SPRITE;
 # 6 "phaseThree.c" 2
 # 1 "phaseThree.h" 1
-# 19 "phaseThree.h"
+# 21 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
@@ -151,9 +151,6 @@ void updateHealth();
 void drawHealth();
 int healthBarFrames[9][2];
 # 9 "phaseThree.c" 2
-
-
-
 
 
 extern int hikerFrameDelay;

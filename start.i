@@ -79,10 +79,10 @@ extern const unsigned char townCMBitmap[262144];
 # 5 "start.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
-extern const unsigned char playerTiles[32768];
+extern const unsigned short playerTiles[16384];
 
 
-extern const unsigned char playerPal[512];
+extern const unsigned short playerPal[256];
 # 6 "start.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
