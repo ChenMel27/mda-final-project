@@ -1,50 +1,30 @@
 /******************************************************************************
-Author:     Melanie Chen  
-Project:    The Summit Ascent – CS 2261 Final  
-File:       main.c  
-Date:       [Insert Date Here]  
+File:       main.c 
+Project:    The Summit Ascent 
 ******************************************************************************/
 
 /*
-          _____                      _ _     _                 
-         / ____|                    (_) |   | |                
-        | (___   ___  ___ _   _ _ __ _| |__ | |_ ___ _ __ ___  
-         \___ \ / _ \/ __| | | | '__| | '_ \| __/ _ \ '_ ` _ \ 
-         ____) |  __/ (__| |_| | |  | | | | | ||  __/ | | | | |
-        |_____/ \___|\___|\__,_|_|  |_|_| |_|\__\___|_| |_| |_|   
-
     Welcome to Summit Ascent!
     Begin your journey at the base of Mount Rainier and climb through three
-    treacherous phases to reach the summit before your stamina runs out.
+    phases to reach the summit before your health runs out.
 
-    - Start in town, gather tips and gear
-    - Progress through side-scrolling phases with hazards
-    - Use stamina wisely and survive the climb
+    - Start in a town and talk to an experienced villager to gather tips
+    - Progress through three side-scrolling phases with obstacles
 
     Controls:
         ← →   Move
         ↑ ↓   Climb / Jump / Duck
-        A     Jump / Grip
-        B     Drop / Crouch
         START Pause / Advance dialogue
 
-    Game States:
-        SPLASH → START → DIALOGUE → PHASE ONE → PHASE TWO → PHASE THREE → WIN/LOSE
-
     Known Bugs:
-        • Minor sprite flicker on transitions
-        • Occasional tile clipping during side-scroll
-        • ShadowOAM sometimes updates 1 frame late
+        • Sprite flicker on state transitions between modes
 */
 
-// ============================= [ SYSTEM INCLUDES ] =============================
+// ============================= [ INCLUDES ] =============================
 
 #include "gba.h"
 #include "mode0.h"
 #include "mode4.h"
-
-// ============================= [ GRAPHICS ASSETS ] =============================
-
 #include "bgOneFront.h"
 #include "bgOneBack.h"
 #include "bgTwoFront.h"
@@ -67,7 +47,9 @@ Date:       [Insert Date Here]
 #include "dayTM.h"
 #include "health.h"
 #include "bgThreeFront.h"
-// ============================= [ FUNCTION DECLARATIONS ] =======================
+#define BG_PRIORITY(n) ((n) & 3)
+
+// ============================= [ FUNCTION PROTOTYPES ] =======================
 
 void initialize();
 void goToSplashScreen();
@@ -88,11 +70,10 @@ void lose();
 void goToWin();
 void win();
 
-// ============================= [ GLOBAL VARIABLES ] ============================
+// ============================= [ VARIABLES ] ============================
 
 extern SPRITE guide;
 extern SPRITE startPlayer;
-
 unsigned short buttons;
 unsigned short oldButtons;
 
@@ -155,22 +136,22 @@ int main() {
     }
 }
 
-// ============================= [ SYSTEM INIT STATE ] ===========================
+// ============================= [ INITIALIZE GAME ] ===========================
 
 void initialize() {
     mgba_open();
-    goToPhaseOne();
+    goToSplashScreen();
 }
 
 void goToSplashScreen() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    videoBuffer = FRONTBUFFER; // 🔥 fix black screen on re-entry
+    videoBuffer = FRONTBUFFER;
 
     DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
     drawFullscreenImage4(splashScreenBitmap);
     drawString4(100, 70, "SPLASH", 15);
 
-    // Optional: reset any game progress flags
+    // Reset game progress
     gameOver = 0;
     winPhaseOne = 0;
     winPhaseTwo = 0;
@@ -269,31 +250,29 @@ void startInstructions() {
 
 // ============================= [ PHASE ONE STATE ] ============================
 
-#define BG_PRIORITY(n) ((n) & 3)
-
 void goToPhaseOne() {
-    REG_DISPCTL = 0;  // Clear all display settings before changing mode
-
-    // Enable both BG0 and BG1
+    // Clear display settings before changing
+    REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
-    // Configure BG2 (parallax background) – note: same tileset, different screen block
-    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
-    // Configure BG0 (main layer)
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
-    // Configure BG1 (parallax background) – note: same tileset, different screen block
-
+    // | Front background -> BG0 | Parallax background -> BG1 | Back day background -> BG2
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+    
+    // Load background common tileset
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
     // Load BG0’s map and BG1’s map (bgOneFront)
-    DMANow(3, dayTMMap, &SCREENBLOCK[26], dayTMLen / 2);
-    DMANow(3, bgOneFrontMap, &SCREENBLOCK[28], bgOneFrontLen / 2);
-    DMANow(3, bgOneBackMap, &SCREENBLOCK[30], bgOneBackLen / 2);
+    DMANow(3, bgOneFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
+    DMANow(3, bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
     
+    // Initialize sprites
     initPlayer();
     initHealth();
+
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASEONE;
@@ -301,15 +280,19 @@ void goToPhaseOne() {
 
 
 void phaseOne() {
+    
+    // Update sprites
     updatePlayer(&hOff, &vOff);
     updateHealth();
-    // Main background scrolls normally:
-    REG_BG1HOFF = hOff;
-    REG_BG1VOFF = vOff;
-    // Parallax background scrolls slower (adjust the divisor as desired):
-    REG_BG2HOFF = hOff / 2;
-    REG_BG2VOFF = vOff / 2;
+
+    // Front background scrolls regular
+    REG_BG0HOFF = hOff;
+    REG_BG0VOFF = vOff;
+    // Parallax background scrolls half speed:
+    REG_BG1HOFF = hOff / 2;
+    REG_BG1VOFF = vOff / 2;
     
+    // Draw sprites
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayer();
     drawHealth();
@@ -318,6 +301,7 @@ void phaseOne() {
     if (gameOver) {
         goToLose();
     }
+
     if (winPhaseOne) {
         goToPhaseTwo();
     }
@@ -326,28 +310,28 @@ void phaseOne() {
 
 // ============================= [ PHASE ONE STATE ] ============================
 
-#define BG_PRIORITY(n) ((n) & 3)
-
 void goToPhaseTwo() {
-    REG_DISPCTL = 0;  // Clear all display settings before changing mode
 
-    // Enable both BG0 and BG1
+    REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
-
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+    
+    // | Front background -> BG0 | Parallax background -> BG1 | Back day background -> BG2
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
-    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
-
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+    
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
-    // Load BG0’s map and BG1’s map (bgOneFront)
+    // Load BG0/1/2 Maps
     DMANow(3, dayTMMap, &SCREENBLOCK[26], dayTMLen / 2);
     DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgTwoBackLen / 2);
     DMANow(3, bgTwoFrontMap, &SCREENBLOCK[30], bgTwoFrontLen / 2);
     
+    // Initialize sprites
     initPlayerTwo();
     initSnow();
+
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASETWO;
@@ -355,16 +339,21 @@ void goToPhaseTwo() {
 
 
 void phaseTwo() {
+
+    // Update sprites
     updatePlayerTwo(&hOff, &vOff);
-    updateSnow();             // <- Update snow position and logic
+    updateSnow();
     updateHealth();
-    // Main background scrolls normally:
-    REG_BG2HOFF = hOff;
-    REG_BG2VOFF = vOff;
-    // Parallax background scrolls slower (adjust the divisor as desired):
+
+    // Front background scrolls regular
+    REG_BG0HOFF = hOff;
+    REG_BG0VOFF = vOff;
+
+    // Parallax background scrolls half speed:
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
     
+    // Draw sprites
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayerTwo();
     drawSnow();
@@ -381,13 +370,11 @@ void phaseTwo() {
 
 // ============================= [ PHASE THREE STATE ] ============================
 
-
 void goToPhaseThree() {
-    REG_DISPCTL = 0;  // Clear all display settings before changing mode
+    REG_DISPCTL = 0;
 
-    // Enable both BG0 and BG1
+
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
-
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
@@ -400,7 +387,10 @@ void goToPhaseThree() {
     DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgTwoBackLen / 2);
     DMANow(3, bgThreeFrontMap, &SCREENBLOCK[30], bgTwoFrontLen / 2);
     
+    // Initialize sprites
     initPlayerThree();
+    initSnow();
+
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASETHREE;
@@ -408,8 +398,11 @@ void goToPhaseThree() {
 
 
 void phaseThree() {
+    // Update sprites
     updatePlayerThree(&hOff, &vOff);
+    updateSnow();
     updateHealth();
+
     // Main background scrolls normally:
     REG_BG2HOFF = hOff;
     REG_BG2VOFF = vOff;
@@ -417,14 +410,17 @@ void phaseThree() {
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
     
+    // Draw sprites
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayerThree();
+    drawSnow();
     drawHealth();
     DMANow(3, shadowOAM, OAM, 512);
     
     if (gameOver) {
         goToLose();
     }
+
     if (winPhaseThree) {
         goToWin();
     }
@@ -451,7 +447,7 @@ void pause() {
 
 void goToLose() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    videoBuffer = FRONTBUFFER; // 🔥 fix black screen on re-entry
+    videoBuffer = FRONTBUFFER;
 
     DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
     drawFullscreenImage4(splashScreenBitmap);
@@ -466,12 +462,11 @@ void lose() {
     }
 }
 
-
 // ============================= [ WIN STATE ] =================================
 
 void goToWin() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    videoBuffer = FRONTBUFFER; // 🔥 fix black screen on re-entry
+    videoBuffer = FRONTBUFFER;
 
     DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
     drawFullscreenImage4(splashScreenBitmap);

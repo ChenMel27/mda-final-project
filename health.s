@@ -112,6 +112,7 @@ drawHealth:
 	.word	.LANCHOR0
 	.word	shadowOAM
 	.size	drawHealth, .-drawHealth
+	.comm	health,60,4
 	.global	healthBarFrames
 	.data
 	.align	2

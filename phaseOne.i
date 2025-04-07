@@ -206,22 +206,38 @@ void updatePlayer(int* hOff, int* vOff) {
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
 
+
     if ((~(buttons) & ((1<<5)))) {
         player.isAnimating = 1;
         player.direction = 1;
-        if (player.worldX > 0 &&
-            colorAt(leftX - player.xVel, topY) != 0x04 &&
-            colorAt(leftX - player.xVel, bottomY) != 0x04) {
-            player.worldX -= player.xVel;
+        if (player.worldX > 0) {
+            int step;
+
+            for (step = 0; step <= 3; step++) {
+                if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
+                    (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
+                    player.worldX -= player.xVel;
+                    player.worldY -= step;
+                    break;
+                }
+            }
         }
     }
+
+
     if ((~(buttons) & ((1<<4)))) {
         player.isAnimating = 1;
         player.direction = 0;
-        if (player.worldX < 512 - player.width &&
-            colorAt(rightX + player.xVel, topY) != 0x04 &&
-            colorAt(rightX + player.xVel, bottomY) != 0x04) {
-            player.worldX += player.xVel;
+        if (player.worldX < 512 - player.width) {
+            int step;
+            for (step = 0; step <= 3; step++) {
+                if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
+                    (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
+                    player.worldX += player.xVel;
+                    player.worldY -= step;
+                    break;
+                }
+            }
         }
     }
 

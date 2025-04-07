@@ -63,25 +63,41 @@ void updatePlayer(int* hOff, int* vOff) {
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
     
+    // For left movement:
     if (BUTTON_HELD(BUTTON_LEFT)) {
         player.isAnimating = 1;
         player.direction = 1;
-        if (player.worldX > 0 &&
-            colorAt(leftX - player.xVel, topY) != 0x04 &&
-            colorAt(leftX - player.xVel, bottomY) != 0x04) {
-            player.worldX -= player.xVel;
+        if (player.worldX > 0) {
+            int step;
+            // Try stepping up up to 3 pixels:
+            for (step = 0; step <= 3; step++) {
+                if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
+                    (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
+                    player.worldX -= player.xVel;
+                    player.worldY -= step;  // adjust upward by 'step' pixels
+                    break;
+                }
+            }
         }
     }
+
+    // For right movement:
     if (BUTTON_HELD(BUTTON_RIGHT)) {
         player.isAnimating = 1;
         player.direction = 0;
-        if (player.worldX < MAPWIDTH - player.width &&
-            colorAt(rightX + player.xVel, topY) != 0x04 &&
-            colorAt(rightX + player.xVel, bottomY) != 0x04) {
-            player.worldX += player.xVel;
+        if (player.worldX < MAPWIDTH - player.width) {
+            int step;
+            for (step = 0; step <= 3; step++) {
+                if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
+                    (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
+                    player.worldX += player.xVel;
+                    player.worldY -= step;
+                    break;
+                }
+            }
         }
     }
-    
+
     // Jump if up button pressed
     if (BUTTON_PRESSED(BUTTON_UP) && player.yVel == 0) {
         player.yVel = -12;

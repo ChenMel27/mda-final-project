@@ -1,7 +1,9 @@
-#include "sprites.h"
+#ifndef HEALTH_H
+#define HEALTH_H
 
-extern SPRITE health;
 void initHealth();
 void updateHealth();
 void drawHealth();
 int healthBarFrames[9][2];
+
+#endif

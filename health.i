@@ -2,7 +2,20 @@
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "health.c"
+
+
+
+
+
 # 1 "health.h" 1
+
+
+
+void initHealth();
+void updateHealth();
+void drawHealth();
+int healthBarFrames[9][2];
+# 7 "health.c" 2
 # 1 "sprites.h" 1
 
 
@@ -111,14 +124,11 @@ typedef struct {
     int active;
     u8 oamIndex;
 } SPRITE;
-# 2 "health.h" 2
+# 8 "health.c" 2
 
-extern SPRITE health;
-void initHealth();
-void updateHealth();
-void drawHealth();
-int healthBarFrames[9][2];
-# 2 "health.c" 2
+
+SPRITE health;
+
 
 void initHealth() {
     health.worldX = 10;
@@ -130,12 +140,15 @@ void initHealth() {
     health.currentFrame = 0;
     health.isAnimating = 0;
     health.direction = 0;
+
     health.active = 9;
 }
+
 
 void updateHealth() {
     health.isAnimating = 0;
 }
+
 
 void drawHealth() {
     int frameIndex = 9 - health.active;
@@ -149,6 +162,7 @@ void drawHealth() {
     shadowOAM[health.oamIndex].attr1 = ((health.worldX) & 0x1FF) | (1<<14);
     shadowOAM[health.oamIndex].attr2 = ((((col) * (32) + (row))) & 0x3FF);
 }
+
 
 int healthBarFrames[9][2] = {
     {6, 5}, {6, 6}, {6, 7},

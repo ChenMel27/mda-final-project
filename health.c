@@ -1,22 +1,35 @@
-#include "health.h"
+// -----------------------------------------------------------------------------
+// File: health.c
+// Summary: Manages and updates the player's health bar using sprite tiles.
+// -----------------------------------------------------------------------------
 
+#include "health.h"
+#include "sprites.h"
+
+// Health bar sprite
+SPRITE health;
+
+// Initializes health bar with default values.
 void initHealth() {
     health.worldX = 10;
     health.worldY = 10;
     health.width = 32;
     health.height = 8;
-    health.oamIndex = 100;  // Use a different OAM slot than the player
+    health.oamIndex = 100;
     health.numFrames = 9;
     health.currentFrame = 0;
     health.isAnimating = 0;
     health.direction = 0;
-    health.active = 9; // Start with full lives
+    // Number of hits a player can take before deactivating and losing
+    health.active = 9;
 }
 
+// Disables animation each frame (placeholder).
 void updateHealth() {
     health.isAnimating = 0;
 }
 
+// Draws the health sprite frame based on current health value.
 void drawHealth() {
     int frameIndex = 9 - health.active;
     if (frameIndex < 0) frameIndex = 0;
@@ -30,6 +43,7 @@ void drawHealth() {
     shadowOAM[health.oamIndex].attr2 = ATTR2_TILEID(row, col);
 }
 
+// Tile indices for 9 health bar states in 'player' sprite sheet.
 int healthBarFrames[9][2] = {
     {6, 5}, {6, 6}, {6, 7},
     {10, 5}, {10, 6}, {10, 7},
