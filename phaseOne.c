@@ -1,3 +1,8 @@
+// -----------------------------------------------------------------------------
+// File: phaseOne.c
+// Summary: Manages the first phase of the game.
+// -----------------------------------------------------------------------------
+
 #include "hiker.h"
 #include "gba.h"
 #include "mode0.h"
@@ -6,32 +11,31 @@
 #include "phaseOne.h"
 #include "player.h"
 
-// Starting position definitions
+// Starting player position
 #define PLAYER_START_X 0
 #define PLAYER_START_Y 101
 
-// Animation variables
-int hikerFrameDelay = 4;
-int hikerFrameCounter = 0;
-int hikerFrame = 0;
-int hikerFrames[] = {20, 22, 24};
+// Set variables
+hikerFrameDelay = 4;
+hikerFrameCounter = 0;
+hikerFrame = 0;
+hikerFrames[] = {20, 22, 24};
 extern int hOff, vOff;
-int isDucking = 0;
-int gameOver = 0;
-int winPhaseOne = 0;
+isDucking = 0;
+gameOver = 0;
+winPhaseOne = 0;
+sbb = 20;
 
-
+// Sprite definitions
 SPRITE player;
-SPRITE health;
+extern SPRITE health;
 
-// Bg sbb
-int sbb = 20;
 
 void initPlayer() {
     player.worldX = PLAYER_START_X;
     player.worldY = PLAYER_START_Y;
-    player.x = SCREENWIDTH / 2 - 8;   // Center horizontally (16x32 sprite)
-    player.y = SCREENHEIGHT / 2 - 16; // Center vertically
+    player.x = SCREENWIDTH / 2 - 8;
+    player.y = SCREENHEIGHT / 2 - 16;
     player.width = 12;
     player.height = 25;
     player.oamIndex = 0;
@@ -50,7 +54,7 @@ void initPlayer() {
 void updatePlayer(int* hOff, int* vOff) {
     player.isAnimating = 0;
     
-    // Duck if button held down
+    // Down ducking movement
     if (BUTTON_HELD(BUTTON_DOWN)) {
         isDucking = 1;
     } else {
@@ -63,25 +67,25 @@ void updatePlayer(int* hOff, int* vOff) {
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
     
-    // For left movement:
+    // Left movement
     if (BUTTON_HELD(BUTTON_LEFT)) {
         player.isAnimating = 1;
         player.direction = 1;
         if (player.worldX > 0) {
             int step;
-            // Try stepping up up to 3 pixels:
+            // Try stepping up up to 3 pixels
             for (step = 0; step <= 3; step++) {
                 if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
                     (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
                     player.worldX -= player.xVel;
-                    player.worldY -= step;  // adjust upward by 'step' pixels
+                    player.worldY -= step; 
                     break;
                 }
             }
         }
     }
 
-    // For right movement:
+    // Right movement
     if (BUTTON_HELD(BUTTON_RIGHT)) {
         player.isAnimating = 1;
         player.direction = 0;
@@ -98,7 +102,7 @@ void updatePlayer(int* hOff, int* vOff) {
         }
     }
 
-    // Jump if up button pressed
+    // Up jumping movement
     if (BUTTON_PRESSED(BUTTON_UP) && player.yVel == 0) {
         player.yVel = -12;
     }
@@ -109,7 +113,7 @@ void updatePlayer(int* hOff, int* vOff) {
         player.yVel = TERMINAL_VELOCITY;
     }
     
-    // Vertical movement... move one pixel at a time
+    // Vertical movement
     if (player.yVel < 0) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
@@ -130,7 +134,7 @@ void updatePlayer(int* hOff, int* vOff) {
                 colorAt(rightX, bottomY + 1) != 0x04) {
                 player.worldY++;
             } else {
-                player.yVel = 0;  // Landed on ground
+                player.yVel = 0;
                 break;
             }
         }
@@ -159,7 +163,7 @@ void updatePlayer(int* hOff, int* vOff) {
     // Update screen block index.
     sbb = 20 + (*hOff / 256);
 
-    // Check if player has reached the end of the map
+    // Player wins if reached the end of the map
     if (player.worldX + player.width >= MAPWIDTH - 1) {
         winPhaseOne = 1;
     }
@@ -172,7 +176,7 @@ void drawPlayer() {
     int topY    = player.worldY;
     int bottomY = player.worldY + player.height - 1;
     
-    // Check collision with a "bad tile" (0x02)
+    // Check collision with bad tile
     if (colorAt(leftX, topY) == 0x05 ||
         colorAt(rightX, topY) == 0x05 ||
         colorAt(leftX, bottomY) == 0x05 ||
@@ -191,18 +195,17 @@ void drawPlayer() {
         player.worldY = PLAYER_START_Y;
         player.yVel = 0;
         
-        // Optionally, you can also reset the camera offsets
+        // Reset the camera offsets
         hOff = 0;
         vOff = 0;
         
-        // Skip drawing this frame to simulate a hit
         return;
     }
     
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
     
-    // Draw the player if still active
+    // Draw the player
     shadowOAM[player.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
     if (player.direction == 0) {
         shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
@@ -210,16 +213,12 @@ void drawPlayer() {
         shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
     }
         
-    // Choose appropriate tile based on whether the player is ducking or animating
+    // Use specific sprite tile if ducking
     if (isDucking) {
             shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
     } else {
         shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
     }  
-}
-
-inline unsigned char colorAt(int x, int y) {
-    return ((unsigned char*) bgOneFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
 }
 
 void resetPlayerState() {
@@ -229,4 +228,8 @@ void resetPlayerState() {
     isDucking = 0;
     gameOver = 0;
     sbb = 20;
+}
+
+inline unsigned char colorAt(int x, int y) {
+    return ((unsigned char*) bgOneFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
 }

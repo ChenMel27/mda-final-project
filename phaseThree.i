@@ -142,19 +142,15 @@ extern const unsigned short playerTiles[16384];
 
 extern const unsigned short playerPal[256];
 # 8 "phaseThree.c" 2
-# 1 "CM2.h" 1
-# 20 "CM2.h"
-extern const unsigned short CM2Bitmap[65536];
-# 9 "phaseThree.c" 2
 # 1 "health.h" 1
 
 
-extern SPRITE health;
+
 void initHealth();
 void updateHealth();
 void drawHealth();
 int healthBarFrames[9][2];
-# 10 "phaseThree.c" 2
+# 9 "phaseThree.c" 2
 
 
 
@@ -169,6 +165,7 @@ extern int isDucking;
 extern int gameOver;
 int winPhaseThree = 0;
 extern SPRITE player;
+extern SPRITE health;
 extern int sbb;
 
 void initPlayerThree() {

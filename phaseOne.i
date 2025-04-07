@@ -2,13 +2,18 @@
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "phaseOne.c"
+
+
+
+
+
 # 1 "hiker.h" 1
 # 21 "hiker.h"
 extern const unsigned short hikerTiles[16384];
 
 
 extern const unsigned short hikerPal[256];
-# 2 "phaseOne.c" 2
+# 7 "phaseOne.c" 2
 # 1 "gba.h" 1
 
 
@@ -48,7 +53,7 @@ typedef volatile struct {
 } DMAChannel;
 # 103 "gba.h"
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
-# 3 "phaseOne.c" 2
+# 8 "phaseOne.c" 2
 # 1 "mode0.h" 1
 # 32 "mode0.h"
 typedef struct {
@@ -60,11 +65,11 @@ typedef struct {
 typedef struct {
  u16 tilemap[1024];
 } SB;
-# 4 "phaseOne.c" 2
+# 9 "phaseOne.c" 2
 # 1 "bgOneFrontCM.h" 1
 # 20 "bgOneFrontCM.h"
 extern const unsigned char bgOneFrontCMBitmap[131072];
-# 5 "phaseOne.c" 2
+# 10 "phaseOne.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
 typedef struct {
@@ -126,49 +131,51 @@ typedef struct {
     int active;
     u8 oamIndex;
 } SPRITE;
-# 6 "phaseOne.c" 2
+# 11 "phaseOne.c" 2
 # 1 "phaseOne.h" 1
 # 17 "phaseOne.h"
-extern SPRITE player;
+int hikerFrameDelay;
+int hikerFrameCounter;
+int hikerFrame;
+int hikerFrames[3];
+int isDucking;
 int gameOver;
 int winPhaseOne;
-unsigned char colorAt(int x, int y);
+int sbb;
+
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
-void initHealth();
-void updateHealth();
-void drawHealth();
-# 7 "phaseOne.c" 2
+unsigned char colorAt(int x, int y);
+# 12 "phaseOne.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
 extern const unsigned short playerTiles[16384];
 
 
 extern const unsigned short playerPal[256];
-# 8 "phaseOne.c" 2
+# 13 "phaseOne.c" 2
 
 
 
 
 
 
-int hikerFrameDelay = 4;
-int hikerFrameCounter = 0;
-int hikerFrame = 0;
-int hikerFrames[] = {20, 22, 24};
+hikerFrameDelay = 4;
+hikerFrameCounter = 0;
+hikerFrame = 0;
+hikerFrames[] = {20, 22, 24};
 extern int hOff, vOff;
-int isDucking = 0;
-int gameOver = 0;
-int winPhaseOne = 0;
+isDucking = 0;
+gameOver = 0;
+winPhaseOne = 0;
+sbb = 20;
 
 
 SPRITE player;
-SPRITE health;
+extern SPRITE health;
 
-
-int sbb = 20;
 
 void initPlayer() {
     player.worldX = 0;
@@ -338,7 +345,6 @@ void drawPlayer() {
         hOff = 0;
         vOff = 0;
 
-
         return;
     }
 
@@ -361,10 +367,6 @@ void drawPlayer() {
     }
 }
 
-inline unsigned char colorAt(int x, int y) {
-    return ((unsigned char*) bgOneFrontCMBitmap)[((y) * (512) + (x))];
-}
-
 void resetPlayerState() {
     hikerFrameDelay = 4;
     hikerFrameCounter = 0;
@@ -372,4 +374,8 @@ void resetPlayerState() {
     isDucking = 0;
     gameOver = 0;
     sbb = 20;
+}
+
+inline unsigned char colorAt(int x, int y) {
+    return ((unsigned char*) bgOneFrontCMBitmap)[((y) * (512) + (x))];
 }

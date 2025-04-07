@@ -14,15 +14,17 @@
 #define MAX_HOFF (BG_WIDTH - SCREEN_WIDTH)
 #define MAX_VOFF (BG_HEIGHT - SCREEN_HEIGHT)
 
-extern SPRITE player;
+int hikerFrameDelay;
+int hikerFrameCounter;
+int hikerFrame;
+int hikerFrames[3];
+int isDucking;
 int gameOver;
 int winPhaseOne;
-unsigned char colorAt(int x, int y);
+int sbb;
+
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
-void initHealth();
-void updateHealth();
-void drawHealth();
-
+unsigned char colorAt(int x, int y);

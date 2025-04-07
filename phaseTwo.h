@@ -16,7 +16,7 @@
 #define MAX_SNOW 3
 #define SNOW_WIDTH 16
 #define SNOW_HEIGHT 16
-#define SNOW_TILE_ROW 12
+#define SNOW_TILE_ROW 14
 #define SNOW_TILE_COL 0
 #define SNOW_SPEED 1
 

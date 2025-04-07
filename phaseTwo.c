@@ -5,8 +5,8 @@
 #include "sprites.h"
 #include "phaseTwo.h"
 #include "player.h"
-#include "CM2.h"
 #include "health.h"
+#include "stdlib.h"
 
 // Starting position definitions
 #define PLAYER_START_X 0
@@ -21,6 +21,7 @@ extern int isDucking;
 extern int gameOver;
 int winPhaseTwo = 0;
 extern SPRITE player;
+extern SPRITE health;
 extern int sbb;
 
 void initPlayerTwo() {

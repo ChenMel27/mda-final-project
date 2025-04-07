@@ -478,26 +478,6 @@ drawPlayer:
 	.word	health
 	.size	drawPlayer, .-drawPlayer
 	.align	2
-	.global	colorAt
-	.syntax unified
-	.arm
-	.fpu softvfp
-	.type	colorAt, %function
-colorAt:
-	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	r3, .L110
-	add	r0, r0, r1, lsl #9
-	ldrb	r0, [r3, r0]	@ zero_extendqisi2
-	bx	lr
-.L111:
-	.align	2
-.L110:
-	.word	bgOneFrontCMBitmap
-	.size	colorAt, .-colorAt
-	.align	2
 	.global	resetPlayerState
 	.syntax unified
 	.arm
@@ -511,8 +491,8 @@ resetPlayerState:
 	mov	r2, #0
 	mov	ip, #4
 	mov	r0, #20
-	ldr	r3, .L113
-	ldr	r1, .L113+4
+	ldr	r3, .L110
+	ldr	r1, .L110+4
 	str	r2, [r3, #4]
 	str	ip, [r1]
 	str	r0, [r1, #4]
@@ -520,22 +500,41 @@ resetPlayerState:
 	str	r2, [r3]
 	str	r2, [r3, #16]
 	bx	lr
-.L114:
+.L111:
 	.align	2
-.L113:
+.L110:
 	.word	.LANCHOR0
 	.word	.LANCHOR1
 	.size	resetPlayerState, .-resetPlayerState
-	.global	sbb
-	.comm	health,60,4
+	.align	2
+	.global	colorAt
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	colorAt, %function
+colorAt:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	ldr	r3, .L113
+	add	r0, r0, r1, lsl #9
+	ldrb	r0, [r3, r0]	@ zero_extendqisi2
+	bx	lr
+.L114:
+	.align	2
+.L113:
+	.word	bgOneFrontCMBitmap
+	.size	colorAt, .-colorAt
 	.comm	player,60,4
+	.global	sbb
+	.global	winPhaseOne
+	.global	gameOver
 	.global	isDucking
 	.global	hikerFrames
 	.global	hikerFrame
 	.global	hikerFrameCounter
 	.global	hikerFrameDelay
-	.global	winPhaseOne
-	.global	gameOver
 	.data
 	.align	2
 	.set	.LANCHOR1,. + 0

@@ -18,6 +18,7 @@ Project:    The Summit Ascent
 
     Known Bugs:
         • Sprite flicker on state transitions between modes
+        • Pause isn't working
 */
 
 // ============================= [ INCLUDES ] =============================
@@ -140,7 +141,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {
@@ -288,7 +289,8 @@ void phaseOne() {
     // Front background scrolls regular
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
-    // Parallax background scrolls half speed:
+
+    // Parallax background scrolls half speed
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
     
@@ -320,13 +322,14 @@ void goToPhaseTwo() {
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     
+    // Load background common tileset
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
-    // Load BG0/1/2 Maps
-    DMANow(3, dayTMMap, &SCREENBLOCK[26], dayTMLen / 2);
-    DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgTwoBackLen / 2);
-    DMANow(3, bgTwoFrontMap, &SCREENBLOCK[30], bgTwoFrontLen / 2);
+    // Load BG0’s map and BG1’s map (bgOneFront)
+    DMANow(3, bgTwoFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
+    DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
     
     // Initialize sprites
     initPlayerTwo();
@@ -371,21 +374,23 @@ void phaseTwo() {
 // ============================= [ PHASE THREE STATE ] ============================
 
 void goToPhaseThree() {
+
     REG_DISPCTL = 0;
-
-
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+    
+    // | Front background -> BG0 | Parallax background -> BG1 | Back day background -> BG2
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
-    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
-
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+    
+    // Load background common tileset
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
     // Load BG0’s map and BG1’s map (bgOneFront)
-    DMANow(3, dayTMMap, &SCREENBLOCK[26], dayTMLen / 2);
-    DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgTwoBackLen / 2);
-    DMANow(3, bgThreeFrontMap, &SCREENBLOCK[30], bgTwoFrontLen / 2);
+    DMANow(3, bgThreeFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
+    DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
     
     // Initialize sprites
     initPlayerThree();
@@ -398,15 +403,17 @@ void goToPhaseThree() {
 
 
 void phaseThree() {
+
     // Update sprites
     updatePlayerThree(&hOff, &vOff);
     updateSnow();
     updateHealth();
 
-    // Main background scrolls normally:
-    REG_BG2HOFF = hOff;
-    REG_BG2VOFF = vOff;
-    // Parallax background scrolls slower (adjust the divisor as desired):
+    // Front background scrolls regular
+    REG_BG0HOFF = hOff;
+    REG_BG0VOFF = vOff;
+
+    // Parallax background scrolls half speed:
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
     
@@ -429,14 +436,17 @@ void phaseThree() {
 // ============================= [ PAUSE STATE ] ================================
 
 void goToPause() {
+    // Switch to mode 4 and draw bitmap image
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
+    videoBuffer = FRONTBUFFER;
+
+    DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
+    drawFullscreenImage4(splashScreenBitmap);
+    drawString4(100, 70, "PAUSE", 15);
     state = PAUSE;
 }
 
 void pause() {
-    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    fillScreen4(0);
-    drawString4(7, 55, "PAUSE", 1);
-
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToStart();
         state = START;
@@ -446,6 +456,7 @@ void pause() {
 // ============================= [ LOSE STATE ] =================================
 
 void goToLose() {
+    // Switch to mode 4 and draw bitmap image
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
 
@@ -465,6 +476,7 @@ void lose() {
 // ============================= [ WIN STATE ] =================================
 
 void goToWin() {
+    // Switch to mode 4 and draw bitmap image
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
 

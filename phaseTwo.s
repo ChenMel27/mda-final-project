@@ -689,7 +689,7 @@ drawSnow:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, lr}
-	mov	r6, #384
+	mov	r6, #448
 	ldr	r1, .L141
 	ldr	r2, .L141+4
 	ldr	r3, .L141+8

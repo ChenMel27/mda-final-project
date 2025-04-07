@@ -5,7 +5,6 @@
 #include "sprites.h"
 #include "phaseThree.h"
 #include "player.h"
-#include "CM2.h"
 #include "health.h"
 
 // Starting position definitions
@@ -21,6 +20,7 @@ extern int isDucking;
 extern int gameOver;
 int winPhaseThree = 0;
 extern SPRITE player;
+extern SPRITE health;
 extern int sbb;
 
 void initPlayerThree() {
