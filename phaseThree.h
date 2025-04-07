@@ -1,6 +1,10 @@
 #include "gba.h"
 #include "sprites.h"
 
+#define PLAYER_START_X 0
+#define PLAYER_START_Y 101
+#define PLAYER_START_X 0
+#define PLAYER_START_Y 101
 #define MAPWIDTH 512
 #define MAPHEIGHT 256
 #define SCREENWIDTH 240

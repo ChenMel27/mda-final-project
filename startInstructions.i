@@ -66,9 +66,6 @@ int begin;
 # 4 "startInstructions.c" 2
 # 1 "phaseOne.h" 1
 
-
-
-
 # 1 "sprites.h" 1
 # 10 "sprites.h"
 typedef struct {
@@ -130,15 +127,22 @@ typedef struct {
     int active;
     u8 oamIndex;
 } SPRITE;
-# 6 "phaseOne.h" 2
-# 21 "phaseOne.h"
-extern SPRITE player;
+# 3 "phaseOne.h" 2
+# 20 "phaseOne.h"
+int hikerFrameDelay;
+int hikerFrameCounter;
+int hikerFrame;
+int hikerFrames[3];
+int isDucking;
 int gameOver;
 int winPhaseOne;
-unsigned char colorAt(int x, int y);
+int sbb;
+
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
+void resetPlayerState();
+unsigned char colorAt(int x, int y);
 # 5 "startInstructions.c" 2
 
 int startPage = 0;
@@ -164,12 +168,14 @@ void drawStartInstructionsDialouge() {
         drawString4(5, 75, "you have come to the right person.", 1);
         if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) startPage++;
     } else if (startPage == 4) {
-        drawString4(5, 55, "Three sections await with difficulty and", 1);
-        drawString4(5, 65, "I will be there to guide you in between", 1);
-        drawString4(5, 75, " sections, but it's up to you to survive.", 1);
+        drawString4(5, 55, "Three sections await with", 1);
+        drawString4(5, 65, "difficulty and I will be", 1);
+        drawString4(5, 75, " there to guide you in between", 1);
+        drawString4(5, 85, "sections, but it's up", 1);
+        drawString4(5, 95, " to you to survive.", 1);
         if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) startPage++;
     } else if (startPage == 5) {
-        drawString4(5, 60, "Three sections await with difficulty...", 1);
+        drawString4(5, 60, "Three sections await with difficulty.", 1);
         if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) startPage++;
     } else if (startPage == 6) {
         drawString4(5, 55, "We begin with the first Ascent", 1);

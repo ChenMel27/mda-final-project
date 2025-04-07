@@ -128,7 +128,7 @@ typedef struct {
 } SPRITE;
 # 6 "phaseTwo.c" 2
 # 1 "phaseTwo.h" 1
-# 23 "phaseTwo.h"
+# 25 "phaseTwo.h"
 SPRITE snows[3];
 
 
@@ -969,10 +969,7 @@ extern long double strtold (const char *restrict, char **restrict);
 
 
 
-
-
-
-# 15 "phaseTwo.c"
+# 12 "phaseTwo.c"
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
 extern int hikerFrame;

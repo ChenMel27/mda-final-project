@@ -128,7 +128,7 @@ typedef struct {
 } SPRITE;
 # 6 "phaseThree.c" 2
 # 1 "phaseThree.h" 1
-# 17 "phaseThree.h"
+# 19 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);

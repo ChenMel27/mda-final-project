@@ -1636,7 +1636,7 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	316
+	.short	0
 	.short	0
 	.short	0
 	.short	0

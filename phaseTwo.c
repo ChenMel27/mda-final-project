@@ -8,10 +8,7 @@
 #include "health.h"
 #include "stdlib.h"
 
-// Starting position definitions
-#define PLAYER_START_X 0
-#define PLAYER_START_Y 101
-// Animation variables
+// Global phase variables
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
 extern int hikerFrame;
@@ -28,8 +25,8 @@ void initPlayerTwo() {
     resetPlayerState();
     player.worldX = 0;
     player.worldY = 101;
-    player.x = SCREENWIDTH / 2 - 8;   // Center horizontally (16x32 sprite)
-    player.y = SCREENHEIGHT / 2 - 16; // Center vertically
+    player.x = SCREENWIDTH / 2 - 8;
+    player.y = SCREENHEIGHT / 2 - 16;
     player.width = 17;
     player.height = 23;
     player.oamIndex = 0;
@@ -205,7 +202,7 @@ void drawPlayerTwo() {
             shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
         }
         
-        // If ducking use the duck tile otherwise animate and use the regular animated frame
+        // If ducking use the duck tile
         if (isDucking) {
             shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
         } else {
@@ -219,7 +216,8 @@ void drawPlayerTwo() {
 void initSnow() {
     for (int i = 0; i < MAX_SNOW; i++) {
         snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
-        snows[i].worldY = rand() % 60 - 80; // start above screen
+        // Start above screen
+        snows[i].worldY = rand() % 60 - 80;
         snows[i].width = SNOW_WIDTH;
         snows[i].height = SNOW_HEIGHT;
         snows[i].oamIndex = 120 + i;
@@ -236,8 +234,8 @@ void updateSnow() {
 
             if (collision(snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
                 player.worldX, player.worldY, player.width, player.height)) {
-                // Reset the snow to the top of the screen (just above the visible area)
-                snows[i].worldY = -SNOW_HEIGHT;  // or use a small random offset: - (rand() % 10 + SNOW_HEIGHT)
+                // Reset the snow to the top of the screen
+                snows[i].worldY = -SNOW_HEIGHT;
                 snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
             
                 // Reduce player's health

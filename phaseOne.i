@@ -133,7 +133,7 @@ typedef struct {
 } SPRITE;
 # 11 "phaseOne.c" 2
 # 1 "phaseOne.h" 1
-# 17 "phaseOne.h"
+# 20 "phaseOne.h"
 int hikerFrameDelay;
 int hikerFrameCounter;
 int hikerFrame;
@@ -156,10 +156,6 @@ extern const unsigned short playerTiles[16384];
 
 extern const unsigned short playerPal[256];
 # 13 "phaseOne.c" 2
-
-
-
-
 
 
 hikerFrameDelay = 4;

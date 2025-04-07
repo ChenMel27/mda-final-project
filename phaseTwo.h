@@ -1,6 +1,8 @@
 #include "gba.h"
 #include "sprites.h"
 
+#define PLAYER_START_X 0
+#define PLAYER_START_Y 101
 #define MAPWIDTH 512
 #define MAPHEIGHT 256
 #define SCREENWIDTH 240
@@ -21,7 +23,6 @@
 #define SNOW_SPEED 1
 
 SPRITE snows[MAX_SNOW];
-
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();

@@ -26,12 +26,14 @@ void drawStartInstructionsDialouge() {
         drawString4(5, 75, "you have come to the right person.", 1);
         if (BUTTON_PRESSED(BUTTON_START)) startPage++;
     } else if (startPage == 4) {
-        drawString4(5, 55, "Three sections await with difficulty and", 1);
-        drawString4(5, 65, "I will be there to guide you in between", 1);
-        drawString4(5, 75, " sections, but it's up to you to survive.", 1);
+        drawString4(5, 55, "Three sections await with", 1);
+        drawString4(5, 65, "difficulty and I will be", 1);
+        drawString4(5, 75, " there to guide you in between", 1);
+        drawString4(5, 85, "sections, but it's up", 1);
+        drawString4(5, 95, " to you to survive.", 1);
         if (BUTTON_PRESSED(BUTTON_START)) startPage++;
     } else if (startPage == 5) {
-        drawString4(5, 60, "Three sections await with difficulty...", 1);
+        drawString4(5, 60, "Three sections await with difficulty.", 1);
         if (BUTTON_PRESSED(BUTTON_START)) startPage++;
     } else if (startPage == 6) {
         drawString4(5, 55, "We begin with the first Ascent", 1);

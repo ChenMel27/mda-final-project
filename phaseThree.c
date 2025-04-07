@@ -7,9 +7,6 @@
 #include "player.h"
 #include "health.h"
 
-// Starting position definitions
-#define PLAYER_START_X 0
-#define PLAYER_START_Y 101
 // Animation variables
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
@@ -27,8 +24,8 @@ void initPlayerThree() {
     resetPlayerState();
     player.worldX = 0;
     player.worldY = 101;
-    player.x = SCREENWIDTH / 2 - 8;   // Center horizontally (16x32 sprite)
-    player.y = SCREENHEIGHT / 2 - 16; // Center vertically
+    player.x = SCREENWIDTH / 2 - 8;
+    player.y = SCREENHEIGHT / 2 - 16;
     player.width = 17;
     player.height = 23;
     player.oamIndex = 0;

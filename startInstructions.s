@@ -37,24 +37,30 @@
 	.ascii	"you have come to the right person.\000"
 	.align	2
 .LC8:
-	.ascii	"Three sections await with difficulty and\000"
+	.ascii	"Three sections await with\000"
 	.align	2
 .LC9:
-	.ascii	"I will be there to guide you in between\000"
+	.ascii	"difficulty and I will be\000"
 	.align	2
 .LC10:
-	.ascii	" sections, but it's up to you to survive.\000"
+	.ascii	" there to guide you in between\000"
 	.align	2
 .LC11:
-	.ascii	"Three sections await with difficulty...\000"
+	.ascii	"sections, but it's up\000"
 	.align	2
 .LC12:
-	.ascii	"We begin with the first Ascent\000"
+	.ascii	" to you to survive.\000"
 	.align	2
 .LC13:
-	.ascii	"to Camp Muir...\000"
+	.ascii	"Three sections await with difficulty.\000"
 	.align	2
 .LC14:
+	.ascii	"We begin with the first Ascent\000"
+	.align	2
+.LC15:
+	.ascii	"to Camp Muir...\000"
+	.align	2
+.LC16:
 	.ascii	"Continue down the bridge to begin.\000"
 	.text
 	.align	2
@@ -190,48 +196,60 @@ drawStartInstructionsDialouge:
 	mov	r0, #5
 	b	.L44
 .L55:
+	ldr	r4, .L58+12
 	mov	r3, #1
 	mov	r1, #55
 	mov	r0, #5
 	ldr	r2, .L58+64
-	ldr	r4, .L58+12
 	mov	lr, pc
 	bx	r4
 	mov	r3, #1
 	mov	r1, #65
-	ldr	r2, .L58+68
 	mov	r0, #5
+	ldr	r2, .L58+68
 	mov	lr, pc
 	bx	r4
 	mov	r3, #1
 	mov	r1, #75
+	mov	r0, #5
 	ldr	r2, .L58+72
+	mov	lr, pc
+	bx	r4
+	mov	r3, #1
+	mov	r1, #85
+	ldr	r2, .L58+76
+	mov	r0, #5
+	mov	lr, pc
+	bx	r4
+	mov	r3, #1
+	mov	r1, #95
+	ldr	r2, .L58+80
 	b	.L46
 .L56:
 	mov	r0, r4
 	mov	r3, #1
 	mov	r1, #60
-	ldr	r2, .L58+76
+	ldr	r2, .L58+84
 	ldr	r4, .L58+12
 	b	.L44
 .L57:
 	mov	r3, #1
 	mov	r1, #55
-	ldr	r2, .L58+80
+	ldr	r2, .L58+88
 	mov	r0, #5
 	ldr	r4, .L58+12
 	mov	lr, pc
 	bx	r4
 	mov	r3, #1
 	mov	r1, #65
-	ldr	r2, .L58+84
+	ldr	r2, .L58+92
 	b	.L46
 .L59:
 	.align	2
 .L58:
 	.word	.LANCHOR0
 	.word	fillScreen4
-	.word	.LC14
+	.word	.LC16
 	.word	drawString4
 	.word	oldButtons
 	.word	buttons
@@ -251,9 +269,17 @@ drawStartInstructionsDialouge:
 	.word	.LC11
 	.word	.LC12
 	.word	.LC13
+	.word	.LC14
+	.word	.LC15
 	.size	drawStartInstructionsDialouge, .-drawStartInstructionsDialouge
+	.comm	sbb,4,4
 	.comm	winPhaseOne,4,4
 	.comm	gameOver,4,4
+	.comm	isDucking,4,4
+	.comm	hikerFrames,12,4
+	.comm	hikerFrame,4,4
+	.comm	hikerFrameCounter,4,4
+	.comm	hikerFrameDelay,4,4
 	.global	begin
 	.global	startPage
 	.bss

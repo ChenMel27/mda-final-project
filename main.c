@@ -159,6 +159,7 @@ void goToSplashScreen() {
     winPhaseThree = 0;
     next = 0;
     begin = 0;
+    initHealth();
 
     state = SPLASH;
 }
@@ -261,11 +262,11 @@ void goToPhaseOne() {
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     
-    // Load background common tileset
+    // DMA background common tileset
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
-    // Load BG0’s map and BG1’s map (bgOneFront)
+    // DMA BG0/1/2 tile maps into screen blocks
     DMANow(3, bgOneFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
     DMANow(3, bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
@@ -322,11 +323,11 @@ void goToPhaseTwo() {
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     
-    // Load background common tileset
+    // DMA background common tileset
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
-    // Load BG0’s map and BG1’s map (bgOneFront)
+    // DMA BG0/1/2 tile maps into screen blocks
     DMANow(3, bgTwoFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
     DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
@@ -383,11 +384,11 @@ void goToPhaseThree() {
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     
-    // Load background common tileset
+    // DMA background common tileset
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
-    // Load BG0’s map and BG1’s map (bgOneFront)
+    // DMA BG0/1/2 tile maps into screen blocks
     DMANow(3, bgThreeFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
     DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);

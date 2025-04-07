@@ -182,7 +182,7 @@ typedef struct {
     u8 oamIndex;
 } SPRITE;
 # 3 "phaseOne.h" 2
-# 17 "phaseOne.h"
+# 20 "phaseOne.h"
 int hikerFrameDelay;
 int hikerFrameCounter;
 int hikerFrame;

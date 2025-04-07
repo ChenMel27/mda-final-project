@@ -11,10 +11,6 @@
 #include "phaseOne.h"
 #include "player.h"
 
-// Starting player position
-#define PLAYER_START_X 0
-#define PLAYER_START_Y 101
-
 // Set variables
 hikerFrameDelay = 4;
 hikerFrameCounter = 0;
@@ -160,7 +156,7 @@ void updatePlayer(int* hOff, int* vOff) {
     if (*hOff > MAPWIDTH - SCREENWIDTH) *hOff = MAPWIDTH - SCREENWIDTH;
     if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
     
-    // Update screen block index.
+    // Update screen block index
     sbb = 20 + (*hOff / 256);
 
     // Player wins if reached the end of the map
