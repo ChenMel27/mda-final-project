@@ -217,6 +217,10 @@ unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
+void initCountdownTimer(void);
+void drawTimer(void);
+void updatePlayerPalette();
+unsigned short playerPaletteWork[256];
 int winPhaseThree;
 # 38 "main.c" 2
 # 1 "startInstructions.h" 1
@@ -422,7 +426,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {
@@ -677,6 +681,7 @@ void goToPhaseThree() {
 
     initPlayerThree();
     initSnow();
+    initCountdownTimer();
 
     hOff = 0;
     vOff = (256 - 160);
@@ -690,6 +695,7 @@ void phaseThree() {
     updatePlayerThree(&hOff, &vOff);
     updateSnow();
     updateHealth();
+    updatePlayerPalette();
 
 
     (*(volatile unsigned short*) 0x04000010) = hOff;
@@ -704,6 +710,7 @@ void phaseThree() {
     drawPlayerThree();
     drawSnow();
     drawHealth();
+    drawTimer();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
     if (gameOver) {

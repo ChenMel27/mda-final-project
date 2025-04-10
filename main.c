@@ -141,7 +141,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {
@@ -396,6 +396,7 @@ void goToPhaseThree() {
     // Initialize sprites
     initPlayerThree();
     initSnow();
+    initCountdownTimer();
 
     hOff = 0;
     vOff = MAX_VOFF;
@@ -409,6 +410,7 @@ void phaseThree() {
     updatePlayerThree(&hOff, &vOff);
     updateSnow();
     updateHealth();
+    updatePlayerPalette();
 
     // Front background scrolls regular
     REG_BG0HOFF = hOff;
@@ -423,6 +425,7 @@ void phaseThree() {
     drawPlayerThree();
     drawSnow();
     drawHealth();
+    drawTimer();
     DMANow(3, shadowOAM, OAM, 512);
     
     if (gameOver) {

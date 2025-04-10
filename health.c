@@ -9,6 +9,19 @@
 // Health bar sprite
 SPRITE health;
 
+// Tile indices for 9 health bar states in 'player' sprite sheet.
+int healthBarFrames[9][2] = {
+    {6, 5},
+    {6, 6},
+    {6, 7},
+    {10, 5},
+    {10, 6},
+    {10, 7},
+    {14, 5},
+    {14, 6},
+    {14, 7}
+};
+
 // Initializes health bar with default values.
 void initHealth() {
     health.worldX = 10;
@@ -42,10 +55,3 @@ void drawHealth() {
     shadowOAM[health.oamIndex].attr1 = ATTR1_X(health.worldX) | ATTR1_SMALL;
     shadowOAM[health.oamIndex].attr2 = ATTR2_TILEID(row, col);
 }
-
-// Tile indices for 9 health bar states in 'player' sprite sheet.
-int healthBarFrames[9][2] = {
-    {6, 5}, {6, 6}, {6, 7},
-    {10, 5}, {10, 6}, {10, 7},
-    {14, 5}, {14, 6}, {14, 7}
-};

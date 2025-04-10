@@ -102,4 +102,48 @@ typedef volatile struct {
 // Immediately begins a DMA transfer using parameters
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 
+
+// =================================== TIMERS ====================================
+
+// Controllers
+#define REG_TM0CNT *(volatile unsigned short*)0x4000102
+#define REG_TM1CNT *(volatile unsigned short*)0x4000106
+#define REG_TM2CNT *(volatile unsigned short*)0x400010A
+#define REG_TM3CNT *(volatile unsigned short*)0x400010E
+
+// Timer values
+#define REG_TM0D       *(volatile unsigned short*)0x4000100
+#define REG_TM1D       *(volatile unsigned short*)0x4000104
+#define REG_TM2D       *(volatile unsigned short*)0x4000108
+#define REG_TM3D       *(volatile unsigned short*)0x400010C
+
+// Timer flags
+#define TIMER_ON      (1<<7)
+#define TIMER_OFF     (0<<7)
+#define TM_IRQ        (1<<6)
+#define TM_CASCADE    (1<<2)
+#define TM_FREQ_1     0
+#define TM_FREQ_64    1
+#define TM_FREQ_256   2
+#define TM_FREQ_1024  3
+// Define the hardware register addresses for blending
+#define REG_BLDCNT (*(volatile unsigned short*)0x4000050)
+#define REG_BLDY   (*(volatile unsigned short*)0x4000052)
+
+// Bit masks for REG_BLDCNT:
+
+// Effect bits: set the blend mode (here, we use the standard blend effect).
+#define BLDCNT_EFFECT_NONE   0
+#define BLDCNT_EFFECT_BLEND  (1 << 6)  // Standard blend mode
+
+// Target bits: specify which backgrounds/objects are affected by the blend.
+#define BLDCNT_TGT1_BG0      (1 << 0)
+#define BLDCNT_TGT1_BG1      (1 << 1)
+#define BLDCNT_TGT1_BG2      (1 << 2)
+#define BLDCNT_TGT1_BG3      (1 << 3)
+#define BLDCNT_TGT1_OBJ      (1 << 4)  // Sprites (objects)
+#define BLDCNT_TGT1_BD       (1 << 5)  // Backdrop
+
+// REG_BLDY is used to set the blend intensity (0 = no blend, 16 = full blend)
+
 #endif

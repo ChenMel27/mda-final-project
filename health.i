@@ -130,6 +130,19 @@ typedef struct {
 SPRITE health;
 
 
+int healthBarFrames[9][2] = {
+    {6, 5},
+    {6, 6},
+    {6, 7},
+    {10, 5},
+    {10, 6},
+    {10, 7},
+    {14, 5},
+    {14, 6},
+    {14, 7}
+};
+
+
 void initHealth() {
     health.worldX = 10;
     health.worldY = 10;
@@ -162,10 +175,3 @@ void drawHealth() {
     shadowOAM[health.oamIndex].attr1 = ((health.worldX) & 0x1FF) | (1<<14);
     shadowOAM[health.oamIndex].attr2 = ((((col) * (32) + (row))) & 0x3FF);
 }
-
-
-int healthBarFrames[9][2] = {
-    {6, 5}, {6, 6}, {6, 7},
-    {10, 5}, {10, 6}, {10, 7},
-    {14, 5}, {14, 6}, {14, 7}
-};

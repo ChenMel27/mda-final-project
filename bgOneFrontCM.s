@@ -76641,13 +76641,6 @@ bgOneFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
 	.byte	0
 	.byte	0
 	.byte	0
@@ -76723,8 +76716,15 @@ bgOneFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	5
-	.byte	5
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -77152,14 +77152,6 @@ bgOneFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
 	.byte	0
 	.byte	0
 	.byte	0
@@ -77233,12 +77225,20 @@ bgOneFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -77664,14 +77664,6 @@ bgOneFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
 	.byte	0
 	.byte	0
 	.byte	0
@@ -77744,14 +77736,22 @@ bgOneFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
-	.byte	5
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0

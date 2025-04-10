@@ -22,4 +22,8 @@ unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
+void initCountdownTimer(void);
+void drawTimer(void);
+void updatePlayerPalette();
+unsigned short playerPaletteWork[256];
 int winPhaseThree;
