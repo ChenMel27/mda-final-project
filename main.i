@@ -461,6 +461,7 @@ void splashScreen() {
 
 void goToStart() {
     (*(volatile unsigned short *)0x4000000) = 0;
+    hideSprites();
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 

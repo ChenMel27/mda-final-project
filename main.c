@@ -176,6 +176,7 @@ void splashScreen() {
 
 void goToStart() {
     REG_DISPCTL = 0;
+    hideSprites();
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 

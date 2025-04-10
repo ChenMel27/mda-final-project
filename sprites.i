@@ -113,6 +113,11 @@ typedef struct {
 # 2 "sprites.c" 2
 
 OBJ_ATTR shadowOAM[128];
-void hideSprites() {
+void hideSprites(){
+    int i;
+    for (i = 0; i < 128; i++) {
+        shadowOAM[i].attr0 = (2<<8);
+    }
 
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
 }

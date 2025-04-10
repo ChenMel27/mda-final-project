@@ -131,42 +131,45 @@ goToStart:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	mov	r1, #67108864
+	mov	r4, #67108864
 	mov	r5, #0
-	mov	r2, #4608
-	mov	r0, #53760
-	strh	r5, [r1]	@ movhi
-	ldr	r4, .L14
-	strh	r2, [r1]	@ movhi
-	mov	r3, #256
-	strh	r0, [r1, #10]	@ movhi
-	mov	r2, #83886080
+	ldr	r3, .L14
+	strh	r5, [r4]	@ movhi
+	mov	lr, pc
+	bx	r3
+	mov	r3, #4608
+	mov	r2, #53760
+	strh	r3, [r4]	@ movhi
 	mov	r0, #3
-	ldr	r1, .L14+4
+	strh	r2, [r4, #10]	@ movhi
+	mov	r3, #256
+	ldr	r4, .L14+4
+	mov	r2, #83886080
+	ldr	r1, .L14+8
 	mov	lr, pc
 	bx	r4
 	mov	r3, #8192
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L14+8
+	ldr	r1, .L14+12
 	mov	lr, pc
 	bx	r4
 	mov	r0, #3
-	ldr	r2, .L14+12
-	ldr	r1, .L14+16
+	ldr	r2, .L14+16
+	ldr	r1, .L14+20
 	mov	r3, #4096
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L14+20
+	ldr	r3, .L14+24
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L14+24
+	ldr	r3, .L14+28
 	mov	lr, pc
 	bx	r3
 	mov	r1, #1
 	mov	r0, #96
-	ldr	r2, .L14+28
-	ldr	r3, .L14+32
+	ldr	r2, .L14+32
+	ldr	r3, .L14+36
 	strb	r1, [r2]
 	str	r5, [r3]
 	str	r0, [r3, #4]
@@ -175,6 +178,7 @@ goToStart:
 .L15:
 	.align	2
 .L14:
+	.word	hideSprites
 	.word	DMANow
 	.word	sTSPal
 	.word	sTSTiles
