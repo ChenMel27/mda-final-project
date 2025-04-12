@@ -333,6 +333,93 @@ int healthBarFrames[9][2];
 
 extern const unsigned short bgThreeFrontMap[2048];
 # 51 "main.c" 2
+# 1 "dialogueFont.h" 1
+# 21 "dialogueFont.h"
+extern const unsigned short dialogueFontTiles[16384];
+
+
+extern const unsigned short dialogueFontPal[256];
+# 52 "main.c" 2
+# 1 "diaOne.h" 1
+
+
+
+
+
+
+
+extern const unsigned short diaOneMap[1024];
+# 53 "main.c" 2
+# 1 "diaTwo.h" 1
+
+
+
+
+
+
+
+extern const unsigned short diaTwoMap[1024];
+# 54 "main.c" 2
+# 1 "diaThree.h" 1
+
+
+
+
+
+
+
+extern const unsigned short diaThreeMap[1024];
+# 55 "main.c" 2
+# 1 "diaFour.h" 1
+
+
+
+
+
+
+
+extern const unsigned short diaFourMap[1024];
+# 56 "main.c" 2
+# 1 "diaFive.h" 1
+
+
+
+
+
+
+
+extern const unsigned short diaFiveMap[1024];
+# 57 "main.c" 2
+# 1 "diaSix.h" 1
+
+
+
+
+
+
+
+extern const unsigned short diaSixMap[1024];
+# 58 "main.c" 2
+# 1 "diaSeven.h" 1
+
+
+
+
+
+
+
+extern const unsigned short diaSevenMap[1024];
+# 59 "main.c" 2
+# 1 "diaEight.h" 1
+
+
+
+
+
+
+
+extern const unsigned short diaEightMap[1024];
+# 60 "main.c" 2
 
 
 
@@ -426,7 +513,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToPhaseOne();
+    goToSplashScreen();
 }
 
 void goToSplashScreen() {
@@ -516,10 +603,20 @@ void start() {
 
 
 void goToStartInstructions() {
-    waitForVBlank();
     (*(volatile unsigned short *)0x4000000) = 0;
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
-    videoBuffer = ((unsigned short*) 0x0600A000);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
+    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
+
+
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
+
     startPage = 0;
     state = DIALOGUE;
 }
@@ -527,9 +624,39 @@ void goToStartInstructions() {
 
 
 void startInstructions() {
-    drawStartInstructionsDialouge();
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
 
-    if (begin == 1) {
+        startPage++;
+
+        switch (startPage) {
+            case 1:
+                DMANow(3, diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 2:
+                DMANow(3, diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 3:
+                DMANow(3, diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 4:
+                DMANow(3, diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 5:
+                DMANow(3, diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 6:
+                DMANow(3, diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 7:
+                DMANow(3, diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 8:
+                begin = 1;
+                break;
+        }
+    }
+
+    if (begin) {
         begin = 0;
         goToStartTwo();
         state = START;
