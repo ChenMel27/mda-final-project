@@ -35,7 +35,6 @@ Project:    The Summit Ascent
 #include "phaseOne.h"
 #include "phaseTwo.h"
 #include "phaseThree.h"
-#include "startInstructions.h"
 #include "start.h"
 #include "splashScreen.h"
 #include "snowtiles.h"
@@ -102,6 +101,9 @@ typedef enum {
 GameState state;
 int hOff = 0;
 int vOff = 0;
+int talkedToGuide = 0;
+int begin = 0;
+int startPage = 0;
 
 // ============================= [ GAME ENTRY POINT ] ============================
 
@@ -213,7 +215,8 @@ void goToStartTwo() {
     initGuideSprite();
     startPlayer.worldX = 134;
     startPlayer.worldX = 436;
-
+    next = 0;
+    talkedToGuide = 1;
     hOff = 0;
     vOff = MAX_VOFF;
     state = START;
@@ -232,7 +235,7 @@ void start() {
         goToStartInstructions();
     }
 
-    if (next == 1) {
+    if (next == 1 && talkedToGuide) {
         goToPhaseOne();
     }
 }

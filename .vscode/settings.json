@@ -31,6 +31,7 @@
         "phasetwo.h": "c",
         "health.h": "c",
         "cm2.h": "c",
-        "bgthreefrontcm.h": "c"
+        "bgthreefrontcm.h": "c",
+        "snowtiles.h": "c"
     }
 }

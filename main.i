@@ -223,16 +223,6 @@ void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
 # 38 "main.c" 2
-# 1 "startInstructions.h" 1
-
-
-
-void goToStartInstructions();
-void drawStartInstructionsDialouge();
-
-int startPage;
-int begin;
-# 39 "main.c" 2
 # 1 "start.h" 1
 # 9 "start.h"
 int next;
@@ -244,25 +234,25 @@ void updateGuideSprite();
 void drawStartPlayer();
 void drawGuideSprite();
 int checkPlayerGuideCollision();
-# 40 "main.c" 2
+# 39 "main.c" 2
 # 1 "splashScreen.h" 1
 # 21 "splashScreen.h"
 extern const unsigned short splashScreenBitmap[19200];
 
 
 extern const unsigned short splashScreenPal[256];
-# 41 "main.c" 2
+# 40 "main.c" 2
 # 1 "snowtiles.h" 1
 # 21 "snowtiles.h"
 extern unsigned char snowtilesTiles[7680];
 
 
 extern unsigned char snowtilesPal[512];
-# 42 "main.c" 2
+# 41 "main.c" 2
 # 1 "townCM.h" 1
 # 20 "townCM.h"
 extern const unsigned char townCMBitmap[262144];
-# 43 "main.c" 2
+# 42 "main.c" 2
 # 1 "town.h" 1
 
 
@@ -272,21 +262,21 @@ extern const unsigned char townCMBitmap[262144];
 
 
 extern unsigned short townMap[1024];
-# 44 "main.c" 2
+# 43 "main.c" 2
 # 1 "foreground.h" 1
 # 21 "foreground.h"
 extern const unsigned short foregroundTiles[12800];
 
 
 extern const unsigned short foregroundPal[256];
-# 45 "main.c" 2
+# 44 "main.c" 2
 # 1 "topdownrpg.h" 1
 # 21 "topdownrpg.h"
 extern const unsigned short topdownrpgTiles[32768];
 
 
 extern const unsigned short topdownrpgPal[256];
-# 46 "main.c" 2
+# 45 "main.c" 2
 # 1 "sTM.h" 1
 
 
@@ -296,14 +286,14 @@ extern const unsigned short topdownrpgPal[256];
 
 
 extern const unsigned short sTMMap[4096];
-# 47 "main.c" 2
+# 46 "main.c" 2
 # 1 "sTS.h" 1
 # 21 "sTS.h"
 extern const unsigned short sTSTiles[8192];
 
 
 extern const unsigned short sTSPal[256];
-# 48 "main.c" 2
+# 47 "main.c" 2
 # 1 "dayTM.h" 1
 
 
@@ -313,7 +303,7 @@ extern const unsigned short sTSPal[256];
 
 
 extern const unsigned short dayTMMap[2048];
-# 49 "main.c" 2
+# 48 "main.c" 2
 # 1 "health.h" 1
 
 
@@ -322,7 +312,7 @@ void initHealth();
 void updateHealth();
 void drawHealth();
 int healthBarFrames[9][2];
-# 50 "main.c" 2
+# 49 "main.c" 2
 # 1 "bgThreeFront.h" 1
 
 
@@ -332,14 +322,14 @@ int healthBarFrames[9][2];
 
 
 extern const unsigned short bgThreeFrontMap[2048];
-# 51 "main.c" 2
+# 50 "main.c" 2
 # 1 "dialogueFont.h" 1
 # 21 "dialogueFont.h"
 extern const unsigned short dialogueFontTiles[16384];
 
 
 extern const unsigned short dialogueFontPal[256];
-# 52 "main.c" 2
+# 51 "main.c" 2
 # 1 "diaOne.h" 1
 
 
@@ -349,7 +339,7 @@ extern const unsigned short dialogueFontPal[256];
 
 
 extern const unsigned short diaOneMap[1024];
-# 53 "main.c" 2
+# 52 "main.c" 2
 # 1 "diaTwo.h" 1
 
 
@@ -359,7 +349,7 @@ extern const unsigned short diaOneMap[1024];
 
 
 extern const unsigned short diaTwoMap[1024];
-# 54 "main.c" 2
+# 53 "main.c" 2
 # 1 "diaThree.h" 1
 
 
@@ -369,7 +359,7 @@ extern const unsigned short diaTwoMap[1024];
 
 
 extern const unsigned short diaThreeMap[1024];
-# 55 "main.c" 2
+# 54 "main.c" 2
 # 1 "diaFour.h" 1
 
 
@@ -379,7 +369,7 @@ extern const unsigned short diaThreeMap[1024];
 
 
 extern const unsigned short diaFourMap[1024];
-# 56 "main.c" 2
+# 55 "main.c" 2
 # 1 "diaFive.h" 1
 
 
@@ -389,7 +379,7 @@ extern const unsigned short diaFourMap[1024];
 
 
 extern const unsigned short diaFiveMap[1024];
-# 57 "main.c" 2
+# 56 "main.c" 2
 # 1 "diaSix.h" 1
 
 
@@ -399,7 +389,7 @@ extern const unsigned short diaFiveMap[1024];
 
 
 extern const unsigned short diaSixMap[1024];
-# 58 "main.c" 2
+# 57 "main.c" 2
 # 1 "diaSeven.h" 1
 
 
@@ -409,7 +399,7 @@ extern const unsigned short diaSixMap[1024];
 
 
 extern const unsigned short diaSevenMap[1024];
-# 59 "main.c" 2
+# 58 "main.c" 2
 # 1 "diaEight.h" 1
 
 
@@ -419,7 +409,7 @@ extern const unsigned short diaSevenMap[1024];
 
 
 extern const unsigned short diaEightMap[1024];
-# 60 "main.c" 2
+# 59 "main.c" 2
 
 
 
@@ -465,6 +455,9 @@ typedef enum {
 GameState state;
 int hOff = 0;
 int vOff = 0;
+int talkedToGuide = 0;
+int begin = 0;
+int startPage = 0;
 
 
 
@@ -576,7 +569,8 @@ void goToStartTwo() {
     initGuideSprite();
     startPlayer.worldX = 134;
     startPlayer.worldX = 436;
-
+    next = 0;
+    talkedToGuide = 1;
     hOff = 0;
     vOff = (256 - 160);
     state = START;
@@ -595,7 +589,7 @@ void start() {
         goToStartInstructions();
     }
 
-    if (next == 1) {
+    if (next == 1 && talkedToGuide) {
         goToPhaseOne();
     }
 }
