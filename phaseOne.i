@@ -158,19 +158,42 @@ extern const unsigned short playerPal[256];
 # 13 "phaseOne.c" 2
 
 
-hikerFrameDelay = 4;
-hikerFrameCounter = 0;
-hikerFrame = 0;
-hikerFrames[] = {24, 26, 28, 20, 22};
+
+
+
+int hikerFrameDelay = 4;
+int hikerFrameCounter = 0;
+int hikerFrame = 0;
+int hikerFrames[] = {24, 26, 28, 20, 22};
 extern int hOff, vOff;
-isDucking = 0;
-gameOver = 0;
-winPhaseOne = 0;
-sbb = 20;
+int isDucking = 0;
+int gameOver = 0;
+int winPhaseOne = 0;
+int sbb = 20;
 
 
 SPRITE player;
 extern SPRITE health;
+
+
+typedef enum {
+    PLAYER_NORMAL,
+    PLAYER_FALLING
+} PlayerState;
+
+PlayerState playerState = PLAYER_NORMAL;
+
+
+int fallingX, fallingY;
+const int fallSpeed = 3;
+
+
+void startFallingAnimation(int startX, int startY);
+void updateFallingAnimation(void);
+void drawFallingSprite(void);
+void resetPlayerAfterFall(void);
+
+inline unsigned char colorAt(int x, int y);
 
 
 void initPlayer() {
@@ -193,7 +216,15 @@ void initPlayer() {
     DMANow(3, (void*) playerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
 }
 
+
 void updatePlayer(int* hOff, int* vOff) {
+
+    if (playerState == PLAYER_FALLING) {
+        updateFallingAnimation();
+        return;
+    }
+
+
     player.isAnimating = 0;
 
 
@@ -215,7 +246,6 @@ void updatePlayer(int* hOff, int* vOff) {
         player.direction = 1;
         if (player.worldX > 0) {
             int step;
-
             for (step = 0; step <= 3; step++) {
                 if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
                     (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
@@ -308,7 +338,14 @@ void updatePlayer(int* hOff, int* vOff) {
     }
 }
 
+
 void drawPlayer() {
+
+    if (playerState == PLAYER_FALLING) {
+        drawFallingSprite();
+        return;
+    }
+
 
     int leftX = player.worldX;
     int rightX = player.worldX + player.width - 1;
@@ -321,44 +358,86 @@ void drawPlayer() {
         colorAt(leftX, bottomY) == 0x05 ||
         colorAt(rightX, bottomY) == 0x05) {
 
-
         if (health.active > 0) {
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
             }
         }
-
-
         player.worldX = 0;
         player.worldY = 101;
         player.yVel = 0;
-
-
         hOff = 0;
         vOff = 0;
-
         return;
     }
+
+
+    if (colorAt(leftX, topY) == 0x06 ||
+        colorAt(rightX, topY) == 0x06 ||
+        colorAt(leftX, bottomY) == 0x06 ||
+        colorAt(rightX, bottomY) == 0x06) {
+
+        if (health.active > 0) {
+            health.active--;
+            if (health.active == 0) {
+                gameOver = 1;
+            }
+            startFallingAnimation(110, 332);
+        }
+        return;
+    }
+
+
+    if (colorAt(leftX, topY) == 0x07 ||
+        colorAt(rightX, topY) == 0x07 ||
+        colorAt(leftX, bottomY) == 0x07 ||
+        colorAt(rightX, bottomY) == 0x07) {
+
+        if (health.active > 0) {
+            health.active--;
+            if (health.active == 0) {
+                gameOver = 1;
+            }
+            startFallingAnimation(123, 332);
+        }
+        return;
+    }
+
+
+    if (colorAt(leftX, topY) == 0x08 ||
+        colorAt(rightX, topY) == 0x08 ||
+        colorAt(leftX, bottomY) == 0x08 ||
+        colorAt(rightX, bottomY) == 0x08) {
+
+        if (health.active > 0) {
+            health.active--;
+            if (health.active == 0) {
+                gameOver = 1;
+            }
+            startFallingAnimation(183, 332);
+        }
+        return;
+    }
+
 
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
 
-
     shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
     if (player.direction == 0) {
         shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
-    } else if (player.direction == 1) {
+    } else {
         shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
     }
 
-
     if (isDucking) {
-            shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
+        shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
     } else {
         shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
     }
 }
+
 
 void resetPlayerState() {
     hikerFrameDelay = 4;
@@ -368,6 +447,41 @@ void resetPlayerState() {
     gameOver = 0;
     sbb = 20;
 }
+
+
+
+
+void startFallingAnimation(int startX, int startY) {
+    playerState = PLAYER_FALLING;
+    fallingX = startX;
+    fallingY = startY;
+}
+
+
+void updateFallingAnimation(void) {
+    fallingY += fallSpeed;
+    if (fallingY >= 400) {
+        resetPlayerAfterFall();
+    }
+}
+
+
+void drawFallingSprite(void) {
+    shadowOAM[player.oamIndex].attr0 = ((fallingY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
+    shadowOAM[player.oamIndex].attr1 = ((fallingX) & 0x1FF) | (2<<14);
+    shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[0]))) & 0x3FF);
+}
+
+
+void resetPlayerAfterFall(void) {
+    player.worldX = 0;
+    player.worldY = 101;
+    player.yVel = 0;
+    hOff = 0;
+    vOff = 0;
+    playerState = PLAYER_NORMAL;
+}
+
 
 inline unsigned char colorAt(int x, int y) {
     return ((unsigned char*) bgOneFrontCMBitmap)[((y) * (512) + (x))];

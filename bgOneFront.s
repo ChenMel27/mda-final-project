@@ -682,8 +682,8 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	153
+	.short	221
+	.short	222
 	.short	154
 	.short	1
 	.short	2
@@ -714,8 +714,8 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	153
-	.short	154
-	.short	178
+	.short	246
+	.short	247
 	.short	179
 	.short	26
 	.short	27
@@ -746,8 +746,8 @@ bgOneFrontMap:
 	.short	2
 	.short	2
 	.short	178
-	.short	179
-	.short	27
+	.short	271
+	.short	272
 	.short	27
 	.short	27
 	.short	27
@@ -778,8 +778,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	26
-	.short	26
+	.short	191
+	.short	191
 	.short	27
 	.short	27
 	.short	27
@@ -798,8 +798,8 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	153
+	.short	221
+	.short	222
 	.short	154
 	.short	178
 	.short	179
@@ -810,8 +810,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	26
-	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	233
 	.short	233
@@ -830,8 +830,8 @@ bgOneFrontMap:
 	.short	151
 	.short	152
 	.short	153
-	.short	154
-	.short	178
+	.short	246
+	.short	247
 	.short	179
 	.short	179
 	.short	26
@@ -842,8 +842,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	26
-	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -862,7 +862,8 @@ bgOneFrontMap:
 	.short	176
 	.short	177
 	.short	178
-	.short	179
+	.short	271
+	.short	272
 	.short	26
 	.short	26
 	.short	26
@@ -873,6 +874,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -891,6 +894,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -901,6 +906,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -919,6 +926,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -929,6 +938,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -947,6 +958,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -957,6 +970,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -975,6 +990,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -985,6 +1002,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -1003,6 +1022,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -1013,29 +1034,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -1626,7 +1626,7 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	316
+	.short	320
 	.short	0
 	.short	0
 	.short	0
@@ -1641,8 +1641,8 @@ bgOneFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	153
+	.short	221
+	.short	222
 	.short	154
 	.short	178
 	.short	179
@@ -1673,8 +1673,8 @@ bgOneFrontMap:
 	.short	151
 	.short	152
 	.short	153
-	.short	154
-	.short	178
+	.short	246
+	.short	247
 	.short	179
 	.short	26
 	.short	26
@@ -1705,8 +1705,8 @@ bgOneFrontMap:
 	.short	176
 	.short	177
 	.short	178
-	.short	179
-	.short	26
+	.short	271
+	.short	272
 	.short	26
 	.short	26
 	.short	26
@@ -1737,13 +1737,13 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
 	.short	26
 	.short	26
-	.short	26
-	.short	26
 	.short	233
 	.short	233
 	.short	233
@@ -1769,13 +1769,13 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
 	.short	26
 	.short	26
-	.short	26
-	.short	26
 	.short	233
 	.short	233
 	.short	233
@@ -1798,16 +1798,16 @@ bgOneFrontMap:
 	.short	233
 	.short	233
 	.short	233
-	.short	26
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
 	.short	26
 	.short	26
-	.short	26
 	.short	233
 	.short	233
 	.short	233
@@ -1820,8 +1820,6 @@ bgOneFrontMap:
 	.short	233
 	.short	233
 	.short	233
-	.short	26
-	.short	26
 	.short	26
 	.short	26
 	.short	26
@@ -1835,6 +1833,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -1865,14 +1865,14 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
 	.short	26
 	.short	26
 	.short	26
-	.short	26
-	.short	26
 	.short	233
 	.short	233
 	.short	233
@@ -1880,18 +1880,6 @@ bgOneFrontMap:
 	.short	233
 	.short	233
 	.short	233
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
-	.short	26
 	.short	26
 	.short	26
 	.short	26
@@ -1909,6 +1897,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -1939,6 +1929,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -1969,6 +1961,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -1999,6 +1993,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -2029,6 +2025,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
@@ -2059,6 +2057,8 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	26
+	.short	191
+	.short	191
 	.short	26
 	.short	26
 	.short	26
