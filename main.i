@@ -445,7 +445,9 @@ typedef enum {
     START,
     DIALOGUE,
     PHASEONE,
+    DIALOGUE2,
     PHASETWO,
+    DIALOGUE3,
     PHASETHREE,
     PAUSE,
     LOSE,
@@ -481,8 +483,14 @@ int main() {
             case PHASEONE:
                 phaseOne();
                 break;
+            case DIALOGUE2:
+                phaseTwoInstructions();
+                break;
             case PHASETWO:
                 phaseTwo();
+                break;
+            case DIALOGUE3:
+                phaseThreeInstructions();
                 break;
             case PHASETHREE:
                 phaseThree();
@@ -578,6 +586,7 @@ void goToStartTwo() {
 
 void start() {
     updateStartPlayer(&hOff, &vOff);
+    updateGuideSprite();
     (*(volatile unsigned short*) 0x04000014) = hOff;
     (*(volatile unsigned short*) 0x04000016) = vOff;
 
@@ -713,10 +722,65 @@ void phaseOne() {
     }
 
     if (winPhaseOne) {
-        goToPhaseTwo();
+        goToPhaseTwoInstructions();
     }
 }
 
+
+
+void goToPhaseTwoInstructions() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
+    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
+
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
+
+    startPage = 0;
+    state = DIALOGUE2;
+}
+
+
+
+void phaseTwoInstructions() {
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+
+        startPage++;
+
+        switch (startPage) {
+            case 1:
+                DMANow(3, diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 2:
+                DMANow(3, diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 3:
+                DMANow(3, diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 4:
+                DMANow(3, diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 5:
+                DMANow(3, diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 6:
+                DMANow(3, diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 7:
+                DMANow(3, diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 8:
+                goToPhaseTwo();
+                break;
+        }
+    }
+}
 
 
 
@@ -775,7 +839,63 @@ void phaseTwo() {
         goToLose();
     }
     if (winPhaseTwo) {
-        goToPhaseThree();
+        goToPhaseThreeInstructions();
+    }
+}
+
+
+
+void goToPhaseThreeInstructions() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
+    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
+
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
+
+    startPage = 0;
+    state = DIALOGUE3;
+}
+
+
+
+void phaseThreeInstructions() {
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+
+        startPage++;
+
+        switch (startPage) {
+            case 1:
+                DMANow(3, diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 2:
+                DMANow(3, diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 3:
+                DMANow(3, diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 4:
+                DMANow(3, diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 5:
+                DMANow(3, diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 6:
+                DMANow(3, diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 7:
+                DMANow(3, diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                break;
+            case 8:
+                goToPhaseThree();
+                break;
+        }
     }
 }
 

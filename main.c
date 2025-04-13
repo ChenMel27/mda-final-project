@@ -91,7 +91,9 @@ typedef enum {
     START,
     DIALOGUE,
     PHASEONE,
+    DIALOGUE2,
     PHASETWO,
+    DIALOGUE3,
     PHASETHREE,
     PAUSE,
     LOSE,
@@ -127,8 +129,14 @@ int main() {
             case PHASEONE:
                 phaseOne();
                 break;
+            case DIALOGUE2:
+                phaseTwoInstructions();
+                break;
             case PHASETWO:
                 phaseTwo();
+                break;
+            case DIALOGUE3:
+                phaseThreeInstructions();
                 break;
             case PHASETHREE:
                 phaseThree();
@@ -224,6 +232,7 @@ void goToStartTwo() {
 
 void start() {
     updateStartPlayer(&hOff, &vOff);
+    updateGuideSprite();
     REG_BG1HOFF = hOff;
     REG_BG1VOFF = vOff;
 
@@ -359,12 +368,67 @@ void phaseOne() {
     }
 
     if (winPhaseOne) {
-        goToPhaseTwo();
+        goToPhaseTwoInstructions();
     }
 }
 
+// ============================= [ DIALOGUE 2 STATE ] =============================
 
-// ============================= [ PHASE ONE STATE ] ============================
+void goToPhaseTwoInstructions() {
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
+    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
+
+    REG_BG0HOFF = 0;
+    REG_BG0VOFF = 0;
+
+    startPage = 0;
+    state = DIALOGUE2;
+}
+
+
+
+void phaseTwoInstructions() {
+    if (BUTTON_PRESSED(BUTTON_START)) {
+
+        startPage++;
+
+        switch (startPage) {
+            case 1:
+                DMANow(3, diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
+                break;
+            case 2:
+                DMANow(3, diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
+                break;
+            case 3:
+                DMANow(3, diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
+                break;
+            case 4:
+                DMANow(3, diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
+                break;
+            case 5:
+                DMANow(3, diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
+                break;
+            case 6:
+                DMANow(3, diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
+                break;
+            case 7:
+                DMANow(3, diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
+                break;
+            case 8:
+                goToPhaseTwo();
+                break;
+        }
+    }
+}
+
+// ============================= [ PHASE TWO STATE ] ============================
 
 void goToPhaseTwo() {
 
@@ -421,7 +485,63 @@ void phaseTwo() {
         goToLose();
     }
     if (winPhaseTwo) {
-        goToPhaseThree();
+        goToPhaseThreeInstructions();
+    }
+}
+
+// ============================= [ DIALOGUE 2 STATE ] =============================
+
+void goToPhaseThreeInstructions() {
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
+    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
+
+    REG_BG0HOFF = 0;
+    REG_BG0VOFF = 0;
+
+    startPage = 0;
+    state = DIALOGUE3;
+}
+
+
+
+void phaseThreeInstructions() {
+    if (BUTTON_PRESSED(BUTTON_START)) {
+
+        startPage++;
+
+        switch (startPage) {
+            case 1:
+                DMANow(3, diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
+                break;
+            case 2:
+                DMANow(3, diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
+                break;
+            case 3:
+                DMANow(3, diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
+                break;
+            case 4:
+                DMANow(3, diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
+                break;
+            case 5:
+                DMANow(3, diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
+                break;
+            case 6:
+                DMANow(3, diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
+                break;
+            case 7:
+                DMANow(3, diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
+                break;
+            case 8:
+                goToPhaseThree();
+                break;
+        }
     }
 }
 
