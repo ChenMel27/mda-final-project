@@ -15,7 +15,7 @@
 hikerFrameDelay = 4;
 hikerFrameCounter = 0;
 hikerFrame = 0;
-hikerFrames[] = {20, 22, 24};
+hikerFrames[] = {24, 26, 28, 20, 22};
 extern int hOff, vOff;
 isDucking = 0;
 gameOver = 0;
@@ -35,7 +35,7 @@ void initPlayer() {
     player.width = 12;
     player.height = 25;
     player.oamIndex = 0;
-    player.numFrames = 3;
+    player.numFrames = 5;
     player.currentFrame = 0;
     player.isAnimating = 1;
     player.direction = 0;
@@ -155,9 +155,6 @@ void updatePlayer(int* hOff, int* vOff) {
     if (*vOff < 0) *vOff = 0;
     if (*hOff > MAPWIDTH - SCREENWIDTH) *hOff = MAPWIDTH - SCREENWIDTH;
     if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
-    
-    // Update screen block index
-    sbb = 20 + (*hOff / 256);
 
     // Player wins if reached the end of the map
     if (player.worldX + player.width >= MAPWIDTH - 1) {

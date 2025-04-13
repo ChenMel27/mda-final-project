@@ -137,7 +137,7 @@ typedef struct {
 int hikerFrameDelay;
 int hikerFrameCounter;
 int hikerFrame;
-int hikerFrames[3];
+int hikerFrames[5];
 int isDucking;
 int gameOver;
 int winPhaseOne;
@@ -161,7 +161,7 @@ extern const unsigned short playerPal[256];
 hikerFrameDelay = 4;
 hikerFrameCounter = 0;
 hikerFrame = 0;
-hikerFrames[] = {20, 22, 24};
+hikerFrames[] = {24, 26, 28, 20, 22};
 extern int hOff, vOff;
 isDucking = 0;
 gameOver = 0;
@@ -181,7 +181,7 @@ void initPlayer() {
     player.width = 12;
     player.height = 25;
     player.oamIndex = 0;
-    player.numFrames = 3;
+    player.numFrames = 5;
     player.currentFrame = 0;
     player.isAnimating = 1;
     player.direction = 0;
@@ -301,9 +301,6 @@ void updatePlayer(int* hOff, int* vOff) {
     if (*vOff < 0) *vOff = 0;
     if (*hOff > 512 - 240) *hOff = 512 - 240;
     if (*vOff > 256 - 160) *vOff = 256 - 160;
-
-
-    sbb = 20 + (*hOff / 256);
 
 
     if (player.worldX + player.width >= 512 - 1) {

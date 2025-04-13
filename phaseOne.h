@@ -20,7 +20,7 @@
 int hikerFrameDelay;
 int hikerFrameCounter;
 int hikerFrame;
-int hikerFrames[3];
+int hikerFrames[5];
 int isDucking;
 int gameOver;
 int winPhaseOne;
