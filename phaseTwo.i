@@ -129,7 +129,7 @@ typedef struct {
 # 6 "phaseTwo.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
-SPRITE snows[3];
+SPRITE snows[6];
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
@@ -1174,10 +1174,10 @@ void drawPlayerTwo() {
 }
 
 void initSnow() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 6; i++) {
         snows[i].worldX = rand() % (512 - 16);
 
-        snows[i].worldY = rand() % 60 - 80;
+        snows[i].worldY = rand() % 10 - 10;
         snows[i].width = 16;
         snows[i].height = 16;
         snows[i].oamIndex = 120 + i;
@@ -1187,7 +1187,7 @@ void initSnow() {
 }
 
 void updateSnow() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 6; i++) {
         if (snows[i].active) {
             snows[i].worldY += snows[i].yVel;
 
@@ -1195,7 +1195,7 @@ void updateSnow() {
             if (collision(snows[i].worldX, snows[i].worldY, 16, 16,
                 player.worldX, player.worldY, player.width, player.height)) {
 
-                snows[i].worldY = -16;
+                snows[i].worldY = rand() % 10 - 10;
                 snows[i].worldX = rand() % (512 - 16);
 
 
@@ -1218,7 +1218,7 @@ void updateSnow() {
 
 
             if (snows[i].worldY > 256) {
-                snows[i].worldY = rand() % 60 - 80;
+                snows[i].worldY = rand() % 10 - 10;
                 snows[i].worldX = rand() % (512 - 16);
             }
         }
@@ -1226,7 +1226,7 @@ void updateSnow() {
 }
 
 void drawSnow() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 6; i++) {
         if (snows[i].active) {
             int screenX = snows[i].worldX - hOff;
             int screenY = snows[i].worldY - vOff;

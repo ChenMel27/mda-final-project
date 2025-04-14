@@ -527,23 +527,22 @@ initSnow:
 	str	r0, [r4, #16]
 	mov	lr, pc
 	bx	r5
-	mov	r1, #1
-	smull	r3, r2, r6, r0
+	mov	r2, #1
+	smull	r3, r1, r6, r0
 	asr	r3, r0, #31
-	add	r2, r2, r0
-	rsb	r3, r3, r2, asr #5
-	rsb	r3, r3, r3, lsl #4
-	add	r2, r8, r1
+	rsb	r3, r3, r1, asr #2
+	add	r3, r3, r3, lsl #2
+	add	r1, r8, r2
 	strb	r8, [r4, #56]
-	sub	r0, r0, r3, lsl #2
-	and	r8, r2, #255
-	sub	r0, r0, #80
-	cmp	r8, #123
+	sub	r0, r0, r3, lsl r2
+	and	r8, r1, #255
+	sub	r0, r0, #10
+	cmp	r8, #126
 	str	r9, [r4, #24]
 	str	r9, [r4, #28]
 	str	r0, [r4, #20]
-	str	r1, [r4, #52]
-	str	r1, [r4, #12]
+	str	r2, [r4, #52]
+	str	r2, [r4, #12]
 	add	r4, r4, #60
 	bne	.L110
 	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
@@ -554,7 +553,7 @@ initSnow:
 	.word	snows
 	.word	rand
 	.word	-2078209981
-	.word	-2004318071
+	.word	1717986919
 	.size	initSnow, .-initSnow
 	.align	2
 	.global	updateSnow
@@ -569,26 +568,22 @@ updateSnow:
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	ldr	r4, .L131
 	ldr	r5, .L131+4
-	ldr	r7, .L131+8
-	ldr	r8, .L131+12
-	ldr	fp, .L131+16
+	ldr	r8, .L131+8
+	ldr	r7, .L131+12
+	ldr	r10, .L131+16
 	ldr	r9, .L131+20
-	ldr	r10, .L131+24
+	ldr	fp, .L131+24
 	sub	sp, sp, #20
-	add	r6, r4, #180
-.L123:
-	ldr	r3, [r4, #52]
-	cmp	r3, #0
-	bne	.L129
+	add	r6, r4, #360
+	b	.L123
 .L117:
 	add	r4, r4, #60
 	cmp	r4, r6
-	bne	.L123
-	add	sp, sp, #20
-	@ sp needed
-	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	bx	lr
-.L129:
+	beq	.L129
+.L123:
+	ldr	r3, [r4, #52]
+	cmp	r3, #0
+	beq	.L117
 	mov	r3, #16
 	add	r2, r5, #24
 	ldm	r2, {r2, ip}
@@ -605,7 +600,7 @@ updateSnow:
 	ldr	r0, [r4, #16]
 	str	r1, [r4, #20]
 	mov	lr, pc
-	bx	r7
+	bx	r8
 	cmp	r0, #0
 	bne	.L130
 .L118:
@@ -613,17 +608,16 @@ updateSnow:
 	cmp	r3, #256
 	ble	.L117
 	mov	lr, pc
-	bx	r8
-	smull	r3, r2, fp, r0
+	bx	r7
+	smull	r3, r2, r10, r0
 	asr	r3, r0, #31
-	add	r2, r2, r0
-	rsb	r3, r3, r2, asr #5
-	rsb	r3, r3, r3, lsl #4
-	sub	r0, r0, r3, lsl #2
-	sub	r0, r0, #80
+	rsb	r3, r3, r2, asr #2
+	add	r3, r3, r3, lsl #2
+	sub	r0, r0, r3, lsl #1
+	sub	r0, r0, #10
 	str	r0, [r4, #20]
 	mov	lr, pc
-	bx	r8
+	bx	r7
 	smull	r3, r2, r9, r0
 	asr	r3, r0, #31
 	add	r2, r2, r0
@@ -631,18 +625,32 @@ updateSnow:
 	rsb	r3, r3, r3, lsl #5
 	sub	r0, r0, r3, lsl #4
 	str	r0, [r4, #16]
-	b	.L117
+	add	r4, r4, #60
+	cmp	r4, r6
+	bne	.L123
+.L129:
+	add	sp, sp, #20
+	@ sp needed
+	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+	bx	lr
 .L130:
-	mvn	r3, #15
-	str	r3, [r4, #20]
 	mov	lr, pc
-	bx	r8
+	bx	r7
+	smull	r3, r2, r10, r0
+	asr	r3, r0, #31
+	rsb	r3, r3, r2, asr #2
+	add	r3, r3, r3, lsl #2
+	sub	r0, r0, r3, lsl #1
+	sub	r0, r0, #10
+	str	r0, [r4, #20]
+	mov	lr, pc
+	bx	r7
 	smull	r3, r2, r9, r0
 	asr	r3, r0, #31
 	add	r2, r2, r0
 	rsb	r3, r3, r2, asr #8
 	mov	r2, #0
-	ldr	r1, [r10, #52]
+	ldr	r1, [fp, #52]
 	rsb	r3, r3, r3, lsl #5
 	sub	r0, r0, r3, lsl #4
 	cmp	r1, r2
@@ -653,7 +661,7 @@ updateSnow:
 	cmp	ip, r2
 	moveq	r1, #1
 	ldreq	r3, .L131+28
-	str	ip, [r10, #52]
+	str	ip, [fp, #52]
 	streq	r1, [r3]
 .L120:
 	ldr	r1, .L131+32
@@ -671,7 +679,7 @@ updateSnow:
 	.word	player
 	.word	collision
 	.word	rand
-	.word	-2004318071
+	.word	1717986919
 	.word	-2078209981
 	.word	health
 	.word	gameOver
@@ -697,7 +705,7 @@ drawSnow:
 	ldr	r4, [r2]
 	ldr	ip, .L141+12
 	ldr	lr, .L141+16
-	add	r0, r3, #180
+	add	r0, r3, #360
 .L135:
 	ldr	r2, [r3, #52]
 	cmp	r2, #0
@@ -752,7 +760,7 @@ colorAtTwo:
 	.size	colorAtTwo, .-colorAtTwo
 	.comm	healthBarFrames,72,4
 	.global	winPhaseTwo
-	.comm	snows,180,4
+	.comm	snows,360,4
 	.bss
 	.align	2
 	.set	.LANCHOR0,. + 0

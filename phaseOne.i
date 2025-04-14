@@ -399,7 +399,7 @@ void drawPlayer() {
             if (health.active == 0) {
                 gameOver = 1;
             }
-            startFallingAnimation(123, 332);
+            startFallingAnimation(125, 332);
         }
         return;
     }

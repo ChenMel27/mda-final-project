@@ -838,7 +838,7 @@ goToPhaseTwo:
 	.word	100720640
 	.word	bgTwoBackMap
 	.word	100724736
-	.word	dayTMMap
+	.word	duskTMMap
 	.word	initPlayerTwo
 	.word	initSnow
 	.word	state
@@ -1929,7 +1929,7 @@ win:
 	.comm	winPhaseOne,4,4
 	.comm	gameOver,4,4
 	.comm	isDucking,4,4
-	.comm	hikerFrames,12,4
+	.comm	hikerFrames,20,4
 	.comm	hikerFrame,4,4
 	.comm	hikerFrameCounter,4,4
 	.comm	hikerFrameDelay,4,4

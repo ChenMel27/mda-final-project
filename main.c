@@ -56,6 +56,7 @@ Project:    The Summit Ascent
 #include "diaSix.h"
 #include "diaSeven.h"
 #include "diaEight.h"
+#include "duskTM.h"
 #define BG_PRIORITY(n) ((n) & 3)
 
 // ============================= [ FUNCTION PROTOTYPES ] =======================
@@ -447,7 +448,7 @@ void goToPhaseTwo() {
     // DMA BG0/1/2 tile maps into screen blocks
     DMANow(3, bgTwoFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
     DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
-    DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
+    DMANow(3, duskTMMap, &SCREENBLOCK[30], duskTMLen / 2);
     
     // Initialize sprites
     initPlayerTwo();

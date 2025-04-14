@@ -217,7 +217,7 @@ void initSnow() {
     for (int i = 0; i < MAX_SNOW; i++) {
         snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
         // Start above screen
-        snows[i].worldY = rand() % 60 - 80;
+        snows[i].worldY = rand() % 10 - 10;
         snows[i].width = SNOW_WIDTH;
         snows[i].height = SNOW_HEIGHT;
         snows[i].oamIndex = 120 + i;
@@ -235,7 +235,7 @@ void updateSnow() {
             if (collision(snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
                 player.worldX, player.worldY, player.width, player.height)) {
                 // Reset the snow to the top of the screen
-                snows[i].worldY = -SNOW_HEIGHT;
+                snows[i].worldY = rand() % 10 - 10;
                 snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
             
                 // Reduce player's health
@@ -258,7 +258,7 @@ void updateSnow() {
 
             // Reset if off screen
             if (snows[i].worldY > MAPHEIGHT) {
-                snows[i].worldY = rand() % 60 - 80;
+                snows[i].worldY = rand() % 10 - 10;
                 snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
             }
         }
@@ -282,4 +282,3 @@ void drawSnow() {
 inline unsigned char colorAtTwo(int x, int y) {
     return ((unsigned char*) bgTwoFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
 }
-

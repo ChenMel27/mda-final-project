@@ -186,7 +186,7 @@ typedef struct {
 int hikerFrameDelay;
 int hikerFrameCounter;
 int hikerFrame;
-int hikerFrames[3];
+int hikerFrames[5];
 int isDucking;
 int gameOver;
 int winPhaseOne;
@@ -410,6 +410,16 @@ extern const unsigned short diaSevenMap[1024];
 
 extern const unsigned short diaEightMap[1024];
 # 59 "main.c" 2
+# 1 "duskTM.h" 1
+
+
+
+
+
+
+
+extern const unsigned short duskTMMap[2048];
+# 60 "main.c" 2
 
 
 
@@ -801,7 +811,7 @@ void goToPhaseTwo() {
 
     DMANow(3, bgTwoFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
     DMANow(3, bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
-    DMANow(3, dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+    DMANow(3, duskTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
 
     initPlayerTwo();

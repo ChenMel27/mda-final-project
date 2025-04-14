@@ -537,7 +537,7 @@ drawPlayer:
 	str	r3, [r2, #52]
 	moveq	r3, #1
 	mov	ip, #1
-	mov	r0, #123
+	mov	r0, #125
 	streq	r3, [lr, #20]
 	b	.L120
 .L103:
