@@ -452,11 +452,11 @@ diaFiveMap:
 	.short	107
 	.short	107
 	.short	257
-	.short	108
+	.short	107
 	.short	100
+	.short	96
+	.short	136
 	.short	100
-	.short	134
-	.short	272
 	.short	272
 	.short	324
 	.short	272
@@ -501,27 +501,27 @@ diaFiveMap:
 	.short	139
 	.short	129
 	.short	135
-	.short	199
-	.short	104
-	.short	128
 	.short	257
-	.short	97
-	.short	100
-	.short	134
 	.short	137
-	.short	100
-	.short	100
-	.short	128
-	.short	197
-	.short	100
-	.short	96
-	.short	98
+	.short	104
+	.short	134
 	.short	103
-	.short	272
-	.short	129
-	.short	128
+	.short	257
+	.short	134
+	.short	103
+	.short	132
 	.short	100
+	.short	100
+	.short	257
+	.short	128
+	.short	129
+	.short	134
+	.short	100
+	.short	133
 	.short	165
+	.short	257
+	.short	257
+	.short	257
 	.short	324
 	.short	272
 	.short	272

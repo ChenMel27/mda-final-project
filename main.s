@@ -1924,7 +1924,7 @@ win:
 	.comm	winPhaseThree,4,4
 	.comm	playerPaletteWork,512,4
 	.comm	winPhaseTwo,4,4
-	.comm	snows,180,4
+	.comm	snows,360,4
 	.comm	sbb,4,4
 	.comm	winPhaseOne,4,4
 	.comm	gameOver,4,4

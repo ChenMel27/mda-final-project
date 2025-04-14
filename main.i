@@ -200,7 +200,7 @@ unsigned char colorAt(int x, int y);
 # 36 "main.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
-SPRITE snows[3];
+SPRITE snows[6];
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
