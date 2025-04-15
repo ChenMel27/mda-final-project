@@ -984,11 +984,11 @@ extern int sbb;
 void initPlayerTwo() {
     resetPlayerState();
     player.worldX = 0;
-    player.worldY = 101;
+    player.worldY = 102;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
     player.width = 17;
-    player.height = 23;
+    player.height = 24;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -1164,7 +1164,7 @@ void drawPlayerTwo() {
 
 
         if (isDucking) {
-            shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
+            shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (4))) & 0x3FF);
         } else {
             shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
         }

@@ -24,11 +24,11 @@ extern int sbb;
 void initPlayerTwo() {
     resetPlayerState();
     player.worldX = 0;
-    player.worldY = 101;
+    player.worldY = 102;
     player.x = SCREENWIDTH / 2 - 8;
     player.y = SCREENHEIGHT / 2 - 16;
     player.width = 17;
-    player.height = 23;
+    player.height = 24;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -204,7 +204,7 @@ void drawPlayerTwo() {
         
         // If ducking use the duck tile
         if (isDucking) {
-            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
+            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 5);
         } else {
             shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
         }

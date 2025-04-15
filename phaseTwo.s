@@ -29,9 +29,9 @@ initPlayerTwo:
 	mov	r1, #0
 	mov	r5, #64
 	mov	r3, #17
-	mov	r2, #23
+	mov	r2, #24
 	mov	lr, #1
-	mov	r7, #101
+	mov	r7, #102
 	mov	r6, #112
 	ldr	ip, .L4+4
 	mov	r0, r4
@@ -434,7 +434,7 @@ drawPlayerTwo:
 	ldr	r1, .L107+24
 	ldr	r1, [r1]
 	cmp	r1, #0
-	movne	r1, #132
+	movne	r1, #164
 	ldreq	r0, .L107+28
 	ldreq	r1, .L107+32
 	ldreq	r0, [r0]

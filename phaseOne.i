@@ -169,7 +169,6 @@ extern int hOff, vOff;
 int isDucking = 0;
 int gameOver = 0;
 int winPhaseOne = 0;
-int sbb = 20;
 
 
 SPRITE player;
@@ -198,11 +197,11 @@ inline unsigned char colorAt(int x, int y);
 
 void initPlayer() {
     player.worldX = 0;
-    player.worldY = 101;
+    player.worldY = 102;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
     player.width = 12;
-    player.height = 25;
+    player.height = 24;
     player.oamIndex = 0;
     player.numFrames = 5;
     player.currentFrame = 0;
@@ -250,7 +249,8 @@ void updatePlayer(int* hOff, int* vOff) {
                 if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
                     (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
                     player.worldX -= player.xVel;
-                    player.worldY -= step;
+                    int offsetY = (step > 0) ? (step - 1) : 0;
+                    player.worldY -= offsetY;
                     break;
                 }
             }
@@ -365,7 +365,7 @@ void drawPlayer() {
             }
         }
         player.worldX = 0;
-        player.worldY = 101;
+        player.worldY = 102;
         player.yVel = 0;
         hOff = 0;
         vOff = 0;
@@ -475,7 +475,7 @@ void drawFallingSprite(void) {
 
 void resetPlayerAfterFall(void) {
     player.worldX = 0;
-    player.worldY = 101;
+    player.worldY = 102;
     player.yVel = 0;
     hOff = 0;
     vOff = 0;

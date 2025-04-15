@@ -24,11 +24,11 @@ volatile int secondsElapsed = 0;
 void initPlayerThree() {
     resetPlayerState();
     player.worldX = 0;
-    player.worldY = 101;
+    player.worldY = 102;
     player.x = SCREENWIDTH / 2 - 8;
     player.y = SCREENHEIGHT / 2 - 16;
     player.width = 17;
-    player.height = 23;
+    player.height = 24;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -219,9 +219,9 @@ void drawPlayerThree() {
         
     // If ducking use the duck tile otherwise animate and use the regular animated frame
     if (isDucking) {
-        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 5);
     } else {
-        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 5);
     }
     }
 
@@ -301,31 +301,31 @@ void updatePlayerPalette(void)
     
     // Update only palette indices 3 to 13 (inclusive)
     // That is 11 entries.
-    for (int i = 3; i <= 13; i++) {
-        unsigned short orig = playerPal[i];
-        // Extract the original RGB components (each 0 .. 31)
-        int r = orig & 0x1F;
-        int g = (orig >> 5) & 0x1F;
-        int b = (orig >> 10) & 0x1F;
+
+    unsigned short orig = playerPal[1];
+    // Extract the original RGB components (each 0 .. 31)
+    int r = orig & 0x1F;
+    int g = (orig >> 5) & 0x1F;
+    int b = (orig >> 10) & 0x1F;
         
-        // Scale red and green by the factor.
-        int newR = (int)(r * factor);
-        int newG = (int)(g * factor);
-        // For blue, blend toward maximum (31) as oxygen depletes.
-        int newB = (int)(b * factor + 31 * (1.0f - factor));
+    // Scale red and green by the factor.
+    int newR = (int)(r * factor);
+    int newG = (int)(g * factor);
+    // For blue, blend toward maximum (31) as oxygen depletes.
+    int newB = (int)(b * factor + 31 * (1.0f - factor));
         
-        // Clamp, if needed (though factor math should keep it in range)
-        if (newR > 31) newR = 31;
-        if (newG > 31) newG = 31;
-        if (newB > 31) newB = 31;
+    // Clamp, if needed (though factor math should keep it in range)
+    if (newR > 31) newR = 31;
+    if (newG > 31) newG = 31;
+    if (newB > 31) newB = 31;
         
-        // Repack the components into a 15-bit RGB color (RGB555).
-        unsigned short newColor = (newB << 10) | (newG << 5) | newR;
-        playerPaletteWork[i] = newColor;
-    }
+    // Repack the components into a 15-bit RGB color (RGB555).
+    unsigned short newColor = (newB << 10) | (newG << 5) | newR;
+    playerPaletteWork[1] = newColor;
+    
     
     // Update only the portion of the sprite palette corresponding to entries 3..13.
     // If each palette entry is a halfword (2 bytes) and you want 11 entries:
-    DMANow(3, &playerPaletteWork[3], &SPRITE_PAL[3], 11);
+    DMANow(3, &playerPaletteWork[1], &SPRITE_PAL[1], 1);
 }
 

@@ -29,9 +29,9 @@ initPlayerThree:
 	mov	r1, #0
 	mov	r5, #64
 	mov	r3, #17
-	mov	r2, #23
+	mov	r2, #24
 	mov	lr, #1
-	mov	r7, #101
+	mov	r7, #102
 	mov	r6, #112
 	ldr	ip, .L6+4
 	mov	r0, r4
@@ -461,12 +461,12 @@ drawPlayerThree:
 	ldr	r3, .L120+20
 	ldr	r3, [r3]
 	cmp	r3, #0
-	movne	r3, #132
+	movne	r3, #164
 	ldreq	r2, .L120+24
 	ldreq	r3, .L120+28
 	ldreq	r2, [r2]
 	ldreq	r3, [r3, r2, lsl #2]
-	addeq	r3, r3, #32
+	addeq	r3, r3, #160
 	lsleq	r3, r3, #22
 	lsreq	r3, r3, #22
 	add	r1, r1, ip
@@ -592,9 +592,9 @@ drawTimer:
 	.size	drawTimer, .-drawTimer
 	.global	__aeabi_i2f
 	.global	__aeabi_fdiv
-	.global	__aeabi_fsub
 	.global	__aeabi_fmul
 	.global	__aeabi_f2iz
+	.global	__aeabi_fsub
 	.global	__aeabi_fadd
 	.align	2
 	.global	updatePlayerPalette
@@ -604,114 +604,103 @@ drawTimer:
 	.type	updatePlayerPalette, %function
 updatePlayerPalette:
 	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 8
+	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r3, .L137
+	ldr	r3, .L135
 	ldrh	r0, [r3, #12]
 	rsb	r0, r0, #20
-	sub	sp, sp, #12
-	ldr	r8, .L137+4
+	push	{r4, r5, r6, r7, r8, r9, r10, lr}
 	bic	r0, r0, r0, asr #31
+	ldr	r9, .L135+4
 	mov	lr, pc
-	bx	r8
-	ldr	r3, .L137+8
-	ldr	r1, .L137+12
+	bx	r9
+	ldr	r1, .L135+8
+	ldr	r3, .L135+12
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L137+16
-	mov	r1, r0
 	mov	r6, r0
-	mov	r0, #1065353216
-	mov	lr, pc
-	bx	r3
-	ldr	r7, .L137+20
-	ldr	r1, .L137+24
-	mov	lr, pc
-	bx	r7
-	ldr	r10, .L137+28
-	mov	r2, r10
-	str	r0, [sp, #4]	@ float
-	ldr	fp, .L137+32
-	ldr	r9, .L137+36
-.L134:
-	ldrh	r10, [fp, #2]!
-	and	r0, r10, #31
-	str	r2, [sp]
-	mov	lr, pc
-	bx	r8
-	mov	r1, r6
-	mov	lr, pc
-	bx	r7
+	ldr	r3, .L135+16
+	ldrh	r7, [r3, #2]
+	and	r0, r7, #31
 	mov	lr, pc
 	bx	r9
+	ldr	r8, .L135+20
+	mov	r1, r6
+	mov	lr, pc
+	bx	r8
+	ldr	r10, .L135+24
+	mov	lr, pc
+	bx	r10
 	mov	r4, r0
-	lsr	r0, r10, #5
+	lsr	r0, r7, #5
 	and	r0, r0, #31
-	mov	lr, pc
-	bx	r8
-	mov	r1, r6
-	mov	lr, pc
-	bx	r7
 	mov	lr, pc
 	bx	r9
-	mov	r5, r0
-	lsr	r0, r10, #10
-	and	r0, r0, #31
-	mov	lr, pc
-	bx	r8
 	mov	r1, r6
 	mov	lr, pc
-	bx	r7
-	ldr	r3, .L137+40
-	ldr	r1, [sp, #4]	@ float
+	bx	r8
+	mov	lr, pc
+	bx	r10
+	mov	r5, r0
+	lsr	r0, r7, #10
+	and	r0, r0, #31
+	mov	lr, pc
+	bx	r9
+	mov	r1, r6
+	mov	lr, pc
+	bx	r8
+	mov	r3, r0
+	ldr	r2, .L135+28
+	mov	r1, r6
+	mov	r0, #1065353216
+	mov	r6, r3
+	mov	lr, pc
+	bx	r2
+	ldr	r1, .L135+32
+	mov	lr, pc
+	bx	r8
+	ldr	r3, .L135+36
+	mov	r1, r0
+	mov	r0, r6
 	mov	lr, pc
 	bx	r3
 	mov	lr, pc
-	bx	r9
+	bx	r10
 	cmp	r5, #31
-	movlt	r3, r5
-	movge	r3, #31
+	movge	r5, #31
 	cmp	r4, #31
 	movge	r4, #31
 	cmp	r0, #31
-	movge	r0, #31
-	orr	r4, r4, r3, lsl #5
-	ldr	r3, .L137+44
-	ldr	r2, [sp]
-	orr	r4, r4, r0, lsl #10
-	cmp	r3, fp
-	strh	r4, [r2, #2]!	@ movhi
-	bne	.L134
-	mov	r3, #11
+	movlt	r3, r0
+	movge	r3, #31
+	orr	r0, r4, r5, lsl #5
+	ldr	r1, .L135+40
+	orr	r0, r0, r3, lsl #10
+	strh	r0, [r1, #2]!	@ movhi
+	ldr	r4, .L135+44
+	mov	r3, #1
 	mov	r0, #3
-	ldr	r2, .L137+48
-	ldr	r1, .L137+52
-	ldr	r4, .L137+56
+	ldr	r2, .L135+48
 	mov	lr, pc
 	bx	r4
-	add	sp, sp, #12
-	@ sp needed
-	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
 	bx	lr
-.L138:
+.L136:
 	.align	2
-.L137:
+.L135:
 	.word	67109120
 	.word	__aeabi_i2f
-	.word	__aeabi_fdiv
 	.word	1101004800
-	.word	__aeabi_fsub
+	.word	__aeabi_fdiv
+	.word	playerPal
 	.word	__aeabi_fmul
-	.word	1106771968
-	.word	playerPaletteWork+4
-	.word	playerPal+4
 	.word	__aeabi_f2iz
+	.word	__aeabi_fsub
+	.word	1106771968
 	.word	__aeabi_fadd
-	.word	playerPal+26
-	.word	83886598
-	.word	playerPaletteWork+6
+	.word	playerPaletteWork
 	.word	DMANow
+	.word	83886594
 	.size	updatePlayerPalette, .-updatePlayerPalette
 	.global	secondsElapsed
 	.comm	healthBarFrames,72,4

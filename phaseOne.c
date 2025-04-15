@@ -23,7 +23,6 @@ extern int hOff, vOff;
 int isDucking = 0;
 int gameOver = 0;
 int winPhaseOne = 0;
-int sbb = 20;
 
 /* --- Sprite Definitions --- */
 SPRITE player;
@@ -56,7 +55,7 @@ void initPlayer() {
     player.x = SCREENWIDTH / 2 - 8;
     player.y = SCREENHEIGHT / 2 - 16;
     player.width = 12;
-    player.height = 25;
+    player.height = 24;
     player.oamIndex = 0;
     player.numFrames = 5;
     player.currentFrame = 0;
@@ -104,7 +103,8 @@ void updatePlayer(int* hOff, int* vOff) {
                 if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
                     (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
                     player.worldX -= player.xVel;
-                    player.worldY -= step; 
+                    int offsetY = (step > 0) ? (step - 1) : 0;
+                    player.worldY -= offsetY; 
                     break;
                 }
             }

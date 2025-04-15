@@ -173,11 +173,11 @@ volatile int secondsElapsed = 0;
 void initPlayerThree() {
     resetPlayerState();
     player.worldX = 0;
-    player.worldY = 101;
+    player.worldY = 102;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
     player.width = 17;
-    player.height = 23;
+    player.height = 24;
     player.oamIndex = 0;
     player.numFrames = 3;
     player.currentFrame = 0;
@@ -368,9 +368,9 @@ void drawPlayerThree() {
 
 
     if (isDucking) {
-        shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
+        shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (4))) & 0x3FF);
     } else {
-        shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
+        shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
     }
     }
 
@@ -450,30 +450,30 @@ void updatePlayerPalette(void)
 
 
 
-    for (int i = 3; i <= 13; i++) {
-        unsigned short orig = playerPal[i];
 
-        int r = orig & 0x1F;
-        int g = (orig >> 5) & 0x1F;
-        int b = (orig >> 10) & 0x1F;
+    unsigned short orig = playerPal[1];
 
-
-        int newR = (int)(r * factor);
-        int newG = (int)(g * factor);
-
-        int newB = (int)(b * factor + 31 * (1.0f - factor));
+    int r = orig & 0x1F;
+    int g = (orig >> 5) & 0x1F;
+    int b = (orig >> 10) & 0x1F;
 
 
-        if (newR > 31) newR = 31;
-        if (newG > 31) newG = 31;
-        if (newB > 31) newB = 31;
+    int newR = (int)(r * factor);
+    int newG = (int)(g * factor);
+
+    int newB = (int)(b * factor + 31 * (1.0f - factor));
 
 
-        unsigned short newColor = (newB << 10) | (newG << 5) | newR;
-        playerPaletteWork[i] = newColor;
-    }
+    if (newR > 31) newR = 31;
+    if (newG > 31) newG = 31;
+    if (newB > 31) newB = 31;
+
+
+    unsigned short newColor = (newB << 10) | (newG << 5) | newR;
+    playerPaletteWork[1] = newColor;
 
 
 
-    DMANow(3, &playerPaletteWork[3], &((u16 *)0x5000200)[3], 11);
+
+    DMANow(3, &playerPaletteWork[1], &((u16 *)0x5000200)[1], 1);
 }
