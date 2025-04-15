@@ -1006,11 +1006,7 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     player.isAnimating = 0;
 
 
-    if ((~(buttons) & ((1<<7)))) {
-        isDucking = 1;
-    } else {
-        isDucking = 0;
-    }
+    isDucking = (~(buttons) & ((1<<7)));
 
 
     int leftX = player.worldX;
@@ -1018,56 +1014,45 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
 
-    if ((~(buttons) & ((1<<5)))) {
+
+    if ((~(buttons) & ((1<<5))) && player.worldX > 0) {
         player.isAnimating = 1;
         player.direction = 1;
-        if (player.worldX > 0) {
-            int step;
-
-            for (step = 0; step <= 3; step++) {
-                if ((colorAtTwo(leftX - player.xVel, topY - step) != 0x02) &&
-                    (colorAtTwo(leftX - player.xVel, bottomY - step) != 0x02)) {
-                    player.worldX -= player.xVel;
-                    player.worldY -= step;
-                    break;
-                }
+        for (int step = 0; step <= 3; step++) {
+            if ((colorAtTwo(leftX - player.xVel, topY - step) != 0x02) &&
+                (colorAtTwo(leftX - player.xVel, bottomY - step) != 0x02)) {
+                player.worldX -= player.xVel;
+                player.worldY -= (step > 0) ? (step - 1) : 0;
+                break;
             }
         }
     }
 
-
-    if ((~(buttons) & ((1<<4)))) {
+    if ((~(buttons) & ((1<<4))) && player.worldX < 512 - player.width) {
         player.isAnimating = 1;
         player.direction = 0;
-        if (player.worldX < 512 - player.width) {
-            int step;
-            for (step = 0; step <= 3; step++) {
-                if ((colorAtTwo(rightX + player.xVel, topY - step) != 0x02) &&
-                    (colorAtTwo(rightX + player.xVel, bottomY - step) != 0x02)) {
-                    player.worldX += player.xVel;
-                    player.worldY -= step;
-                    break;
-                }
+        for (int step = 0; step <= 3; step++) {
+            if ((colorAtTwo(rightX + player.xVel, topY - step) != 0x02) &&
+                (colorAtTwo(rightX + player.xVel, bottomY - step) != 0x02)) {
+                player.worldX += player.xVel;
+                player.worldY -= step;
+                break;
             }
         }
     }
 
 
-    if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && player.yVel == 0) {
-        player.yVel = -12;
-    }
-
+    int grounded = 0;
 
     player.yVel += 1;
     if (player.yVel > 4) {
         player.yVel = 4;
     }
 
-
     if (player.yVel < 0) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
-            if (topY - 1 >= 0 &&
+            if (topY > 0 &&
                 colorAtTwo(leftX, topY - 1) != 0x02 &&
                 colorAtTwo(rightX, topY - 1) != 0x02) {
                 player.worldY--;
@@ -1085,9 +1070,22 @@ void updatePlayerTwo(int* hOff, int* vOff) {
                 player.worldY++;
             } else {
                 player.yVel = 0;
+                grounded = 1;
                 break;
             }
         }
+    } else {
+
+        bottomY = player.worldY + player.height - 1;
+        if (colorAtTwo(leftX, bottomY + 1) == 0x02 || colorAtTwo(rightX, bottomY + 1) == 0x02) {
+            grounded = 1;
+        }
+    }
+
+
+    if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && grounded) {
+        player.yVel = -12;
+        grounded = 0;
     }
 
 
@@ -1104,12 +1102,10 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     *hOff = player.worldX - (240 / 2 - player.width / 2);
     *vOff = player.worldY - (160 / 2 - player.height / 2);
 
-
     if (*hOff < 0) *hOff = 0;
     if (*vOff < 0) *vOff = 0;
     if (*hOff > 512 - 240) *hOff = 512 - 240;
     if (*vOff > 256 - 160) *vOff = 256 - 160;
-
 
     sbb = 20 + (*hOff / 256);
 

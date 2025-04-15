@@ -71,81 +71,64 @@ void initPlayer() {
 
 /* --- Update Routine --- */
 void updatePlayer(int* hOff, int* vOff) {
-    // If the player is in falling state, just update the falling animation
+    // If falling, only update falling animation
     if (playerState == PLAYER_FALLING) {
         updateFallingAnimation();
         return;
     }
 
-    // Normal movement update:
+    // Reset animation each frame
     player.isAnimating = 0;
-    
-    // Down ducking movement
-    if (BUTTON_HELD(BUTTON_DOWN)) {
-        isDucking = 1;
-    } else {
-        isDucking = 0;
-    }
-    
-    // Four corners for collision detection
+
+    // Check ducking
+    isDucking = BUTTON_HELD(BUTTON_DOWN);
+
+    // --- Horizontal Movement ---
+    int movedHorizontally = 0;
     int leftX = player.worldX;
     int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
-    
-    // Left movement
-    if (BUTTON_HELD(BUTTON_LEFT)) {
-        player.isAnimating = 1;
+
+    if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
         player.direction = 1;
-        if (player.worldX > 0) {
-            int step;
-            for (step = 0; step <= 3; step++) {
-                if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
-                    (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
-                    player.worldX -= player.xVel;
-                    int offsetY = (step > 0) ? (step - 1) : 0;
-                    player.worldY -= offsetY; 
-                    break;
-                }
-            }
-        }
-    }
-    
-    // Right movement
-    if (BUTTON_HELD(BUTTON_RIGHT)) {
         player.isAnimating = 1;
-        player.direction = 0;
-        if (player.worldX < MAPWIDTH - player.width) {
-            int step;
-            for (step = 0; step <= 3; step++) {
-                if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
-                    (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
-                    player.worldX += player.xVel;
-                    player.worldY -= step;
-                    break;
-                }
+        for (int step = 0; step <= 3; step++) {
+            if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
+                (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
+                player.worldX -= player.xVel;
+                player.worldY -= (step > 0 ? step - 1 : 0);
+                movedHorizontally = 1;
+                break;
             }
         }
     }
-    
-    // Jumping
-    if (BUTTON_PRESSED(BUTTON_UP) && player.yVel == 0) {
-        player.yVel = -12;
+
+    if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH - player.width) {
+        player.direction = 0;
+        player.isAnimating = 1;
+        for (int step = 0; step <= 3; step++) {
+            if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
+                (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
+                player.worldX += player.xVel;
+                player.worldY -= step;
+                movedHorizontally = 1;
+                break;
+            }
+        }
     }
-    
-    // Gravity
+
+    // --- Gravity and Vertical Movement ---
+    int grounded = 0;
     player.yVel += GRAVITY;
-    if (player.yVel > TERMINAL_VELOCITY) {
-        player.yVel = TERMINAL_VELOCITY;
-    }
-    
-    // Vertical movement
+    if (player.yVel > TERMINAL_VELOCITY) player.yVel = TERMINAL_VELOCITY;
+
     if (player.yVel < 0) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
-            if (topY - 1 >= 0 &&
-                colorAt(leftX, topY - 1) != 0x04 &&
-                colorAt(rightX, topY - 1) != 0x04) {
+            if (topY > 0 &&
+                colorAt(player.worldX, topY - 1) != 0x04 &&
+                colorAt(player.worldX + player.width - 1, topY - 1) != 0x04) {
                 player.worldY--;
             } else {
                 player.yVel = 0;
@@ -156,17 +139,31 @@ void updatePlayer(int* hOff, int* vOff) {
         for (int i = 0; i < player.yVel; i++) {
             bottomY = player.worldY + player.height - 1;
             if (bottomY + 1 < MAPHEIGHT &&
-                colorAt(leftX, bottomY + 1) != 0x04 &&
-                colorAt(rightX, bottomY + 1) != 0x04) {
+                colorAt(player.worldX, bottomY + 1) != 0x04 &&
+                colorAt(player.worldX + player.width - 1, bottomY + 1) != 0x04) {
                 player.worldY++;
             } else {
                 player.yVel = 0;
+                grounded = 1;
                 break;
             }
         }
+    } else {
+        // Check grounded if not falling
+        bottomY = player.worldY + player.height - 1;
+        if (colorAt(player.worldX, bottomY + 1) == 0x04 ||
+            colorAt(player.worldX + player.width - 1, bottomY + 1) == 0x04) {
+            grounded = 1;
+        }
     }
-    
-    // Animation update
+
+    // --- Jumping ---
+    if (BUTTON_PRESSED(BUTTON_UP) && grounded) {
+        player.yVel = -12;
+        grounded = 0;
+    }
+
+    // --- Animation ---
     hikerFrameCounter++;
     if (player.isAnimating && hikerFrameCounter > hikerFrameDelay) {
         hikerFrame = (hikerFrame + 1) % player.numFrames;
@@ -175,22 +172,21 @@ void updatePlayer(int* hOff, int* vOff) {
         hikerFrame = 0;
         hikerFrameCounter = 0;
     }
-    
-    // Center the camera
+
+    // --- Camera ---
     *hOff = player.worldX - (SCREENWIDTH / 2 - player.width / 2);
     *vOff = player.worldY - (SCREENHEIGHT / 2 - player.height / 2);
-    
-    // Clamp the camera
     if (*hOff < 0) *hOff = 0;
     if (*vOff < 0) *vOff = 0;
     if (*hOff > MAPWIDTH - SCREENWIDTH) *hOff = MAPWIDTH - SCREENWIDTH;
     if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
-    
-    // Check win condition
+
+    // --- Win Condition ---
     if (player.worldX + player.width >= MAPWIDTH - 1) {
         winPhaseOne = 1;
     }
 }
+
 
 /* --- Drawing Routine --- */
 void drawPlayer() {
@@ -286,7 +282,7 @@ void drawPlayer() {
     }
     
     if (isDucking) {
-        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 4);
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 5);
     } else {
         shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
     }

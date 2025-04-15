@@ -44,75 +44,60 @@ void initPlayerTwo() {
 
 void updatePlayerTwo(int* hOff, int* vOff) {
     player.isAnimating = 0;
-    
-    // Duck if button held down
-    if (BUTTON_HELD(BUTTON_DOWN)) {
-        isDucking = 1;
-    } else {
-        isDucking = 0;
-    }
-    
-    // Four corners of the player for collision sprite
+
+    // Ducking check
+    isDucking = BUTTON_HELD(BUTTON_DOWN);
+
+    // Collision corners
     int leftX = player.worldX;
     int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
-    
-    if (BUTTON_HELD(BUTTON_LEFT)) {
+
+    // --- Horizontal Movement ---
+    if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
         player.isAnimating = 1;
         player.direction = 1;
-        if (player.worldX > 0) {
-            int step;
-            // Try stepping up up to 3 pixels:
-            for (step = 0; step <= 3; step++) {
-                if ((colorAtTwo(leftX - player.xVel, topY - step) != 0x02) &&
-                    (colorAtTwo(leftX - player.xVel, bottomY - step) != 0x02)) {
-                    player.worldX -= player.xVel;
-                    player.worldY -= step;  // adjust upward by 'step' pixels
-                    break;
-                }
+        for (int step = 0; step <= 3; step++) {
+            if ((colorAtTwo(leftX - player.xVel, topY - step) != 0x02) &&
+                (colorAtTwo(leftX - player.xVel, bottomY - step) != 0x02)) {
+                player.worldX -= player.xVel;
+                player.worldY -= (step > 0) ? (step - 1) : 0;
+                break;
             }
         }
     }
 
-    // For right movement:
-    if (BUTTON_HELD(BUTTON_RIGHT)) {
+    if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH - player.width) {
         player.isAnimating = 1;
         player.direction = 0;
-        if (player.worldX < MAPWIDTH - player.width) {
-            int step;
-            for (step = 0; step <= 3; step++) {
-                if ((colorAtTwo(rightX + player.xVel, topY - step) != 0x02) &&
-                    (colorAtTwo(rightX + player.xVel, bottomY - step) != 0x02)) {
-                    player.worldX += player.xVel;
-                    player.worldY -= step;
-                    break;
-                }
+        for (int step = 0; step <= 3; step++) {
+            if ((colorAtTwo(rightX + player.xVel, topY - step) != 0x02) &&
+                (colorAtTwo(rightX + player.xVel, bottomY - step) != 0x02)) {
+                player.worldX += player.xVel;
+                player.worldY -= step;
+                break;
             }
         }
     }
-    
-    // Jump if up button pressed
-    if (BUTTON_PRESSED(BUTTON_UP) && player.yVel == 0) {
-        player.yVel = -12;
-    }
-    
-    // Gravity
+
+    // --- Gravity & Vertical Movement ---
+    int grounded = 0;
+
     player.yVel += GRAVITY;
     if (player.yVel > TERMINAL_VELOCITY) {
         player.yVel = TERMINAL_VELOCITY;
     }
-    
-    // Vertical movement... move one pixel at a time
+
     if (player.yVel < 0) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
-            if (topY - 1 >= 0 &&
+            if (topY > 0 &&
                 colorAtTwo(leftX, topY - 1) != 0x02 &&
                 colorAtTwo(rightX, topY - 1) != 0x02) {
                 player.worldY--;
             } else {
-                player.yVel = 0;  // ceiling
+                player.yVel = 0;
                 break;
             }
         }
@@ -124,13 +109,26 @@ void updatePlayerTwo(int* hOff, int* vOff) {
                 colorAtTwo(rightX, bottomY + 1) != 0x02) {
                 player.worldY++;
             } else {
-                player.yVel = 0;  // landed ground
+                player.yVel = 0;
+                grounded = 1;
                 break;
             }
         }
+    } else {
+        // Grounded check if not falling
+        bottomY = player.worldY + player.height - 1;
+        if (colorAtTwo(leftX, bottomY + 1) == 0x02 || colorAtTwo(rightX, bottomY + 1) == 0x02) {
+            grounded = 1;
+        }
     }
-    
-    // Animation
+
+    // --- Jumping ---
+    if (BUTTON_PRESSED(BUTTON_UP) && grounded) {
+        player.yVel = -12;
+        grounded = 0;
+    }
+
+    // --- Animation Update ---
     hikerFrameCounter++;
     if (player.isAnimating && hikerFrameCounter > hikerFrameDelay) {
         hikerFrame = (hikerFrame + 1) % player.numFrames;
@@ -139,21 +137,19 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         hikerFrame = 0;
         hikerFrameCounter = 0;
     }
-    
-    // Center the cam
+
+    // --- Camera ---
     *hOff = player.worldX - (SCREENWIDTH / 2 - player.width / 2);
     *vOff = player.worldY - (SCREENHEIGHT / 2 - player.height / 2);
-    
-    // Camera clamped to map
+
     if (*hOff < 0) *hOff = 0;
     if (*vOff < 0) *vOff = 0;
     if (*hOff > MAPWIDTH - SCREENWIDTH) *hOff = MAPWIDTH - SCREENWIDTH;
     if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
-    
-    // Update screen block index.
+
     sbb = 20 + (*hOff / 256);
 
-    // Check if player has reached the end of the map
+    // --- Win Condition ---
     if (player.worldX + player.width >= MAPWIDTH - 1) {
         winPhaseTwo = 1;
     }

@@ -167,8 +167,9 @@ extern int gameOver;
 int winPhaseThree = 0;
 extern SPRITE player;
 extern SPRITE health;
-extern int sbb;
 volatile int secondsElapsed = 0;
+static int slowModeActive = 0;
+
 
 void initPlayerThree() {
     resetPlayerState();
@@ -200,8 +201,8 @@ void initPlayerThree() {
 
 
 void updatePlayerThree(int* hOff, int* vOff) {
-
     static int slowCounter = 0;
+    player.isAnimating = 0;
 
 
     int leftX = player.worldX;
@@ -210,14 +211,10 @@ void updatePlayerThree(int* hOff, int* vOff) {
     int bottomY = player.worldY + player.height - 1;
 
 
-    int slowModeActive = 0;
-    if (colorAtThree(leftX, topY) == 0x02 ||
-        colorAtThree(rightX, topY) == 0x02 ||
-        colorAtThree(leftX, bottomY) == 0x02 ||
-        colorAtThree(rightX, bottomY) == 0x02) {
-        slowModeActive = 1;
-    }
-
+    slowModeActive = colorAtThree(leftX, topY) == 0x02 ||
+                     colorAtThree(rightX, topY) == 0x02 ||
+                     colorAtThree(leftX, bottomY) == 0x02 ||
+                     colorAtThree(rightX, bottomY) == 0x02;
 
 
     int updateMovement = 1;
@@ -234,75 +231,49 @@ void updatePlayerThree(int* hOff, int* vOff) {
     }
 
 
-    if ((~(buttons) & ((1<<7))))
-        isDucking = 1;
-    else
-        isDucking = 0;
-
-
-    leftX = player.worldX;
-    rightX = player.worldX + player.width - 1;
-    topY = player.worldY;
-    bottomY = player.worldY + player.height - 1;
-
+    isDucking = (~(buttons) & ((1<<7)));
 
 
     if (updateMovement) {
-
-        if ((~(buttons) & ((1<<5)))) {
+        if ((~(buttons) & ((1<<5))) && player.worldX > 0) {
             player.isAnimating = 1;
             player.direction = 1;
-            if (player.worldX > 0) {
-                int step;
-
-                for (step = 0; step <= 3; step++) {
-                    if ((colorAtThree(leftX - player.xVel, topY - step) != 0x01) &&
-                        (colorAtThree(leftX - player.xVel, bottomY - step) != 0x01)) {
-                        player.worldX -= player.xVel;
-                        player.worldY -= step;
-                        break;
-                    }
+            for (int step = 0; step <= 3; step++) {
+                if ((colorAtThree(leftX - player.xVel, topY - step) != 0x01) &&
+                    (colorAtThree(leftX - player.xVel, bottomY - step) != 0x01)) {
+                    player.worldX -= player.xVel;
+                    player.worldY -= (step > 0) ? (step - 1) : 0;
+                    break;
                 }
             }
         }
 
-
-        if ((~(buttons) & ((1<<4)))) {
+        if ((~(buttons) & ((1<<4))) && player.worldX < 512 - player.width) {
             player.isAnimating = 1;
             player.direction = 0;
-            if (player.worldX < 512 - player.width) {
-                int step;
-                for (step = 0; step <= 3; step++) {
-                    if ((colorAtThree(rightX + player.xVel, topY - step) != 0x01) &&
-                        (colorAtThree(rightX + player.xVel, bottomY - step) != 0x01)) {
-                        player.worldX += player.xVel;
-                        player.worldY -= step;
-                        break;
-                    }
+            for (int step = 0; step <= 3; step++) {
+                if ((colorAtThree(rightX + player.xVel, topY - step) != 0x01) &&
+                    (colorAtThree(rightX + player.xVel, bottomY - step) != 0x01)) {
+                    player.worldX += player.xVel;
+                    player.worldY -= step;
+                    break;
                 }
             }
         }
     }
 
 
-    if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && player.yVel == 0) {
-        player.yVel = -12;
-    }
-
-
+    int grounded = 0;
 
     player.yVel += 1;
-    if (player.yVel > 4)
-        player.yVel = 4;
-
+    if (player.yVel > 4) player.yVel = 4;
 
     if (updateMovement) {
         if (player.yVel < 0) {
             for (int i = 0; i < -player.yVel; i++) {
-                topY = player.worldY;
-                if (topY - 1 >= 0 &&
-                    colorAtThree(player.worldX, topY - 1) != 0x01 &&
-                    colorAtThree(player.worldX + player.width - 1, topY - 1) != 0x01) {
+                if (player.worldY > 0 &&
+                    colorAtThree(leftX, player.worldY - 1) != 0x01 &&
+                    colorAtThree(rightX, player.worldY - 1) != 0x01) {
                     player.worldY--;
                 } else {
                     player.yVel = 0;
@@ -313,15 +284,26 @@ void updatePlayerThree(int* hOff, int* vOff) {
             for (int i = 0; i < player.yVel; i++) {
                 bottomY = player.worldY + player.height - 1;
                 if (bottomY + 1 < 256 &&
-                    colorAtThree(player.worldX, bottomY + 1) != 0x01 &&
-                    colorAtThree(player.worldX + player.width - 1, bottomY + 1) != 0x01) {
+                    colorAtThree(leftX, bottomY + 1) != 0x01 &&
+                    colorAtThree(rightX, bottomY + 1) != 0x01) {
                     player.worldY++;
                 } else {
                     player.yVel = 0;
+                    grounded = 1;
                     break;
                 }
             }
+        } else {
+            bottomY = player.worldY + player.height - 1;
+            if (colorAtThree(leftX, bottomY + 1) == 0x01 || colorAtThree(rightX, bottomY + 1) == 0x01) {
+                grounded = 1;
+            }
         }
+    }
+
+
+    if (!slowModeActive && (!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && grounded) {
+        player.yVel = -12;
     }
 
 
@@ -341,12 +323,13 @@ void updatePlayerThree(int* hOff, int* vOff) {
     if (*vOff < 0) *vOff = 0;
     if (*hOff > 512 - 240) *hOff = 512 - 240;
     if (*vOff > 256 - 160) *vOff = 256 - 160;
-    sbb = 20 + (*hOff / 256);
 
 
-    if (player.worldX + player.width >= 512 - 1)
+    if (player.worldX + player.width >= 512 - 1) {
         winPhaseThree = 1;
+    }
 }
+
 
 
 void drawPlayerThree() {

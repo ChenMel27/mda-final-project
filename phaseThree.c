@@ -18,8 +18,9 @@ extern int gameOver;
 int winPhaseThree = 0;
 extern SPRITE player;
 extern SPRITE health;
-extern int sbb;
 volatile int secondsElapsed = 0;
+static int slowModeActive = 0;
+
 
 void initPlayerThree() {
     resetPlayerState();
@@ -51,27 +52,23 @@ void initPlayerThree() {
 #define SLOW_DELAY 4  // Only update movement every 4 frames when in slow mode
 
 void updatePlayerThree(int* hOff, int* vOff) {
-    // Static counter to gate movement updates in slow mode
     static int slowCounter = 0;
-    
-    // Compute current collision boundaries (world coordinates)
-    int leftX   = player.worldX;
-    int rightX  = player.worldX + player.width - 1;
-    int topY    = player.worldY;
+    player.isAnimating = 0;
+
+    // Collision bounds
+    int leftX = player.worldX;
+    int rightX = player.worldX + player.width - 1;
+    int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
-    
-    // Determine if dangerous tile (0x02) is present on any collision corner
-    int slowModeActive = 0;
-    if (colorAtThree(leftX, topY) == 0x02 ||
-        colorAtThree(rightX, topY) == 0x02 ||
-        colorAtThree(leftX, bottomY) == 0x02 ||
-        colorAtThree(rightX, bottomY) == 0x02) {
-        slowModeActive = 1;
-    }
-    
-    // In slow mode, we want to reduce the update frequency.
-    // When slowModeActive is true, only allow movement updates every SLOW_DELAY frames.
-    int updateMovement = 1; // 1 = update movement normally; 0 = skip movement update this frame.
+
+    // --- Slow mode check ---
+    slowModeActive = colorAtThree(leftX, topY) == 0x02 ||
+                     colorAtThree(rightX, topY) == 0x02 ||
+                     colorAtThree(leftX, bottomY) == 0x02 ||
+                     colorAtThree(rightX, bottomY) == 0x02;
+
+    // Gate movement updates if in slow mode
+    int updateMovement = 1;
     if (slowModeActive) {
         slowCounter++;
         if (slowCounter < SLOW_DELAY) {
@@ -81,101 +78,86 @@ void updatePlayerThree(int* hOff, int* vOff) {
             slowCounter = 0;
         }
     } else {
-        slowCounter = 0; // reset when not in slow mode
+        slowCounter = 0;
     }
-    
-    // Process ducking state (this always happens)
-    if (BUTTON_HELD(BUTTON_DOWN))
-        isDucking = 1;
-    else
-        isDucking = 0;
-    
-    // Recalculate collision boundaries (in case position changed on a previous frame)
-    leftX   = player.worldX;
-    rightX  = player.worldX + player.width - 1;
-    topY    = player.worldY;
-    bottomY = player.worldY + player.height - 1;
-    
-    // --- Horizontal Movement (with hill-stepping) ---
-    // Only update horizontal movement if updateMovement is true.
+
+    // Ducking state
+    isDucking = BUTTON_HELD(BUTTON_DOWN);
+
+    // --- Horizontal Movement ---
     if (updateMovement) {
-        // LEFT MOVEMENT
-        if (BUTTON_HELD(BUTTON_LEFT)) {
+        if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
             player.isAnimating = 1;
-            player.direction = 1;  // Facing left
-            if (player.worldX > 0) {
-                int step;
-                // Attempt to step up up to 3 pixels for smooth movement on slopes
-                for (step = 0; step <= 3; step++) {
-                    if ((colorAtThree(leftX - player.xVel, topY - step) != 0x01) &&
-                        (colorAtThree(leftX - player.xVel, bottomY - step) != 0x01)) {
-                        player.worldX -= player.xVel;
-                        player.worldY -= step;
-                        break;
-                    }
-                }
-            }
-        }
-        
-        // RIGHT MOVEMENT
-        if (BUTTON_HELD(BUTTON_RIGHT)) {
-            player.isAnimating = 1;
-            player.direction = 0;  // Facing right
-            if (player.worldX < MAPWIDTH - player.width) {
-                int step;
-                for (step = 0; step <= 3; step++) {
-                    if ((colorAtThree(rightX + player.xVel, topY - step) != 0x01) &&
-                        (colorAtThree(rightX + player.xVel, bottomY - step) != 0x01)) {
-                        player.worldX += player.xVel;
-                        player.worldY -= step;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    
-    // --- Jumping ---
-    if (BUTTON_PRESSED(BUTTON_UP) && player.yVel == 0) {
-        player.yVel = -12;
-    }
-    
-    // --- Gravity and Vertical Movement ---
-    // Gravity is applied every frame regardless of slow mode.
-    player.yVel += GRAVITY;
-    if (player.yVel > TERMINAL_VELOCITY)
-        player.yVel = TERMINAL_VELOCITY;
-    
-    // Only update vertical movement (collision check) on frames when updateMovement is true.
-    if (updateMovement) {
-        if (player.yVel < 0) {  // Moving upward
-            for (int i = 0; i < -player.yVel; i++) {
-                topY = player.worldY;
-                if (topY - 1 >= 0 &&
-                    colorAtThree(player.worldX, topY - 1) != 0x01 &&
-                    colorAtThree(player.worldX + player.width - 1, topY - 1) != 0x01) {
-                    player.worldY--;
-                } else {
-                    player.yVel = 0;  // Hit the ceiling
+            player.direction = 1;
+            for (int step = 0; step <= 3; step++) {
+                if ((colorAtThree(leftX - player.xVel, topY - step) != 0x01) &&
+                    (colorAtThree(leftX - player.xVel, bottomY - step) != 0x01)) {
+                    player.worldX -= player.xVel;
+                    player.worldY -= (step > 0) ? (step - 1) : 0;
                     break;
                 }
             }
-        } else if (player.yVel > 0) {  // Moving downward
+        }
+
+        if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH - player.width) {
+            player.isAnimating = 1;
+            player.direction = 0;
+            for (int step = 0; step <= 3; step++) {
+                if ((colorAtThree(rightX + player.xVel, topY - step) != 0x01) &&
+                    (colorAtThree(rightX + player.xVel, bottomY - step) != 0x01)) {
+                    player.worldX += player.xVel;
+                    player.worldY -= step;
+                    break;
+                }
+            }
+        }
+    }
+
+    // --- Gravity and Vertical Movement ---
+    int grounded = 0;
+
+    player.yVel += GRAVITY;
+    if (player.yVel > TERMINAL_VELOCITY) player.yVel = TERMINAL_VELOCITY;
+
+    if (updateMovement) {
+        if (player.yVel < 0) {
+            for (int i = 0; i < -player.yVel; i++) {
+                if (player.worldY > 0 &&
+                    colorAtThree(leftX, player.worldY - 1) != 0x01 &&
+                    colorAtThree(rightX, player.worldY - 1) != 0x01) {
+                    player.worldY--;
+                } else {
+                    player.yVel = 0;
+                    break;
+                }
+            }
+        } else if (player.yVel > 0) {
             for (int i = 0; i < player.yVel; i++) {
                 bottomY = player.worldY + player.height - 1;
                 if (bottomY + 1 < MAPHEIGHT &&
-                    colorAtThree(player.worldX, bottomY + 1) != 0x01 &&
-                    colorAtThree(player.worldX + player.width - 1, bottomY + 1) != 0x01) {
+                    colorAtThree(leftX, bottomY + 1) != 0x01 &&
+                    colorAtThree(rightX, bottomY + 1) != 0x01) {
                     player.worldY++;
                 } else {
-                    player.yVel = 0;  // Landed on the ground
+                    player.yVel = 0;
+                    grounded = 1;
                     break;
                 }
             }
+        } else {
+            bottomY = player.worldY + player.height - 1;
+            if (colorAtThree(leftX, bottomY + 1) == 0x01 || colorAtThree(rightX, bottomY + 1) == 0x01) {
+                grounded = 1;
+            }
         }
     }
-    
-    // --- Animation Update ---
+
+    // --- Jumping (only allowed if not slow mode and grounded) ---
+    if (!slowModeActive && BUTTON_PRESSED(BUTTON_UP) && grounded) {
+        player.yVel = -12;
+    }
+
+    // --- Animation ---
     hikerFrameCounter++;
     if (player.isAnimating && hikerFrameCounter > hikerFrameDelay) {
         hikerFrame = (hikerFrame + 1) % player.numFrames;
@@ -184,20 +166,21 @@ void updatePlayerThree(int* hOff, int* vOff) {
         hikerFrame = 0;
         hikerFrameCounter = 0;
     }
-    
-    // --- Camera Update ---
+
+    // --- Camera ---
     *hOff = player.worldX - (SCREENWIDTH / 2 - player.width / 2);
     *vOff = player.worldY - (SCREENHEIGHT / 2 - player.height / 2);
     if (*hOff < 0) *hOff = 0;
     if (*vOff < 0) *vOff = 0;
     if (*hOff > MAPWIDTH - SCREENWIDTH) *hOff = MAPWIDTH - SCREENWIDTH;
     if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
-    sbb = 20 + (*hOff / 256);
-    
+
     // --- Win Condition ---
-    if (player.worldX + player.width >= MAPWIDTH - 1)
+    if (player.worldX + player.width >= MAPWIDTH - 1) {
         winPhaseThree = 1;
+    }
 }
+
 
 
 void drawPlayerThree() {

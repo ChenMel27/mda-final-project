@@ -227,71 +227,54 @@ void updatePlayer(int* hOff, int* vOff) {
     player.isAnimating = 0;
 
 
-    if ((~(buttons) & ((1<<7)))) {
-        isDucking = 1;
-    } else {
-        isDucking = 0;
-    }
+    isDucking = (~(buttons) & ((1<<7)));
 
 
+    int movedHorizontally = 0;
     int leftX = player.worldX;
     int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
 
-
-    if ((~(buttons) & ((1<<5)))) {
-        player.isAnimating = 1;
+    if ((~(buttons) & ((1<<5))) && player.worldX > 0) {
         player.direction = 1;
-        if (player.worldX > 0) {
-            int step;
-            for (step = 0; step <= 3; step++) {
-                if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
-                    (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
-                    player.worldX -= player.xVel;
-                    int offsetY = (step > 0) ? (step - 1) : 0;
-                    player.worldY -= offsetY;
-                    break;
-                }
-            }
-        }
-    }
-
-
-    if ((~(buttons) & ((1<<4)))) {
         player.isAnimating = 1;
+        for (int step = 0; step <= 3; step++) {
+            if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
+                (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
+                player.worldX -= player.xVel;
+                player.worldY -= (step > 0 ? step - 1 : 0);
+                movedHorizontally = 1;
+                break;
+            }
+        }
+    }
+
+    if ((~(buttons) & ((1<<4))) && player.worldX < 512 - player.width) {
         player.direction = 0;
-        if (player.worldX < 512 - player.width) {
-            int step;
-            for (step = 0; step <= 3; step++) {
-                if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
-                    (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
-                    player.worldX += player.xVel;
-                    player.worldY -= step;
-                    break;
-                }
+        player.isAnimating = 1;
+        for (int step = 0; step <= 3; step++) {
+            if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
+                (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
+                player.worldX += player.xVel;
+                player.worldY -= step;
+                movedHorizontally = 1;
+                break;
             }
         }
     }
 
 
-    if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && player.yVel == 0) {
-        player.yVel = -12;
-    }
-
-
+    int grounded = 0;
     player.yVel += 1;
-    if (player.yVel > 4) {
-        player.yVel = 4;
-    }
-
+    if (player.yVel > 4) player.yVel = 4;
 
     if (player.yVel < 0) {
         for (int i = 0; i < -player.yVel; i++) {
             topY = player.worldY;
-            if (topY - 1 >= 0 &&
-                colorAt(leftX, topY - 1) != 0x04 &&
-                colorAt(rightX, topY - 1) != 0x04) {
+            if (topY > 0 &&
+                colorAt(player.worldX, topY - 1) != 0x04 &&
+                colorAt(player.worldX + player.width - 1, topY - 1) != 0x04) {
                 player.worldY--;
             } else {
                 player.yVel = 0;
@@ -302,14 +285,28 @@ void updatePlayer(int* hOff, int* vOff) {
         for (int i = 0; i < player.yVel; i++) {
             bottomY = player.worldY + player.height - 1;
             if (bottomY + 1 < 256 &&
-                colorAt(leftX, bottomY + 1) != 0x04 &&
-                colorAt(rightX, bottomY + 1) != 0x04) {
+                colorAt(player.worldX, bottomY + 1) != 0x04 &&
+                colorAt(player.worldX + player.width - 1, bottomY + 1) != 0x04) {
                 player.worldY++;
             } else {
                 player.yVel = 0;
+                grounded = 1;
                 break;
             }
         }
+    } else {
+
+        bottomY = player.worldY + player.height - 1;
+        if (colorAt(player.worldX, bottomY + 1) == 0x04 ||
+            colorAt(player.worldX + player.width - 1, bottomY + 1) == 0x04) {
+            grounded = 1;
+        }
+    }
+
+
+    if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && grounded) {
+        player.yVel = -12;
+        grounded = 0;
     }
 
 
@@ -325,8 +322,6 @@ void updatePlayer(int* hOff, int* vOff) {
 
     *hOff = player.worldX - (240 / 2 - player.width / 2);
     *vOff = player.worldY - (160 / 2 - player.height / 2);
-
-
     if (*hOff < 0) *hOff = 0;
     if (*vOff < 0) *vOff = 0;
     if (*hOff > 512 - 240) *hOff = 512 - 240;
@@ -337,6 +332,7 @@ void updatePlayer(int* hOff, int* vOff) {
         winPhaseOne = 1;
     }
 }
+
 
 
 void drawPlayer() {
@@ -432,7 +428,7 @@ void drawPlayer() {
     }
 
     if (isDucking) {
-        shadowOAM[player.oamIndex].attr2 = ((((4) * (32) + (4))) & 0x3FF);
+        shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (4))) & 0x3FF);
     } else {
         shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
     }
