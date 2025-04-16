@@ -3108,11 +3108,11 @@ sTMMap:
 	.short	411
 	.short	365
 	.short	487
-	.short	488
-	.short	489
-	.short	487
-	.short	488
-	.short	489
+	.short	360
+	.short	1
+	.short	1
+	.short	1
+	.short	359
 	.short	437
 	.short	438
 	.short	439
@@ -3140,13 +3140,13 @@ sTMMap:
 	.short	443
 	.short	365
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	468
-	.short	469
-	.short	470
+	.short	392
+	.short	1
+	.short	1
+	.short	1
+	.short	391
+	.short	308
+	.short	308
 	.short	471
 	.short	472
 	.short	473
@@ -3172,13 +3172,13 @@ sTMMap:
 	.short	475
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	500
-	.short	501
-	.short	502
+	.short	424
+	.short	1
+	.short	1
+	.short	1
+	.short	423
+	.short	20
+	.short	21
 	.short	503
 	.short	504
 	.short	505
@@ -3205,12 +3205,12 @@ sTMMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	487
+	.short	488
+	.short	489
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	52
+	.short	53
 	.short	0
 	.short	0
 	.short	0

@@ -58,15 +58,22 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
         player.isAnimating = 1;
         player.direction = 1;
+    
         for (int step = 0; step <= 3; step++) {
-            if ((colorAtTwo(leftX - player.xVel, topY - step) != 0x02) &&
-                (colorAtTwo(leftX - player.xVel, bottomY - step) != 0x02)) {
-                player.worldX -= player.xVel;
-                player.worldY -= (step > 0) ? (step - 1) : 0;
+            int testLeftX = player.worldX - player.xVel;
+            int testTopY = player.worldY - step;
+            int testBottomY = player.worldY + player.height - 1 - step;
+    
+            if (colorAtTwo(testLeftX, testTopY) != 0x02 &&
+                colorAtTwo(testLeftX, testBottomY) != 0x02) {
+                
+                player.worldX = testLeftX;
+                player.worldY -= step;
                 break;
             }
         }
     }
+    
 
     if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH - player.width) {
         player.isAnimating = 1;

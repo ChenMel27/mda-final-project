@@ -90,100 +90,102 @@ updatePlayerTwo:
 	ldr	r4, .L110+4
 	ldrh	fp, [r3]
 	ldr	r2, [r4, #16]
-	lsr	r8, fp, #5
-	eor	r8, r8, #1
-	mov	r3, #0
+	lsr	r3, fp, #5
+	eor	r3, r3, #1
 	cmp	r2, #0
-	movle	r8, #0
-	andgt	r8, r8, #1
-	mvn	r9, fp
+	movle	r3, #0
+	andgt	r3, r3, #1
+	mov	r9, #0
+	mvn	ip, fp
 	ldr	r5, [r4, #24]
-	ldr	r10, .L110+8
-	ldr	ip, [r4, #20]
-	ldr	lr, [r4, #28]
-	cmp	r8, r3
 	sub	sp, sp, #20
-	add	r8, r5, r2
-	and	r9, r9, #128
+	ldr	r8, .L110+8
+	ldr	lr, [r4, #20]
+	ldr	r10, [r4, #28]
+	cmp	r3, r9
+	add	r3, r5, r2
+	str	r3, [sp, #12]
+	and	ip, ip, #128
+	sub	r3, r3, #1
 	mov	r6, r0
-	str	r9, [r10]
-	str	r3, [r4, #40]
 	mov	r7, r1
-	moveq	r3, ip
-	str	r8, [sp, #12]
-	streq	r2, [sp, #4]
-	sub	r10, r8, #1
-	add	r0, lr, ip
+	str	r9, [r4, #40]
+	str	ip, [r8]
+	str	r3, [sp, #8]
+	add	r0, r10, lr
 	bne	.L103
+.L38:
+	mov	r3, lr
+	str	r2, [sp]
 .L7:
 	ands	r1, fp, #16
 	bne	.L10
-	ldr	r9, [sp, #4]
-	rsb	r8, r5, #512
-	cmp	r8, r9
+	ldr	r8, [sp]
+	rsb	ip, r5, #512
+	cmp	ip, r8
 	ble	.L10
+	mov	r8, #1
+	mov	ip, r1
 	ldr	r9, [r4, #8]
-	mov	r8, r1
-	str	r9, [sp, #8]
 	str	r1, [r4, #36]
-	add	r1, r9, r10
-	mov	r9, #1
-	str	r9, [r4, #40]
-	ldr	r9, .L110+12
+	ldr	r1, [sp, #8]
+	str	r8, [r4, #40]
+	add	r1, r9, r1
+	ldr	r8, .L110+12
 	add	r1, r1, r0, lsl #9
 	rsb	r0, r0, r0, lsl #23
-	lsl	ip, ip, #9
+	lsl	lr, lr, #9
 	lsl	r0, r0, #9
-	add	r1, r1, r9
+	add	r1, r1, r8
 .L14:
-	add	r9, r1, ip
-	ldrb	r9, [r9, r0]	@ zero_extendqisi2
-	cmp	r9, #2
+	add	r8, r1, lr
+	ldrb	r8, [r8, r0]	@ zero_extendqisi2
+	cmp	r8, #2
 	beq	.L13
-	ldrb	r9, [r1, #-512]	@ zero_extendqisi2
-	cmp	r9, #2
+	ldrb	r8, [r1, #-512]	@ zero_extendqisi2
+	cmp	r8, #2
 	bne	.L104
 .L13:
-	add	r8, r8, #1
-	cmp	r8, #4
+	add	ip, ip, #1
+	cmp	ip, #4
 	sub	r1, r1, #512
 	bne	.L14
 	mov	r1, #1
-	str	r1, [sp, #8]
+	str	r1, [sp, #4]
 	b	.L12
 .L10:
 	ldr	r1, [r4, #40]
-	str	r1, [sp, #8]
+	str	r1, [sp, #4]
 .L12:
-	ldr	ip, [r4, #12]
-	add	r0, ip, #1
+	ldr	lr, [r4, #12]
+	add	r0, lr, #1
 	cmp	r0, #4
 	str	r0, [r4, #12]
 	ble	.L15
 	mov	r0, #4
 	str	r0, [r4, #12]
-	add	r8, lr, r3
+	add	r9, r10, r3
 .L16:
 	ldr	r1, [sp, #12]
-	ldr	r9, .L110+12
-	add	r1, r1, lr, lsl #9
+	ldr	ip, .L110+12
+	add	r1, r1, r10, lsl #9
 	sub	r1, r1, #1
-	add	r1, r9, r1
-	add	r9, r9, r2
-	mov	r2, r8
+	add	r1, ip, r1
+	add	ip, ip, r2
+	mov	r2, r9
 	cmp	r2, #255
 	mov	r10, #0
 	bgt	.L30
 .L27:
-	ldrb	ip, [r9, r2, lsl #9]	@ zero_extendqisi2
+	ldrb	lr, [ip, r2, lsl #9]	@ zero_extendqisi2
 	add	r2, r2, #1
-	cmp	ip, #2
-	sub	lr, r2, r8
+	cmp	lr, #2
+	sub	r8, r2, r9
 	beq	.L30
-	ldrb	ip, [r1, r3, lsl #9]	@ zero_extendqisi2
-	cmp	ip, #2
+	ldrb	lr, [r1, r3, lsl #9]	@ zero_extendqisi2
+	cmp	lr, #2
 	beq	.L30
-	cmp	r0, lr
+	cmp	r0, r8
 	mov	r10, #1
 	add	r3, r3, #1
 	ble	.L105
@@ -202,21 +204,22 @@ updatePlayerTwo:
 .L15:
 	cmp	r0, #0
 	bge	.L106
-	mvn	ip, ip
-	ldr	lr, .L110+12
-	sub	ip, r3, ip
-	add	r9, r2, lr
+	mvn	lr, lr
+	ldr	r8, .L110+12
+	add	ip, r2, r8
+	ldr	r2, [sp, #8]
+	sub	lr, r3, lr
+	add	r8, r8, r2
 	mov	r2, #0
-	add	lr, lr, r10
 	b	.L23
 .L19:
-	ldrb	r0, [r9, r1, lsl #9]	@ zero_extendqisi2
+	ldrb	r0, [ip, r1, lsl #9]	@ zero_extendqisi2
 	cmp	r0, #2
 	beq	.L22
-	ldrb	r0, [lr, r1, lsl #9]	@ zero_extendqisi2
+	ldrb	r0, [r8, r1, lsl #9]	@ zero_extendqisi2
 	cmp	r0, #2
 	beq	.L22
-	cmp	r1, ip
+	cmp	lr, r1
 	mov	r2, #1
 	beq	.L107
 	mov	r3, r1
@@ -231,19 +234,19 @@ updatePlayerTwo:
 	str	r3, [r4, #12]
 .L25:
 	ldr	r8, .L110+20
-	ldr	r2, [sp, #8]
+	ldr	r2, [sp, #4]
 	ldr	r3, [r8]
 	cmp	r2, #0
 	add	r3, r3, #1
 	str	r3, [r8]
 	bne	.L108
-	ldr	r2, [sp, #8]
+	ldr	r2, [sp, #4]
 	ldr	r3, .L110+24
 	str	r2, [r8]
 	str	r2, [r3]
 .L36:
 	add	r5, r5, r5, lsr #31
-	ldr	r3, [sp, #4]
+	ldr	r3, [sp]
 	asr	r5, r5, #1
 	rsb	r5, r5, #120
 	sub	r5, r3, r5
@@ -290,16 +293,17 @@ updatePlayerTwo:
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
 .L106:
-	add	r8, lr, r3
+	add	r9, r10, r3
 	bne	.L16
 	ldr	r3, .L110+12
-	add	r9, r2, r8, lsl #9
-	ldrb	r2, [r9, r3]	@ zero_extendqisi2
+	add	ip, r2, r9, lsl #9
+	ldrb	r2, [ip, r3]	@ zero_extendqisi2
 	cmp	r2, #2
-	lsl	r8, r8, #9
+	lsl	r9, r9, #9
 	beq	.L102
-	add	r8, r10, r8
-	ldrb	r3, [r8, r3]	@ zero_extendqisi2
+	ldr	r2, [sp, #8]
+	add	r9, r2, r9
+	ldrb	r3, [r9, r3]	@ zero_extendqisi2
 	cmp	r3, #2
 	bne	.L25
 .L102:
@@ -329,62 +333,55 @@ updatePlayerTwo:
 	str	r3, [r8]
 	b	.L36
 .L103:
-	ldr	r9, [r4, #8]
-	ldr	r1, .L110+12
-	sub	r9, r2, r9
-	mov	r8, #1
-	str	r9, [sp, #4]
-	add	r9, r9, r0, lsl #9
-	add	r1, r9, r1
-	lsl	r9, ip, #9
-	str	r2, [sp, #8]
-	mov	r2, r9
-	str	r8, [r4, #40]
-	str	r8, [r4, #36]
-	rsb	r8, r0, r0, lsl #23
-	lsl	r8, r8, #9
+	mov	r3, #1
+	mov	r1, lr
+	ldr	ip, [r4, #8]
+	sub	r8, r0, lr
+	sub	r9, r2, ip
+	add	r8, r9, r8, lsl #9
+	ldr	ip, .L110+12
+	sub	r8, r8, #512
+	str	r3, [r4, #40]
+	str	r3, [r4, #36]
+	add	r3, ip, r8
+	str	r9, [sp]
+	str	r3, [sp, #4]
+	add	ip, ip, r9
+	sub	r8, lr, #4
 .L9:
-	add	r9, r1, r2
-	ldrb	r9, [r9, r8]	@ zero_extendqisi2
-	cmp	r9, #2
+	ldrb	r3, [ip, r1, lsl #9]	@ zero_extendqisi2
+	cmp	r3, #2
+	mov	r3, r1
 	beq	.L8
-	ldrb	r9, [r1, #-512]	@ zero_extendqisi2
+	ldr	r9, [sp, #4]
+	ldrb	r9, [r9, r1, lsl #9]	@ zero_extendqisi2
 	cmp	r9, #2
 	bne	.L109
 .L8:
-	add	r3, r3, #1
-	cmp	r3, #4
-	sub	r1, r1, #512
+	sub	r1, r1, #1
+	cmp	r8, r1
 	bne	.L9
-	ldr	r2, [sp, #8]
-	mov	r3, ip
-	str	r2, [sp, #4]
-	b	.L7
+	b	.L38
 .L107:
-	str	ip, [r4, #20]
+	str	lr, [r4, #20]
 	b	.L25
 .L105:
 	str	r3, [r4, #20]
 	b	.L25
 .L109:
-	cmp	r3, #1
-	movlt	r3, #1
-	ldr	r1, [sp, #4]
-	sub	r3, r3, #1
-	sub	r3, ip, r3
-	ldr	r2, [sp, #8]
+	ldr	r1, [sp]
 	str	r3, [r4, #20]
 	str	r1, [r4, #16]
 	b	.L7
 .L104:
-	ldmib	sp, {r0, r1}
-	add	r1, r1, r0
-	str	r1, [sp, #4]
+	ldr	r1, [sp]
+	add	r1, r1, r9
+	str	r1, [sp]
 	str	r1, [r4, #16]
 	mov	r1, #1
-	sub	r3, r3, r8
+	sub	r3, r3, ip
 	str	r3, [r4, #20]
-	str	r1, [sp, #8]
+	str	r1, [sp, #4]
 	b	.L12
 .L111:
 	.align	2

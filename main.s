@@ -93,27 +93,6 @@ goToSplashScreen:
 	.word	state
 	.size	goToSplashScreen, .-goToSplashScreen
 	.align	2
-	.global	initialize
-	.syntax unified
-	.arm
-	.fpu softvfp
-	.type	initialize, %function
-initialize:
-	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	ldr	r3, .L8
-	mov	lr, pc
-	bx	r3
-	pop	{r4, lr}
-	b	goToSplashScreen
-.L9:
-	.align	2
-.L8:
-	.word	mgba_open
-	.size	initialize, .-initialize
-	.align	2
 	.syntax unified
 	.arm
 	.fpu softvfp
@@ -122,22 +101,22 @@ lose.part.0:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L14
+	ldr	r3, .L10
 	ldrh	r3, [r3]
 	push	{r4, lr}
 	ands	r4, r3, #8
-	beq	.L13
+	beq	.L9
 	pop	{r4, lr}
 	bx	lr
-.L13:
+.L9:
 	bl	goToSplashScreen
-	ldr	r3, .L14+4
+	ldr	r3, .L10+4
 	strb	r4, [r3]
 	pop	{r4, lr}
 	bx	lr
-.L15:
+.L11:
 	.align	2
-.L14:
+.L10:
 	.word	buttons
 	.word	state
 	.size	lose.part.0, .-lose.part.0
@@ -154,7 +133,7 @@ goToStart:
 	push	{r4, r5, r6, lr}
 	mov	r4, #67108864
 	mov	r5, #0
-	ldr	r3, .L18
+	ldr	r3, .L14
 	strh	r5, [r4]	@ movhi
 	mov	lr, pc
 	bx	r3
@@ -164,41 +143,41 @@ goToStart:
 	mov	r0, #3
 	strh	r2, [r4, #10]	@ movhi
 	mov	r3, #256
-	ldr	r4, .L18+4
+	ldr	r4, .L14+4
 	mov	r2, #83886080
-	ldr	r1, .L18+8
+	ldr	r1, .L14+8
 	mov	lr, pc
 	bx	r4
 	mov	r3, #8192
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L18+12
+	ldr	r1, .L14+12
 	mov	lr, pc
 	bx	r4
 	mov	r0, #3
-	ldr	r2, .L18+16
-	ldr	r1, .L18+20
+	ldr	r2, .L14+16
+	ldr	r1, .L14+20
 	mov	r3, #4096
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L18+24
+	ldr	r3, .L14+24
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L18+28
+	ldr	r3, .L14+28
 	mov	lr, pc
 	bx	r3
 	mov	r1, #1
 	mov	r0, #96
-	ldr	r2, .L18+32
-	ldr	r3, .L18+36
+	ldr	r2, .L14+32
+	ldr	r3, .L14+36
 	strb	r1, [r2]
 	str	r5, [r3, #4]
 	str	r0, [r3, #8]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L19:
+.L15:
 	.align	2
-.L18:
+.L14:
 	.word	hideSprites
 	.word	DMANow
 	.word	sTSPal
@@ -210,6 +189,27 @@ goToStart:
 	.word	state
 	.word	.LANCHOR0
 	.size	goToStart, .-goToStart
+	.align	2
+	.global	initialize
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	initialize, %function
+initialize:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, lr}
+	ldr	r3, .L18
+	mov	lr, pc
+	bx	r3
+	pop	{r4, lr}
+	b	goToStart
+.L19:
+	.align	2
+.L18:
+	.word	mgba_open
+	.size	initialize, .-initialize
 	.align	2
 	.syntax unified
 	.arm
@@ -1859,7 +1859,7 @@ main:
 	.align	2
 .L209:
 	.word	mgba_open
-	.word	goToSplashScreen
+	.word	goToStart
 	.word	buttons
 	.word	oldButtons
 	.word	state
