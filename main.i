@@ -420,6 +420,20 @@ extern const unsigned short diaEightMap[1024];
 
 extern const unsigned short duskTMMap[2048];
 # 60 "main.c" 2
+# 1 "pause.h" 1
+
+
+
+
+
+
+
+extern const unsigned short pauseMap[1024];
+# 61 "main.c" 2
+
+
+static int savedStartX;
+static int savedStartY;
 
 
 
@@ -450,6 +464,7 @@ extern SPRITE startPlayer;
 unsigned short buttons;
 unsigned short oldButtons;
 
+
 typedef enum {
     SPLASH,
     START,
@@ -464,12 +479,15 @@ typedef enum {
     WIN
 } GameState;
 
-GameState state;
+GameState state, prevState;
+
 int hOff = 0;
 int vOff = 0;
 int talkedToGuide = 0;
 int begin = 0;
 int startPage = 0;
+int resumingFromPause = 0;
+
 
 
 
@@ -524,7 +542,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToStart();
+    goToSplashScreen();
 }
 
 void goToSplashScreen() {
@@ -594,6 +612,24 @@ void goToStartTwo() {
     state = START;
 }
 
+void goToStartThree() {
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
+    (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
+
+    DMANow(3, sTSPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
+    DMANow(3, sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+
+    initStartPlayer();
+    initGuideSprite();
+    startPlayer.worldX = savedStartX;
+    startPlayer.worldY = savedStartY;
+
+    hOff = 0;
+    vOff = (256 - 160);
+    state = START;
+}
+
 void start() {
     updateStartPlayer(&hOff, &vOff);
     updateGuideSprite();
@@ -611,6 +647,16 @@ void start() {
     if (next == 1 && talkedToGuide) {
         goToPhaseOne();
     }
+
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+
+        savedStartX = startPlayer.worldX;
+        savedStartY = startPlayer.worldY;
+        prevState = state;
+        goToPause();
+        return;
+    }
+
 }
 
 
@@ -679,32 +725,32 @@ void startInstructions() {
 
 
 void goToPhaseOne() {
-
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
-
-
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
     (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
     (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
-
-
     DMANow(3, foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
-
-
     DMANow(3, bgOneFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
     DMANow(3, bgOneBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
     DMANow(3, dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
+    if (!resumingFromPause) {
+        initPlayer();
+        initHealth();
+    }
 
-    initPlayer();
-    initHealth();
+
+    resumingFromPause = 0;
 
     hOff = 0;
     vOff = (256 - 160);
     state = PHASEONE;
 }
+
+
+
 
 
 void phaseOne() {
@@ -734,6 +780,13 @@ void phaseOne() {
     if (winPhaseOne) {
         goToPhaseTwoInstructions();
     }
+
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        prevState = state;
+        goToPause();
+        return;
+    }
+
 }
 
 
@@ -814,8 +867,12 @@ void goToPhaseTwo() {
     DMANow(3, duskTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
 
-    initPlayerTwo();
-    initSnow();
+    if (!resumingFromPause) {
+        initPlayerTwo();
+        initSnow();
+    }
+
+    resumingFromPause = 0;
 
     hOff = 0;
     vOff = (256 - 160);
@@ -848,9 +905,17 @@ void phaseTwo() {
     if (gameOver) {
         goToLose();
     }
+
     if (winPhaseTwo) {
         goToPhaseThreeInstructions();
     }
+
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        prevState = state;
+        goToPause();
+        return;
+    }
+
 }
 
 
@@ -930,7 +995,6 @@ void goToPhaseThree() {
     DMANow(3, bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
     DMANow(3, dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
-
     initPlayerThree();
     initSnow();
     initCountdownTimer();
@@ -977,22 +1041,36 @@ void phaseThree() {
 
 
 void goToPause() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
+    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
 
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
-    videoBuffer = ((unsigned short*) 0x06000000);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, pauseMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
 
-    DMANow(3, (volatile void*)splashScreenPal, ((unsigned short *)0x5000000), 256 | (1 << 31));
-    drawFullscreenImage4(splashScreenBitmap);
-    drawString4(100, 70, "PAUSE", 15);
     state = PAUSE;
 }
 
 void pause() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToStart();
-        state = START;
+        resumingFromPause = 1;
+        switch (prevState) {
+            case PHASEONE: goToPhaseOne(); break;
+            case PHASETWO: goToPhaseTwo(); break;
+            case START: goToStartThree(); break;
+            case DIALOGUE: goToStartInstructions(); break;
+            case DIALOGUE2: goToPhaseTwoInstructions(); break;
+            case DIALOGUE3: goToPhaseThreeInstructions();break;
+            default: goToStart(); break;
+        }
+        state = prevState;
     }
 }
+
 
 
 

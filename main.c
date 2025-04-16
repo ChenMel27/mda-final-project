@@ -57,7 +57,12 @@ Project:    The Summit Ascent
 #include "diaSeven.h"
 #include "diaEight.h"
 #include "duskTM.h"
+#include "pause.h"
 #define BG_PRIORITY(n) ((n) & 3)
+// when pausing out of START, save where the player was
+static int savedStartX;
+static int savedStartY;
+
 
 // ============================= [ FUNCTION PROTOTYPES ] =======================
 
@@ -87,6 +92,7 @@ extern SPRITE startPlayer;
 unsigned short buttons;
 unsigned short oldButtons;
 
+
 typedef enum {
     SPLASH,
     START,
@@ -101,12 +107,15 @@ typedef enum {
     WIN
 } GameState;
 
-GameState state;
+GameState state, prevState;
+
 int hOff = 0;
 int vOff = 0;
 int talkedToGuide = 0;
 int begin = 0;
 int startPage = 0;
+int resumingFromPause = 0;
+
 
 // ============================= [ GAME ENTRY POINT ] ============================
 
@@ -161,7 +170,7 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToStart();
+    goToSplashScreen();
 }
 
 void goToSplashScreen() {
@@ -231,6 +240,24 @@ void goToStartTwo() {
     state = START;
 }
 
+void goToStartThree() {
+    REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
+    REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
+
+    DMANow(3, sTSPal, BG_PALETTE, sTSPalLen / 2);
+    DMANow(3, sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
+    DMANow(3, sTMMap, &SCREENBLOCK[18], sTMLen / 2);
+
+    initStartPlayer();
+    initGuideSprite();
+    startPlayer.worldX = savedStartX;
+    startPlayer.worldY = savedStartY;
+
+    hOff = 0;
+    vOff = MAX_VOFF;
+    state = START;
+}
+
 void start() {
     updateStartPlayer(&hOff, &vOff);
     updateGuideSprite();
@@ -248,6 +275,16 @@ void start() {
     if (next == 1 && talkedToGuide) {
         goToPhaseOne();
     }
+
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        // about to pause out of START, save our position
+        savedStartX = startPlayer.worldX;
+        savedStartY = startPlayer.worldY;
+        prevState = state;
+        goToPause();
+        return;
+    }
+    
 }
 
 // ============================= [ DIALOGUE STATE ] =============================
@@ -316,32 +353,32 @@ void startInstructions() {
 // ============================= [ PHASE ONE STATE ] ============================
 
 void goToPhaseOne() {
-    // Clear display settings before changing
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
-
-    // | Front background -> BG0 | Parallax background -> BG1 | Back day background -> BG2
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
-    
-    // DMA background common tileset
     DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
-    
-    // DMA BG0/1/2 tile maps into screen blocks
     DMANow(3, bgOneFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
     DMANow(3, bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
     
-    // Initialize sprites
-    initPlayer();
-    initHealth();
-
+    if (!resumingFromPause) {
+        initPlayer();
+        initHealth();
+    }
+    
+    // clear the flag so *next* goToPhaseOne does full init again
+    resumingFromPause = 0;
+    
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASEONE;
 }
+
+
+
 
 
 void phaseOne() {
@@ -371,6 +408,13 @@ void phaseOne() {
     if (winPhaseOne) {
         goToPhaseTwoInstructions();
     }
+
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        prevState = state;
+        goToPause();
+        return;
+    }
+    
 }
 
 // ============================= [ DIALOGUE 2 STATE ] =============================
@@ -449,10 +493,14 @@ void goToPhaseTwo() {
     DMANow(3, bgTwoFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
     DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, duskTMMap, &SCREENBLOCK[30], duskTMLen / 2);
+
+
+    if (!resumingFromPause) {
+        initPlayerTwo();
+        initSnow();
+    }
     
-    // Initialize sprites
-    initPlayerTwo();
-    initSnow();
+    resumingFromPause = 0;
 
     hOff = 0;
     vOff = MAX_VOFF;
@@ -485,9 +533,17 @@ void phaseTwo() {
     if (gameOver) {
         goToLose();
     }
+    
     if (winPhaseTwo) {
         goToPhaseThreeInstructions();
     }
+
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        prevState = state;
+        goToPause();
+        return;
+    }
+    
 }
 
 // ============================= [ DIALOGUE 2 STATE ] =============================
@@ -566,8 +622,7 @@ void goToPhaseThree() {
     DMANow(3, bgThreeFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
     DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
-    
-    // Initialize sprites
+
     initPlayerThree();
     initSnow();
     initCountdownTimer();
@@ -614,22 +669,36 @@ void phaseThree() {
 // ============================= [ PAUSE STATE ] ================================
 
 void goToPause() {
-    // Switch to mode 4 and draw bitmap image
-    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    videoBuffer = FRONTBUFFER;
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
+    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
 
-    DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
-    drawFullscreenImage4(splashScreenBitmap);
-    drawString4(100, 70, "PAUSE", 15);
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, pauseMap, &SCREENBLOCK[20], pauseLen / 2);
+    REG_BG0HOFF = 0;
+    REG_BG0VOFF = 0;
+
     state = PAUSE;
 }
 
 void pause() {
     if (BUTTON_PRESSED(BUTTON_START)) {
-        goToStart();
-        state = START;
+        resumingFromPause = 1;    // ← signal “skip init” next time
+        switch (prevState) {
+            case PHASEONE:    goToPhaseOne();             break;
+            case PHASETWO:    goToPhaseTwo();             break;
+            case START:       goToStartThree();                break;
+            case DIALOGUE:    goToStartInstructions();    break;
+            case DIALOGUE2:   goToPhaseTwoInstructions(); break;
+            case DIALOGUE3:   goToPhaseThreeInstructions();break;
+            default:          goToStart();                break;
+        }
+        state = prevState;
     }
 }
+
 
 // ============================= [ LOSE STATE ] =================================
 
