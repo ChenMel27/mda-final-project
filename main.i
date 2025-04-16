@@ -200,7 +200,7 @@ unsigned char colorAt(int x, int y);
 # 36 "main.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
-SPRITE snows[6];
+SPRITE snows[2];
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
@@ -212,7 +212,7 @@ void drawSnow();
 int winPhaseTwo;
 # 37 "main.c" 2
 # 1 "phaseThree.h" 1
-# 21 "phaseThree.h"
+# 24 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
@@ -222,6 +222,22 @@ void drawTimer(void);
 void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
+
+typedef struct {
+    unsigned short worldX;
+    unsigned short worldY;
+    unsigned char winFlag;
+    unsigned char loseFlag;
+    unsigned char health;
+    unsigned char finishTime;
+    unsigned short padding;
+} PlayerPacket;
+
+extern PlayerPacket localPacket;
+extern PlayerPacket remotePacket;
+extern int multiplayerGameOver;
+
+void syncMultiplayerState();
 # 38 "main.c" 2
 # 1 "start.h" 1
 # 9 "start.h"
@@ -420,6 +436,36 @@ extern const unsigned short diaEightMap[1024];
 
 extern const unsigned short duskTMMap[2048];
 # 60 "main.c" 2
+# 1 "tie.h" 1
+
+
+
+
+
+
+
+extern const unsigned short tieMap[1024];
+# 61 "main.c" 2
+# 1 "winP1.h" 1
+
+
+
+
+
+
+
+extern const unsigned short winP1Map[1024];
+# 62 "main.c" 2
+# 1 "winP2.h" 1
+
+
+
+
+
+
+
+extern const unsigned short winP2Map[1024];
+# 63 "main.c" 2
 
 
 
@@ -461,7 +507,10 @@ typedef enum {
     PHASETHREE,
     PAUSE,
     LOSE,
-    WIN
+    WIN,
+    TIE,
+    WINP1,
+    WINP2,
 } GameState;
 
 GameState state;
@@ -514,6 +563,15 @@ int main() {
             case WIN:
                 lose();
                 break;
+            case TIE:
+                tie();
+                break;
+            case WINP1:
+                winp1();
+                break;
+            case WINP2:
+                winp2();
+                break;
         }
 
         waitForVBlank();
@@ -524,7 +582,9 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToStart();
+    (*(volatile unsigned short*) 0x4000128) = 0;
+    (*(volatile unsigned short*) 0x4000128) = 0x5003;
+    goToPhaseThree();
 }
 
 void goToSplashScreen() {
@@ -935,6 +995,9 @@ void goToPhaseThree() {
     initSnow();
     initCountdownTimer();
 
+
+    initHealth();
+
     hOff = 0;
     vOff = (256 - 160);
     state = PHASETHREE;
@@ -942,7 +1005,6 @@ void goToPhaseThree() {
 
 
 void phaseThree() {
-
 
     updatePlayerThree(&hOff, &vOff);
     updateSnow();
@@ -952,8 +1014,6 @@ void phaseThree() {
 
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
-
-
     (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff / 2;
 
@@ -965,14 +1025,23 @@ void phaseThree() {
     drawTimer();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
-    if (gameOver) {
-        goToLose();
-    }
 
-    if (winPhaseThree) {
-        goToWin();
+    if ((winPhaseThree || *(volatile unsigned short*)0x400010C >= 20) && !multiplayerGameOver) {
+        syncMultiplayerState();
+
+        if ((localPacket.winFlag && remotePacket.winFlag) ||
+            (localPacket.loseFlag && remotePacket.loseFlag)) {
+            goToTie();
+        } else if (localPacket.winFlag && !remotePacket.winFlag) {
+            goToWinP2();
+        } else if (!localPacket.winFlag && remotePacket.winFlag) {
+            goToWinP1();
+        }
+
+        multiplayerGameOver = 1;
     }
 }
+
 
 
 
@@ -1028,6 +1097,69 @@ void goToWin() {
 }
 
 void win() {
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToSplashScreen();
+        state = SPLASH;
+    }
+}
+
+
+
+
+void goToTie() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
+    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, tieMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
+    state = TIE;
+}
+
+void tie() {
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToSplashScreen();
+        state = SPLASH;
+    }
+}
+
+void goToWinP1() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
+    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, winP1Map, &((SB*) 0x6000000)[20], (2048) / 2);
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
+    state = WINP1;
+}
+
+void winp1() {
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToSplashScreen();
+        state = SPLASH;
+    }
+}
+
+void goToWinP2() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
+    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, winP2Map, &((SB*) 0x6000000)[20], (2048) / 2);
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
+    state = WINP2;
+}
+
+void winp2() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToSplashScreen();
         state = SPLASH;

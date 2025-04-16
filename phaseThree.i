@@ -128,7 +128,7 @@ typedef struct {
 } SPRITE;
 # 6 "phaseThree.c" 2
 # 1 "phaseThree.h" 1
-# 21 "phaseThree.h"
+# 24 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
@@ -138,6 +138,22 @@ void drawTimer(void);
 void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
+
+typedef struct {
+    unsigned short worldX;
+    unsigned short worldY;
+    unsigned char winFlag;
+    unsigned char loseFlag;
+    unsigned char health;
+    unsigned char finishTime;
+    unsigned short padding;
+} PlayerPacket;
+
+extern PlayerPacket localPacket;
+extern PlayerPacket remotePacket;
+extern int multiplayerGameOver;
+
+void syncMultiplayerState();
 # 7 "phaseThree.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
@@ -155,6 +171,10 @@ void updateHealth();
 void drawHealth();
 int healthBarFrames[9][2];
 # 9 "phaseThree.c" 2
+
+PlayerPacket localPacket;
+PlayerPacket remotePacket;
+int multiplayerGameOver = 0;
 
 
 extern int hikerFrameDelay;
@@ -459,4 +479,40 @@ void updatePlayerPalette(void)
 
 
     DMANow(3, &playerPaletteWork[1], &((u16 *)0x5000200)[1], 1);
+}
+
+void syncMultiplayerState() {
+    localPacket.worldX = player.worldX;
+    localPacket.worldY = player.worldY;
+    localPacket.winFlag = winPhaseThree;
+    localPacket.loseFlag = gameOver;
+    localPacket.health = health.active;
+    localPacket.finishTime = 20 - *(volatile unsigned short*)0x400010C;
+    localPacket.padding = 0;
+
+    unsigned int* sendData = (unsigned int*)&localPacket;
+    unsigned int timeout = 0xFFFF;
+
+
+    (*(volatile unsigned int*) 0x4000120) = sendData[0];
+    while (!((*(volatile unsigned short*) 0x4000128) & (1 << 7)) && timeout--) { }
+    if (!((*(volatile unsigned short*) 0x4000128) & (1 << 7))) {
+
+        return;
+    }
+    unsigned int recv0 = (*(volatile unsigned int*) 0x4000120);
+
+
+    timeout = 0xFFFF;
+    (*(volatile unsigned int*) 0x4000120) = sendData[1];
+    while (!((*(volatile unsigned short*) 0x4000128) & (1 << 7)) && timeout--) { }
+    if (!((*(volatile unsigned short*) 0x4000128) & (1 << 7))) {
+
+        return;
+    }
+    unsigned int recv1 = (*(volatile unsigned int*) 0x4000120);
+
+    unsigned int* recvData = (unsigned int*)&remotePacket;
+    recvData[0] = recv0;
+    recvData[1] = recv1;
 }

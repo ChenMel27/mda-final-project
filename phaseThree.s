@@ -747,16 +747,114 @@ updatePlayerPalette:
 	.word	DMANow
 	.word	83886594
 	.size	updatePlayerPalette, .-updatePlayerPalette
+	.align	2
+	.global	syncMultiplayerState
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	syncMultiplayerState, %function
+syncMultiplayerState:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, lr}
+	mov	r4, #0
+	mov	lr, #67108864
+	ldr	ip, .L155
+	add	r5, ip, #16
+	ldr	r0, .L155+4
+	ldm	r5, {r5, ip}
+	ldr	r2, .L155+8
+	strh	r5, [r0]	@ movhi
+	strh	ip, [r0, #2]	@ movhi
+	ldr	r5, .L155+12
+	ldrh	ip, [r2, #12]
+	mov	r1, r2
+	ldr	r2, [r5, #4]
+	strb	r2, [r0, #4]
+	ldr	r2, .L155+16
+	ldr	r2, [r2, #52]
+	rsb	ip, ip, #20
+	ldr	r5, .L155+20
+	strb	r2, [r0, #6]
+	strb	ip, [r0, #7]
+	ldrh	r2, [r0]
+	ldrh	ip, [r0, #2]
+	ldr	r5, [r5]
+	orr	r2, r2, ip, lsl #16
+	strb	r5, [r0, #5]
+	strh	r4, [r0, #8]	@ movhi
+	mov	r3, #65536
+	str	r2, [lr, #288]
+	b	.L141
+.L153:
+	subs	r3, r3, #1
+	beq	.L140
+.L141:
+	ldrh	r2, [r1, #40]
+	tst	r2, #128
+	beq	.L153
+.L140:
+	ldr	r1, .L155+8
+	ldrh	r3, [r1, #40]
+	tst	r3, #128
+	beq	.L139
+	mov	ip, #67108864
+	ldrh	r2, [r0, #4]
+	ldrh	r0, [r0, #6]
+	orr	r2, r2, r0, lsl #16
+	mov	r3, #65536
+	ldr	r0, [ip, #288]
+	str	r2, [ip, #288]
+	b	.L145
+.L154:
+	subs	r3, r3, #1
+	beq	.L144
+.L145:
+	ldrh	r2, [r1, #40]
+	tst	r2, #128
+	beq	.L154
+.L144:
+	ldr	r3, .L155+8
+	ldrh	r3, [r3, #40]
+	tst	r3, #128
+	beq	.L139
+	mov	r3, #67108864
+	ldr	r2, [r3, #288]
+	ldr	r3, .L155+24
+	lsr	ip, r2, #16
+	lsr	r1, r0, #16
+	strh	ip, [r3, #6]	@ movhi
+	strh	r2, [r3, #4]	@ movhi
+	strh	r0, [r3]	@ movhi
+	strh	r1, [r3, #2]	@ movhi
+.L139:
+	pop	{r4, r5, lr}
+	bx	lr
+.L156:
+	.align	2
+.L155:
+	.word	player
+	.word	localPacket
+	.word	67109120
+	.word	.LANCHOR0
+	.word	health
+	.word	gameOver
+	.word	remotePacket
+	.size	syncMultiplayerState, .-syncMultiplayerState
 	.global	secondsElapsed
+	.global	multiplayerGameOver
+	.comm	remotePacket,10,4
+	.comm	localPacket,10,4
 	.comm	healthBarFrames,72,4
 	.global	winPhaseThree
 	.comm	playerPaletteWork,512,4
 	.bss
 	.align	2
 	.set	.LANCHOR0,. + 0
-	.type	slowCounter.4102, %object
-	.size	slowCounter.4102, 4
-slowCounter.4102:
+	.type	slowCounter.4118, %object
+	.size	slowCounter.4118, 4
+slowCounter.4118:
 	.space	4
 	.type	winPhaseThree, %object
 	.size	winPhaseThree, 4
@@ -765,5 +863,9 @@ winPhaseThree:
 	.type	secondsElapsed, %object
 	.size	secondsElapsed, 4
 secondsElapsed:
+	.space	4
+	.type	multiplayerGameOver, %object
+	.size	multiplayerGameOver, 4
+multiplayerGameOver:
 	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

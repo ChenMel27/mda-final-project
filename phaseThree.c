@@ -7,6 +7,10 @@
 #include "player.h"
 #include "health.h"
 
+PlayerPacket localPacket;
+PlayerPacket remotePacket;
+int multiplayerGameOver = 0;
+
 // Animation variables
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
@@ -310,5 +314,41 @@ void updatePlayerPalette(void)
     // Update only the portion of the sprite palette corresponding to entries 3..13.
     // If each palette entry is a halfword (2 bytes) and you want 11 entries:
     DMANow(3, &playerPaletteWork[1], &SPRITE_PAL[1], 1);
+}
+
+void syncMultiplayerState() {
+    localPacket.worldX = player.worldX;
+    localPacket.worldY = player.worldY;
+    localPacket.winFlag = winPhaseThree;
+    localPacket.loseFlag = gameOver;
+    localPacket.health = health.active;
+    localPacket.finishTime = 20 - REG_TM3D;
+    localPacket.padding = 0;
+
+    unsigned int* sendData = (unsigned int*)&localPacket;
+    unsigned int timeout = 0xFFFF;
+
+    // Send first 32-bit word and wait for completion with timeout.
+    REG_SIODATA32 = sendData[0];
+    while (!(REG_SIOCNT & (1 << 7)) && timeout--) { }
+    if (!(REG_SIOCNT & (1 << 7))) {
+        // Timeout reached: exit the sync routine.
+        return;
+    }
+    unsigned int recv0 = REG_SIODATA32;
+
+    // Reset timeout and send second 32-bit word.
+    timeout = 0xFFFF;
+    REG_SIODATA32 = sendData[1];
+    while (!(REG_SIOCNT & (1 << 7)) && timeout--) { }
+    if (!(REG_SIOCNT & (1 << 7))) {
+        // Timeout reached: exit the sync routine.
+        return;
+    }
+    unsigned int recv1 = REG_SIODATA32;
+
+    unsigned int* recvData = (unsigned int*)&remotePacket;
+    recvData[0] = recv0;
+    recvData[1] = recv1;
 }
 

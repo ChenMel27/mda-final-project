@@ -17,6 +17,9 @@
 #define SCREEN_HEIGHT 160
 #define MAX_HOFF (BG_WIDTH - SCREEN_WIDTH)
 #define MAX_VOFF (BG_HEIGHT - SCREEN_HEIGHT)
+#define REG_SIODATA32 (*(volatile unsigned int*) 0x4000120)
+#define REG_SIOCNT (*(volatile unsigned short*) 0x4000128)
+
 
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
@@ -27,3 +30,20 @@ void drawTimer(void);
 void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
+
+typedef struct {
+    unsigned short worldX;
+    unsigned short worldY;
+    unsigned char winFlag;
+    unsigned char loseFlag;
+    unsigned char health;
+    unsigned char finishTime;
+    unsigned short padding;
+} PlayerPacket;
+
+extern PlayerPacket localPacket;
+extern PlayerPacket remotePacket;
+extern int multiplayerGameOver;
+
+void syncMultiplayerState();
+

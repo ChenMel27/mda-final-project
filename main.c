@@ -57,6 +57,9 @@ Project:    The Summit Ascent
 #include "diaSeven.h"
 #include "diaEight.h"
 #include "duskTM.h"
+#include "tie.h"
+#include "winP1.h"
+#include "winP2.h"
 #define BG_PRIORITY(n) ((n) & 3)
 
 // ============================= [ FUNCTION PROTOTYPES ] =======================
@@ -98,7 +101,10 @@ typedef enum {
     PHASETHREE,
     PAUSE,
     LOSE,
-    WIN
+    WIN,
+    TIE,
+    WINP1,
+    WINP2,
 } GameState;
 
 GameState state;
@@ -151,6 +157,15 @@ int main() {
             case WIN:
                 lose();
                 break;
+            case TIE:
+                tie();
+                break;
+            case WINP1:
+                winp1();
+                break;
+            case WINP2:
+                winp2();
+                break;
         }
 
         waitForVBlank();
@@ -161,7 +176,9 @@ int main() {
 
 void initialize() {
     mgba_open();
-    goToStart();
+    REG_SIOCNT = 0;       // clear it
+    REG_SIOCNT = 0x5003;  // Enable 32-bit transfer, normal mode, start bit
+    goToPhaseThree();
 }
 
 void goToSplashScreen() {
@@ -572,29 +589,30 @@ void goToPhaseThree() {
     initSnow();
     initCountdownTimer();
 
+    // THROW AWAY
+    initHealth();
+
     hOff = 0;
     vOff = MAX_VOFF;
     state = PHASETHREE;
 }
 
+int syncCalled = 0;
 
 void phaseThree() {
-
-    // Update sprites
+    // Update sprites, scroll backgrounds, and draw.
     updatePlayerThree(&hOff, &vOff);
     updateSnow();
     updateHealth();
     updatePlayerPalette();
-
-    // Front background scrolls regular
+    
+    // Update background offsets.
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
-
-    // Parallax background scrolls half speed:
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
     
-    // Draw sprites
+    // Draw sprites and the timer.
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayerThree();
     drawSnow();
@@ -602,14 +620,24 @@ void phaseThree() {
     drawTimer();
     DMANow(3, shadowOAM, OAM, 512);
     
-    if (gameOver) {
-        goToLose();
-    }
-
-    if (winPhaseThree) {
-        goToWin();
+    // If win condition is met or timer expired, attempt sync only once.
+    if ((winPhaseThree || REG_TM3D >= 20) && !multiplayerGameOver && !syncCalled) {
+        syncCalled = 1;  // Set the global flag to prevent re-attempts.
+        syncMultiplayerState();
+        
+        if ((localPacket.winFlag && remotePacket.winFlag) || 
+            (localPacket.loseFlag && remotePacket.loseFlag)) {
+            goToTie();
+        } else if (localPacket.winFlag && !remotePacket.winFlag) {
+            goToWinP2();
+        } else if (!localPacket.winFlag && remotePacket.winFlag) {
+            goToWinP1();
+        }
+        
+        multiplayerGameOver = 1;  // Mark that the sync (or fallback) has been completed.
     }
 }
+
 
 // ============================= [ PAUSE STATE ] ================================
 
@@ -665,6 +693,69 @@ void goToWin() {
 }
 
 void win() {
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToSplashScreen();
+        state = SPLASH;
+    }
+}
+
+
+// ============================= [ DIALOGUE STATE ] =============================
+
+void goToTie() {
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
+    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, tieMap, &SCREENBLOCK[20], tieLen / 2);
+    REG_BG0HOFF = 0;
+    REG_BG0VOFF = 0;
+    state = TIE;
+}
+
+void tie() {
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToSplashScreen();
+        state = SPLASH;
+    }
+}
+
+void goToWinP1() {
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
+    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, winP1Map, &SCREENBLOCK[20], winP1Len / 2);
+    REG_BG0HOFF = 0;
+    REG_BG0VOFF = 0;
+    state = WINP1;
+}
+
+void winp1() {
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToSplashScreen();
+        state = SPLASH;
+    }
+}
+
+void goToWinP2() {
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
+    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, winP2Map, &SCREENBLOCK[20], winP2Len / 2);
+    REG_BG0HOFF = 0;
+    REG_BG0VOFF = 0;
+    state = WINP2;
+}
+
+void winp2() {
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToSplashScreen();
         state = SPLASH;
