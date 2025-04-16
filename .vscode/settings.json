@@ -32,6 +32,7 @@
         "health.h": "c",
         "cm2.h": "c",
         "bgthreefrontcm.h": "c",
-        "snowtiles.h": "c"
+        "snowtiles.h": "c",
+        "string.h": "c"
     }
 }

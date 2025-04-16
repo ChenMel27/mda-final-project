@@ -79,11 +79,16 @@ void goToLose();
 void lose();
 void goToWin();
 void win();
+void goToMultiplayerResult();
+void multiplayerResult();
+
 
 // ============================= [ VARIABLES ] ============================
 
 extern SPRITE guide;
 extern SPRITE startPlayer;
+extern SPRITE player;
+extern SPRITE health;
 unsigned short buttons;
 unsigned short oldButtons;
 
@@ -98,7 +103,8 @@ typedef enum {
     PHASETHREE,
     PAUSE,
     LOSE,
-    WIN
+    WIN,
+    MULTIRESULT,
 } GameState;
 
 GameState state;
@@ -150,6 +156,9 @@ int main() {
                 break;
             case WIN:
                 lose();
+                break;
+            case MULTIRESULT:
+                multiplayerResult();
                 break;
         }
 
@@ -606,9 +615,32 @@ void phaseThree() {
         goToLose();
     }
 
-    if (winPhaseThree) {
-        goToWin();
+    if (winPhaseThree && !localFinishedTime) {
+        localFinishedTime = REG_TM3D;
     }
+    
+    if (remotePacket.winFlag && !remoteFinishedTime) {
+        remoteFinishedTime = REG_TM3D;
+    }
+    
+    if (localFinishedTime && remoteFinishedTime && !multiplayerGameOver) {
+        if (localFinishedTime < remoteFinishedTime) {
+            strcpy(resultMessage, "PLAYER 1 WINS!");
+        } else if (localFinishedTime > remoteFinishedTime) {
+            strcpy(resultMessage, "PLAYER 2 WINS!");
+        } else {
+            if (health.active > remotePacket.health) {
+                strcpy(resultMessage, "PLAYER 1 WINS! (HP)");
+            } else if (health.active < remotePacket.health) {
+                strcpy(resultMessage, "PLAYER 2 WINS! (HP)");
+            } else {
+                strcpy(resultMessage, "IT'S A TIE!");
+            }
+        }
+    
+        multiplayerGameOver = 1;
+        goToMultiplayerResult();
+    }    
 }
 
 // ============================= [ PAUSE STATE ] ================================
@@ -668,5 +700,20 @@ void win() {
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToSplashScreen();
         state = SPLASH;
+    }
+}
+
+void goToMultiplayerResult() {
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
+    videoBuffer = FRONTBUFFER;
+    DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
+    drawFullscreenImage4(splashScreenBitmap);
+    drawString4(50, 70, resultMessage, 15);
+    state = MULTIRESULT;
+}
+
+void multiplayerResult() {
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToSplashScreen();
     }
 }

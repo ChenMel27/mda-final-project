@@ -27,3 +27,21 @@ void drawTimer(void);
 void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
+extern int localFinishedTime;
+extern int remoteFinishedTime;
+extern int multiplayerGameOver;
+extern char resultMessage[32];
+typedef struct {
+    u16 worldX;
+    u16 worldY;
+    u8 direction;
+    u8 health;
+    u8 winFlag;
+    u8 padding;
+} PlayerPacket;
+
+extern SPRITE remotePlayer;
+extern PlayerPacket localPacket;
+extern PlayerPacket remotePacket;
+#define REG_SIODATA32  *(volatile u32*)0x4000120
+#define REG_SIOCNT     *(volatile u16*)0x4000128

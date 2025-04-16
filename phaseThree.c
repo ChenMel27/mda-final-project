@@ -6,6 +6,7 @@
 #include "phaseThree.h"
 #include "player.h"
 #include "health.h"
+#include <string.h>
 
 // Animation variables
 extern int hikerFrameDelay;
@@ -20,6 +21,10 @@ extern SPRITE player;
 extern SPRITE health;
 volatile int secondsElapsed = 0;
 static int slowModeActive = 0;
+int localFinishedTime = 0;
+int remoteFinishedTime = 0;
+int multiplayerGameOver = 0;
+char resultMessage[32];
 
 
 void initPlayerThree() {
@@ -310,5 +315,50 @@ void updatePlayerPalette(void)
     // Update only the portion of the sprite palette corresponding to entries 3..13.
     // If each palette entry is a halfword (2 bytes) and you want 11 entries:
     DMANow(3, &playerPaletteWork[1], &SPRITE_PAL[1], 1);
+}
+
+void syncMultiplayerState() {
+    localPacket.worldX = player.worldX;
+    localPacket.worldY = player.worldY;
+    localPacket.direction = player.direction;
+    localPacket.health = health.active;
+    localPacket.winFlag = winPhaseThree;
+    localPacket.padding = 0;
+
+    u32* sendData = (u32*)&localPacket;
+    u32 send0 = sendData[0];
+    u32 send1 = sendData[1];
+
+    REG_SIODATA32 = send0;
+    while (!(REG_SIOCNT & (1 << 7)));
+    u32 recv0 = REG_SIODATA32;
+
+    REG_SIODATA32 = send1;
+    while (!(REG_SIOCNT & (1 << 7)));
+    u32 recv1 = REG_SIODATA32;
+
+    u32* recvData = (u32*)&remotePacket;
+    recvData[0] = recv0;
+    recvData[1] = recv1;
+
+    remotePlayer.worldX = remotePacket.worldX;
+    remotePlayer.worldY = remotePacket.worldY;
+    remotePlayer.direction = remotePacket.direction;
+    remotePlayer.active = 1;
+}
+
+void drawRemotePlayer() {
+    int screenX = remotePlayer.worldX - hOff;
+    int screenY = remotePlayer.worldY - vOff;
+
+    shadowOAM[2].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
+
+    if (remotePlayer.direction == 0) {
+        shadowOAM[2].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+    } else {
+        shadowOAM[2].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
+    }
+
+    shadowOAM[2].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 3);  // Use different palette row
 }
 
