@@ -8,6 +8,10 @@
 #include "health.h"
 #include "stdlib.h"
 
+#define SNOW_SPAWN_BUFFER 10   // how far above view to start
+#define SNOW_SPAWN_WIDTH (SCREENWIDTH - SNOW_WIDTH)
+#define SNOW_SPAWN_HEIGHT SNOW_SPAWN_BUFFER
+
 // Global phase variables
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
@@ -217,70 +221,76 @@ void drawPlayerTwo() {
 }
 
 void initSnow() {
+    // seed RNG once (e.g. in your init)
+    srand(1234);
     for (int i = 0; i < MAX_SNOW; i++) {
-        snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
-        // Start above screen
-        snows[i].worldY = rand() % 10 - 10;
-        snows[i].width = SNOW_WIDTH;
-        snows[i].height = SNOW_HEIGHT;
+        snows[i].width    = SNOW_WIDTH;
+        snows[i].height   = SNOW_HEIGHT;
         snows[i].oamIndex = 120 + i;
-        snows[i].active = 1;
-        snows[i].yVel = SNOW_SPEED;
+        snows[i].active   = 1;
+        snows[i].yVel     = SNOW_SPEED;
+        resetSnow(i);
     }
 }
 
 void updateSnow() {
     for (int i = 0; i < MAX_SNOW; i++) {
-        if (snows[i].active) {
-            snows[i].worldY += snows[i].yVel;
+        if (!snows[i].active) continue;
 
+        snows[i].worldY += snows[i].yVel;
 
-            if (collision(snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
-                player.worldX, player.worldY, player.width, player.height)) {
-                // Reset the snow to the top of the screen
-                snows[i].worldY = rand() % 10 - 10;
-                snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
-            
-                // Reduce player's health
-                if (health.active > 0) {
-                    health.active--;
-                    if (health.active == 0) {
-                        gameOver = 1;
-                    }
-                }
-                // Reset player's position back to starting point
-                player.worldX = PLAYER_START_X;
-                player.worldY = PLAYER_START_Y;
-                player.yVel = 0;
-                
-                // Reset the camera offsets
-                hOff = 0;
-                vOff = 0;
-            }
-  
-
-            // Reset if off screen
-            if (snows[i].worldY > MAPHEIGHT) {
-                snows[i].worldY = rand() % 10 - 10;
-                snows[i].worldX = rand() % (MAPWIDTH - SNOW_WIDTH);
-            }
+        // collision with player?
+        if (collision(
+            snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
+            player.worldX,   player.worldY,   player.width,   player.height
+        )) {
+            health.active--;
+            if (health.active == 0) gameOver = 1;
+            player.worldX = PLAYER_START_X;
+            player.worldY = PLAYER_START_Y;
+            player.yVel   = 0;
+            hOff = vOff = 0;
+            resetSnow(i);
+        }
+        // fell below bottom of view?
+        else if (snows[i].worldY > vOff + SCREENHEIGHT) {
+            resetSnow(i);
         }
     }
 }
 
 void drawSnow() {
     for (int i = 0; i < MAX_SNOW; i++) {
-        if (snows[i].active) {
-            int screenX = snows[i].worldX - hOff;
-            int screenY = snows[i].worldY - vOff;
+        if (!snows[i].active) {
+            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_HIDE;
+            continue;
+        }
 
-            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_SQUARE;
-            shadowOAM[snows[i].oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_SMALL;
-            shadowOAM[snows[i].oamIndex].attr2 = ATTR2_TILEID(SNOW_TILE_COL, SNOW_TILE_ROW);
+        int sx = snows[i].worldX - hOff;
+        int sy = snows[i].worldY - vOff;
+
+        // hide if completely off‑screen
+        if (sx < -SNOW_WIDTH || sx > SCREENWIDTH ||
+            sy < -SNOW_HEIGHT|| sy > SCREENHEIGHT) {
+            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_HIDE;
+        } else {
+            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_Y(sy)
+                                               | ATTR0_REGULAR
+                                               | ATTR0_4BPP
+                                               | ATTR0_SQUARE;
+            shadowOAM[snows[i].oamIndex].attr1 = ATTR1_X(sx) | ATTR1_SMALL;
+            shadowOAM[snows[i].oamIndex].attr2 = ATTR2_TILEID(SNOW_TILE_COL,
+                                                              SNOW_TILE_ROW);
         }
     }
 }
 
+static void resetSnow(int i) {
+    // spawn somewhere in the visible X range
+    snows[i].worldX = hOff + (rand() % SNOW_SPAWN_WIDTH);
+    // spawn just above the top of the screen
+    snows[i].worldY = vOff - (rand() % SNOW_SPAWN_HEIGHT) - SNOW_HEIGHT;
+}
 
 inline unsigned char colorAtTwo(int x, int y) {
     return ((unsigned char*) bgTwoFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];

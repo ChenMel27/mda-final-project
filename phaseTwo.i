@@ -129,12 +129,14 @@ typedef struct {
 # 6 "phaseTwo.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
-SPRITE snows[6];
+SPRITE snows[2];
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
 void updatePlayerTwo(int* hOff, int* vOff);
 void drawPlayerTwo();
+static void resetSnow(int i);
+void resetPlayerState(void);
 void initSnow();
 void updateSnow();
 void drawSnow();
@@ -968,7 +970,11 @@ extern long double strtold (const char *restrict, char **restrict);
 
 
 
-# 12 "phaseTwo.c"
+
+
+
+
+# 16 "phaseTwo.c"
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
 extern int hikerFrame;
@@ -1177,70 +1183,76 @@ void drawPlayerTwo() {
 }
 
 void initSnow() {
-    for (int i = 0; i < 6; i++) {
-        snows[i].worldX = rand() % (512 - 16);
 
-        snows[i].worldY = rand() % 10 - 10;
+    srand(1234);
+    for (int i = 0; i < 2; i++) {
         snows[i].width = 16;
         snows[i].height = 16;
         snows[i].oamIndex = 120 + i;
         snows[i].active = 1;
         snows[i].yVel = 1;
+        resetSnow(i);
     }
 }
 
 void updateSnow() {
-    for (int i = 0; i < 6; i++) {
-        if (snows[i].active) {
-            snows[i].worldY += snows[i].yVel;
+    for (int i = 0; i < 2; i++) {
+        if (!snows[i].active) continue;
+
+        snows[i].worldY += snows[i].yVel;
 
 
-            if (collision(snows[i].worldX, snows[i].worldY, 16, 16,
-                player.worldX, player.worldY, player.width, player.height)) {
+        if (collision(
+            snows[i].worldX, snows[i].worldY, 16, 16,
+            player.worldX, player.worldY, player.width, player.height
+        )) {
+            health.active--;
+            if (health.active == 0) gameOver = 1;
+            player.worldX = 0;
+            player.worldY = 101;
+            player.yVel = 0;
+            hOff = vOff = 0;
+            resetSnow(i);
+        }
 
-                snows[i].worldY = rand() % 10 - 10;
-                snows[i].worldX = rand() % (512 - 16);
-
-
-                if (health.active > 0) {
-                    health.active--;
-                    if (health.active == 0) {
-                        gameOver = 1;
-                    }
-                }
-
-                player.worldX = 0;
-                player.worldY = 101;
-                player.yVel = 0;
-
-
-                hOff = 0;
-                vOff = 0;
-            }
-
-
-
-            if (snows[i].worldY > 256) {
-                snows[i].worldY = rand() % 10 - 10;
-                snows[i].worldX = rand() % (512 - 16);
-            }
+        else if (snows[i].worldY > vOff + 160) {
+            resetSnow(i);
         }
     }
 }
 
 void drawSnow() {
-    for (int i = 0; i < 6; i++) {
-        if (snows[i].active) {
-            int screenX = snows[i].worldX - hOff;
-            int screenY = snows[i].worldY - vOff;
+    for (int i = 0; i < 2; i++) {
+        if (!snows[i].active) {
+            shadowOAM[snows[i].oamIndex].attr0 = (2<<8);
+            continue;
+        }
 
-            shadowOAM[snows[i].oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (0<<14);
-            shadowOAM[snows[i].oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14);
-            shadowOAM[snows[i].oamIndex].attr2 = ((((14) * (32) + (0))) & 0x3FF);
+        int sx = snows[i].worldX - hOff;
+        int sy = snows[i].worldY - vOff;
+
+
+        if (sx < -16 || sx > 240 ||
+            sy < -16|| sy > 160) {
+            shadowOAM[snows[i].oamIndex].attr0 = (2<<8);
+        } else {
+            shadowOAM[snows[i].oamIndex].attr0 = ((sy) & 0xFF)
+                                               | (0<<8)
+                                               | (0<<13)
+                                               | (0<<14);
+            shadowOAM[snows[i].oamIndex].attr1 = ((sx) & 0x1FF) | (1<<14);
+            shadowOAM[snows[i].oamIndex].attr2 = ((((14) * (32) + (0))) & 0x3FF)
+                                                                            ;
         }
     }
 }
 
+static void resetSnow(int i) {
+
+    snows[i].worldX = hOff + (rand() % (240 - 16));
+
+    snows[i].worldY = vOff - (rand() % 10) - 16;
+}
 
 inline unsigned char colorAtTwo(int x, int y) {
     return ((unsigned char*) bgTwoFrontCMBitmap)[((y) * (512) + (x))];

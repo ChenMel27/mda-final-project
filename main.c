@@ -184,7 +184,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {

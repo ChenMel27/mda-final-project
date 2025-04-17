@@ -200,12 +200,14 @@ unsigned char colorAt(int x, int y);
 # 36 "main.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
-SPRITE snows[6];
+SPRITE snows[2];
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
 void updatePlayerTwo(int* hOff, int* vOff);
 void drawPlayerTwo();
+static void resetSnow(int i);
+void resetPlayerState(void);
 void initSnow();
 void updateSnow();
 void drawSnow();
@@ -485,11 +487,8 @@ static int splashSelection;
 
 
 
-
 static int savedStartX;
 static int savedStartY;
-static int pausedVBlanks;
-
 
 
 
@@ -603,7 +602,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 void goToSplashScreen() {
@@ -711,19 +710,7 @@ void goToStartThree() {
     hOff = 0;
     vOff = (256 - 160);
 
-    int sampleOffset = pausedVBlanks * (11025/60);
-    int byteOffset = sampleOffset * sizeof(u8);
-
-
-    if (byteOffset >= animaljam_length) {
-
     playSoundA(animaljam_data, animaljam_length, 1);
-    } else {
-
-    u8* startPtr = animaljam_data + byteOffset;
-    int remaining = animaljam_length - byteOffset;
-    playSoundA(startPtr, remaining, 1);
-    }
     state = START;
 }
 
