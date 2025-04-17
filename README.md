@@ -1,77 +1,79 @@
 # The Summit Ascent  
 
 ## Finished
-- **Start Phase (Top-down):**  
-  A functioning start phase where the player can walk around a town environment and interact with a guide to progress to the main climb.
-- **Dialogue System:**  
-  Mode 4 dialogue slides with controls explanation and setup.
-- **Phase One (Side-scroll):**  
-  A side-scrolling phase where the animated player can walk, jump, and duck. Includes animation, collision detection, terrain climbing, and health loss upon touching water and rock.
-- **Phase Two (Side-scroll with Hazards):**  
-  Adds falling snow hazards and water that reduce health on collision. 
-  Includes parallax scrolling.
-- **Phase Three (Final Ascent):**  
-  Final climb with dangerous terrain and snow hazards. 
-  Health-based gameplay continues with win condition at the map edge.
-- **Health Bar System:**  
-  A sprite health bar that visually updates from full to empty using tile frames (max 9). 
-  Displays in all side-scrolling phases.
 
-- **Game States:**
-  - `SPLASH` – Title screen
-  - `START` – Top-down town
-  - `DIALOGUE` – Instruction slides
-  - `PHASEONE` – Side-scrolling level (Rocks and water)
-  - `PHASETWO` – Side-scrolling level (Snow and water)
-  - `PHASETHREE` – Side-scrolling level (Final level - Snow)
-  - `PAUSE` – Static splash-style pause screen
-  - `LOSE` – Static lose screen
-  - `WIN` – Static win screen
+- **Splash Menu**  
+  - Two options (“START” / “INSTRUCTIONS”) highlighted in red/black via palette swaps  
+  - Navigate with UP/DOWN, confirm with START  
+  - “INSTRUCTIONS” brings up a full‑screen “Game Instructions” tilemap, exit back with START  
 
-- **Player & Guide Sprites:**
-  - Player has animated frames and ducking pose.
-  - Collision with guide triggers dialogue.
-  - Player loses health when colliding with danger tiles.
+- **Audio**  
+  - mGBA debug output enabled (`mgba_open()`)  
+  - Simple sound engine initialized (`setupSounds()`)  
+  - Looping background track (AnimalJam) on channel A during the Start phase  
+  - Placeholder for digital sound effects via `digitalSound.h`  
 
-## What Still Needs to be Added
+- **Game‑wide Instruction Screens**  
+  - Four‑page dialogue overlay before Phase One  
+  - Repeated two‑page overlays before each subsequent phase (Phase Two, Phase Three)  
+  - Advance each slide with START  
 
-- [ ] **Improved Win/Lose Screens**
-- [ ] **Pause Menu Bug Fixes**
-- [ ] **Music & Sound Effects**
-- [ ] **More Level Design & Environmental Obstacles**
-- [ ] **Healing / Pickups Mechanics and Cheat**
+- **Start Phase (Top‑down Town)**  
+  - 4‑way movement with separate frames for up/down/left/right  
+  - Tile‑map collision; guide NPC patrols, animates, and on collision leads to Phase One intro  
+  - Camera centers on the player, updates background screen‑block index as you scroll  
+  - Pause (START) saves your X/Y and returns you to the same spot on unpause  
 
----
+- **Phase One (Side‑scroll)**  
+  - Horizontal walk, jump, duck, and up‑to‑3px slope‑climb logic  
+  - Rock collision resets position & deducts health  
+  - Three crevasse zones each trigger a falling animation from preset coordinates  
+  - Two‑layer parallax (foreground + back “day” layer)  
 
-## Known Bugs
-- **Sprite Flicker Between States:**  
-  May be caused by `shadowOAM` not being reset or DMA timing.
-- **Pause State**  
----
+- **Phase Two (Side‑scroll with Hazards)**  
+  - All Phase One mechanics  
+  - Water tiles that damage & reset the player on contact  
+  - Falling snow hazards tied to the current viewport (spawn buffer, constant speed, RNG seed)  
+  - Parallax scrolling via separate BG layers  
+
+- **Phase Three (Final Ascent)**  
+  - All Phase Two mechanics  
+  - “Slow‑mode” terrain throttles movement updates every 4 frames  
+  - 20‑second oxygen timer using hardware timers (Timer2 → Timer3 cascade)  
+  - Two 16×16 sprite digits display countdown; player palette blends as oxygen depletes  
+  - Win on reaching the far right of the map  
+
+- **Pause / Resume**  
+  - Accessible in any phase or the start town via START  
+  - Displays a pause screen overlay; RETURNING restores your last state without re‑initializing  
+
+- **Health Bar System**  
+  - On‑screen sprite bar (0–9 frames) updated immediately on damage  
+
+- **Game States**  
+  - `SPLASH`, `GAMEINSTRUCTIONS`, `START`, `DIALOGUE`, `PHASEONE`,  
+    `DIALOGUE2`, `PHASETWO`, `DIALOGUE3`, `PHASETHREE`, `PAUSE`, `LOSE`, `WIN`  
 
 ## Controls
 
-- `← →` Walk  
-- `↑` Jump (side-scroll) / Interact (top-down)  
-- `↓` Duck (side-scroll)  
-- `START` Pause game / Advance dialogue  
+- **← →** Walk  
+- **↑** Jump / Climb (side‑scroll) / Interact (top‑down)  
+- **↓** Duck  
+- **START** Pause / Advance dialogue/instruction slides  
 
+## Flow
 
-## Navigation Flow
+1. **Splash** → choose START or INSTRUCTIONS  
+2. **Game Instructions** → exit back to Splash  
+3. **Start Phase** → talk to guide → enter Phase One dialogue  
+4. **Phase One** → complete → Phase Two dialogue  
+5. **Phase Two** → complete → Phase Three dialogue  
+6. **Phase Three** → reach summit → Win  
+7. **At any point** → START to pause → START again to resume  
 
-1. **Start Phase (Top-down Town)**  
-   Move around using arrow keys. Find and collide with the guide NPC to enter the dialogue state.
+## To Do
 
-2. **Dialogue Slides**  
-   Press `START` to flip through instructional slides.
-
-3. **Phase One**  
-   Use directional controls to move, jump, and duck. Colliding with water or brown rocks reduces health.
-
-4. **Phase Two**  
-   Dodge falling snow while going through terrain. Snow and water contact resets position and reduces health.
-
-5. **Phase Three (Final Push)**  
-   Reach the far right side to win. Snow contact resets position and reduces health.
-
-
+- [ ] Polish Win/Lose screens  
+- [ ] Fix pause‑menu edge cases  
+- [ ] Add more music & sound effects  
+- [ ] Expand level design & pickups  
