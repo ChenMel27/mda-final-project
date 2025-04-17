@@ -60,8 +60,10 @@ Project:    The Summit Ascent
 #include "pause.h"
 #include "splash1.h"
 #include "gameInstructions.h"
-#define MENU_START        0
-#define MENU_INSTR        1
+#include "animaljam.h"
+#include "digitalSound.h"
+#define MENU_START 0
+#define MENU_INSTR 1
 static int splashSelection;
 #define RED_PALETTE RGB(31, 0, 0)
 #define BLACK_PALETTE RGB(0, 0, 0)
@@ -181,6 +183,7 @@ int main() {
 
 void initialize() {
     mgba_open();
+    setupSounds();
     goToSplashScreen();
 }
 
@@ -244,8 +247,11 @@ void goToStart() {
     initStartPlayer();
     initGuideSprite();
 
+
     hOff = 0;
     vOff = MAX_VOFF;
+    // start looping AnimalJam music on channel A
+    playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
 }
 
@@ -285,6 +291,8 @@ void goToStartThree() {
 
     hOff = 0;
     vOff = MAX_VOFF;
+
+    playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
 }
 
@@ -303,6 +311,7 @@ void start() {
     }
 
     if (next == 1 && talkedToGuide) {
+        stopSounds();
         goToPhaseOne();
     }
 
@@ -311,6 +320,7 @@ void start() {
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
+        stopSounds();
         goToPause();
         return;
     }

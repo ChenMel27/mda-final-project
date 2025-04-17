@@ -447,6 +447,37 @@ extern const unsigned short splash1Pal[256];
 
 extern const unsigned short gameInstructionsMap[1024];
 # 63 "main.c" 2
+# 1 "animaljam.h" 1
+
+
+extern const unsigned int animaljam_sampleRate;
+extern const unsigned int animaljam_length;
+extern const signed char animaljam_data[];
+# 64 "main.c" 2
+# 1 "digitalSound.h" 1
+
+
+
+void setupSounds();
+void playSoundA(const signed char* sound, int length, int loops);
+void playSoundB(const signed char* sound, int length, int loops);
+
+void pauseSounds();
+void unpauseSounds();
+void stopSounds();
+# 49 "digitalSound.h"
+typedef struct{
+    const signed char* data;
+    int dataLength;
+    int isPlaying;
+    int looping;
+    int durationInVBlanks;
+    int vBlankCount;
+} SOUND;
+
+SOUND soundA;
+SOUND soundB;
+# 65 "main.c" 2
 
 
 static int splashSelection;
@@ -454,8 +485,11 @@ static int splashSelection;
 
 
 
+
 static int savedStartX;
 static int savedStartY;
+static int pausedVBlanks;
+
 
 
 
@@ -568,6 +602,7 @@ int main() {
 
 void initialize() {
     mgba_open();
+    setupSounds();
     goToSplashScreen();
 }
 
@@ -631,8 +666,11 @@ void goToStart() {
     initStartPlayer();
     initGuideSprite();
 
+
     hOff = 0;
     vOff = (256 - 160);
+
+    playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
 }
 
@@ -672,6 +710,20 @@ void goToStartThree() {
 
     hOff = 0;
     vOff = (256 - 160);
+
+    int sampleOffset = pausedVBlanks * (11025/60);
+    int byteOffset = sampleOffset * sizeof(u8);
+
+
+    if (byteOffset >= animaljam_length) {
+
+    playSoundA(animaljam_data, animaljam_length, 1);
+    } else {
+
+    u8* startPtr = animaljam_data + byteOffset;
+    int remaining = animaljam_length - byteOffset;
+    playSoundA(startPtr, remaining, 1);
+    }
     state = START;
 }
 
@@ -690,6 +742,7 @@ void start() {
     }
 
     if (next == 1 && talkedToGuide) {
+        stopSounds();
         goToPhaseOne();
     }
 
@@ -698,6 +751,7 @@ void start() {
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
+        stopSounds();
         goToPause();
         return;
     }
