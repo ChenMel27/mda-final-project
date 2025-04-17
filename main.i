@@ -430,6 +430,28 @@ extern const unsigned short duskTMMap[2048];
 
 extern const unsigned short pauseMap[1024];
 # 61 "main.c" 2
+# 1 "splash1.h" 1
+# 21 "splash1.h"
+extern const unsigned short splash1Bitmap[19200];
+
+
+extern const unsigned short splash1Pal[256];
+# 62 "main.c" 2
+# 1 "gameInstructions.h" 1
+
+
+
+
+
+
+
+extern const unsigned short gameInstructionsMap[1024];
+# 63 "main.c" 2
+
+
+static int splashSelection;
+
+
 
 
 static int savedStartX;
@@ -476,7 +498,8 @@ typedef enum {
     PHASETHREE,
     PAUSE,
     LOSE,
-    WIN
+    WIN,
+    GAMEINSTRUCTIONS,
 } GameState;
 
 GameState state, prevState;
@@ -532,6 +555,9 @@ int main() {
             case WIN:
                 lose();
                 break;
+            case GAMEINSTRUCTIONS:
+                gameInstructions();
+                break;
         }
 
         waitForVBlank();
@@ -549,33 +575,50 @@ void goToSplashScreen() {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
     videoBuffer = ((unsigned short*) 0x06000000);
 
-    DMANow(3, (volatile void*)splashScreenPal, ((unsigned short *)0x5000000), 256 | (1 << 31));
-    drawFullscreenImage4(splashScreenBitmap);
-    drawString4(100, 70, "SPLASH", 15);
+
+    DMANow(3, (volatile void*)splash1Pal, ((unsigned short *)0x5000000), 256 | (1 << 31));
+    drawFullscreenImage4(splash1Bitmap);
 
 
-    gameOver = 0;
-    winPhaseOne = 0;
-    winPhaseTwo = 0;
-    winPhaseThree = 0;
-    next = 0;
-    begin = 0;
-    initHealth();
+    splashSelection = 0;
+
+    ((unsigned short *)0x5000000)[12] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+    ((unsigned short *)0x5000000)[13] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
 
     state = SPLASH;
 }
 
-
 void splashScreen() {
+
+    if ((!(~(oldButtons) & ((1<<7))) && (~(buttons) & ((1<<7)))) && splashSelection == 0) {
+        splashSelection = 1;
+    } else if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && splashSelection == 1) {
+        splashSelection = 0;
+    }
+
+
+    if (splashSelection == 0) {
+        ((unsigned short *)0x5000000)[12] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+        ((unsigned short *)0x5000000)[13] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+    } else {
+        ((unsigned short *)0x5000000)[12] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+        ((unsigned short *)0x5000000)[13] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+    }
+
+
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToStart();
-        state = START;
+        if (splashSelection == 0) {
+            goToStart();
+        } else {
+            goToGameInstructions();
+        }
     }
 }
 
 
 
 void goToStart() {
+    resumingFromPause = 0;
     (*(volatile unsigned short *)0x4000000) = 0;
     hideSprites();
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
@@ -594,6 +637,7 @@ void goToStart() {
 }
 
 void goToStartTwo() {
+    resumingFromPause = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
@@ -613,6 +657,7 @@ void goToStartTwo() {
 }
 
 void goToStartThree() {
+    resumingFromPause = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
@@ -1109,5 +1154,24 @@ void win() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToSplashScreen();
         state = SPLASH;
+    }
+}
+
+void goToGameInstructions() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
+    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+    DMANow(3, gameInstructionsMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
+
+    state = GAMEINSTRUCTIONS;
+}
+
+void gameInstructions() {
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToSplashScreen();
     }
 }

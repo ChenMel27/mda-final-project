@@ -33,6 +33,7 @@
         "cm2.h": "c",
         "bgthreefrontcm.h": "c",
         "snowtiles.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "pause.h": "c"
     }
 }

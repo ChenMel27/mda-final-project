@@ -58,6 +58,13 @@ Project:    The Summit Ascent
 #include "diaEight.h"
 #include "duskTM.h"
 #include "pause.h"
+#include "splash1.h"
+#include "gameInstructions.h"
+#define MENU_START        0
+#define MENU_INSTR        1
+static int splashSelection;
+#define RED_PALETTE RGB(31, 0, 0)
+#define BLACK_PALETTE RGB(0, 0, 0)
 #define BG_PRIORITY(n) ((n) & 3)
 // when pausing out of START, save where the player was
 static int savedStartX;
@@ -104,7 +111,8 @@ typedef enum {
     PHASETHREE,
     PAUSE,
     LOSE,
-    WIN
+    WIN,
+    GAMEINSTRUCTIONS,
 } GameState;
 
 GameState state, prevState;
@@ -160,6 +168,9 @@ int main() {
             case WIN:
                 lose();
                 break;
+            case GAMEINSTRUCTIONS:
+                gameInstructions();
+                break;
         }
 
         waitForVBlank();
@@ -177,33 +188,50 @@ void goToSplashScreen() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
 
-    DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
-    drawFullscreenImage4(splashScreenBitmap);
-    drawString4(100, 70, "SPLASH", 15);
+    // load your splash1 palette & image
+    DMANow(3, (volatile void*)splash1Pal, BG_PALETTE, 256 | DMA_ON);
+    drawFullscreenImage4(splash1Bitmap);
 
-    // Reset game progress
-    gameOver = 0;
-    winPhaseOne = 0;
-    winPhaseTwo = 0;
-    winPhaseThree = 0;
-    next = 0;
-    begin = 0;
-    initHealth();
+    // initialize selection
+    splashSelection = MENU_START;
+    // make “SPLASH” red, “INSTRUCTIONS” black
+    BG_PALETTE[12] = RED_PALETTE;
+    BG_PALETTE[13] = BLACK_PALETTE;
 
     state = SPLASH;
 }
 
-
 void splashScreen() {
+    // handle up/down to move the cursor
+    if (BUTTON_PRESSED(BUTTON_DOWN) && splashSelection == MENU_START) {
+        splashSelection = MENU_INSTR;
+    } else if (BUTTON_PRESSED(BUTTON_UP) && splashSelection == MENU_INSTR) {
+        splashSelection = MENU_START;
+    }
+
+    // swap the two palette entries
+    if (splashSelection == MENU_START) {
+        BG_PALETTE[12] = RED_PALETTE;
+        BG_PALETTE[13] = BLACK_PALETTE;
+    } else {
+        BG_PALETTE[12] = BLACK_PALETTE;
+        BG_PALETTE[13] = RED_PALETTE;
+    }
+
+    // confirm choice
     if (BUTTON_PRESSED(BUTTON_START)) {
-        goToStart();
-        state = START;
+        if (splashSelection == MENU_START) {
+            goToStart();
+        } else {
+            goToGameInstructions();
+        }
     }
 }
 
 // ============================= [ START PHASE STATE ] ===========================
 
 void goToStart() {
+    resumingFromPause = 0;
     REG_DISPCTL = 0;
     hideSprites();
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
@@ -222,6 +250,7 @@ void goToStart() {
 }
 
 void goToStartTwo() {
+    resumingFromPause = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
@@ -241,6 +270,7 @@ void goToStartTwo() {
 }
 
 void goToStartThree() {
+    resumingFromPause = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
@@ -737,5 +767,24 @@ void win() {
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToSplashScreen();
         state = SPLASH;
+    }
+}
+
+void goToGameInstructions() {
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
+    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+    DMANow(3, gameInstructionsMap, &SCREENBLOCK[20], gameInstructionsLen / 2);
+    REG_BG0HOFF = 0;
+    REG_BG0VOFF = 0;
+
+    state = GAMEINSTRUCTIONS;
+}
+
+void gameInstructions() {
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToSplashScreen();
     }
 }
