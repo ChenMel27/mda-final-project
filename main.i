@@ -182,7 +182,7 @@ typedef struct {
     u8 oamIndex;
 } SPRITE;
 # 3 "phaseOne.h" 2
-# 20 "phaseOne.h"
+# 18 "phaseOne.h"
 int hikerFrameDelay;
 int hikerFrameCounter;
 int hikerFrame;
@@ -190,17 +190,16 @@ int hikerFrames[5];
 int isDucking;
 int gameOver;
 int winPhaseOne;
-int sbb;
+int movedHorizontally;
 
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
-unsigned char colorAt(int x, int y);
 # 36 "main.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
-SPRITE snows[2];
+SPRITE snows[3];
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
@@ -482,13 +481,15 @@ SOUND soundB;
 # 65 "main.c" 2
 
 
-static int splashSelection;
+
 
 
 
 
 static int savedStartX;
 static int savedStartY;
+
+static int splashSelection;
 
 
 
@@ -511,6 +512,16 @@ void goToLose();
 void lose();
 void goToWin();
 void win();
+void startInstructions();
+void phaseTwoInstructions();
+void phaseThreeInstructions();
+void gameInstructions();
+void goToGameInstructions();
+void goToPhaseTwoInstructions();
+void goToPhaseThreeInstructions();
+void resetPlayerState();
+void mgba_open();
+
 
 
 
@@ -518,7 +529,6 @@ extern SPRITE guide;
 extern SPRITE startPlayer;
 unsigned short buttons;
 unsigned short oldButtons;
-
 
 typedef enum {
     SPLASH,
@@ -535,7 +545,8 @@ typedef enum {
     GAMEINSTRUCTIONS,
 } GameState;
 
-GameState state, prevState;
+GameState state;
+GameState prevState;
 
 int hOff = 0;
 int vOff = 0;
@@ -602,7 +613,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToPhaseOne();
+    goToSplashScreen();
 }
 
 void goToSplashScreen() {
@@ -615,6 +626,7 @@ void goToSplashScreen() {
 
 
     splashSelection = 0;
+
 
     ((unsigned short *)0x5000000)[12] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
     ((unsigned short *)0x5000000)[13] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
@@ -652,15 +664,18 @@ void splashScreen() {
 
 
 void goToStart() {
+
+
     resumingFromPause = 0;
+
     (*(volatile unsigned short *)0x4000000) = 0;
     hideSprites();
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
-    DMANow(3, sTSPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
-    DMANow(3, sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+    DMANow(3, (volatile void*)sTSPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
+    DMANow(3,(volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
 
     initStartPlayer();
     initGuideSprite();
@@ -668,6 +683,7 @@ void goToStart() {
 
     hOff = 0;
     vOff = (256 - 160);
+
 
     playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
@@ -678,16 +694,20 @@ void goToStartTwo() {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
-    DMANow(3, sTSPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
-    DMANow(3, sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+    DMANow(3, (volatile void*)sTSPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
+    DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
 
     initStartPlayer();
     initGuideSprite();
+
     startPlayer.worldX = 134;
     startPlayer.worldX = 436;
     next = 0;
+
+
     talkedToGuide = 1;
+
     hOff = 0;
     vOff = (256 - 160);
     state = START;
@@ -698,12 +718,14 @@ void goToStartThree() {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
-    DMANow(3, sTSPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
-    DMANow(3, sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+    DMANow(3, (volatile void*)sTSPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
+    DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
 
     initStartPlayer();
     initGuideSprite();
+
+
     startPlayer.worldX = savedStartX;
     startPlayer.worldY = savedStartY;
 
@@ -724,9 +746,11 @@ void start() {
     drawGuideSprite();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
+
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
     }
+
 
     if (next == 1 && talkedToGuide) {
         stopSounds();
@@ -738,6 +762,8 @@ void start() {
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
+
+
         stopSounds();
         goToPause();
         return;
@@ -750,18 +776,17 @@ void start() {
 void goToStartInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*)dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+
 
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
 
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-    DMANow(3, diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
-
+    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*)diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
 
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
-
     startPage = 0;
     state = DIALOGUE;
 }
@@ -775,25 +800,25 @@ void startInstructions() {
 
         switch (startPage) {
             case 1:
-                DMANow(3, diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 2:
-                DMANow(3, diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 3:
-                DMANow(3, diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 4:
-                DMANow(3, diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 5:
-                DMANow(3, diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 6:
-                DMANow(3, diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 7:
-                DMANow(3, diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 8:
                 begin = 1;
@@ -816,11 +841,12 @@ void goToPhaseOne() {
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
     (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
     (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
-    DMANow(3, foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
-    DMANow(3, bgOneFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
-    DMANow(3, bgOneBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
-    DMANow(3, dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+    DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
+    DMANow(3, (volatile void*)bgOneFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, (volatile void*)bgOneBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+
 
     if (!resumingFromPause) {
         initPlayer();
@@ -880,13 +906,13 @@ void phaseOne() {
 void goToPhaseTwoInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*)dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
 
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
 
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-    DMANow(3, diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*)diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
 
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
@@ -904,25 +930,25 @@ void phaseTwoInstructions() {
 
         switch (startPage) {
             case 1:
-                DMANow(3, diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 2:
-                DMANow(3, diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 3:
-                DMANow(3, diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 4:
-                DMANow(3, diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 5:
-                DMANow(3, diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 6:
-                DMANow(3, diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 7:
-                DMANow(3, diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 8:
                 goToPhaseTwo();
@@ -944,13 +970,13 @@ void goToPhaseTwo() {
     (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
 
 
-    DMANow(3, foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
+    DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
 
 
-    DMANow(3, bgTwoFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
-    DMANow(3, bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
-    DMANow(3, duskTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+    DMANow(3, (volatile void*)bgTwoFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, (volatile void*)duskTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
 
     if (!resumingFromPause) {
@@ -1009,13 +1035,13 @@ void phaseTwo() {
 void goToPhaseThreeInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*)dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
 
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
 
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-    DMANow(3, diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*)diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
 
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
@@ -1033,25 +1059,25 @@ void phaseThreeInstructions() {
 
         switch (startPage) {
             case 1:
-                DMANow(3, diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 2:
-                DMANow(3, diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 3:
-                DMANow(3, diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 4:
-                DMANow(3, diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 5:
-                DMANow(3, diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 6:
-                DMANow(3, diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 7:
-                DMANow(3, diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 8:
                 goToPhaseThree();
@@ -1073,13 +1099,13 @@ void goToPhaseThree() {
     (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
 
 
-    DMANow(3, foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
+    DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
 
 
-    DMANow(3, bgThreeFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
-    DMANow(3, bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
-    DMANow(3, dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+    DMANow(3, (volatile void*)bgThreeFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
     initPlayerThree();
     initSnow();
@@ -1129,12 +1155,12 @@ void phaseThree() {
 void goToPause() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*) dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*) dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
 
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-    DMANow(3, pauseMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    DMANow(3, (volatile void*) dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*) pauseMap, &((SB*) 0x6000000)[20], (2048) / 2);
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
 
@@ -1143,14 +1169,15 @@ void goToPause() {
 
 void pause() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+
         resumingFromPause = 1;
         switch (prevState) {
             case PHASEONE: goToPhaseOne(); break;
             case PHASETWO: goToPhaseTwo(); break;
             case START: goToStartThree(); break;
             case DIALOGUE: goToStartInstructions(); break;
-            case DIALOGUE2: goToPhaseTwoInstructions(); break;
-            case DIALOGUE3: goToPhaseThreeInstructions();break;
+            case DIALOGUE2: goToPhaseTwoInstructions();break;
+            case DIALOGUE3: goToPhaseThreeInstructions(); break;
             default: goToStart(); break;
         }
         state = prevState;
@@ -1201,10 +1228,10 @@ void win() {
 void goToGameInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*) dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*) dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
-    DMANow(3, gameInstructionsMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    DMANow(3,(volatile void*) gameInstructionsMap, &((SB*) 0x6000000)[20], (2048) / 2);
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
 

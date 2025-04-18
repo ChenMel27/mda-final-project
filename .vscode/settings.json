@@ -35,6 +35,7 @@
         "snowtiles.h": "c",
         "stdbool.h": "c",
         "pause.h": "c",
-        "diaseven.h": "c"
+        "diaseven.h": "c",
+        "bgonefrontcm.h": "c"
     }
 }

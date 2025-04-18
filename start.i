@@ -153,24 +153,18 @@ typedef struct {
 int guideFrameCounter = 0;
 int guideFrameDelay = 6;
 int guideAnimIndex = 0;
-
-
-
 int guideSpeed = 1;
-int guideMoveDirection = -1;
-
-
-
 int guidePatrolLeftBound = 0;
 int guidePatrolRightBound = 0;
+int guideMoveCounter = 0;
+int guideMoveDelay = 2;
 
 
-
+int guideMoveDirection = -1;
 
 
 int guideLeftFrames[5] = {18, 16, 14, 12, 10};
 int guideRightFrames[4] = {12, 14, 16, 18};
-
 
 
 int startHikerFrameDelay = 4;
@@ -190,20 +184,12 @@ typedef enum {
 
 extern int hOff, vOff;
 
-
-
 SPRITE startPlayer;
 SPRITE guide;
-
-
-extern int sbb;
-
-
 
 inline unsigned char startColorAt(int x, int y) {
     return townCMBitmap[((y) * (512) + (x))];
 }
-
 
 
 void initStartPlayer() {
@@ -225,7 +211,6 @@ void initStartPlayer() {
 }
 
 void initGuideSprite() {
-
     guide.worldX = 436;
     guide.worldY = 127;
     guide.width = 16;
@@ -238,11 +223,9 @@ void initGuideSprite() {
     guide.yVel = 0;
 
 
-
     guidePatrolLeftBound = guide.worldX - 20;
     guidePatrolRightBound = guide.worldX + 20;
 }
-
 
 
 void updateStartPlayer(int* hOff, int* vOff) {
@@ -254,7 +237,6 @@ void updateStartPlayer(int* hOff, int* vOff) {
     int rightX = startPlayer.worldX + startPlayer.width - 1;
     int topY = startPlayer.worldY;
     int bottomY = startPlayer.worldY + startPlayer.height - 1;
-
 
     if ((~(buttons) & ((1<<4)))) {
         startPlayer.isAnimating = 1;
@@ -320,14 +302,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
     if (*vOff < 0) *vOff = 0;
     if (*hOff > 512 - 240) *hOff = 512 - 240;
     if (*vOff > 512 - 160) *vOff = 512 - 160;
-
-
-    sbb = 20 + (*hOff / 512);
 }
-
-
-int guideMoveCounter = 0;
-int guideMoveDelay = 2;
 
 void updateGuideSprite() {
 
@@ -342,8 +317,6 @@ void updateGuideSprite() {
         }
         guideFrameCounter = 0;
     }
-
-
     guideMoveCounter++;
     if (guideMoveCounter > guideMoveDelay) {
 
@@ -365,7 +338,6 @@ void updateGuideSprite() {
 
 
 
-
 void drawStartPlayer() {
     int screenX = startPlayer.worldX - hOff;
     int screenY = startPlayer.worldY - vOff;
@@ -373,25 +345,17 @@ void drawStartPlayer() {
         ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
 
     if (startPlayer.direction == RIGHT) {
-        shadowOAM[startPlayer.oamIndex].attr1 =
-            ((screenX) & 0x1FF) | (2<<14);
-        shadowOAM[startPlayer.oamIndex].attr2 =
-            ((((1) * (32) + (startHikerFramesHorizontal[startHikerFrame]))) & 0x3FF);
+        shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
+        shadowOAM[startPlayer.oamIndex].attr2 = ((((1) * (32) + (startHikerFramesHorizontal[startHikerFrame]))) & 0x3FF);
     } else if (startPlayer.direction == LEFT) {
-        shadowOAM[startPlayer.oamIndex].attr1 =
-            ((screenX) & 0x1FF) | (2<<14) | (1<<12);
-        shadowOAM[startPlayer.oamIndex].attr2 =
-            ((((1) * (32) + (startHikerFramesHorizontal[startHikerFrame]))) & 0x3FF);
+        shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
+        shadowOAM[startPlayer.oamIndex].attr2 = ((((1) * (32) + (startHikerFramesHorizontal[startHikerFrame]))) & 0x3FF);
     } else if (startPlayer.direction == UP) {
-        shadowOAM[startPlayer.oamIndex].attr1 =
-            ((screenX) & 0x1FF) | (2<<14);
-        shadowOAM[startPlayer.oamIndex].attr2 =
-            ((((1) * (32) + (startHikerFramesUp[startHikerFrame]))) & 0x3FF);
+        shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
+        shadowOAM[startPlayer.oamIndex].attr2 = ((((1) * (32) + (startHikerFramesUp[startHikerFrame]))) & 0x3FF);
     } else if (startPlayer.direction == DOWN) {
-        shadowOAM[startPlayer.oamIndex].attr1 =
-            ((screenX) & 0x1FF) | (2<<14);
-        shadowOAM[startPlayer.oamIndex].attr2 =
-            ((((1) * (32) + (startHikerFramesDown[startHikerFrame]))) & 0x3FF);
+        shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
+        shadowOAM[startPlayer.oamIndex].attr2 = ((((1) * (32) + (startHikerFramesDown[startHikerFrame]))) & 0x3FF);
     }
 }
 
@@ -405,9 +369,6 @@ void drawGuideSprite() {
     int hflip = 0;
 
 
-
-
-
     if (guideMoveDirection == -1) {
         tileX = guideLeftFrames[guideAnimIndex];
         hflip = 0;
@@ -416,11 +377,9 @@ void drawGuideSprite() {
         hflip = (1<<12);
     }
 
-    shadowOAM[guide.oamIndex].attr1 =
-        ((screenX) & 0x1FF) | (2<<14) | hflip;
+    shadowOAM[guide.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | hflip;
     shadowOAM[guide.oamIndex].attr2 = ((((9) * (32) + (tileX))) & 0x3FF);
 }
-
 
 
 int checkPlayerGuideCollision() {

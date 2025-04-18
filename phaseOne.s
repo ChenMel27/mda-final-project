@@ -233,15 +233,15 @@ updatePlayer:
 	mov	r3, #0
 	str	r3, [r4, #12]
 .L32:
-	ldr	r3, [r7, #8]
+	ldr	r3, [r7, #12]
 	ldr	r2, [sp, #8]
 	add	r3, r3, #1
 	cmp	r2, #0
-	str	r3, [r7, #8]
+	str	r3, [r7, #12]
 	bne	.L116
 	ldr	r3, [sp, #8]
+	str	r3, [r7, #16]
 	str	r3, [r7, #12]
-	str	r3, [r7, #8]
 .L43:
 	ldr	r3, [sp, #4]
 	add	r3, r3, r3, lsr #31
@@ -276,7 +276,7 @@ updatePlayer:
 	add	r3, r3, r1
 	cmp	r3, r2
 	movgt	r3, #1
-	strgt	r3, [r7, #16]
+	strgt	r3, [r7, #20]
 .L10:
 	add	sp, sp, #20
 	@ sp needed
@@ -350,15 +350,15 @@ updatePlayer:
 	ldr	r2, [r2]
 	cmp	r3, r2
 	ble	.L43
-	ldr	r0, [r7, #12]
+	ldr	r0, [r7, #16]
 	ldr	r3, .L119+28
 	ldr	r1, [r4, #48]
 	add	r0, r0, #1
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
-	str	r1, [r7, #12]
-	str	r3, [r7, #8]
+	str	r1, [r7, #16]
+	str	r3, [r7, #12]
 	b	.L43
 .L111:
 	mov	r8, #1
@@ -406,10 +406,12 @@ updatePlayer:
 .L118:
 	cmp	r3, #1
 	movlt	r3, #1
+	mov	r0, #1
 	sub	r3, r3, #1
 	sub	r3, r1, r3
 	str	r3, [r4, #20]
 	str	fp, [r4, #16]
+	str	r0, [r7, #8]
 	b	.L14
 .L117:
 	mov	r2, #1
@@ -417,6 +419,7 @@ updatePlayer:
 	sub	r3, r3, r0
 	str	fp, [r4, #16]
 	str	r3, [r4, #20]
+	str	r2, [r7, #8]
 	str	r2, [sp, #8]
 	b	.L19
 .L120:
@@ -495,7 +498,7 @@ drawPlayer:
 	moveq	r3, #1
 	mov	ip, #1
 	mov	r0, #110
-	streq	r3, [lr, #20]
+	streq	r3, [lr, #24]
 .L148:
 	mov	r2, #332
 	ldr	r1, .L150+16
@@ -514,7 +517,7 @@ drawPlayer:
 	cmp	r3, #0
 	str	r3, [r2, #52]
 	moveq	r3, #1
-	streq	r3, [lr, #20]
+	streq	r3, [lr, #24]
 .L127:
 	mov	r3, #0
 	mov	r2, #102
@@ -574,7 +577,7 @@ drawPlayer:
 	moveq	r3, #1
 	mov	ip, #1
 	mov	r0, #125
-	streq	r3, [lr, #20]
+	streq	r3, [lr, #24]
 	b	.L148
 .L131:
 	cmp	r6, #8
@@ -597,7 +600,7 @@ drawPlayer:
 	moveq	r3, #1
 	mov	ip, #1
 	mov	r0, #183
-	streq	r3, [lr, #20]
+	streq	r3, [lr, #24]
 	b	.L148
 .L133:
 	ldr	r3, .L150+28
@@ -625,7 +628,7 @@ drawPlayer:
 	add	r3, r2, r1
 	movne	r2, #164
 	ldreq	r2, .L150+32
-	ldreq	r1, [lr, #12]
+	ldreq	r1, [lr, #16]
 	addeq	r2, r2, r1, lsl #2
 	ldreq	r2, [r2, #4]
 	addeq	r2, r2, #32
@@ -659,27 +662,22 @@ resetPlayerState:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	str	lr, [sp, #-4]!
+	@ link register save eliminated.
 	mov	r2, #0
-	mov	lr, #4
-	mov	r0, #20
-	ldr	r3, .L154
-	ldr	ip, .L154+4
-	ldr	r1, .L154+8
-	str	lr, [ip]
-	str	r2, [r3, #8]
+	mov	r0, #4
+	ldr	r3, .L153
+	ldr	r1, .L153+4
 	str	r2, [r3, #12]
-	str	r2, [r3, #4]
-	str	r2, [r3, #20]
 	str	r0, [r1]
-	ldr	lr, [sp], #4
+	str	r2, [r3, #16]
+	str	r2, [r3, #4]
+	str	r2, [r3, #24]
 	bx	lr
-.L155:
-	.align	2
 .L154:
+	.align	2
+.L153:
 	.word	.LANCHOR0
 	.word	.LANCHOR1
-	.word	sbb
 	.size	resetPlayerState, .-resetPlayerState
 	.align	2
 	.global	startFallingAnimation
@@ -692,18 +690,18 @@ startFallingAnimation:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	mov	r2, #1
-	ldr	r3, .L158
+	ldr	r3, .L157
 	str	lr, [sp, #-4]!
-	ldr	ip, .L158+4
-	ldr	lr, .L158+8
+	ldr	ip, .L157+4
+	ldr	lr, .L157+8
 	strb	r2, [r3]
 	str	r0, [lr]
 	str	r1, [ip]
 	ldr	lr, [sp], #4
 	bx	lr
-.L159:
-	.align	2
 .L158:
+	.align	2
+.L157:
 	.word	.LANCHOR0
 	.word	fallingY
 	.word	fallingX
@@ -719,16 +717,16 @@ updateFallingAnimation:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r2, .L162
+	ldr	r2, .L161
 	ldr	r3, [r2]
 	add	r3, r3, #3
 	cmp	r3, #400
 	str	r3, [r2]
 	bxlt	lr
 	b	updateFallingAnimation.part.0
-.L163:
-	.align	2
 .L162:
+	.align	2
+.L161:
 	.word	fallingY
 	.size	updateFallingAnimation, .-updateFallingAnimation
 	.align	2
@@ -742,14 +740,14 @@ drawFallingSprite:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r2, .L166
-	ldr	r3, .L166+4
+	ldr	r2, .L165
+	ldr	r3, .L165+4
 	ldr	r2, [r2]
-	ldr	r1, .L166+8
+	ldr	r1, .L165+8
 	ldr	r3, [r3, #4]
-	ldr	r0, .L166+12
-	ldr	r4, .L166+16
-	ldr	lr, .L166+20
+	ldr	r0, .L165+12
+	ldr	r4, .L165+16
+	ldr	lr, .L165+20
 	ldrb	r1, [r1, #56]	@ zero_extendqisi2
 	ldrb	r0, [r0]	@ zero_extendqisi2
 	lsl	r2, r2, #23
@@ -766,9 +764,9 @@ drawFallingSprite:
 	strh	r3, [ip, #4]	@ movhi
 	pop	{r4, lr}
 	bx	lr
-.L167:
-	.align	2
 .L166:
+	.align	2
+.L165:
 	.word	fallingX
 	.word	.LANCHOR1
 	.word	player
@@ -788,11 +786,11 @@ resetPlayerAfterFall:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	mov	r3, #0
 	mov	r1, #102
-	ldr	r0, .L170
+	ldr	r0, .L169
 	str	lr, [sp, #-4]!
-	ldr	r2, .L170+4
-	ldr	lr, .L170+8
-	ldr	ip, .L170+12
+	ldr	r2, .L169+4
+	ldr	lr, .L169+8
+	ldr	ip, .L169+12
 	strb	r3, [r0]
 	str	r3, [lr]
 	str	r3, [ip]
@@ -801,40 +799,20 @@ resetPlayerAfterFall:
 	str	r1, [r2, #20]
 	ldr	lr, [sp], #4
 	bx	lr
-.L171:
-	.align	2
 .L170:
+	.align	2
+.L169:
 	.word	.LANCHOR0
 	.word	player
 	.word	hOff
 	.word	vOff
 	.size	resetPlayerAfterFall, .-resetPlayerAfterFall
-	.align	2
-	.global	colorAt
-	.syntax unified
-	.arm
-	.fpu softvfp
-	.type	colorAt, %function
-colorAt:
-	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	r3, .L173
-	add	r0, r0, r1, lsl #9
-	ldrb	r0, [r3, r0]	@ zero_extendqisi2
-	bx	lr
-.L174:
-	.align	2
-.L173:
-	.word	bgOneFrontCMBitmap
-	.size	colorAt, .-colorAt
+	.global	playerState
+	.comm	player,60,4
 	.global	fallSpeed
 	.comm	fallingY,4,4
 	.comm	fallingX,4,4
-	.global	playerState
-	.comm	player,60,4
-	.comm	sbb,4,4
+	.global	movedHorizontally
 	.global	winPhaseOne
 	.global	gameOver
 	.global	isDucking
@@ -874,6 +852,10 @@ playerState:
 	.type	isDucking, %object
 	.size	isDucking, 4
 isDucking:
+	.space	4
+	.type	movedHorizontally, %object
+	.size	movedHorizontally, 4
+movedHorizontally:
 	.space	4
 	.type	hikerFrameCounter, %object
 	.size	hikerFrameCounter, 4

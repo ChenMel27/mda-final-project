@@ -11,10 +11,13 @@
 #include "phaseOne.h"
 #include "player.h"
 
-/* --- Definitions --- */
-#define FALL_END_Y 400   // Y coordinate where the falling animation ends
+// y val where the falling animation ends
+#define FALL_END_Y 400
+int fallingX;
+int fallingY;
+const int fallSpeed = 3;
 
-/* --- Global Variables --- */
+// global var
 int hikerFrameDelay = 4;
 int hikerFrameCounter = 0;
 int hikerFrame = 0;
@@ -23,24 +26,20 @@ extern int hOff, vOff;
 int isDucking = 0;
 int gameOver = 0;
 int winPhaseOne = 0;
+int movedHorizontally = 0;
 
-/* --- Sprite Definitions --- */
+// sprites
 SPRITE player;
 extern SPRITE health;
 
-/* --- Player State Definitions --- */
+
 typedef enum {
     PLAYER_NORMAL,
     PLAYER_FALLING
 } PlayerState;
-
 PlayerState playerState = PLAYER_NORMAL;
 
-/* --- Falling Animation Globals --- */
-int fallingX, fallingY;
-const int fallSpeed = 3;   // Pixels to move per frame during falling
-
-/* --- Function Prototypes --- */
+// Function Prototypes
 void startFallingAnimation(int startX, int startY);
 void updateFallingAnimation(void);
 void drawFallingSprite(void);
@@ -48,10 +47,10 @@ void resetPlayerAfterFall(void);
 
 inline unsigned char colorAt(int x, int y);
 
-/* --- Initialization --- */
+// Initialization 
 void initPlayer() {
-    player.worldX = PLAYER_START_X;
-    player.worldY = PLAYER_START_Y;
+    player.worldX = PLAYER1_START_X;
+    player.worldY = PLAYER1_START_Y;
     player.x = SCREENWIDTH / 2 - 8;
     player.y = SCREENHEIGHT / 2 - 16;
     player.width = 12;
@@ -64,12 +63,11 @@ void initPlayer() {
     player.active = 1;
     player.xVel = 1;
     player.yVel = 0;
-    
     DMANow(3, (void*) playerPal, SPRITE_PAL, playerPalLen / 2);
     DMANow(3, (void*) playerTiles, &CHARBLOCK[4], playerTilesLen / 2);
 }
 
-/* --- Update Routine --- */
+// Update
 void updatePlayer(int* hOff, int* vOff) {
     // If falling, only update falling animation
     if (playerState == PLAYER_FALLING) {
@@ -77,14 +75,13 @@ void updatePlayer(int* hOff, int* vOff) {
         return;
     }
 
-    // Reset animation each frame
+    // reset animation
     player.isAnimating = 0;
 
-    // Check ducking
+    // ducking check
     isDucking = BUTTON_HELD(BUTTON_DOWN);
 
-    // --- Horizontal Movement ---
-    int movedHorizontally = 0;
+    // Horizontal
     int leftX = player.worldX;
     int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
@@ -93,6 +90,7 @@ void updatePlayer(int* hOff, int* vOff) {
     if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
         player.direction = 1;
         player.isAnimating = 1;
+        // iterate 3 up (left 1) for mountains + smooth movement
         for (int step = 0; step <= 3; step++) {
             if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
                 (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
@@ -104,9 +102,10 @@ void updatePlayer(int* hOff, int* vOff) {
         }
     }
 
-    if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH - player.width) {
+    if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH1 - player.width) {
         player.direction = 0;
         player.isAnimating = 1;
+        // iterate 3 up (right 1) for mountains + smooth movement
         for (int step = 0; step <= 3; step++) {
             if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
                 (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
@@ -118,8 +117,9 @@ void updatePlayer(int* hOff, int* vOff) {
         }
     }
 
-    // --- Gravity and Vertical Movement ---
+    // Gravity + vertical movement for jumping
     int grounded = 0;
+
     player.yVel += GRAVITY;
     if (player.yVel > TERMINAL_VELOCITY) player.yVel = TERMINAL_VELOCITY;
 
@@ -138,7 +138,7 @@ void updatePlayer(int* hOff, int* vOff) {
     } else if (player.yVel > 0) {
         for (int i = 0; i < player.yVel; i++) {
             bottomY = player.worldY + player.height - 1;
-            if (bottomY + 1 < MAPHEIGHT &&
+            if (bottomY + 1 < MAPHEIGHT1 &&
                 colorAt(player.worldX, bottomY + 1) != 0x04 &&
                 colorAt(player.worldX + player.width - 1, bottomY + 1) != 0x04) {
                 player.worldY++;
@@ -157,13 +157,13 @@ void updatePlayer(int* hOff, int* vOff) {
         }
     }
 
-    // --- Jumping ---
+    // Jumping (12 px)
     if (BUTTON_PRESSED(BUTTON_UP) && grounded) {
         player.yVel = -12;
         grounded = 0;
     }
 
-    // --- Animation ---
+    // Animating
     hikerFrameCounter++;
     if (player.isAnimating && hikerFrameCounter > hikerFrameDelay) {
         hikerFrame = (hikerFrame + 1) % player.numFrames;
@@ -173,30 +173,30 @@ void updatePlayer(int* hOff, int* vOff) {
         hikerFrameCounter = 0;
     }
 
-    // --- Camera ---
+    // Setting up the camera
     *hOff = player.worldX - (SCREENWIDTH / 2 - player.width / 2);
     *vOff = player.worldY - (SCREENHEIGHT / 2 - player.height / 2);
     if (*hOff < 0) *hOff = 0;
     if (*vOff < 0) *vOff = 0;
-    if (*hOff > MAPWIDTH - SCREENWIDTH) *hOff = MAPWIDTH - SCREENWIDTH;
-    if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
+    if (*hOff > MAPWIDTH1 - SCREENWIDTH) *hOff = MAPWIDTH1 - SCREENWIDTH;
+    if (*vOff > MAPHEIGHT1 - SCREENHEIGHT) *vOff = MAPHEIGHT1 - SCREENHEIGHT;
 
-    // --- Win Condition ---
-    if (player.worldX + player.width >= MAPWIDTH - 1) {
+    // Winning conidition 
+    if (player.worldX + player.width >= MAPWIDTH1 - 1) {
         winPhaseOne = 1;
     }
 }
 
 
-/* --- Drawing Routine --- */
+// Draw
 void drawPlayer() {
-    // If falling, draw the falling sprite and skip collision checks
+    // If falling, draw the falling sprite (ie skip collision checking)
     if (playerState == PLAYER_FALLING) {
         drawFallingSprite();
         return;
     }
     
-    // Four corners for collision detection
+    // Four corners
     int leftX   = player.worldX;
     int rightX  = player.worldX + player.width - 1;
     int topY    = player.worldY;
@@ -214,8 +214,9 @@ void drawPlayer() {
                 gameOver = 1;
             }
         }
-        player.worldX = PLAYER_START_X;
-        player.worldY = PLAYER_START_Y;
+
+        player.worldX = PLAYER1_START_X;
+        player.worldY = PLAYER1_START_Y;
         player.yVel = 0;
         hOff = 0;
         vOff = 0;
@@ -233,7 +234,8 @@ void drawPlayer() {
             if (health.active == 0) {
                 gameOver = 1;
             }
-            startFallingAnimation(110, 332);  // Start at left crevasse coordinate.
+            // Start at left crevasse coordinate
+            startFallingAnimation(110, 332);
         }
         return;
     }
@@ -249,7 +251,8 @@ void drawPlayer() {
             if (health.active == 0) {
                 gameOver = 1;
             }
-            startFallingAnimation(125, 332);  // Start at middle crevasse coordinate.
+            // Start at middle crevasse coordinate
+            startFallingAnimation(125, 332);
         }
         return;
     }
@@ -265,12 +268,13 @@ void drawPlayer() {
             if (health.active == 0) {
                 gameOver = 1;
             }
-            startFallingAnimation(183, 332);  // Start at right crevasse coordinate.
+            // Start at right crevasse coordinate
+            startFallingAnimation(183, 332);
         }
         return;
     }
     
-    // Normal drawing of player
+    // Regular draw player
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
     
@@ -281,6 +285,7 @@ void drawPlayer() {
         shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
     }
     
+    // If ducking, then change tile
     if (isDucking) {
         shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 5);
     } else {
@@ -288,26 +293,25 @@ void drawPlayer() {
     }
 }
 
-/* --- Utility: Reset Player State --- */
+// Reset player state
 void resetPlayerState() {
     hikerFrameDelay = 4;
     hikerFrameCounter = 0;
     hikerFrame = 0;
     isDucking = 0;
     gameOver = 0;
-    sbb = 20;
 }
 
-/* --- Falling Animation Functions --- */
+/* ===================== Falling Animation ===================== */
 
-// Called to switch the player into FALLING state using the given starting coordinates.
+// Go to falling state with given starting coordinates of crevasse (left, middle, right)
 void startFallingAnimation(int startX, int startY) {
     playerState = PLAYER_FALLING;
     fallingX = startX;
     fallingY = startY;
 }
 
-// Called each frame while in the FALLING state.
+// Each frame while falling
 void updateFallingAnimation(void) {
     fallingY += fallSpeed;
     if (fallingY >= FALL_END_Y) {
@@ -315,24 +319,24 @@ void updateFallingAnimation(void) {
     }
 }
 
-// Draw the falling sprite at its current falling coordinates.
+// Draw the falling sprite at curr fall coordinates
 void drawFallingSprite(void) {
     shadowOAM[player.oamIndex].attr0 = ATTR0_Y(fallingY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
     shadowOAM[player.oamIndex].attr1 = ATTR1_X(fallingX) | ATTR1_MEDIUM;
     shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[0], 1);
 }
 
-// Reset the player's state after the falling animation completes.
+// Reset the player's state after fall animation
 void resetPlayerAfterFall(void) {
-    player.worldX = PLAYER_START_X;
-    player.worldY = PLAYER_START_Y;
+    player.worldX = PLAYER1_START_X;
+    player.worldY = PLAYER1_START_Y;
     player.yVel = 0;
     hOff = 0;
     vOff = 0;
     playerState = PLAYER_NORMAL;
 }
 
-/* --- Utility Function: Get Color at x,y --- */
+// Get color at function for phase one
 inline unsigned char colorAt(int x, int y) {
-    return ((unsigned char*) bgOneFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
+    return ((unsigned char*) bgOneFrontCMBitmap)[OFFSET(x, y, MAPWIDTH1)];
 }

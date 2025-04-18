@@ -3,8 +3,8 @@
 
 #include "gba.h"
 
-#define MAPWIDTH 512
-#define MAPHEIGHT 512
+#define STARTMAPWIDTH 512
+#define STARTMAPHEIGHT 512
 
 int next;
 

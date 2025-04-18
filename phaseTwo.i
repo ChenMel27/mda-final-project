@@ -129,13 +129,13 @@ typedef struct {
 # 6 "phaseTwo.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
-SPRITE snows[2];
+SPRITE snows[3];
 
 unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
 void updatePlayerTwo(int* hOff, int* vOff);
 void drawPlayerTwo();
-static void resetSnow(int i);
+void resetSnow(int i);
 void resetPlayerState(void);
 void initSnow();
 void updateSnow();
@@ -974,7 +974,8 @@ extern long double strtold (const char *restrict, char **restrict);
 
 
 
-# 16 "phaseTwo.c"
+
+# 17 "phaseTwo.c"
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
 extern int hikerFrame;
@@ -985,10 +986,8 @@ extern int gameOver;
 int winPhaseTwo = 0;
 extern SPRITE player;
 extern SPRITE health;
-extern int sbb;
 
 void initPlayerTwo() {
-    resetPlayerState();
     player.worldX = 0;
     player.worldY = 102;
     player.x = 240 / 2 - 8;
@@ -1120,8 +1119,6 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     if (*hOff > 512 - 240) *hOff = 512 - 240;
     if (*vOff > 256 - 160) *vOff = 256 - 160;
 
-    sbb = 20 + (*hOff / 256);
-
 
     if (player.worldX + player.width >= 512 - 1) {
         winPhaseTwo = 1;
@@ -1144,6 +1141,7 @@ void drawPlayerTwo() {
 
         if (health.active > 0) {
             health.active--;
+
             if (health.active == 0) {
                 gameOver = 1;
             }
@@ -1182,10 +1180,11 @@ void drawPlayerTwo() {
     }
 }
 
+
 void initSnow() {
 
     srand(1234);
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 3; i++) {
         snows[i].width = 16;
         snows[i].height = 16;
         snows[i].oamIndex = 120 + i;
@@ -1196,22 +1195,24 @@ void initSnow() {
 }
 
 void updateSnow() {
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 3; i++) {
         if (!snows[i].active) continue;
 
         snows[i].worldY += snows[i].yVel;
 
 
-        if (collision(
-            snows[i].worldX, snows[i].worldY, 16, 16,
-            player.worldX, player.worldY, player.width, player.height
-        )) {
+        if (collision(snows[i].worldX, snows[i].worldY, 16, 16,
+            player.worldX, player.worldY, player.width, player.height)) {
             health.active--;
+
             if (health.active == 0) gameOver = 1;
+
+
             player.worldX = 0;
             player.worldY = 101;
             player.yVel = 0;
-            hOff = vOff = 0;
+            hOff = 0;
+            vOff = 0;
             resetSnow(i);
         }
 
@@ -1222,7 +1223,7 @@ void updateSnow() {
 }
 
 void drawSnow() {
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 3; i++) {
         if (!snows[i].active) {
             shadowOAM[snows[i].oamIndex].attr0 = (2<<8);
             continue;
@@ -1232,22 +1233,17 @@ void drawSnow() {
         int sy = snows[i].worldY - vOff;
 
 
-        if (sx < -16 || sx > 240 ||
-            sy < -16|| sy > 160) {
+        if (sx < -16 || sx > 240 || sy < -16|| sy > 160) {
             shadowOAM[snows[i].oamIndex].attr0 = (2<<8);
         } else {
-            shadowOAM[snows[i].oamIndex].attr0 = ((sy) & 0xFF)
-                                               | (0<<8)
-                                               | (0<<13)
-                                               | (0<<14);
+            shadowOAM[snows[i].oamIndex].attr0 = ((sy) & 0xFF) | (0<<8) | (0<<13) | (0<<14);
             shadowOAM[snows[i].oamIndex].attr1 = ((sx) & 0x1FF) | (1<<14);
-            shadowOAM[snows[i].oamIndex].attr2 = ((((14) * (32) + (0))) & 0x3FF)
-                                                                            ;
+            shadowOAM[snows[i].oamIndex].attr2 = ((((14) * (32) + (0))) & 0x3FF);
         }
     }
 }
 
-static void resetSnow(int i) {
+void resetSnow(int i) {
 
     snows[i].worldX = hOff + (rand() % (240 - 16));
 

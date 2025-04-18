@@ -8,7 +8,8 @@
 #include "health.h"
 #include "stdlib.h"
 
-#define SNOW_SPAWN_BUFFER 10   // how far above view to start
+// how far above view to start
+#define SNOW_SPAWN_BUFFER 10
 #define SNOW_SPAWN_WIDTH (SCREENWIDTH - SNOW_WIDTH)
 #define SNOW_SPAWN_HEIGHT SNOW_SPAWN_BUFFER
 
@@ -23,10 +24,8 @@ extern int gameOver;
 int winPhaseTwo = 0;
 extern SPRITE player;
 extern SPRITE health;
-extern int sbb;
 
 void initPlayerTwo() {
-    resetPlayerState();
     player.worldX = 0;
     player.worldY = 102;
     player.x = SCREENWIDTH / 2 - 8;
@@ -58,16 +57,16 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
 
-    // --- Horizontal Movement ---
+    // Horizontal movement
     if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
         player.isAnimating = 1;
         player.direction = 1;
-    
+        // iterate 3 up (left 1) for mountains + smooth movement
         for (int step = 0; step <= 3; step++) {
             int testLeftX = player.worldX - player.xVel;
             int testTopY = player.worldY - step;
             int testBottomY = player.worldY + player.height - 1 - step;
-    
+
             if (colorAtTwo(testLeftX, testTopY) != 0x02 &&
                 colorAtTwo(testLeftX, testBottomY) != 0x02) {
                 
@@ -92,7 +91,7 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         }
     }
 
-    // --- Gravity & Vertical Movement ---
+    // Vertical movement + gravity
     int grounded = 0;
 
     player.yVel += GRAVITY;
@@ -133,13 +132,13 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         }
     }
 
-    // --- Jumping ---
+    // Jumping
     if (BUTTON_PRESSED(BUTTON_UP) && grounded) {
         player.yVel = -12;
         grounded = 0;
     }
 
-    // --- Animation Update ---
+    // Animating
     hikerFrameCounter++;
     if (player.isAnimating && hikerFrameCounter > hikerFrameDelay) {
         hikerFrame = (hikerFrame + 1) % player.numFrames;
@@ -149,7 +148,7 @@ void updatePlayerTwo(int* hOff, int* vOff) {
         hikerFrameCounter = 0;
     }
 
-    // --- Camera ---
+    // Camera setting
     *hOff = player.worldX - (SCREENWIDTH / 2 - player.width / 2);
     *vOff = player.worldY - (SCREENHEIGHT / 2 - player.height / 2);
 
@@ -158,9 +157,7 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     if (*hOff > MAPWIDTH - SCREENWIDTH) *hOff = MAPWIDTH - SCREENWIDTH;
     if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
 
-    sbb = 20 + (*hOff / 256);
-
-    // --- Win Condition ---
+    // Win condition
     if (player.worldX + player.width >= MAPWIDTH - 1) {
         winPhaseTwo = 1;
     }
@@ -173,7 +170,7 @@ void drawPlayerTwo() {
     int topY    = player.worldY;
     int bottomY = player.worldY + player.height - 1;
     
-    // If any corner is over the bad tile (1) hide the sprite
+    // If player is in water, lose a life
     if (colorAtTwo(leftX, topY) == 0x01 ||
         colorAtTwo(rightX, topY) == 0x01 ||
         colorAtTwo(leftX, bottomY) == 0x01 ||
@@ -182,12 +179,13 @@ void drawPlayerTwo() {
         // Lose a life
         if (health.active > 0) {
             health.active--;
+            // If no lives, go to lose
             if (health.active == 0) {
                 gameOver = 1;
             }
         }
         
-        // Reset player's position back to starting point
+        // Reset player position back to start of phase two
         player.worldX = PLAYER_START_X;
         player.worldY = PLAYER_START_Y;
         player.yVel = 0;
@@ -220,8 +218,9 @@ void drawPlayerTwo() {
     }
 }
 
+// ============================= [ SNOW LOGIC ] =============================
 void initSnow() {
-    // seed RNG once (e.g. in your init)
+    // seed
     srand(1234);
     for (int i = 0; i < MAX_SNOW; i++) {
         snows[i].width    = SNOW_WIDTH;
@@ -239,20 +238,22 @@ void updateSnow() {
 
         snows[i].worldY += snows[i].yVel;
 
-        // collision with player?
-        if (collision(
-            snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
-            player.worldX,   player.worldY,   player.width,   player.height
-        )) {
+        // collision with snow
+        if (collision(snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
+            player.worldX,   player.worldY,   player.width,   player.height)) {
             health.active--;
+            // Lose if no more health
             if (health.active == 0) gameOver = 1;
+
+            // Or reset player
             player.worldX = PLAYER_START_X;
             player.worldY = PLAYER_START_Y;
-            player.yVel   = 0;
-            hOff = vOff = 0;
+            player.yVel = 0;
+            hOff = 0;
+            vOff = 0;
             resetSnow(i);
         }
-        // fell below bottom of view?
+        // fell below bottom of view
         else if (snows[i].worldY > vOff + SCREENHEIGHT) {
             resetSnow(i);
         }
@@ -270,23 +271,18 @@ void drawSnow() {
         int sy = snows[i].worldY - vOff;
 
         // hide if completely off‑screen
-        if (sx < -SNOW_WIDTH || sx > SCREENWIDTH ||
-            sy < -SNOW_HEIGHT|| sy > SCREENHEIGHT) {
+        if (sx < -SNOW_WIDTH || sx > SCREENWIDTH || sy < -SNOW_HEIGHT|| sy > SCREENHEIGHT) {
             shadowOAM[snows[i].oamIndex].attr0 = ATTR0_HIDE;
         } else {
-            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_Y(sy)
-                                               | ATTR0_REGULAR
-                                               | ATTR0_4BPP
-                                               | ATTR0_SQUARE;
+            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_Y(sy) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_SQUARE;
             shadowOAM[snows[i].oamIndex].attr1 = ATTR1_X(sx) | ATTR1_SMALL;
-            shadowOAM[snows[i].oamIndex].attr2 = ATTR2_TILEID(SNOW_TILE_COL,
-                                                              SNOW_TILE_ROW);
+            shadowOAM[snows[i].oamIndex].attr2 = ATTR2_TILEID(SNOW_TILE_COL, SNOW_TILE_ROW);
         }
     }
 }
 
-static void resetSnow(int i) {
-    // spawn somewhere in the visible X range
+void resetSnow(int i) {
+    // spawn somewhere in the visible x range
     snows[i].worldX = hOff + (rand() % SNOW_SPAWN_WIDTH);
     // spawn just above the top of the screen
     snows[i].worldY = vOff - (rand() % SNOW_SPAWN_HEIGHT) - SNOW_HEIGHT;

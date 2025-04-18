@@ -133,7 +133,7 @@ typedef struct {
 } SPRITE;
 # 11 "phaseOne.c" 2
 # 1 "phaseOne.h" 1
-# 20 "phaseOne.h"
+# 18 "phaseOne.h"
 int hikerFrameDelay;
 int hikerFrameCounter;
 int hikerFrame;
@@ -141,13 +141,12 @@ int hikerFrames[5];
 int isDucking;
 int gameOver;
 int winPhaseOne;
-int sbb;
+int movedHorizontally;
 
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
-unsigned char colorAt(int x, int y);
 # 12 "phaseOne.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
@@ -159,6 +158,9 @@ extern const unsigned short playerPal[256];
 
 
 
+int fallingX;
+int fallingY;
+const int fallSpeed = 3;
 
 
 int hikerFrameDelay = 4;
@@ -169,6 +171,7 @@ extern int hOff, vOff;
 int isDucking = 0;
 int gameOver = 0;
 int winPhaseOne = 0;
+int movedHorizontally = 0;
 
 
 SPRITE player;
@@ -179,12 +182,7 @@ typedef enum {
     PLAYER_NORMAL,
     PLAYER_FALLING
 } PlayerState;
-
 PlayerState playerState = PLAYER_NORMAL;
-
-
-int fallingX, fallingY;
-const int fallSpeed = 3;
 
 
 void startFallingAnimation(int startX, int startY);
@@ -210,7 +208,6 @@ void initPlayer() {
     player.active = 1;
     player.xVel = 1;
     player.yVel = 0;
-
     DMANow(3, (void*) playerPal, ((u16 *)0x5000200), 512 / 2);
     DMANow(3, (void*) playerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
 }
@@ -230,7 +227,6 @@ void updatePlayer(int* hOff, int* vOff) {
     isDucking = (~(buttons) & ((1<<7)));
 
 
-    int movedHorizontally = 0;
     int leftX = player.worldX;
     int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
@@ -239,6 +235,7 @@ void updatePlayer(int* hOff, int* vOff) {
     if ((~(buttons) & ((1<<5))) && player.worldX > 0) {
         player.direction = 1;
         player.isAnimating = 1;
+
         for (int step = 0; step <= 3; step++) {
             if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
                 (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
@@ -253,6 +250,7 @@ void updatePlayer(int* hOff, int* vOff) {
     if ((~(buttons) & ((1<<4))) && player.worldX < 512 - player.width) {
         player.direction = 0;
         player.isAnimating = 1;
+
         for (int step = 0; step <= 3; step++) {
             if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
                 (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
@@ -266,6 +264,7 @@ void updatePlayer(int* hOff, int* vOff) {
 
 
     int grounded = 0;
+
     player.yVel += 1;
     if (player.yVel > 4) player.yVel = 4;
 
@@ -360,6 +359,7 @@ void drawPlayer() {
                 gameOver = 1;
             }
         }
+
         player.worldX = 0;
         player.worldY = 102;
         player.yVel = 0;
@@ -379,6 +379,7 @@ void drawPlayer() {
             if (health.active == 0) {
                 gameOver = 1;
             }
+
             startFallingAnimation(110, 332);
         }
         return;
@@ -395,6 +396,7 @@ void drawPlayer() {
             if (health.active == 0) {
                 gameOver = 1;
             }
+
             startFallingAnimation(125, 332);
         }
         return;
@@ -411,6 +413,7 @@ void drawPlayer() {
             if (health.active == 0) {
                 gameOver = 1;
             }
+
             startFallingAnimation(183, 332);
         }
         return;
@@ -427,6 +430,7 @@ void drawPlayer() {
         shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
     }
 
+
     if (isDucking) {
         shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (4))) & 0x3FF);
     } else {
@@ -441,7 +445,6 @@ void resetPlayerState() {
     hikerFrame = 0;
     isDucking = 0;
     gameOver = 0;
-    sbb = 20;
 }
 
 

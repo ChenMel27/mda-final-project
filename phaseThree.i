@@ -157,6 +157,9 @@ int healthBarFrames[9][2];
 # 9 "phaseThree.c" 2
 
 
+
+
+
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
 extern int hikerFrame;
@@ -172,7 +175,6 @@ static int slowModeActive = 0;
 
 
 void initPlayerThree() {
-    resetPlayerState();
     player.worldX = 0;
     player.worldY = 102;
     player.x = 240 / 2 - 8;
@@ -198,8 +200,6 @@ void initPlayerThree() {
     }
 }
 
-
-
 void updatePlayerThree(int* hOff, int* vOff) {
     static int slowCounter = 0;
     player.isAnimating = 0;
@@ -211,10 +211,7 @@ void updatePlayerThree(int* hOff, int* vOff) {
     int bottomY = player.worldY + player.height - 1;
 
 
-    slowModeActive = colorAtThree(leftX, topY) == 0x02 ||
-                     colorAtThree(rightX, topY) == 0x02 ||
-                     colorAtThree(leftX, bottomY) == 0x02 ||
-                     colorAtThree(rightX, bottomY) == 0x02;
+    slowModeActive = colorAtThree(leftX, topY) == 0x02 || colorAtThree(rightX, topY) == 0x02 || colorAtThree(leftX, bottomY) == 0x02 || colorAtThree(rightX, bottomY) == 0x02;
 
 
     int updateMovement = 1;
@@ -333,11 +330,6 @@ void updatePlayerThree(int* hOff, int* vOff) {
 
 
 void drawPlayerThree() {
-
-    int leftX = player.worldX;
-    int rightX = player.worldX + player.width - 1;
-    int topY = player.worldY;
-    int bottomY = player.worldY + player.height - 1;
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
 
@@ -355,13 +347,13 @@ void drawPlayerThree() {
     } else {
         shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
     }
-    }
-
-
+}
 
 inline unsigned char colorAtThree(int x, int y) {
     return ((unsigned char*) bgThreeFrontCMBitmap)[((y) * (512) + (x))];
 }
+
+
 
 void initCountdownTimer(void)
 {
@@ -374,14 +366,10 @@ void initCountdownTimer(void)
     *(volatile unsigned short*)0x400010A = 3 | (1<<7);
 
 
+
     *(volatile unsigned short*)0x400010C = 0;
     *(volatile unsigned short*)0x400010E = (1<<7) | (1<<2);
 }
-
-
-
-
-
 
 
 void drawTimer(void)
@@ -392,13 +380,15 @@ void drawTimer(void)
     if (countdown == 0) {
         gameOver = 1;
     }
-    if (countdown < 0)
+
+
+    if (countdown < 0) {
         countdown = 0;
+    }
 
 
     int tens = countdown / 10;
     int ones = countdown % 10;
-
 
 
     int timerX = 180;
@@ -407,8 +397,6 @@ void drawTimer(void)
 
     shadowOAM[50].attr0 = ((timerY) & 0xFF) | (0<<8) | (0<<13) | (0<<14);
     shadowOAM[50].attr1 = ((timerX) & 0x1FF) | (1<<14);
-
-
     shadowOAM[50].attr2 = ((((30) * (32) + (tens * 2))) & 0x3FF);
 
 
@@ -421,7 +409,6 @@ void updatePlayerPalette(void)
 {
 
     int secondsPassed = *(volatile unsigned short*)0x400010C;
-
     int oxygenCountdown = 20 - secondsPassed;
     if (oxygenCountdown < 0)
         oxygenCountdown = 0;
@@ -433,8 +420,8 @@ void updatePlayerPalette(void)
 
 
 
-
     unsigned short orig = playerPal[1];
+
 
     int r = orig & 0x1F;
     int g = (orig >> 5) & 0x1F;
@@ -446,7 +433,6 @@ void updatePlayerPalette(void)
 
     int newB = (int)(b * factor + 31 * (1.0f - factor));
 
-
     if (newR > 31) newR = 31;
     if (newG > 31) newG = 31;
     if (newB > 31) newB = 31;
@@ -454,8 +440,6 @@ void updatePlayerPalette(void)
 
     unsigned short newColor = (newB << 10) | (newG << 5) | newR;
     playerPaletteWork[1] = newColor;
-
-
 
 
     DMANow(3, &playerPaletteWork[1], &((u16 *)0x5000200)[1], 1);

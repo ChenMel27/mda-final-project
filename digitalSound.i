@@ -88,7 +88,7 @@ void setupSounds() {
 void playSoundA(const signed char* data, int dataLength, int looping) {
 
 
-    DMANow(1, data, (u16*)0x040000A0, (2 << 21) | (3 << 28) | (1 << 25) | (1 << 26));
+    DMANow(1, (volatile void*) data, (u16*)0x040000A0, (2 << 21) | (3 << 28) | (1 << 25) | (1 << 26));
 
 
     *(volatile unsigned short*)0x4000102 = 0;
@@ -110,7 +110,7 @@ void playSoundB(const signed char* data, int dataLength, int looping) {
 
 
     ((DMAChannel*)0x040000B0)[2].ctrl = 0;
-    DMANow(2, data, (u16*)0x040000A4, (2 << 21) | (3 << 28) | (1 << 25) | (1 << 26));
+    DMANow(2, (volatile void*) data, (u16*)0x040000A4, (2 << 21) | (3 << 28) | (1 << 25) | (1 << 26));
 
 
     *(volatile unsigned short*)0x4000106 = 0;

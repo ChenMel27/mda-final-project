@@ -28,7 +28,7 @@ unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
 void updatePlayerTwo(int* hOff, int* vOff);
 void drawPlayerTwo();
-static void resetSnow(int i);
+void resetSnow(int i);
 void resetPlayerState(void);
 void initSnow();
 void updateSnow();

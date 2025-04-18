@@ -1,6 +1,6 @@
 /******************************************************************************
-File:       main.c 
-Project:    The Summit Ascent 
+File: main.c 
+Project: The Summit Ascent 
 ******************************************************************************/
 
 /*
@@ -12,8 +12,8 @@ Project:    The Summit Ascent
     - Progress through three side-scrolling phases with obstacles
 
     Controls:
-        ← →   Move
-        ↑ ↓   Climb / Jump / Duck
+        ← → Move
+        ↑ ↓ Climb / Jump / Duck
         START Pause / Advance dialogue
 
     Known Bugs:
@@ -64,13 +64,15 @@ Project:    The Summit Ascent
 #include "digitalSound.h"
 #define MENU_START 0
 #define MENU_INSTR 1
-static int splashSelection;
-#define RED_PALETTE RGB(31, 0, 0)
-#define BLACK_PALETTE RGB(0, 0, 0)
+#define RED RGB(31, 0, 0)
+#define BLACK RGB(0, 0, 0)
 #define BG_PRIORITY(n) ((n) & 3)
-// when pausing out of START, save where the player was
+
+// save player coordinates
 static int savedStartX;
 static int savedStartY;
+
+static int splashSelection;
 
 
 // ============================= [ FUNCTION PROTOTYPES ] =======================
@@ -93,6 +95,16 @@ void goToLose();
 void lose();
 void goToWin();
 void win();
+void startInstructions();
+void phaseTwoInstructions();
+void phaseThreeInstructions();
+void gameInstructions();
+void goToGameInstructions();
+void goToPhaseTwoInstructions();
+void goToPhaseThreeInstructions();
+void resetPlayerState();
+void mgba_open();
+
 
 // ============================= [ VARIABLES ] ============================
 
@@ -100,7 +112,6 @@ extern SPRITE guide;
 extern SPRITE startPlayer;
 unsigned short buttons;
 unsigned short oldButtons;
-
 
 typedef enum {
     SPLASH,
@@ -117,7 +128,8 @@ typedef enum {
     GAMEINSTRUCTIONS,
 } GameState;
 
-GameState state, prevState;
+GameState state;
+GameState prevState;
 
 int hOff = 0;
 int vOff = 0;
@@ -127,7 +139,7 @@ int startPage = 0;
 int resumingFromPause = 0;
 
 
-// ============================= [ GAME ENTRY POINT ] ============================
+// ============================= [ ! MAIN GAME STATES ! ] ============================
 
 int main() {
     initialize();
@@ -179,46 +191,47 @@ int main() {
     }
 }
 
-// ============================= [ INITIALIZE GAME ] ===========================
+// ============================= [ INITIALIZING GAME ] ===========================
 
 void initialize() {
     mgba_open();
     setupSounds();
-    goToPhaseOne();
+    goToSplashScreen();
 }
 
 void goToSplashScreen() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
 
-    // load your splash1 palette & image
+    // load initialize splash palette and img with start highlighted red
     DMANow(3, (volatile void*)splash1Pal, BG_PALETTE, 256 | DMA_ON);
     drawFullscreenImage4(splash1Bitmap);
 
     // initialize selection
     splashSelection = MENU_START;
-    // make “SPLASH” red, “INSTRUCTIONS” black
-    BG_PALETTE[12] = RED_PALETTE;
-    BG_PALETTE[13] = BLACK_PALETTE;
+
+    // make start red, instructions black
+    BG_PALETTE[12] = RED;
+    BG_PALETTE[13] = BLACK;
 
     state = SPLASH;
 }
 
 void splashScreen() {
-    // handle up/down to move the cursor
+    // handle up/down to move selecting start vs instructions
     if (BUTTON_PRESSED(BUTTON_DOWN) && splashSelection == MENU_START) {
         splashSelection = MENU_INSTR;
     } else if (BUTTON_PRESSED(BUTTON_UP) && splashSelection == MENU_INSTR) {
         splashSelection = MENU_START;
     }
 
-    // swap the two palette entries
+    // swap palette entries
     if (splashSelection == MENU_START) {
-        BG_PALETTE[12] = RED_PALETTE;
-        BG_PALETTE[13] = BLACK_PALETTE;
+        BG_PALETTE[12] = RED;
+        BG_PALETTE[13] = BLACK;
     } else {
-        BG_PALETTE[12] = BLACK_PALETTE;
-        BG_PALETTE[13] = RED_PALETTE;
+        BG_PALETTE[12] = BLACK;
+        BG_PALETTE[13] = RED;
     }
 
     // confirm choice
@@ -234,15 +247,18 @@ void splashScreen() {
 // ============================= [ START PHASE STATE ] ===========================
 
 void goToStart() {
+
+    // reset pause flag
     resumingFromPause = 0;
+
     REG_DISPCTL = 0;
     hideSprites();
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
-    DMANow(3, sTSPal, BG_PALETTE, sTSPalLen / 2);
-    DMANow(3, sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
-    DMANow(3, sTMMap, &SCREENBLOCK[18], sTMLen / 2);
+    DMANow(3, (volatile void*)sTSPal, BG_PALETTE, sTSPalLen / 2);
+    DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
+    DMANow(3,(volatile void*)sTMMap, &SCREENBLOCK[18], sTMLen / 2);
 
     initStartPlayer();
     initGuideSprite();
@@ -250,7 +266,8 @@ void goToStart() {
 
     hOff = 0;
     vOff = MAX_VOFF;
-    // start looping AnimalJam music on channel A
+
+    // start looping animal jam music (CHANNEL A)
     playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
 }
@@ -260,16 +277,20 @@ void goToStartTwo() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
-    DMANow(3, sTSPal, BG_PALETTE, sTSPalLen / 2);
-    DMANow(3, sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
-    DMANow(3, sTMMap, &SCREENBLOCK[18], sTMLen / 2);
+    DMANow(3, (volatile void*)sTSPal, BG_PALETTE, sTSPalLen / 2);
+    DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
+    DMANow(3, (volatile void*)sTMMap, &SCREENBLOCK[18], sTMLen / 2);
 
     initStartPlayer();
     initGuideSprite();
+
     startPlayer.worldX = 134;
     startPlayer.worldX = 436;
     next = 0;
+
+    // flag that guide has been talked to so that they now can start phase 1
     talkedToGuide = 1;
+
     hOff = 0;
     vOff = MAX_VOFF;
     state = START;
@@ -280,12 +301,14 @@ void goToStartThree() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
-    DMANow(3, sTSPal, BG_PALETTE, sTSPalLen / 2);
-    DMANow(3, sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
-    DMANow(3, sTMMap, &SCREENBLOCK[18], sTMLen / 2);
+    DMANow(3, (volatile void*)sTSPal, BG_PALETTE, sTSPalLen / 2);
+    DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
+    DMANow(3, (volatile void*)sTMMap, &SCREENBLOCK[18], sTMLen / 2);
 
     initStartPlayer();
     initGuideSprite();
+
+    // initalize player to previous coordinates after pause
     startPlayer.worldX = savedStartX;
     startPlayer.worldY = savedStartY;
 
@@ -306,20 +329,24 @@ void start() {
     drawGuideSprite();
     DMANow(3, shadowOAM, OAM, 512);
 
+    // go to initialize instructions when collide with guide
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
     }
 
+    // next is for hitting the right side and guide has been collided with
     if (next == 1 && talkedToGuide) {
         stopSounds();
         goToPhaseOne();
     }
 
     if (BUTTON_PRESSED(BUTTON_START)) {
-        // about to pause out of START, save our position
+        // save player position before pausing
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
+
+        // stop sound and go to pause
         stopSounds();
         goToPause();
         return;
@@ -332,18 +359,17 @@ void start() {
 void goToStartInstructions() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*)dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+
     // BG0 = dialogue overlay
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
 
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
-    DMANow(3, diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*)diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
 
-    // 🧠 This is important:
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
-
     startPage = 0;
     state = DIALOGUE;
 }
@@ -357,25 +383,25 @@ void startInstructions() {
 
         switch (startPage) {
             case 1:
-                DMANow(3, diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
+                DMANow(3, (volatile void*)diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
                 break;
             case 2:
-                DMANow(3, diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
+                DMANow(3, (volatile void*)diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
                 break;
             case 3:
-                DMANow(3, diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
+                DMANow(3, (volatile void*)diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
                 break;
             case 4:
-                DMANow(3, diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
+                DMANow(3, (volatile void*)diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
                 break;
             case 5:
-                DMANow(3, diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
+                DMANow(3, (volatile void*)diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
                 break;
             case 6:
-                DMANow(3, diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
+                DMANow(3, (volatile void*)diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
                 break;
             case 7:
-                DMANow(3, diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
+                DMANow(3, (volatile void*)diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
                 break;
             case 8:
                 begin = 1;
@@ -398,18 +424,19 @@ void goToPhaseOne() {
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
-    DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
-    DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
-    DMANow(3, bgOneFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
-    DMANow(3, bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
-    DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
+    DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+    DMANow(3, (volatile void*)bgOneFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
+    DMANow(3, (volatile void*)bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
     
+    // only reset coordinates in beginning
     if (!resumingFromPause) {
         initPlayer();
         initHealth();
     }
     
-    // clear the flag so *next* goToPhaseOne does full init again
+    // clear the flag so next goToPhaseOne() does full init again
     resumingFromPause = 0;
     
     hOff = 0;
@@ -462,13 +489,13 @@ void phaseOne() {
 void goToPhaseTwoInstructions() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*)dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
 
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
 
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
-    DMANow(3, diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*)diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
 
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
@@ -486,25 +513,25 @@ void phaseTwoInstructions() {
 
         switch (startPage) {
             case 1:
-                DMANow(3, diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
+                DMANow(3, (volatile void*)diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
                 break;
             case 2:
-                DMANow(3, diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
+                DMANow(3, (volatile void*)diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
                 break;
             case 3:
-                DMANow(3, diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
+                DMANow(3, (volatile void*)diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
                 break;
             case 4:
-                DMANow(3, diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
+                DMANow(3, (volatile void*)diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
                 break;
             case 5:
-                DMANow(3, diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
+                DMANow(3, (volatile void*)diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
                 break;
             case 6:
-                DMANow(3, diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
+                DMANow(3, (volatile void*)diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
                 break;
             case 7:
-                DMANow(3, diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
+                DMANow(3, (volatile void*)diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
                 break;
             case 8:
                 goToPhaseTwo();
@@ -526,13 +553,13 @@ void goToPhaseTwo() {
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     
     // DMA background common tileset
-    DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
-    DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+    DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
     // DMA BG0/1/2 tile maps into screen blocks
-    DMANow(3, bgTwoFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
-    DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
-    DMANow(3, duskTMMap, &SCREENBLOCK[30], duskTMLen / 2);
+    DMANow(3, (volatile void*)bgTwoFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, (volatile void*)duskTMMap, &SCREENBLOCK[30], duskTMLen / 2);
 
 
     if (!resumingFromPause) {
@@ -591,13 +618,13 @@ void phaseTwo() {
 void goToPhaseThreeInstructions() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*)dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
 
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
 
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
-    DMANow(3, diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*)diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
 
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
@@ -615,25 +642,25 @@ void phaseThreeInstructions() {
 
         switch (startPage) {
             case 1:
-                DMANow(3, diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
+                DMANow(3, (volatile void*)diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
                 break;
             case 2:
-                DMANow(3, diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
+                DMANow(3, (volatile void*)diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
                 break;
             case 3:
-                DMANow(3, diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
+                DMANow(3, (volatile void*)diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
                 break;
             case 4:
-                DMANow(3, diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
+                DMANow(3, (volatile void*)diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
                 break;
             case 5:
-                DMANow(3, diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
+                DMANow(3, (volatile void*)diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
                 break;
             case 6:
-                DMANow(3, diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
+                DMANow(3, (volatile void*)diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
                 break;
             case 7:
-                DMANow(3, diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
+                DMANow(3, (volatile void*)diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
                 break;
             case 8:
                 goToPhaseThree();
@@ -655,13 +682,13 @@ void goToPhaseThree() {
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
     
     // DMA background common tileset
-    DMANow(3, foregroundPal, BG_PALETTE, foregroundPalLen / 2);
-    DMANow(3, foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+    DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     
     // DMA BG0/1/2 tile maps into screen blocks
-    DMANow(3, bgThreeFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
-    DMANow(3, bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
-    DMANow(3, dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
+    DMANow(3, (volatile void*)bgThreeFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
 
     initPlayerThree();
     initSnow();
@@ -711,12 +738,12 @@ void phaseThree() {
 void goToPause() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*) dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, (volatile void*) dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
 
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
-    DMANow(3, pauseMap, &SCREENBLOCK[20], pauseLen / 2);
+    DMANow(3, (volatile void*) dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*) pauseMap, &SCREENBLOCK[20], pauseLen / 2);
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
 
@@ -725,15 +752,16 @@ void goToPause() {
 
 void pause() {
     if (BUTTON_PRESSED(BUTTON_START)) {
-        resumingFromPause = 1;    // ← signal “skip init” next time
+        // flag to skip init next time
+        resumingFromPause = 1;
         switch (prevState) {
-            case PHASEONE:    goToPhaseOne();             break;
-            case PHASETWO:    goToPhaseTwo();             break;
-            case START:       goToStartThree();                break;
-            case DIALOGUE:    goToStartInstructions();    break;
-            case DIALOGUE2:   goToPhaseTwoInstructions(); break;
-            case DIALOGUE3:   goToPhaseThreeInstructions();break;
-            default:          goToStart();                break;
+            case PHASEONE: goToPhaseOne(); break;
+            case PHASETWO: goToPhaseTwo(); break;
+            case START: goToStartThree(); break;
+            case DIALOGUE: goToStartInstructions(); break;
+            case DIALOGUE2: goToPhaseTwoInstructions();break;
+            case DIALOGUE3: goToPhaseThreeInstructions(); break;
+            default: goToStart(); break;
         }
         state = prevState;
     }
@@ -783,10 +811,10 @@ void win() {
 void goToGameInstructions() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
-    DMANow(3, dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    DMANow(3, (volatile void*) dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, (volatile void*) dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
-    DMANow(3, gameInstructionsMap, &SCREENBLOCK[20], gameInstructionsLen / 2);
+    DMANow(3,(volatile void*) gameInstructionsMap, &SCREENBLOCK[20], gameInstructionsLen / 2);
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
 

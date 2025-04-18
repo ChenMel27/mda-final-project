@@ -278,15 +278,6 @@ updateStartPlayer:
 	cmp	r3, #352
 	movge	r3, #352
 	str	r3, [r7]
-	ldr	r3, [r6]
-	add	r2, r3, #508
-	cmp	r3, #0
-	add	r2, r2, #3
-	movlt	r3, r2
-	ldr	r2, .L63+24
-	asr	r3, r3, #9
-	add	r3, r3, #20
-	str	r3, [r2]
 	add	sp, sp, #12
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
@@ -332,7 +323,6 @@ updateStartPlayer:
 	.word	.LANCHOR0
 	.word	.LANCHOR1
 	.word	__aeabi_idivmod
-	.word	sbb
 	.size	updateStartPlayer, .-updateStartPlayer
 	.align	2
 	.global	updateGuideSprite
@@ -628,8 +618,6 @@ checkPlayerGuideCollision:
 	.word	startPlayer
 	.word	collision
 	.size	checkPlayerGuideCollision, .-checkPlayerGuideCollision
-	.global	guideMoveDelay
-	.global	guideMoveCounter
 	.comm	guide,60,4
 	.comm	startPlayer,60,4
 	.global	startHikerFramesDown
@@ -640,9 +628,11 @@ checkPlayerGuideCollision:
 	.global	startHikerFrameDelay
 	.global	guideRightFrames
 	.global	guideLeftFrames
+	.global	guideMoveDirection
+	.global	guideMoveDelay
+	.global	guideMoveCounter
 	.global	guidePatrolRightBound
 	.global	guidePatrolLeftBound
-	.global	guideMoveDirection
 	.global	guideSpeed
 	.global	guideAnimIndex
 	.global	guideFrameDelay

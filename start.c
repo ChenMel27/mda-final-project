@@ -5,32 +5,26 @@
 #include "player.h"
 #include "sprites.h"
 
-// --- Guide Movement and Animation Variables ---
+// Guide movement + animation vars
 
-// Timing for the guide’s animation.
+// Timing for guide animation
 int guideFrameCounter = 0;
 int guideFrameDelay = 6;
 int guideAnimIndex = 0;
-
-// Speed and movement direction for the guide.
-// guideMoveDirection: -1 = moving left, 1 = moving right.
 int guideSpeed = 1;
-int guideMoveDirection = -1;
-
-// Define patrol boundaries (set relative to the guide's initial position).
-// These will be initialized in initGuideSprite.
 int guidePatrolLeftBound = 0;
 int guidePatrolRightBound = 0;
+int guideMoveCounter = 0;
+int guideMoveDelay = 2;
 
-// Animation frames (tile X coordinates) for the guide sprite.
-// For this example, assume the artwork is drawn facing left by default.
-// Therefore, when moving left we use these left frames and no flip;
-// when moving right we use these right frames with a flip.
+// -1 = moving left, 1 = moving right
+int guideMoveDirection = -1;
+
+// Tile frames for guide
 int guideLeftFrames[5] = {18, 16, 14, 12, 10};
 int guideRightFrames[4] = {12, 14, 16, 18};
 
-// --- Start Player Animation Variables ---
-
+// Start player animation
 int startHikerFrameDelay = 4;
 int startHikerFrameCounter = 0;
 int startHikerFrame = 0;
@@ -48,22 +42,14 @@ typedef enum {
 
 extern int hOff, vOff;
 
-// --- Sprite Structures ---
-
 SPRITE startPlayer;
 SPRITE guide;
-
-// Background screen block index.
-extern int sbb;
-
-// --- Collision Map Function ---
 
 inline unsigned char startColorAt(int x, int y) {
     return townCMBitmap[OFFSET(x, y, 512)];
 }
 
-// --- Initialization Functions ---
-
+// Initialize
 void initStartPlayer() {
     startPlayer.worldX = 0;
     startPlayer.worldY = 165;
@@ -83,7 +69,6 @@ void initStartPlayer() {
 }
 
 void initGuideSprite() {
-    // Set the starting position for the guide.
     guide.worldX = 436;
     guide.worldY = 127;
     guide.width = 16;
@@ -95,30 +80,27 @@ void initGuideSprite() {
     guide.direction = 0;
     guide.yVel = 0;
     
-    // Define the patrol boundaries relative to its starting position.
-    // Here the guide will move 20 pixels left and right from its starting X value.
+    // guide movs 20 pixels left and right from its starting x
     guidePatrolLeftBound = guide.worldX - 20;
     guidePatrolRightBound = guide.worldX + 20;
 }
 
-// --- Update Functions ---
-
+// Update
 void updateStartPlayer(int* hOff, int* vOff) {
     startPlayer.isAnimating = 0;
     int speed = 1;
     
-    // Determine the four edges of the player.
+    // 4 corners of collision
     int leftX   = startPlayer.worldX;
     int rightX  = startPlayer.worldX + startPlayer.width - 1;
     int topY    = startPlayer.worldY;
     int bottomY = startPlayer.worldY + startPlayer.height - 1;
     
-    // Process input for movement.
     if (BUTTON_HELD(BUTTON_RIGHT)) {
         startPlayer.isAnimating = 1;
         startPlayer.direction = RIGHT;
         int newX = startPlayer.worldX + speed;
-        if (startPlayer.worldX + startPlayer.width < MAPWIDTH &&
+        if (startPlayer.worldX + startPlayer.width < STARTMAPWIDTH &&
             startColorAt(newX + startPlayer.width - 1, topY) != 0 &&
             startColorAt(newX + startPlayer.width - 1, bottomY) != 0) {
             startPlayer.worldX = newX;
@@ -152,14 +134,14 @@ void updateStartPlayer(int* hOff, int* vOff) {
         startPlayer.isAnimating = 1;
         startPlayer.direction = DOWN;
         int newY = startPlayer.worldY + speed;
-        if (startPlayer.worldY < MAPHEIGHT - startPlayer.height &&
+        if (startPlayer.worldY < STARTMAPHEIGHT - startPlayer.height &&
             startColorAt(leftX, newY + startPlayer.height - 1) != 0 &&
             startColorAt(rightX, newY + startPlayer.height - 1) != 0) {
             startPlayer.worldY = newY;
         }
     }
     
-    // Handle animation for the start player.
+    // Start player animation
     startHikerFrameCounter++;
     if (startPlayer.isAnimating && startHikerFrameCounter > startHikerFrameDelay) {
         startHikerFrame = (startHikerFrame + 1) % startPlayer.numFrames;
@@ -169,61 +151,51 @@ void updateStartPlayer(int* hOff, int* vOff) {
         startHikerFrameCounter = 0;
     }
     
-    // Center the camera on the player.
+    // Camera
     *hOff = startPlayer.worldX - (SCREENWIDTH / 2 - startPlayer.width / 2);
     *vOff = startPlayer.worldY - (SCREENHEIGHT / 2 - startPlayer.height / 2);
     
-    // Clamp the camera to the map boundaries.
+    // Clamp camera
     if (*hOff < 0) *hOff = 0;
     if (*vOff < 0) *vOff = 0;
-    if (*hOff > MAPWIDTH - SCREENWIDTH) *hOff = MAPWIDTH - SCREENWIDTH;
-    if (*vOff > MAPHEIGHT - SCREENHEIGHT) *vOff = MAPHEIGHT - SCREENHEIGHT;
-    
-    // Update the background screen block index.
-    sbb = 20 + (*hOff / 512);
+    if (*hOff > STARTMAPWIDTH - SCREENWIDTH) *hOff = STARTMAPWIDTH - SCREENWIDTH;
+    if (*vOff > STARTMAPHEIGHT - SCREENHEIGHT) *vOff = STARTMAPHEIGHT - SCREENHEIGHT;
 }
 
-// Add these global variables:
-int guideMoveCounter = 0;
-int guideMoveDelay = 2; // Increase this value for slower movement.
-
 void updateGuideSprite() {
-    // Animate the guide sprite.
+    // Animate the guide
     guideFrameCounter++;
     if (guideFrameCounter > guideFrameDelay) {
         if (guideMoveDirection == -1) {
-            // Cycle through 6 frames when moving left.
+            // 6 frames left
             guideAnimIndex = (guideAnimIndex + 1) % 5;
         } else {
-            // Cycle through 5 frames when moving right.
+            // 5 frames right
             guideAnimIndex = (guideAnimIndex + 1) % 4;
         }
         guideFrameCounter = 0;
     }
-    
-    // Increment the movement counter.
     guideMoveCounter++;
     if (guideMoveCounter > guideMoveDelay) {
-        // Move the guide sprite along the x-axis.
+        // Move guide horizontally
         guide.worldX += guideSpeed * guideMoveDirection;
         guideMoveCounter = 0;
     }
     
-    // Reverse direction if the sprite reaches its patrol boundaries.
+    // Reverse direction
     if (guide.worldX < guidePatrolLeftBound) {
         guide.worldX = guidePatrolLeftBound;
         guideMoveDirection = 1;
-        guideAnimIndex = 0; // Restart the right-walk animation.
+        guideAnimIndex = 0;
     } else if (guide.worldX > guidePatrolRightBound) {
         guide.worldX = guidePatrolRightBound;
         guideMoveDirection = -1;
-        guideAnimIndex = 0; // Restart the left-walk animation.
+        guideAnimIndex = 0;
     }
 }
 
 
-// --- Draw Functions ---
-
+// Draw
 void drawStartPlayer() {
     int screenX = startPlayer.worldX - hOff;
     int screenY = startPlayer.worldY - vOff;
@@ -231,25 +203,17 @@ void drawStartPlayer() {
         ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
     
     if (startPlayer.direction == RIGHT) {
-        shadowOAM[startPlayer.oamIndex].attr1 =
-            ATTR1_X(screenX) | ATTR1_MEDIUM;
-        shadowOAM[startPlayer.oamIndex].attr2 =
-            ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
+        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
     } else if (startPlayer.direction == LEFT) {
-        shadowOAM[startPlayer.oamIndex].attr1 =
-            ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
-        shadowOAM[startPlayer.oamIndex].attr2 =
-            ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
+        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
+        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
     } else if (startPlayer.direction == UP) {
-        shadowOAM[startPlayer.oamIndex].attr1 =
-            ATTR1_X(screenX) | ATTR1_MEDIUM;
-        shadowOAM[startPlayer.oamIndex].attr2 =
-            ATTR2_TILEID(startHikerFramesUp[startHikerFrame], 1);
+        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesUp[startHikerFrame], 1);
     } else if (startPlayer.direction == DOWN) {
-        shadowOAM[startPlayer.oamIndex].attr1 =
-            ATTR1_X(screenX) | ATTR1_MEDIUM;
-        shadowOAM[startPlayer.oamIndex].attr2 =
-            ATTR2_TILEID(startHikerFramesDown[startHikerFrame], 1);
+        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesDown[startHikerFrame], 1);
     }
 }
 
@@ -262,10 +226,7 @@ void drawGuideSprite() {
     int tileX;
     int hflip = 0;
     
-    // Adjust the flip logic based on the guide artwork.
-    // If the artwork is drawn facing left by default:
-    //   - When moving left, no flip is necessary.
-    //   - When moving right, flip the sprite.
+    // flip logic
     if (guideMoveDirection == -1) {
         tileX = guideLeftFrames[guideAnimIndex];
         hflip = 0;
@@ -274,13 +235,11 @@ void drawGuideSprite() {
         hflip = ATTR1_HFLIP;
     }
     
-    shadowOAM[guide.oamIndex].attr1 =
-        ATTR1_X(screenX) | ATTR1_MEDIUM | hflip;
+    shadowOAM[guide.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | hflip;
     shadowOAM[guide.oamIndex].attr2 = ATTR2_TILEID(tileX, 9);
 }
 
-// --- Collision Checking ---
-
+// Collision checking between player and guide
 int checkPlayerGuideCollision() {
     return collision(
         startPlayer.worldX, startPlayer.worldY, startPlayer.width, startPlayer.height,

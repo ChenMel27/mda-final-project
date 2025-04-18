@@ -1,11 +1,9 @@
 #include "gba.h"
 #include "sprites.h"
-
-// Starting player position
-#define PLAYER_START_X 0
-#define PLAYER_START_Y 102
-#define MAPWIDTH 512
-#define MAPHEIGHT 256
+#define PLAYER1_START_X 0
+#define PLAYER1_START_Y 102
+#define MAPWIDTH1 512
+#define MAPHEIGHT1 256
 #define SCREENWIDTH 240
 #define SCREENHEIGHT 160
 #define GRAVITY 1
@@ -24,10 +22,9 @@ int hikerFrames[5];
 int isDucking;
 int gameOver;
 int winPhaseOne;
-int sbb;
+int movedHorizontally;
 
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
-unsigned char colorAt(int x, int y);

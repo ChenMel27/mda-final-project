@@ -22,7 +22,7 @@ void setupSounds() {
 void playSoundA(const signed char* data, int dataLength, int looping) {
     
     // Set DMA channel to 1
-    DMANow(1, data, REG_FIFO_A, DMA_DESTINATION_FIXED | DMA_AT_REFRESH | DMA_REPEAT | DMA_32);
+    DMANow(1, (volatile void*) data, REG_FIFO_A, DMA_DESTINATION_FIXED | DMA_AT_REFRESH | DMA_REPEAT | DMA_32);
 
     // Set up timer 0
     REG_TM0CNT = 0;
@@ -44,7 +44,7 @@ void playSoundB(const signed char* data, int dataLength, int looping) {
 
     // Set DMA channel to 2
     DMA[2].ctrl = 0;
-    DMANow(2, data, REG_FIFO_B, DMA_DESTINATION_FIXED | DMA_AT_REFRESH | DMA_REPEAT | DMA_32);
+    DMANow(2, (volatile void*) data, REG_FIFO_B, DMA_DESTINATION_FIXED | DMA_AT_REFRESH | DMA_REPEAT | DMA_32);
 
     // Set up timer 1
     REG_TM1CNT = 0;

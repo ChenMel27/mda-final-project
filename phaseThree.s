@@ -22,18 +22,15 @@ initPlayerThree:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, lr}
-	ldr	r3, .L6
-	mov	lr, pc
-	bx	r3
-	mov	r4, #3
 	mov	r1, #0
+	mov	r4, #3
 	mov	r5, #64
 	mov	r3, #17
 	mov	r2, #24
 	mov	lr, #1
 	mov	r7, #102
 	mov	r6, #112
-	ldr	ip, .L6+4
+	ldr	ip, .L6
 	mov	r0, r4
 	str	r5, [ip, #4]
 	str	r3, [ip, #24]
@@ -44,9 +41,9 @@ initPlayerThree:
 	str	r1, [ip, #36]
 	str	r1, [ip, #12]
 	mov	r3, #256
-	ldr	r2, .L6+8
-	ldr	r1, .L6+12
-	ldr	r5, .L6+16
+	ldr	r2, .L6+4
+	ldr	r1, .L6+8
+	ldr	r5, .L6+12
 	str	r4, [ip, #48]
 	str	r7, [ip, #20]
 	str	r6, [ip]
@@ -57,12 +54,12 @@ initPlayerThree:
 	bx	r5
 	mov	r0, r4
 	mov	r3, #16384
-	ldr	r2, .L6+20
-	ldr	r1, .L6+24
+	ldr	r2, .L6+16
+	ldr	r1, .L6+20
 	mov	lr, pc
 	bx	r5
-	ldr	r3, .L6+28
-	ldr	r2, .L6+32
+	ldr	r3, .L6+24
+	ldr	r2, .L6+28
 	add	r0, r3, #512
 .L2:
 	ldrh	r1, [r3, #2]!
@@ -74,7 +71,6 @@ initPlayerThree:
 .L7:
 	.align	2
 .L6:
-	.word	resetPlayerState
 	.word	player
 	.word	83886592
 	.word	playerPal
@@ -754,9 +750,9 @@ updatePlayerPalette:
 	.bss
 	.align	2
 	.set	.LANCHOR0,. + 0
-	.type	slowCounter.4102, %object
-	.size	slowCounter.4102, 4
-slowCounter.4102:
+	.type	slowCounter.4100, %object
+	.size	slowCounter.4100, 4
+slowCounter.4100:
 	.space	4
 	.type	winPhaseThree, %object
 	.size	winPhaseThree, 4
