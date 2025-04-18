@@ -5,6 +5,6 @@
 #define STM_HEIGHT (64)
 #define sTMLen (8192)
 
-extern const unsigned short sTMMap[4096];
+extern unsigned short sTMMap[4096];
 
 #endif
