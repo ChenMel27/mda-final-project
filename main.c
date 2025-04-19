@@ -67,7 +67,7 @@ Project: The Summit Ascent
 #define RED RGB(31, 0, 0)
 #define BLACK RGB(0, 0, 0)
 #define BG_PRIORITY(n) ((n) & 3)
-
+#define TILEMAP_WIDTH 64
 // save player coordinates
 static int savedStartX;
 static int savedStartY;
@@ -247,30 +247,37 @@ void splashScreen() {
 // ============================= [ START PHASE STATE ] ===========================
 
 void goToStart() {
-
-    // reset pause flag
     resumingFromPause = 0;
-
-    REG_DISPCTL = 0;
-    hideSprites();
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
+    hideSprites();
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
-    DMANow(3, (volatile void*)sTSPal, BG_PALETTE, sTSPalLen / 2);
-    DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
-    DMANow(3,(volatile void*)sTMMap, &SCREENBLOCK[18], sTMLen / 2);
+    DMANow(3, (volatile void*)sTSPal,   BG_PALETTE,      sTSPalLen   / 2);
+    DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0],  sTSTilesLen / 2);
+    DMANow(3, (volatile void*)sTMMap,   &SCREENBLOCK[18], sTMLen / 2);
+    
+    volatile u16* map1 = SCREENBLOCK[19].tilemap;
+    for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 5; j++) {
+            map1[(((27 + j) * TILEMAP_WIDTH) / 2 + (25 + i))] = TILEMAP_ENTRY_TILEID(364) | TILEMAP_ENTRY_PALROW(0);
+        }
+    }
 
+    volatile u16* map2 = SCREENBLOCK[21].tilemap;
+    for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 2; j++) {
+            map2[(((j) * TILEMAP_WIDTH) / 2 + (25 + i))] = TILEMAP_ENTRY_TILEID(364) | TILEMAP_ENTRY_PALROW(0);
+        }
+    }
+    // init sprites & camera
     initStartPlayer();
     initGuideSprite();
+    hOff = 0;  vOff = MAX_VOFF;
 
-
-    hOff = 0;
-    vOff = MAX_VOFF;
-
-    // start looping animal jam music (CHANNEL A)
     playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
 }
+
 
 void goToStartTwo() {
     resumingFromPause = 0;

@@ -205,7 +205,7 @@ unsigned char colorAtTwo(int x, int y);
 void initPlayerTwo();
 void updatePlayerTwo(int* hOff, int* vOff);
 void drawPlayerTwo();
-static void resetSnow(int i);
+void resetSnow(int i);
 void resetPlayerState(void);
 void initSnow();
 void updateSnow();
@@ -664,30 +664,37 @@ void splashScreen() {
 
 
 void goToStart() {
-
-
     resumingFromPause = 0;
-
-    (*(volatile unsigned short *)0x4000000) = 0;
-    hideSprites();
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
+    hideSprites();
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
     DMANow(3, (volatile void*)sTSPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
-    DMANow(3,(volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+    DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+
+    volatile u16* map1 = ((SB*) 0x6000000)[19].tilemap;
+    for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 5; j++) {
+            map1[(((27 + j) * 64) / 2 + (25 + i))] = ((364) & 1023) | (((0) & 15) << 12);
+        }
+    }
+
+    volatile u16* map2 = ((SB*) 0x6000000)[21].tilemap;
+    for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 1; j++) {
+            map2[(((j) * 64) / 2 + (25 + i))] = ((364) & 1023) | (((0) & 15) << 12);
+        }
+    }
 
     initStartPlayer();
     initGuideSprite();
-
-
-    hOff = 0;
-    vOff = (256 - 160);
-
+    hOff = 0; vOff = (256 - 160);
 
     playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
 }
+
 
 void goToStartTwo() {
     resumingFromPause = 0;

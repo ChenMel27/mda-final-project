@@ -888,17 +888,17 @@ sTMMap:
 	.short	59
 	.short	60
 	.short	28
-	.short	29
-	.short	30
-	.short	31
+	.short	231
+	.short	231
+	.short	231
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	28
-	.short	29
-	.short	30
+	.short	231
+	.short	231
 	.short	31
 	.short	0
 	.short	55
@@ -920,18 +920,18 @@ sTMMap:
 	.short	91
 	.short	92
 	.short	60
-	.short	61
-	.short	62
-	.short	63
+	.short	231
+	.short	231
+	.short	231
 	.short	0
 	.short	0
 	.short	2
 	.short	3
 	.short	4
 	.short	5
-	.short	61
-	.short	62
-	.short	63
+	.short	231
+	.short	231
+	.short	231
 	.short	0
 	.short	87
 	.short	88
@@ -952,18 +952,18 @@ sTMMap:
 	.short	123
 	.short	124
 	.short	92
-	.short	93
-	.short	94
-	.short	95
+	.short	231
+	.short	231
+	.short	231
 	.short	32
 	.short	33
 	.short	34
 	.short	35
 	.short	36
 	.short	37
-	.short	93
-	.short	94
-	.short	95
+	.short	231
+	.short	231
+	.short	231
 	.short	0
 	.short	119
 	.short	120
