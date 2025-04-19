@@ -17,7 +17,7 @@
 #define GRIT_TOWNCM_H
 
 #define townCMBitmapLen 262144
-extern const unsigned char townCMBitmap[262144];
+unsigned char townCMBitmap[262144] __attribute__((section(".ewram")));
 
 #endif // GRIT_TOWNCM_H
 
