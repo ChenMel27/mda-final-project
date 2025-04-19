@@ -164,20 +164,27 @@ goToStart:
 	sub	r3, r2, #320
 .L18:
 	strh	r1, [r3], #64	@ movhi
-	cmp	r2, r3
+	cmp	r3, r2
 	bne	.L18
-	add	r2, r2, #2
+	add	r2, r3, #2
 	cmp	r2, r0
 	bne	.L17
 	ldr	r3, .L22+36
 	ldr	r2, .L22+40
 	strh	r1, [r3, #50]	@ movhi
+	strh	r1, [r3, #114]	@ movhi
 	strh	r1, [r3, #52]	@ movhi
+	strh	r1, [r3, #116]	@ movhi
 	strh	r1, [r3, #54]	@ movhi
+	strh	r1, [r3, #118]	@ movhi
 	strh	r1, [r3, #56]	@ movhi
+	strh	r1, [r3, #120]	@ movhi
 	strh	r1, [r3, #58]	@ movhi
+	strh	r1, [r3, #122]	@ movhi
 	strh	r1, [r3, #60]	@ movhi
+	strh	r1, [r3, #124]	@ movhi
 	strh	r1, [r3, #62]	@ movhi
+	strh	r1, [r3, #126]	@ movhi
 	mov	lr, pc
 	bx	r2
 	ldr	r3, .L22+44

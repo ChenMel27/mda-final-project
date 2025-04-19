@@ -252,7 +252,7 @@ extern unsigned char snowtilesPal[512];
 # 41 "main.c" 2
 # 1 "townCM.h" 1
 # 20 "townCM.h"
-extern const unsigned char townCMBitmap[262144];
+extern unsigned char townCMBitmap[262144] __attribute__((section(".ewram")));
 # 42 "main.c" 2
 # 1 "town.h" 1
 
@@ -673,6 +673,7 @@ void goToStart() {
     DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
     DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
 
+
     volatile u16* map1 = ((SB*) 0x6000000)[19].tilemap;
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 5; j++) {
@@ -682,7 +683,7 @@ void goToStart() {
 
     volatile u16* map2 = ((SB*) 0x6000000)[21].tilemap;
     for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < 1; j++) {
+        for (int j = 0; j < 2; j++) {
             map2[(((j) * 64) / 2 + (25 + i))] = ((364) & 1023) | (((0) & 15) << 12);
         }
     }

@@ -11,7 +11,7 @@
 	.file	"townCM.c"
 	.text
 	.global	townCMBitmap
-	.section	.rodata
+	.section	.ewram,"aw"
 	.align	2
 	.type	townCMBitmap, %object
 	.size	townCMBitmap, 262144

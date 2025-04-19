@@ -256,6 +256,7 @@ void goToStart() {
     DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0],  sTSTilesLen / 2);
     DMANow(3, (volatile void*)sTMMap,   &SCREENBLOCK[18], sTMLen / 2);
     
+    // TILE MAP MODIFICATION
     volatile u16* map1 = SCREENBLOCK[19].tilemap;
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 5; j++) {
