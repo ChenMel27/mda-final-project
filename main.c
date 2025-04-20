@@ -62,6 +62,10 @@ Project: The Summit Ascent
 #include "gameInstructions.h"
 #include "animaljam.h"
 #include "digitalSound.h"
+#include "gameInstructions2.h"
+#include "gameInstructions3.h"
+#include "action.h"
+
 #define MENU_START 0
 #define MENU_INSTR 1
 #define RED RGB(31, 0, 0)
@@ -296,13 +300,15 @@ void goToStartTwo() {
     startPlayer.worldX = 436;
     next = 0;
 
-    // flag that guide has been talked to so that they now can start phase 1
     talkedToGuide = 1;
-
     hOff = 0;
     vOff = MAX_VOFF;
+
+    playSoundB(action_data, action_length, 0);
+
     state = START;
 }
+
 
 void goToStartThree() {
     resumingFromPause = 0;
@@ -521,27 +527,9 @@ void phaseTwoInstructions() {
 
         switch (startPage) {
             case 1:
-                DMANow(3, (volatile void*)diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
+                DMANow(3, (volatile void*)gameInstructions2Map, &SCREENBLOCK[20], gameInstructions2Len / 2);
                 break;
             case 2:
-                DMANow(3, (volatile void*)diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
-                break;
-            case 3:
-                DMANow(3, (volatile void*)diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
-                break;
-            case 4:
-                DMANow(3, (volatile void*)diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
-                break;
-            case 5:
-                DMANow(3, (volatile void*)diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
-                break;
-            case 6:
-                DMANow(3, (volatile void*)diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
-                break;
-            case 7:
-                DMANow(3, (volatile void*)diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
-                break;
-            case 8:
                 goToPhaseTwo();
                 break;
         }
@@ -645,32 +633,12 @@ void goToPhaseThreeInstructions() {
 
 void phaseThreeInstructions() {
     if (BUTTON_PRESSED(BUTTON_START)) {
-
         startPage++;
-
         switch (startPage) {
             case 1:
-                DMANow(3, (volatile void*)diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
+                DMANow(3, (volatile void*)gameInstructions3Map, &SCREENBLOCK[20], gameInstructions2Len / 2);
                 break;
             case 2:
-                DMANow(3, (volatile void*)diaThreeMap, &SCREENBLOCK[20], diaThreeLen / 2);
-                break;
-            case 3:
-                DMANow(3, (volatile void*)diaFourMap, &SCREENBLOCK[20], diaFourLen / 2);
-                break;
-            case 4:
-                DMANow(3, (volatile void*)diaFiveMap, &SCREENBLOCK[20], diaFiveLen / 2);
-                break;
-            case 5:
-                DMANow(3, (volatile void*)diaSixMap, &SCREENBLOCK[20], diaSixLen / 2);
-                break;
-            case 6:
-                DMANow(3, (volatile void*)diaSevenMap, &SCREENBLOCK[20], diaSevenLen / 2);
-                break;
-            case 7:
-                DMANow(3, (volatile void*)diaEightMap, &SCREENBLOCK[20], diaEightLen / 2);
-                break;
-            case 8:
                 goToPhaseThree();
                 break;
         }

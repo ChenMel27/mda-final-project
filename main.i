@@ -479,6 +479,7 @@ typedef struct{
 SOUND soundA;
 SOUND soundB;
 # 65 "main.c" 2
+# 1 "gameInstructions2.h" 1
 
 
 
@@ -486,6 +487,26 @@ SOUND soundB;
 
 
 
+extern const unsigned short gameInstructions2Map[1024];
+# 66 "main.c" 2
+# 1 "gameInstructions3.h" 1
+
+
+
+
+
+
+
+extern const unsigned short gameInstructions3Map[1024];
+# 67 "main.c" 2
+# 1 "action.h" 1
+
+
+extern const unsigned int action_sampleRate;
+extern const unsigned int action_length;
+extern const signed char action_data[];
+# 68 "main.c" 2
+# 76 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -713,13 +734,15 @@ void goToStartTwo() {
     startPlayer.worldX = 436;
     next = 0;
 
-
     talkedToGuide = 1;
-
     hOff = 0;
     vOff = (256 - 160);
+
+    playSoundB(action_data, action_length, 0);
+
     state = START;
 }
+
 
 void goToStartThree() {
     resumingFromPause = 0;
@@ -938,27 +961,9 @@ void phaseTwoInstructions() {
 
         switch (startPage) {
             case 1:
-                DMANow(3, (volatile void*)diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)gameInstructions2Map, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 2:
-                DMANow(3, (volatile void*)diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 3:
-                DMANow(3, (volatile void*)diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 4:
-                DMANow(3, (volatile void*)diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 5:
-                DMANow(3, (volatile void*)diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 6:
-                DMANow(3, (volatile void*)diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 7:
-                DMANow(3, (volatile void*)diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 8:
                 goToPhaseTwo();
                 break;
         }
@@ -1062,32 +1067,12 @@ void goToPhaseThreeInstructions() {
 
 void phaseThreeInstructions() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-
         startPage++;
-
         switch (startPage) {
             case 1:
-                DMANow(3, (volatile void*)diaTwoMap, &((SB*) 0x6000000)[20], (2048) / 2);
+                DMANow(3, (volatile void*)gameInstructions3Map, &((SB*) 0x6000000)[20], (2048) / 2);
                 break;
             case 2:
-                DMANow(3, (volatile void*)diaThreeMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 3:
-                DMANow(3, (volatile void*)diaFourMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 4:
-                DMANow(3, (volatile void*)diaFiveMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 5:
-                DMANow(3, (volatile void*)diaSixMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 6:
-                DMANow(3, (volatile void*)diaSevenMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 7:
-                DMANow(3, (volatile void*)diaEightMap, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 8:
                 goToPhaseThree();
                 break;
         }

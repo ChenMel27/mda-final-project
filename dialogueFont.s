@@ -313,6 +313,45 @@ dialogueFontTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	1
+	.short	16
+	.short	4097
+	.short	4352
+	.short	273
+	.short	4096
+	.short	17
+	.short	0
+	.short	1
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	4096
+	.short	0
+	.short	0
+	.short	1
+	.short	0
+	.short	17
+	.short	4352
+	.short	273
+	.short	0
+	.short	17
+	.short	0
+	.short	1
+	.short	4096
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	1
+	.short	4096
+	.short	17
+	.short	4352
+	.short	273
+	.short	16
+	.short	4097
+	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -320,58 +359,19 @@ dialogueFontTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	1
+	.short	4096
+	.short	0
+	.short	4352
+	.short	0
+	.short	4368
+	.short	17
+	.short	4352
+	.short	0
+	.short	4096
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0

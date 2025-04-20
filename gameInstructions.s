@@ -48,303 +48,8 @@ gameInstructionsMap:
 	.short	257
 	.short	0
 	.short	0
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	0
-	.short	0
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	0
-	.short	0
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	0
-	.short	0
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	0
-	.short	0
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	0
-	.short	0
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	0
-	.short	0
-	.short	257
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	257
-	.short	0
-	.short	0
-	.short	257
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	257
-	.short	0
-	.short	0
-	.short	257
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	257
-	.short	0
-	.short	0
-	.short	272
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
+	.short	292
+	.short	231
 	.short	104
 	.short	128
 	.short	133
@@ -357,6 +62,301 @@ gameInstructionsMap:
 	.short	129
 	.short	128
 	.short	133
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	0
+	.short	0
+	.short	292
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	0
+	.short	0
+	.short	292
+	.short	257
+	.short	224
+	.short	101
+	.short	104
+	.short	128
+	.short	99
+	.short	224
+	.short	134
+	.short	103
+	.short	100
+	.short	224
+	.short	136
+	.short	104
+	.short	107
+	.short	107
+	.short	96
+	.short	102
+	.short	100
+	.short	132
+	.short	257
+	.short	101
+	.short	129
+	.short	132
+	.short	257
+	.short	134
+	.short	103
+	.short	100
+	.short	257
+	.short	257
+	.short	0
+	.short	0
+	.short	292
+	.short	257
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	0
+	.short	0
+	.short	292
+	.short	257
+	.short	224
+	.short	128
+	.short	100
+	.short	138
+	.short	134
+	.short	224
+	.short	104
+	.short	128
+	.short	133
+	.short	134
+	.short	132
+	.short	135
+	.short	98
+	.short	134
+	.short	104
+	.short	129
+	.short	128
+	.short	133
+	.short	167
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	0
+	.short	0
+	.short	292
+	.short	257
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	0
+	.short	0
+	.short	38
+	.short	38
+	.short	38
+	.short	130
+	.short	132
+	.short	100
+	.short	133
+	.short	133
+	.short	224
+	.short	133
+	.short	134
+	.short	96
+	.short	132
+	.short	134
+	.short	224
+	.short	134
+	.short	129
+	.short	224
+	.short	98
+	.short	129
+	.short	128
+	.short	134
+	.short	104
+	.short	128
+	.short	135
+	.short	100
+	.short	38
+	.short	38
+	.short	38
+	.short	38
+	.short	0
+	.short	0
+	.short	292
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	224
+	.short	224
+	.short	224
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	257
+	.short	0
+	.short	0
+	.short	292
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	257
+	.short	0
+	.short	0
+	.short	292
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	289
 	.short	289
 	.short	289
@@ -368,7 +368,7 @@ gameInstructionsMap:
 	.short	272
 	.short	0
 	.short	0
-	.short	272
+	.short	292
 	.short	289
 	.short	289
 	.short	289
@@ -400,7 +400,7 @@ gameInstructionsMap:
 	.short	272
 	.short	0
 	.short	0
-	.short	272
+	.short	292
 	.short	289
 	.short	289
 	.short	289
@@ -413,7 +413,39 @@ gameInstructionsMap:
 	.short	289
 	.short	289
 	.short	289
+	.short	292
+	.short	231
+	.short	98
+	.short	129
+	.short	128
+	.short	134
+	.short	132
+	.short	129
+	.short	107
+	.short	133
+	.short	231
+	.short	231
+	.short	231
+	.short	231
+	.short	231
+	.short	231
+	.short	231
+	.short	0
+	.short	0
+	.short	292
 	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	292
 	.short	289
 	.short	289
 	.short	289
@@ -432,7 +464,7 @@ gameInstructionsMap:
 	.short	272
 	.short	0
 	.short	0
-	.short	272
+	.short	292
 	.short	289
 	.short	289
 	.short	289
@@ -445,26 +477,26 @@ gameInstructionsMap:
 	.short	289
 	.short	289
 	.short	289
+	.short	292
 	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	272
+	.short	2
+	.short	257
+	.short	99
+	.short	135
+	.short	98
+	.short	106
+	.short	257
+	.short	257
+	.short	4
+	.short	257
+	.short	105
+	.short	135
+	.short	108
+	.short	130
+	.short	257
 	.short	0
 	.short	0
-	.short	272
+	.short	292
 	.short	289
 	.short	289
 	.short	289
@@ -477,26 +509,26 @@ gameInstructionsMap:
 	.short	289
 	.short	289
 	.short	289
+	.short	292
 	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	272
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
-	.short	272
+	.short	292
 	.short	289
 	.short	289
 	.short	289
@@ -509,26 +541,26 @@ gameInstructionsMap:
 	.short	289
 	.short	289
 	.short	289
+	.short	292
 	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	272
+	.short	5
+	.short	257
+	.short	137
+	.short	96
+	.short	107
+	.short	106
+	.short	257
+	.short	107
+	.short	100
+	.short	101
+	.short	134
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
-	.short	272
+	.short	292
 	.short	289
 	.short	289
 	.short	289
@@ -541,26 +573,26 @@ gameInstructionsMap:
 	.short	289
 	.short	289
 	.short	289
+	.short	292
 	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	272
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
-	.short	272
+	.short	292
 	.short	289
 	.short	289
 	.short	289
@@ -573,57 +605,26 @@ gameInstructionsMap:
 	.short	289
 	.short	289
 	.short	289
+	.short	292
+	.short	289
+	.short	3
+	.short	289
+	.short	137
+	.short	96
+	.short	107
+	.short	106
+	.short	257
+	.short	132
+	.short	104
+	.short	102
+	.short	103
+	.short	134
 	.short	289
 	.short	289
 	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	272
 	.short	0
 	.short	0
-	.short	272
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	272
-	.short	0
-	.short	0
+	.short	292
 	.short	272
 	.short	272
 	.short	272
@@ -636,8 +637,7 @@ gameInstructionsMap:
 	.short	272
 	.short	272
 	.short	272
-	.short	272
-	.short	272
+	.short	292
 	.short	272
 	.short	272
 	.short	272

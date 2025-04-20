@@ -36,6 +36,7 @@
         "stdbool.h": "c",
         "pause.h": "c",
         "diaseven.h": "c",
-        "bgonefrontcm.h": "c"
+        "bgonefrontcm.h": "c",
+        "gameinstructions2.h": "c"
     }
 }
