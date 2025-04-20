@@ -7,21 +7,19 @@
   - Navigate with UP/DOWN, confirm with START  
   - “INSTRUCTIONS” brings up a full‑screen “Game Instructions” tilemap, exit back with START  
 
-- **Audio**  
-  - mGBA debug output enabled (`mgba_open()`)  
-  - Simple sound engine initialized (`setupSounds()`)  
+- **Audio**   
   - Looping background track (AnimalJam) on channel A during the Start phase  
-  - Placeholder for digital sound effects via `digitalSound.h`  
+  - Non looping background adventure sound on channel B after talking to guide after Start phase
 
 - **Game‑wide Instruction Screens**  
-  - Four‑page dialogue overlay before Phase One  
-  - Repeated two‑page overlays before each subsequent phase (Phase Two, Phase Three)  
-  - Advance each slide with START  
+  - Dialogue overlay before Phase One  
+  - Repeated two‑page instructions before each phase
+  - Go to each slide with START  
 
 - **Start Phase (Top‑down Town)**  
   - 4‑way movement with separate frames for up/down/left/right  
   - Tile‑map collision; guide NPC patrols, animates, and on collision leads to Phase One intro  
-  - Camera centers on the player, updates background screen‑block index as you scroll  
+  - Camera centers on the player + updates background screen‑block index as you scroll  
   - Pause (START) saves your X/Y and returns you to the same spot on unpause  
 
 - **Phase One (Side‑scroll)**  
@@ -44,21 +42,17 @@
   - Win on reaching the far right of the map  
 
 - **Pause / Resume**  
-  - Accessible in any phase or the start town via START  
-  - Displays a pause screen overlay; RETURNING restores your last state without re‑initializing  
+  - Accessible in any phase besides phase 3 or the start town via START  
+  - Shows a pause screen
 
 - **Health Bar System**  
-  - On‑screen sprite bar (0–9 frames) updated immediately on damage  
-
-- **Game States**  
-  - `SPLASH`, `GAMEINSTRUCTIONS`, `START`, `DIALOGUE`, `PHASEONE`,  
-    `DIALOGUE2`, `PHASETWO`, `DIALOGUE3`, `PHASETHREE`, `PAUSE`, `LOSE`, `WIN`  
+  - Sprite bar (0–9 frames) updated on damage  
 
 ## Controls
 
 - **← →** Walk  
-- **↑** Jump / Climb (side‑scroll) / Interact (top‑down)  
-- **↓** Duck  
+- **↑** Jump / Climb (side‑scroll) / Up (top‑down)  
+- **↓** Duck  / Down (top‑down) 
 - **START** Pause / Advance dialogue/instruction slides  
 
 ## Flow
@@ -70,10 +64,3 @@
 5. **Phase Two** → complete → Phase Three dialogue  
 6. **Phase Three** → reach summit → Win  
 7. **At any point** → START to pause → START again to resume  
-
-## To Do
-
-- [ ] Polish Win/Lose screens  
-- [ ] Fix pause‑menu edge cases  
-- [ ] Add more music & sound effects  
-- [ ] Expand level design & pickups  
