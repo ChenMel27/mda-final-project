@@ -75,15 +75,19 @@ typedef struct {
 # 4 "start.c" 2
 # 1 "townCM.h" 1
 # 20 "townCM.h"
-extern const unsigned char townCMBitmap[262144];
+extern unsigned char townCMBitmap[262144] __attribute__((section(".ewram")));
 # 5 "start.c" 2
+# 1 "townCM2.h" 1
+# 20 "townCM2.h"
+extern const unsigned char townCM2Bitmap[262144];
+# 6 "start.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
 extern const unsigned short playerTiles[16384];
 
 
 extern const unsigned short playerPal[256];
-# 6 "start.c" 2
+# 7 "start.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
 typedef struct {
@@ -145,7 +149,7 @@ typedef struct {
     int active;
     u8 oamIndex;
 } SPRITE;
-# 7 "start.c" 2
+# 8 "start.c" 2
 
 
 
@@ -158,6 +162,7 @@ int guidePatrolLeftBound = 0;
 int guidePatrolRightBound = 0;
 int guideMoveCounter = 0;
 int guideMoveDelay = 2;
+extern int talkedToGuide;
 
 
 int guideMoveDirection = -1;
@@ -189,6 +194,10 @@ SPRITE guide;
 
 inline unsigned char startColorAt(int x, int y) {
     return townCMBitmap[((y) * (512) + (x))];
+}
+
+inline unsigned char start2ColorAt(int x, int y) {
+    return townCM2Bitmap[((y) * (512) + (x))];
 }
 
 
@@ -238,48 +247,95 @@ void updateStartPlayer(int* hOff, int* vOff) {
     int topY = startPlayer.worldY;
     int bottomY = startPlayer.worldY + startPlayer.height - 1;
 
-    if ((~(buttons) & ((1<<4)))) {
-        startPlayer.isAnimating = 1;
-        startPlayer.direction = RIGHT;
-        int newX = startPlayer.worldX + speed;
-        if (startPlayer.worldX + startPlayer.width < 512 &&
-            startColorAt(newX + startPlayer.width - 1, topY) != 0 &&
-            startColorAt(newX + startPlayer.width - 1, bottomY) != 0) {
-            startPlayer.worldX = newX;
+    if (talkedToGuide) {
+        if ((~(buttons) & ((1<<4)))) {
+            startPlayer.isAnimating = 1;
+            startPlayer.direction = RIGHT;
+            int newX = startPlayer.worldX + speed;
+            if (startPlayer.worldX + startPlayer.width < 512 &&
+                startColorAt(newX + startPlayer.width - 1, topY) != 0 &&
+                startColorAt(newX + startPlayer.width - 1, bottomY) != 0) {
+                startPlayer.worldX = newX;
+            }
+            if (startColorAt(newX + startPlayer.width - 1, topY) == 2 ||
+                startColorAt(newX + startPlayer.width - 1, bottomY) == 2) {
+                next = 1;
+            }
         }
-        if (startColorAt(newX + startPlayer.width - 1, topY) == 2 ||
-            startColorAt(newX + startPlayer.width - 1, bottomY) == 2) {
-            next = 1;
+        if ((~(buttons) & ((1<<5)))) {
+            startPlayer.isAnimating = 1;
+            startPlayer.direction = LEFT;
+            int newX = startPlayer.worldX - speed;
+            if (newX >= 0 &&
+                startColorAt(newX, topY) != 0 &&
+                startColorAt(newX, bottomY) != 0) {
+                startPlayer.worldX = newX;
+            }
         }
-    }
-    if ((~(buttons) & ((1<<5)))) {
-        startPlayer.isAnimating = 1;
-        startPlayer.direction = LEFT;
-        int newX = startPlayer.worldX - speed;
-        if (newX >= 0 &&
-            startColorAt(newX, topY) != 0 &&
-            startColorAt(newX, bottomY) != 0) {
-            startPlayer.worldX = newX;
+        if ((~(buttons) & ((1<<6)))) {
+            startPlayer.isAnimating = 1;
+            startPlayer.direction = UP;
+            int newY = startPlayer.worldY - speed;
+            if (newY >= 0 &&
+                startColorAt(leftX, newY) != 0 &&
+                startColorAt(rightX, newY) != 0) {
+                startPlayer.worldY = newY;
+            }
         }
-    }
-    if ((~(buttons) & ((1<<6)))) {
-        startPlayer.isAnimating = 1;
-        startPlayer.direction = UP;
-        int newY = startPlayer.worldY - speed;
-        if (newY >= 0 &&
-            startColorAt(leftX, newY) != 0 &&
-            startColorAt(rightX, newY) != 0) {
-            startPlayer.worldY = newY;
+        if ((~(buttons) & ((1<<7)))) {
+            startPlayer.isAnimating = 1;
+            startPlayer.direction = DOWN;
+            int newY = startPlayer.worldY + speed;
+            if (startPlayer.worldY < 512 - startPlayer.height &&
+                startColorAt(leftX, newY + startPlayer.height - 1) != 0 &&
+                startColorAt(rightX, newY + startPlayer.height - 1) != 0) {
+                startPlayer.worldY = newY;
+            }
         }
-    }
-    if ((~(buttons) & ((1<<7)))) {
-        startPlayer.isAnimating = 1;
-        startPlayer.direction = DOWN;
-        int newY = startPlayer.worldY + speed;
-        if (startPlayer.worldY < 512 - startPlayer.height &&
-            startColorAt(leftX, newY + startPlayer.height - 1) != 0 &&
-            startColorAt(rightX, newY + startPlayer.height - 1) != 0) {
-            startPlayer.worldY = newY;
+    } else {
+        if ((~(buttons) & ((1<<4)))) {
+            startPlayer.isAnimating = 1;
+            startPlayer.direction = RIGHT;
+            int newX = startPlayer.worldX + speed;
+            if (startPlayer.worldX + startPlayer.width < 512 &&
+                start2ColorAt(newX + startPlayer.width - 1, topY) != 0 &&
+                start2ColorAt(newX + startPlayer.width - 1, bottomY) != 0) {
+                startPlayer.worldX = newX;
+            }
+            if (start2ColorAt(newX + startPlayer.width - 1, topY) == 2 ||
+                start2ColorAt(newX + startPlayer.width - 1, bottomY) == 2) {
+                next = 1;
+            }
+        }
+        if ((~(buttons) & ((1<<5)))) {
+            startPlayer.isAnimating = 1;
+            startPlayer.direction = LEFT;
+            int newX = startPlayer.worldX - speed;
+            if (newX >= 0 &&
+                start2ColorAt(newX, topY) != 0 &&
+                start2ColorAt(newX, bottomY) != 0) {
+                startPlayer.worldX = newX;
+            }
+        }
+        if ((~(buttons) & ((1<<6)))) {
+            startPlayer.isAnimating = 1;
+            startPlayer.direction = UP;
+            int newY = startPlayer.worldY - speed;
+            if (newY >= 0 &&
+                start2ColorAt(leftX, newY) != 0 &&
+                start2ColorAt(rightX, newY) != 0) {
+                startPlayer.worldY = newY;
+            }
+        }
+        if ((~(buttons) & ((1<<7)))) {
+            startPlayer.isAnimating = 1;
+            startPlayer.direction = DOWN;
+            int newY = startPlayer.worldY + speed;
+            if (startPlayer.worldY < 512 - startPlayer.height &&
+                start2ColorAt(leftX, newY + startPlayer.height - 1) != 0 &&
+                start2ColorAt(rightX, newY + startPlayer.height - 1) != 0) {
+                startPlayer.worldY = newY;
+            }
         }
     }
 

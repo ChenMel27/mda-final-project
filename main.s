@@ -39,34 +39,31 @@ goToSplashScreen:
 	ldr	r3, .L4+24
 	mov	lr, pc
 	bx	r3
-	mov	r4, #0
-	mov	r3, #83886080
-	mov	r1, #31
-	ldr	r2, .L4+28
-	strh	r1, [r3, #28]	@ movhi
-	strh	r4, [r3, #30]	@ movhi
-	ldr	lr, .L4+32
-	ldr	r3, .L4+36
-	ldr	ip, .L4+40
-	ldr	r0, .L4+44
-	ldr	r1, .L4+48
-	str	r4, [r2]
-	ldr	r2, .L4+52
-	str	r4, [r3]
-	str	r4, [r3, #4]
-	str	r4, [r3, #8]
-	str	r4, [r3, #12]
-	str	r4, [r3, #16]
-	str	r4, [r3, #20]
-	str	r4, [r3, #24]
-	str	r4, [lr]
-	str	r4, [ip]
-	str	r4, [r0]
-	str	r4, [r1]
-	mov	lr, pc
-	bx	r2
-	ldr	r3, .L4+56
-	strb	r4, [r3]
+	mov	r3, #0
+	mov	r2, #83886080
+	mov	r0, #31
+	ldr	r1, .L4+28
+	strh	r0, [r2, #28]	@ movhi
+	strh	r3, [r2, #30]	@ movhi
+	str	r3, [r1]
+	ldr	r1, .L4+32
+	ldr	r2, .L4+36
+	ldr	r4, .L4+40
+	ldr	lr, .L4+44
+	ldr	ip, .L4+48
+	ldr	r0, .L4+52
+	strb	r3, [r1]
+	str	r3, [r4]
+	str	r3, [lr]
+	str	r3, [ip]
+	str	r3, [r0]
+	str	r3, [r2]
+	str	r3, [r2, #4]
+	str	r3, [r2, #8]
+	str	r3, [r2, #12]
+	str	r3, [r2, #16]
+	str	r3, [r2, #20]
+	str	r3, [r2, #24]
 	pop	{r4, lr}
 	bx	lr
 .L5:
@@ -79,14 +76,13 @@ goToSplashScreen:
 	.word	DMANow
 	.word	splash1Bitmap
 	.word	drawFullscreenImage4
-	.word	winPhaseOne
 	.word	gameOver
+	.word	state
 	.word	.LANCHOR0
+	.word	winPhaseOne
 	.word	winPhaseTwo
 	.word	winPhaseThree
 	.word	next
-	.word	resetPlayerState
-	.word	state
 	.size	goToSplashScreen, .-goToSplashScreen
 	.align	2
 	.global	initialize

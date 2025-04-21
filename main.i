@@ -679,7 +679,7 @@ void goToSplashScreen() {
     ((unsigned short *)0x5000000)[14] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
     ((unsigned short *)0x5000000)[15] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
     resetGameState();
-    resetPlayerState();
+
     state = SPLASH;
 }
 
