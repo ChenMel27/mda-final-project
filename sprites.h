@@ -72,6 +72,7 @@ struct oam_attrs {
 #define ATTR1_SMALL   (1<<14)       // Bits E-F: Size, small
 #define ATTR1_MEDIUM  (2<<14)       // Bits E-F: Size, medium
 #define ATTR1_LARGE   (3<<14)       // Bits E-F: Size, large
+#define ATTR1_AFFINE (1 << 9)  // Bit 9: Affine flag
 
 // Attribute 2
 #define ATTR2_TILEID(x, y) ((OFFSET(x, y, 32)) & 0x3FF)  // Bits 0-9: Tile ID
@@ -109,5 +110,7 @@ typedef struct {
     int active;
     u8 oamIndex; 
 } SPRITE;
+
+#define OAM_AFFINE ((OBJ_AFFINE*)0x7000000)
 
 #endif
