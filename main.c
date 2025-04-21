@@ -65,6 +65,9 @@ Project: The Summit Ascent
 #include "gameInstructions2.h"
 #include "gameInstructions3.h"
 #include "action.h"
+#include "speakingMan.h"
+#include "speakingMan2.h"
+#include "largemantiles.h"
 
 #define MENU_START 0
 #define MENU_INSTR 1
@@ -217,6 +220,7 @@ void goToSplashScreen() {
     // make start red, instructions black
     BG_PALETTE[14] = RED;
     BG_PALETTE[15] = BLACK;
+    resetGameState();
 
     state = SPLASH;
 }
@@ -372,18 +376,29 @@ void start() {
 
 void goToStartInstructions() {
     REG_DISPCTL = 0;
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, (volatile void*)dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1);
+
+    // Load dialogue font palette to palette 0 (index 0–15)
+    DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
 
-    // BG0 = dialogue overlay
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+    // Load largeman palette to palette 1 (index 16–31)
+    
+    DMANow(3, (volatile void*)largemantilesTiles, &CHARBLOCK[3], largemantilesTilesLen / 2);
 
-    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+    // Setup background control registers
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(1) | BG_4BPP;
+    REG_BG1CNT = BG_CHARBLOCK(3) | BG_SCREENBLOCK(25) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+
+    // Load maps (make sure tile IDs in speakingManMap use palette 1)
     DMANow(3, (volatile void*)diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
+    DMANow(3, (volatile void*)speakingManMap, &SCREENBLOCK[25], speakingManLen / 2);
 
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
+    REG_BG1HOFF = 0;
+    REG_BG1VOFF = 0;
+
     startPage = 0;
     state = DIALOGUE;
 }
@@ -502,19 +517,21 @@ void phaseOne() {
 
 void goToPhaseTwoInstructions() {
     REG_DISPCTL = 0;
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, (volatile void*)dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1);
+
+    DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
 
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+    REG_BG1CNT = BG_CHARBLOCK(3) | BG_SCREENBLOCK(25) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
 
-    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
-    DMANow(3, (volatile void*)diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
+    DMANow(3, (volatile void*)speakingMan2Map, &SCREENBLOCK[25], speakingMan2Len / 2);
+    DMANow(3, (volatile void*)gameInstructions2Map, &SCREENBLOCK[20], gameInstructions2Len / 2);
 
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
-
-    startPage = 0;
+    REG_BG1HOFF = 0;
+    REG_BG1VOFF = 0;
     state = DIALOGUE2;
 }
 
@@ -522,17 +539,7 @@ void goToPhaseTwoInstructions() {
 
 void phaseTwoInstructions() {
     if (BUTTON_PRESSED(BUTTON_START)) {
-
-        startPage++;
-
-        switch (startPage) {
-            case 1:
-                DMANow(3, (volatile void*)gameInstructions2Map, &SCREENBLOCK[20], gameInstructions2Len / 2);
-                break;
-            case 2:
-                goToPhaseTwo();
-                break;
-        }
+        goToPhaseTwo();
     }
 }
 
@@ -613,35 +620,28 @@ void phaseTwo() {
 
 void goToPhaseThreeInstructions() {
     REG_DISPCTL = 0;
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, (volatile void*)dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1);
+
+    DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
 
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+    REG_BG1CNT = BG_CHARBLOCK(3) | BG_SCREENBLOCK(25) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
 
-    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
-    DMANow(3, (volatile void*)diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
+    DMANow(3, (volatile void*)speakingMan2Map, &SCREENBLOCK[25], speakingMan2Len / 2);
+    DMANow(3, (volatile void*)gameInstructions3Map, &SCREENBLOCK[20], gameInstructions2Len / 2);
 
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
+    REG_BG1HOFF = 0;
+    REG_BG1VOFF = 0;
 
-    startPage = 0;
     state = DIALOGUE3;
 }
 
-
-
 void phaseThreeInstructions() {
     if (BUTTON_PRESSED(BUTTON_START)) {
-        startPage++;
-        switch (startPage) {
-            case 1:
-                DMANow(3, (volatile void*)gameInstructions3Map, &SCREENBLOCK[20], gameInstructions2Len / 2);
-                break;
-            case 2:
-                goToPhaseThree();
-                break;
-        }
+        goToPhaseThree();
     }
 }
 
@@ -787,7 +787,7 @@ void win() {
 void goToGameInstructions() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, (volatile void*) dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
+    DMANow(3, (volatile void*) largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*) dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
     DMANow(3,(volatile void*) gameInstructionsMap, &SCREENBLOCK[20], gameInstructionsLen / 2);
@@ -802,3 +802,25 @@ void gameInstructions() {
         goToSplashScreen();
     }
 }
+
+void resetGameState() {
+    hOff = 0;
+    vOff = 0;
+    talkedToGuide = 0;
+    begin = 0;
+    startPage = 0;
+    resumingFromPause = 0;
+
+    // Reset win/lose state flags
+    gameOver = 0;
+    winPhaseOne = 0;
+    winPhaseTwo = 0;
+    winPhaseThree = 0;
+
+    // Reset player progress / guide interaction
+    next = 0;
+
+    // Reset splash selection
+    splashSelection = MENU_START;
+}
+

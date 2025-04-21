@@ -50,19 +50,19 @@ gameInstructions2Map:
 	.short	0
 	.short	292
 	.short	231
-	.short	104
 	.short	128
-	.short	133
+	.short	129
 	.short	134
-	.short	132
-	.short	135
-	.short	98
-	.short	134
-	.short	104
+	.short	100
+	.short	225
 	.short	129
 	.short	128
-	.short	133
+	.short	100
 	.short	230
+	.short	230
+	.short	230
+	.short	230
+	.short	231
 	.short	230
 	.short	230
 	.short	230

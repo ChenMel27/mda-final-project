@@ -54,195 +54,6 @@ diaFourMap:
 	.short	258
 	.short	258
 	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	0
-	.short	0
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	0
-	.short	0
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	0
-	.short	0
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	0
-	.short	0
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	0
-	.short	0
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	258
-	.short	0
-	.short	0
-	.short	258
-	.short	258
-	.short	258
 	.short	296
 	.short	296
 	.short	296
@@ -267,11 +78,11 @@ diaFourMap:
 	.short	296
 	.short	296
 	.short	257
-	.short	258
-	.short	258
-	.short	258
 	.short	0
 	.short	0
+	.short	258
+	.short	258
+	.short	258
 	.short	258
 	.short	258
 	.short	258
@@ -299,11 +110,11 @@ diaFourMap:
 	.short	272
 	.short	292
 	.short	258
-	.short	258
-	.short	258
-	.short	258
 	.short	0
 	.short	0
+	.short	258
+	.short	258
+	.short	258
 	.short	258
 	.short	258
 	.short	258
@@ -331,12 +142,12 @@ diaFourMap:
 	.short	134
 	.short	292
 	.short	258
-	.short	258
-	.short	258
-	.short	258
 	.short	0
 	.short	0
-	.short	272
+	.short	258
+	.short	258
+	.short	258
+	.short	258
 	.short	257
 	.short	257
 	.short	227
@@ -363,12 +174,12 @@ diaFourMap:
 	.short	272
 	.short	292
 	.short	272
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
-	.short	272
+	.short	258
+	.short	258
+	.short	258
+	.short	258
 	.short	257
 	.short	257
 	.short	227
@@ -395,12 +206,12 @@ diaFourMap:
 	.short	272
 	.short	292
 	.short	225
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
-	.short	272
+	.short	258
+	.short	289
+	.short	289
+	.short	289
 	.short	257
 	.short	257
 	.short	227
@@ -427,12 +238,12 @@ diaFourMap:
 	.short	272
 	.short	292
 	.short	272
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
-	.short	272
+	.short	258
+	.short	289
+	.short	289
+	.short	289
 	.short	257
 	.short	257
 	.short	227
@@ -459,12 +270,12 @@ diaFourMap:
 	.short	272
 	.short	292
 	.short	272
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
-	.short	272
+	.short	258
+	.short	289
+	.short	289
+	.short	289
 	.short	257
 	.short	257
 	.short	227
@@ -491,12 +302,12 @@ diaFourMap:
 	.short	272
 	.short	292
 	.short	272
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
-	.short	272
+	.short	258
+	.short	289
+	.short	289
+	.short	289
 	.short	257
 	.short	257
 	.short	227
@@ -523,12 +334,12 @@ diaFourMap:
 	.short	272
 	.short	292
 	.short	272
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
 	.short	272
+	.short	289
+	.short	289
+	.short	289
 	.short	257
 	.short	257
 	.short	227
@@ -555,12 +366,12 @@ diaFourMap:
 	.short	272
 	.short	324
 	.short	272
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
 	.short	272
+	.short	289
+	.short	289
+	.short	289
 	.short	257
 	.short	257
 	.short	357
@@ -587,12 +398,12 @@ diaFourMap:
 	.short	361
 	.short	361
 	.short	272
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
 	.short	272
+	.short	289
+	.short	289
+	.short	289
 	.short	257
 	.short	257
 	.short	389
@@ -619,7 +430,196 @@ diaFourMap:
 	.short	272
 	.short	272
 	.short	272
+	.short	0
+	.short	0
 	.short	272
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	272
+	.short	272
+	.short	0
+	.short	0
+	.short	272
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	272
+	.short	272
+	.short	0
+	.short	0
+	.short	272
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	272
+	.short	272
+	.short	0
+	.short	0
+	.short	272
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	272
+	.short	272
+	.short	0
+	.short	0
+	.short	272
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	272
+	.short	272
+	.short	0
+	.short	0
+	.short	272
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
 	.short	272
 	.short	272
 	.short	0

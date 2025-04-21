@@ -37,6 +37,7 @@
         "pause.h": "c",
         "diaseven.h": "c",
         "bgonefrontcm.h": "c",
-        "gameinstructions2.h": "c"
+        "gameinstructions2.h": "c",
+        "action.h": "c"
     }
 }

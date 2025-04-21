@@ -506,7 +506,34 @@ extern const unsigned int action_sampleRate;
 extern const unsigned int action_length;
 extern const signed char action_data[];
 # 68 "main.c" 2
-# 76 "main.c"
+# 1 "speakingMan.h" 1
+
+
+
+
+
+
+
+extern const unsigned short speakingManMap[1024];
+# 69 "main.c" 2
+# 1 "speakingMan2.h" 1
+
+
+
+
+
+
+
+extern const unsigned short speakingMan2Map[1024];
+# 70 "main.c" 2
+# 1 "largemantiles.h" 1
+# 21 "largemantiles.h"
+extern const unsigned short largemantilesTiles[1024];
+
+
+extern const unsigned short largemantilesPal[256];
+# 71 "main.c" 2
+# 79 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -651,7 +678,8 @@ void goToSplashScreen() {
 
     ((unsigned short *)0x5000000)[14] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
     ((unsigned short *)0x5000000)[15] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
-
+    resetGameState();
+    resetPlayerState();
     state = SPLASH;
 }
 
@@ -806,18 +834,29 @@ void start() {
 
 void goToStartInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, (volatile void*)dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
+
+
+    DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
 
 
-    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
 
-    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+    DMANow(3, (volatile void*)largemantilesTiles, &((CB*) 0x6000000)[3], 2048 / 2);
+
+
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((1) & 3) | (0 << 7);
+    (*(volatile unsigned short*) 0x400000A) = ((3) << 2) | ((25) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+
+
     DMANow(3, (volatile void*)diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    DMANow(3, (volatile void*)speakingManMap, &((SB*) 0x6000000)[25], (2048) / 2);
 
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
+    (*(volatile unsigned short*) 0x04000014) = 0;
+    (*(volatile unsigned short*) 0x04000016) = 0;
+
     startPage = 0;
     state = DIALOGUE;
 }
@@ -936,19 +975,21 @@ void phaseOne() {
 
 void goToPhaseTwoInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, (volatile void*)dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
+
+    DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
 
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+    (*(volatile unsigned short*) 0x400000A) = ((3) << 2) | ((25) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
 
-    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-    DMANow(3, (volatile void*)diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    DMANow(3, (volatile void*)speakingMan2Map, &((SB*) 0x6000000)[25], (2048) / 2);
+    DMANow(3, (volatile void*)gameInstructions2Map, &((SB*) 0x6000000)[20], (2048) / 2);
 
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
-
-    startPage = 0;
+    (*(volatile unsigned short*) 0x04000014) = 0;
+    (*(volatile unsigned short*) 0x04000016) = 0;
     state = DIALOGUE2;
 }
 
@@ -956,17 +997,7 @@ void goToPhaseTwoInstructions() {
 
 void phaseTwoInstructions() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-
-        startPage++;
-
-        switch (startPage) {
-            case 1:
-                DMANow(3, (volatile void*)gameInstructions2Map, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 2:
-                goToPhaseTwo();
-                break;
-        }
+        goToPhaseTwo();
     }
 }
 
@@ -1047,35 +1078,28 @@ void phaseTwo() {
 
 void goToPhaseThreeInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, (volatile void*)dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
+
+    DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
 
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+    (*(volatile unsigned short*) 0x400000A) = ((3) << 2) | ((25) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
 
-    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-    DMANow(3, (volatile void*)diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    DMANow(3, (volatile void*)speakingMan2Map, &((SB*) 0x6000000)[25], (2048) / 2);
+    DMANow(3, (volatile void*)gameInstructions3Map, &((SB*) 0x6000000)[20], (2048) / 2);
 
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
+    (*(volatile unsigned short*) 0x04000014) = 0;
+    (*(volatile unsigned short*) 0x04000016) = 0;
 
-    startPage = 0;
     state = DIALOGUE3;
 }
 
-
-
 void phaseThreeInstructions() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        startPage++;
-        switch (startPage) {
-            case 1:
-                DMANow(3, (volatile void*)gameInstructions3Map, &((SB*) 0x6000000)[20], (2048) / 2);
-                break;
-            case 2:
-                goToPhaseThree();
-                break;
-        }
+        goToPhaseThree();
     }
 }
 
@@ -1221,7 +1245,7 @@ void win() {
 void goToGameInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, (volatile void*) dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*) largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*) dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
     DMANow(3,(volatile void*) gameInstructionsMap, &((SB*) 0x6000000)[20], (2048) / 2);
@@ -1235,4 +1259,25 @@ void gameInstructions() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToSplashScreen();
     }
+}
+
+void resetGameState() {
+    hOff = 0;
+    vOff = 0;
+    talkedToGuide = 0;
+    begin = 0;
+    startPage = 0;
+    resumingFromPause = 0;
+
+
+    gameOver = 0;
+    winPhaseOne = 0;
+    winPhaseTwo = 0;
+    winPhaseThree = 0;
+
+
+    next = 0;
+
+
+    splashSelection = 0;
 }

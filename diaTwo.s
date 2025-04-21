@@ -53,195 +53,6 @@ diaTwoMap:
 	.short	321
 	.short	321
 	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	0
-	.short	0
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	0
-	.short	0
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	0
-	.short	0
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	0
-	.short	0
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	0
-	.short	0
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	321
-	.short	0
-	.short	0
-	.short	321
-	.short	321
 	.short	296
 	.short	296
 	.short	297
@@ -267,11 +78,11 @@ diaTwoMap:
 	.short	297
 	.short	296
 	.short	297
-	.short	321
-	.short	321
-	.short	321
 	.short	0
 	.short	0
+	.short	321
+	.short	321
+	.short	321
 	.short	321
 	.short	228
 	.short	225
@@ -299,11 +110,11 @@ diaTwoMap:
 	.short	225
 	.short	225
 	.short	292
-	.short	272
-	.short	321
-	.short	321
 	.short	0
 	.short	0
+	.short	321
+	.short	321
+	.short	321
 	.short	321
 	.short	228
 	.short	464
@@ -331,11 +142,11 @@ diaTwoMap:
 	.short	225
 	.short	225
 	.short	324
-	.short	272
-	.short	321
-	.short	321
 	.short	0
 	.short	0
+	.short	321
+	.short	321
+	.short	321
 	.short	272
 	.short	228
 	.short	487
@@ -363,11 +174,11 @@ diaTwoMap:
 	.short	272
 	.short	272
 	.short	292
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
+	.short	321
+	.short	321
+	.short	321
 	.short	272
 	.short	228
 	.short	225
@@ -395,11 +206,11 @@ diaTwoMap:
 	.short	135
 	.short	130
 	.short	324
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
+	.short	321
+	.short	321
+	.short	321
 	.short	225
 	.short	228
 	.short	225
@@ -427,11 +238,11 @@ diaTwoMap:
 	.short	272
 	.short	272
 	.short	292
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
+	.short	321
+	.short	321
+	.short	224
 	.short	225
 	.short	228
 	.short	225
@@ -459,11 +270,11 @@ diaTwoMap:
 	.short	272
 	.short	272
 	.short	324
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
+	.short	321
+	.short	224
+	.short	224
 	.short	225
 	.short	228
 	.short	225
@@ -491,11 +302,11 @@ diaTwoMap:
 	.short	272
 	.short	272
 	.short	292
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
+	.short	321
+	.short	224
+	.short	224
 	.short	225
 	.short	228
 	.short	272
@@ -523,11 +334,11 @@ diaTwoMap:
 	.short	225
 	.short	272
 	.short	324
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
+	.short	272
+	.short	224
+	.short	224
 	.short	225
 	.short	228
 	.short	272
@@ -555,11 +366,11 @@ diaTwoMap:
 	.short	225
 	.short	272
 	.short	292
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
+	.short	272
+	.short	224
+	.short	224
 	.short	272
 	.short	261
 	.short	357
@@ -587,11 +398,11 @@ diaTwoMap:
 	.short	263
 	.short	263
 	.short	263
-	.short	272
-	.short	272
-	.short	272
 	.short	0
 	.short	0
+	.short	225
+	.short	224
+	.short	224
 	.short	272
 	.short	289
 	.short	389
@@ -619,40 +430,229 @@ diaTwoMap:
 	.short	289
 	.short	289
 	.short	289
+	.short	0
+	.short	0
+	.short	225
+	.short	224
+	.short	224
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	272
+	.short	0
+	.short	0
+	.short	225
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	272
+	.short	0
+	.short	0
+	.short	225
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	272
+	.short	0
+	.short	0
+	.short	225
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	272
+	.short	0
+	.short	0
+	.short	272
+	.short	261
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	272
+	.short	0
+	.short	0
+	.short	272
 	.short	289
-	.short	272
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
 	.short	272
 	.short	0
 	.short	0
 	.short	272
 	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
-	.short	272
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
+	.short	224
 	.short	272
 	.short	0
 	.short	0
