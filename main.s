@@ -172,58 +172,54 @@ goToStart:
 	ldr	r1, .L22+16
 	mov	lr, pc
 	bx	r5
+	mov	r3, #4096
 	mov	r0, #3
 	ldr	r2, .L22+20
 	ldr	r1, .L22+24
-	mov	r3, #4096
 	mov	lr, pc
 	bx	r5
-	mov	r1, #364
-	ldr	r2, .L22+28
-	ldr	r0, .L22+32
+	mov	r5, #27
+	mov	lr, #364
 .L17:
-	sub	r3, r2, #320
+	mov	r1, #57
+	asr	ip, r5, #5
+	add	ip, ip, #9
+	and	r0, r5, #31
+	lsl	ip, ip, #1
+	lsl	r0, r0, #5
 .L18:
-	strh	r1, [r3], #64	@ movhi
-	cmp	r3, r2
+	add	r2, ip, r1, asr #5
+	and	r3, r1, #31
+	lsl	r2, r2, #11
+	add	r3, r3, r0
+	add	r1, r1, #1
+	add	r2, r2, #100663296
+	lsl	r3, r3, #1
+	cmp	r1, #67
+	strh	lr, [r2, r3]	@ movhi
 	bne	.L18
-	add	r2, r3, #2
-	cmp	r2, r0
+	add	r5, r5, #1
+	cmp	r5, #37
 	bne	.L17
-	ldr	r3, .L22+36
-	ldr	r2, .L22+40
-	strh	r1, [r3, #50]	@ movhi
-	strh	r1, [r3, #114]	@ movhi
-	strh	r1, [r3, #52]	@ movhi
-	strh	r1, [r3, #116]	@ movhi
-	strh	r1, [r3, #54]	@ movhi
-	strh	r1, [r3, #118]	@ movhi
-	strh	r1, [r3, #56]	@ movhi
-	strh	r1, [r3, #120]	@ movhi
-	strh	r1, [r3, #58]	@ movhi
-	strh	r1, [r3, #122]	@ movhi
-	strh	r1, [r3, #60]	@ movhi
-	strh	r1, [r3, #124]	@ movhi
-	strh	r1, [r3, #62]	@ movhi
-	strh	r1, [r3, #126]	@ movhi
+	ldr	r3, .L22+28
 	mov	lr, pc
-	bx	r2
-	ldr	r3, .L22+44
+	bx	r3
+	ldr	r3, .L22+32
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	mov	ip, #96
-	ldr	r1, .L22+48
+	ldr	r1, .L22+36
 	str	r3, [r4]
 	mov	r2, #1
-	ldr	r3, .L22+52
+	ldr	r3, .L22+40
 	ldr	r1, [r1]
-	ldr	r0, .L22+56
+	ldr	r0, .L22+44
 	str	ip, [r4, #4]
 	mov	lr, pc
 	bx	r3
 	mov	r2, #1
-	ldr	r3, .L22+60
+	ldr	r3, .L22+48
 	strb	r2, [r3]
 	pop	{r4, r5, r6, lr}
 	bx	lr
@@ -237,9 +233,6 @@ goToStart:
 	.word	sTSTiles
 	.word	100700160
 	.word	sTMMap
-	.word	100704306
-	.word	100704320
-	.word	100706304
 	.word	initStartPlayer
 	.word	initGuideSprite
 	.word	animaljam_length

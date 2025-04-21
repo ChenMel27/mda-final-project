@@ -161,7 +161,7 @@ struct oam_attrs {
   struct attr0 attr0;
   struct attr1 attr1;
 };
-# 93 "sprites.h"
+# 94 "sprites.h"
 void hideSprites();
 
 
@@ -569,6 +569,8 @@ void goToPhaseTwoInstructions();
 void goToPhaseThreeInstructions();
 void resetPlayerState();
 void mgba_open();
+static void patchSquare(int startRow, int startCol, int size, int tileId);
+void resetGameState(void);
 
 
 
@@ -722,20 +724,16 @@ void goToStart() {
     DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
     DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
 
-
-    volatile u16* map1 = ((SB*) 0x6000000)[19].tilemap;
-    for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < 5; j++) {
-            map1[(((27 + j) * 64) / 2 + (25 + i))] = ((364) & 1023) | (((0) & 15) << 12);
+    for (int y = 0; y < 10; y++) {
+        for (int x = 0; x < 10; x++) {
+            int r = y + 27;
+            int c = 57 + x;
+            int blk = 18 + (r / 32) * 2 + (c / 32);
+            volatile u16* m = ((SB*) 0x6000000)[blk].tilemap;
+            m[(r % 32) * 32 + (c % 32)] = (364) | (0 << 12);
         }
     }
 
-    volatile u16* map2 = ((SB*) 0x6000000)[21].tilemap;
-    for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < 2; j++) {
-            map2[(((j) * 64) / 2 + (25 + i))] = ((364) & 1023) | (((0) & 15) << 12);
-        }
-    }
 
     initStartPlayer();
     initGuideSprite();

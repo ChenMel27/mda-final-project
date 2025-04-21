@@ -111,6 +111,8 @@ void goToPhaseTwoInstructions();
 void goToPhaseThreeInstructions();
 void resetPlayerState();
 void mgba_open();
+static void patchSquare(int startRow, int startCol, int size, int tileId);
+void        resetGameState(void);
 
 
 // ============================= [ VARIABLES ] ============================
@@ -264,21 +266,26 @@ void goToStart() {
     DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0],  sTSTilesLen / 2);
     DMANow(3, (volatile void*)sTMMap,   &SCREENBLOCK[18], sTMLen / 2);
     
-    // TILE MAP MODIFICATION
-    volatile u16* map1 = SCREENBLOCK[19].tilemap;
-    for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < 5; j++) {
-            map1[(((27 + j) * TILEMAP_WIDTH) / 2 + (25 + i))] = TILEMAP_ENTRY_TILEID(364) | TILEMAP_ENTRY_PALROW(0);
+    // Modifying start tilemap at runtime
+    // 10x10 block at (27, 57) that will be uncovered when player meets guide and can cross bridge
+    for (int y = 0; y < 10; y++) {
+        for (int x = 0; x < 10; x++) {
+            int r = y + 27; // row offset
+            int c = 57 + x; // col offset
+
+            // Find which screenblock this tile is in
+            int blk = 18 + (r / 32) * 2 + (c / 32);
+
+            // Get pointer to the tilemap for this block
+            volatile u16* m = SCREENBLOCK[blk].tilemap;
+
+            // Write tile ID 364 at (r, c) using palette 0
+            m[(r % 32) * 32 + (c % 32)] = TILEMAP_ENTRY_TILEID(364) | TILEMAP_ENTRY_PALROW(0);
         }
     }
 
-    volatile u16* map2 = SCREENBLOCK[21].tilemap;
-    for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < 2; j++) {
-            map2[(((j) * TILEMAP_WIDTH) / 2 + (25 + i))] = TILEMAP_ENTRY_TILEID(364) | TILEMAP_ENTRY_PALROW(0);
-        }
-    }
-    // init sprites & camera
+
+
     initStartPlayer();
     initGuideSprite();
     hOff = 0;  vOff = MAX_VOFF;
