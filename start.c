@@ -20,6 +20,8 @@ int guidePatrolLeftBound = 0;
 int guidePatrolRightBound = 0;
 int guideMoveCounter = 0;
 int guideMoveDelay = 2;
+int transformedPlayer = 0;
+
 extern int talkedToGuide;
 
 // -1 = moving left, 1 = moving right
@@ -162,6 +164,12 @@ void updateStartPlayer(int* hOff, int* vOff) {
                 startColorAt(newX, bottomY) != 0) {
                 startPlayer.worldX = newX;
             }
+            if (!transformedPlayer &&
+                startColorAt(newX, topY) == 3 ||
+                startColorAt(newX, bottomY) == 3) {
+                transformedPlayer = 1;
+            }
+            
         }
         if (BUTTON_HELD(BUTTON_UP)) {
             startPlayer.isAnimating = 1;
@@ -172,6 +180,11 @@ void updateStartPlayer(int* hOff, int* vOff) {
                 startColorAt(rightX, newY) != 0) {
                 startPlayer.worldY = newY;
             }
+            if (!transformedPlayer &&
+                startColorAt(leftX, newY) == 3 ||
+                startColorAt(rightX, newY) == 3) {
+                transformedPlayer = 1;
+            }
         }
         if (BUTTON_HELD(BUTTON_DOWN)) {
             startPlayer.isAnimating = 1;
@@ -181,6 +194,11 @@ void updateStartPlayer(int* hOff, int* vOff) {
                 startColorAt(leftX, newY + startPlayer.height - 1) != 0 &&
                 startColorAt(rightX, newY + startPlayer.height - 1) != 0) {
                 startPlayer.worldY = newY;
+            }
+            if (!transformedPlayer &&
+                startColorAt(leftX, newY + startPlayer.height - 1) == 3 ||
+                startColorAt(rightX, newY + startPlayer.height - 1) == 3) {
+                transformedPlayer = 1;
             }
         }
     } else {
@@ -197,6 +215,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
                 start2ColorAt(newX + startPlayer.width - 1, bottomY) == 2) {
                 next = 1;
             }
+
         }
         if (BUTTON_HELD(BUTTON_LEFT)) {
             startPlayer.isAnimating = 1;
@@ -281,6 +300,10 @@ void updateGuideSprite() {
         guideMoveDirection = -1;
         guideAnimIndex = 0;
     }
+    if (transformedPlayer) {
+        startPlayer.height = 11;
+        startPlayer.width = 6;
+    }
 }
 
 
@@ -290,20 +313,25 @@ void drawStartPlayer() {
     int screenY = startPlayer.worldY - vOff;
     shadowOAM[startPlayer.oamIndex].attr0 =
         ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
-    
-    if (startPlayer.direction == RIGHT) {
-        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
-    } else if (startPlayer.direction == LEFT) {
-        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
-        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
-    } else if (startPlayer.direction == UP) {
-        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesUp[startHikerFrame], 1);
-    } else if (startPlayer.direction == DOWN) {
-        shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-        shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesDown[startHikerFrame], 1);
-    }
+        if (transformedPlayer) {
+            shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_SMALL;
+            shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(10, 14); // Tile (10,14)
+        }
+         else {
+            if (startPlayer.direction == RIGHT) {
+                shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+                shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
+            } else if (startPlayer.direction == LEFT) {
+                shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
+                shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesHorizontal[startHikerFrame], 1);
+            } else if (startPlayer.direction == UP) {
+                shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+                shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesUp[startHikerFrame], 1);
+            } else if (startPlayer.direction == DOWN) {
+                shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+                shadowOAM[startPlayer.oamIndex].attr2 = ATTR2_TILEID(startHikerFramesDown[startHikerFrame], 1);
+            }
+        }
 }
 
 void drawGuideSprite() {

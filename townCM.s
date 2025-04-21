@@ -126903,6 +126903,7 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -126926,8 +126927,7 @@ townCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	1
 	.byte	0
 	.byte	0
 	.byte	0
@@ -127391,6 +127391,7 @@ townCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -127732,7 +127733,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -127903,6 +127903,7 @@ townCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -128244,7 +128245,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -128439,6 +128439,7 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -128463,7 +128464,6 @@ townCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -128951,6 +128951,7 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -128975,7 +128976,6 @@ townCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -129463,6 +129463,7 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -129487,7 +129488,6 @@ townCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -129975,6 +129975,7 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -130292,7 +130293,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -130335,6 +130335,7 @@ townCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -139703,24 +139704,14 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
 	.byte	0
 	.byte	0
 	.byte	0
@@ -140215,24 +140206,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
 	.byte	0
 	.byte	0
 	.byte	0
@@ -140243,6 +140216,14 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
 	.byte	0
 	.byte	0
 	.byte	0
@@ -140727,24 +140708,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
 	.byte	0
 	.byte	0
 	.byte	0
@@ -140765,6 +140728,14 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
 	.byte	0
 	.byte	0
 	.byte	0
@@ -141239,24 +141210,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
 	.byte	0
 	.byte	0
 	.byte	0
@@ -141287,6 +141240,14 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
 	.byte	0
 	.byte	0
 	.byte	0
@@ -141751,24 +141712,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
 	.byte	0
 	.byte	0
 	.byte	0
@@ -141809,6 +141752,14 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
 	.byte	0
 	.byte	0
 	.byte	0
@@ -142263,24 +142214,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
 	.byte	0
 	.byte	0
 	.byte	0
@@ -142331,6 +142264,14 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
 	.byte	0
 	.byte	0
 	.byte	0
@@ -142775,24 +142716,6 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
 	.byte	0
 	.byte	0
 	.byte	0
@@ -142853,6 +142776,14 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
 	.byte	0
 	.byte	0
 	.byte	0
@@ -143288,23 +143219,92 @@ townCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
