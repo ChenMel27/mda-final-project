@@ -215,8 +215,8 @@ void goToSplashScreen() {
     splashSelection = MENU_START;
 
     // make start red, instructions black
-    BG_PALETTE[12] = RED;
-    BG_PALETTE[13] = BLACK;
+    BG_PALETTE[14] = RED;
+    BG_PALETTE[15] = BLACK;
 
     state = SPLASH;
 }
@@ -231,11 +231,11 @@ void splashScreen() {
 
     // swap palette entries
     if (splashSelection == MENU_START) {
-        BG_PALETTE[12] = RED;
-        BG_PALETTE[13] = BLACK;
+        BG_PALETTE[14] = RED;
+        BG_PALETTE[15] = BLACK;
     } else {
-        BG_PALETTE[12] = BLACK;
-        BG_PALETTE[13] = RED;
+        BG_PALETTE[14] = BLACK;
+        BG_PALETTE[15] = RED;
     }
 
     // confirm choice

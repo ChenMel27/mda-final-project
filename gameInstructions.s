@@ -482,17 +482,17 @@ gameInstructionsMap:
 	.short	2
 	.short	257
 	.short	99
-	.short	135
-	.short	98
-	.short	106
+	.short	129
+	.short	137
+	.short	128
 	.short	257
 	.short	257
 	.short	4
 	.short	257
-	.short	105
 	.short	135
-	.short	108
 	.short	130
+	.short	225
+	.short	225
 	.short	257
 	.short	0
 	.short	0

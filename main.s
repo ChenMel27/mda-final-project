@@ -45,8 +45,8 @@ goToSplashScreen:
 	ldr	ip, .L4+28
 	ldr	r1, .L4+32
 	str	r3, [ip]
-	strh	r3, [r2, #26]	@ movhi
-	strh	r0, [r2, #24]	@ movhi
+	strh	r3, [r2, #30]	@ movhi
+	strh	r0, [r2, #28]	@ movhi
 	strb	r3, [r1]
 	pop	{r4, lr}
 	bx	lr
@@ -1951,8 +1951,8 @@ splashScreen:
 	mov	r2, #83886080
 	mov	ip, #31
 	mov	r0, #0
-	strh	ip, [r2, #24]	@ movhi
-	strh	r0, [r2, #26]	@ movhi
+	strh	ip, [r2, #28]	@ movhi
+	strh	r0, [r2, #30]	@ movhi
 .L231:
 	ldrh	r3, [r3]
 	tst	r3, #8
@@ -1981,8 +1981,8 @@ splashScreen:
 	mov	r2, #83886080
 	mov	ip, #0
 	mov	r0, #31
-	strh	ip, [r2, #24]	@ movhi
-	strh	r0, [r2, #26]	@ movhi
+	strh	ip, [r2, #28]	@ movhi
+	strh	r0, [r2, #30]	@ movhi
 	b	.L231
 .L233:
 	b	goToGameInstructions
