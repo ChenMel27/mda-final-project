@@ -7,7 +7,7 @@
 //	+ bitmap not compressed
 //	Total size: 262144 = 262144
 //
-//	Time-stamp: 2025-04-02, 06:24:28
+//	Time-stamp: 2025-04-21, 18:07:07
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.3
 //	( http://www.coranac.com/projects/#grit )
 //
@@ -17,7 +17,7 @@
 #define GRIT_TOWNCM_H
 
 #define townCMBitmapLen 262144
-extern unsigned char townCMBitmap[262144] __attribute__((section(".ewram")));
+extern const unsigned char townCMBitmap[262144];
 
 #endif // GRIT_TOWNCM_H
 

@@ -51,7 +51,8 @@ void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int c
 
 
 int next;
-
+int tileFlashTimer;
+int tileFlashState;
 void initStartPlayer();
 void initGuideSprite();
 void updateStartPlayer(int* hOff, int* vOff);
@@ -59,6 +60,8 @@ void updateGuideSprite();
 void drawStartPlayer();
 void drawGuideSprite();
 int checkPlayerGuideCollision();
+void fillTileWithColor(int tileId, u8 colorIndex);
+void flashColorInTile(int tileId, u8 targetIndex, u8 flashIndex, int flashOn, u16* originalTileData);
 # 2 "start.c" 2
 
 # 1 "mode0.h" 1
@@ -129,7 +132,7 @@ struct oam_attrs {
   struct attr0 attr0;
   struct attr1 attr1;
 };
-# 93 "sprites.h"
+# 94 "sprites.h"
 void hideSprites();
 
 
@@ -152,6 +155,9 @@ typedef struct {
 # 8 "start.c" 2
 
 
+int tileFlashTimer = 0;
+int tileFlashState = 0;
+u16 originalTiles[4][16];
 
 
 int guideFrameCounter = 0;
@@ -199,6 +205,39 @@ inline unsigned char startColorAt(int x, int y) {
 inline unsigned char start2ColorAt(int x, int y) {
     return townCM2Bitmap[((y) * (512) + (x))];
 }
+
+void flashColorInTile(int tileId, u8 targetIndex, u8 flashIndex, int flashOn, u16* originalTileData) {
+    volatile u16* tile = &((CB*) 0x6000000)[0].tileimg[tileId * 16];
+
+    for (int i = 0; i < 16; i++) {
+        u16 original = originalTileData[i];
+        u16 result = 0;
+
+        for (int j = 0; j < 4; j++) {
+            u8 pixel = (original >> (j * 4)) & 0xF;
+
+            if (pixel == targetIndex && flashOn) {
+                pixel = flashIndex;
+            }
+
+            result |= (pixel << (j * 4));
+        }
+
+        tile[i] = result;
+    }
+}
+
+
+
+void fillTileWithColor(int tileId, u8 colorIndex) {
+    u8 packed = (colorIndex << 4) | colorIndex;
+    u16 word = (packed << 8) | packed;
+    volatile u16* tile = &((CB*) 0x6000000)[0].tileimg[tileId * 16];
+    for (int i = 0; i < 16; i++) {
+        tile[i] = word;
+    }
+}
+
 
 
 void initStartPlayer() {

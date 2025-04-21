@@ -146,7 +146,7 @@ int talkedToGuide = 0;
 int begin = 0;
 int startPage = 0;
 int resumingFromPause = 0;
-
+u16 originalTiles[4][16];
 
 // ============================= [ ! MAIN GAME STATES ! ] ============================
 
@@ -284,6 +284,12 @@ void goToStart() {
         }
     }
 
+    int tileIds[4] = {84, 85, 116, 117};
+    for (int t = 0; t < 4; t++) {
+        for (int i = 0; i < 16; i++) {
+            originalTiles[t][i] = CHARBLOCK[0].tileimg[tileIds[t] * 16 + i];
+        }
+    }
 
 
     initStartPlayer();
@@ -336,7 +342,6 @@ void goToStartThree() {
     // initalize player to previous coordinates after pause
     startPlayer.worldX = savedStartX;
     startPlayer.worldY = savedStartY;
-
     hOff = 0;
     vOff = MAX_VOFF;
 
@@ -364,6 +369,20 @@ void start() {
         stopSounds();
         goToPhaseOne();
     }
+    // Flash tile ID 84 every ~15 frames
+    tileFlashTimer++;
+    if (tileFlashTimer > 15) {
+        tileFlashTimer = 0;
+        tileFlashState = !tileFlashState;
+
+        flashColorInTile(84, 3, 4, tileFlashState, originalTiles[0]);
+        flashColorInTile(85, 3, 4, tileFlashState, originalTiles[1]);
+        flashColorInTile(116, 3, 4, tileFlashState, originalTiles[2]);
+        flashColorInTile(117, 3, 4, tileFlashState, originalTiles[3]);
+    }
+
+
+
 
     if (BUTTON_PRESSED(BUTTON_START)) {
         // save player position before pausing

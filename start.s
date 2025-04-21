@@ -11,8 +11,73 @@
 	.file	"start.c"
 	.text
 	.align	2
-	.global	initStartPlayer
+	.global	flashColorInTile
 	.arch armv4t
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	flashColorInTile, %function
+flashColorInTile:
+	@ Function supports interworking.
+	@ args = 4, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, r7, r8, lr}
+	subs	r5, r3, #0
+	movne	r5, #1
+	ldr	r7, [sp, #24]
+	rsb	r8, r7, #100663296
+	sub	r6, r7, #2
+	add	r8, r8, r0, lsl #5
+	add	r7, r7, #30
+.L4:
+	mov	ip, #0
+	mov	r0, ip
+	ldrh	r4, [r6, #2]!
+.L3:
+	asr	r3, r4, ip
+	and	r3, r3, #15
+	cmp	r3, r1
+	movne	lr, #0
+	andeq	lr, r5, #1
+	cmp	lr, #0
+	movne	r3, r2
+	orr	r0, r0, r3, lsl ip
+	add	ip, ip, #4
+	lsl	r0, r0, #16
+	cmp	ip, #16
+	lsr	r0, r0, #16
+	bne	.L3
+	cmp	r7, r6
+	strh	r0, [r8, r6]	@ movhi
+	bne	.L4
+	pop	{r4, r5, r6, r7, r8, lr}
+	bx	lr
+	.size	flashColorInTile, .-flashColorInTile
+	.align	2
+	.global	fillTileWithColor
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	fillTileWithColor, %function
+fillTileWithColor:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	orr	r1, r1, r1, lsl #4
+	lsl	r3, r0, #5
+	and	r2, r1, #255
+	add	r3, r3, #100663296
+	orr	r2, r2, r2, lsl #8
+	add	r1, r3, #32
+.L11:
+	strh	r2, [r3], #2	@ movhi
+	cmp	r1, r3
+	bne	.L11
+	bx	lr
+	.size	fillTileWithColor, .-fillTileWithColor
+	.align	2
+	.global	initStartPlayer
 	.syntax unified
 	.arm
 	.fpu softvfp
@@ -29,7 +94,7 @@ initStartPlayer:
 	mov	r0, #1
 	mov	lr, #16
 	mov	r5, #165
-	ldr	ip, .L4
+	ldr	ip, .L16
 	str	r3, [ip, #16]
 	strb	r3, [ip, #56]
 	str	r3, [ip, #44]
@@ -39,11 +104,11 @@ initStartPlayer:
 	str	r2, [ip, #4]
 	str	r1, [ip, #48]
 	str	r0, [ip, #40]
-	ldr	r4, .L4+4
+	ldr	r4, .L16+4
 	mov	r3, #256
 	mov	r0, #3
-	ldr	r2, .L4+8
-	ldr	r1, .L4+12
+	ldr	r2, .L16+8
+	ldr	r1, .L16+12
 	str	r5, [ip, #20]
 	str	lr, [ip, #24]
 	str	lr, [ip, #28]
@@ -51,15 +116,15 @@ initStartPlayer:
 	bx	r4
 	mov	r3, #16384
 	mov	r0, #3
-	ldr	r2, .L4+16
-	ldr	r1, .L4+20
+	ldr	r2, .L16+16
+	ldr	r1, .L16+20
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L5:
+.L17:
 	.align	2
-.L4:
+.L16:
 	.word	startPlayer
 	.word	DMANow
 	.word	83886592
@@ -86,10 +151,10 @@ initGuideSprite:
 	mov	r4, #16
 	mov	lr, #416
 	mov	ip, #456
-	ldr	r3, .L8
+	ldr	r3, .L20
 	str	r0, [r3, #28]
 	strb	r1, [r3, #56]
-	ldr	r0, .L8+4
+	ldr	r0, .L20+4
 	str	r6, [r3, #16]
 	str	r5, [r3, #20]
 	str	r4, [r3, #24]
@@ -102,9 +167,9 @@ initGuideSprite:
 	str	ip, [r0, #4]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L9:
+.L21:
 	.align	2
-.L8:
+.L20:
 	.word	guide
 	.word	.LANCHOR0
 	.size	initGuideSprite, .-initGuideSprite
@@ -121,11 +186,11 @@ updateStartPlayer:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	mov	r10, #0
-	ldr	r4, .L115
-	ldr	r6, .L115+4
+	ldr	r4, .L127
+	ldr	r6, .L127+4
 	add	r2, r4, #20
 	ldm	r2, {r2, r5, lr}
-	ldr	r3, .L115+8
+	ldr	r3, .L127+8
 	ldr	ip, [r4, #16]
 	ldr	r6, [r6]
 	ldrh	r3, [r3]
@@ -140,51 +205,51 @@ updateStartPlayer:
 	str	r10, [r4, #40]
 	sub	r1, r9, #1
 	and	r0, r3, #16
-	beq	.L11
+	beq	.L23
 	cmp	r0, r10
-	beq	.L12
-.L104:
-	ldr	r8, .L115+12
-.L13:
+	beq	.L24
+.L116:
+	ldr	r8, .L127+12
+.L25:
 	tst	r3, #32
-	bne	.L21
+	bne	.L33
 	mov	r0, #1
 	ldr	r9, [r4, #16]
 	subs	r9, r9, #1
 	str	r0, [r4, #40]
 	str	r0, [r4, #36]
-	bmi	.L21
-	ldr	r0, .L115+16
+	bmi	.L33
+	ldr	r0, .L127+16
 	add	r10, r0, r2, lsl #9
 	ldrb	r10, [r10, r9]	@ zero_extendqisi2
 	cmp	r10, #0
-	beq	.L21
+	beq	.L33
 	add	r1, r0, r1, lsl #9
 	ldrb	r1, [r1, r9]	@ zero_extendqisi2
 	cmp	r1, #0
 	strne	r9, [r4, #16]
-.L21:
+.L33:
 	tst	r3, #64
-	bne	.L24
+	bne	.L36
 	mov	r0, #1
 	mov	r1, #2
 	subs	r2, r2, #1
 	str	r0, [r4, #40]
 	str	r1, [r4, #36]
-	bmi	.L24
-	ldr	r1, .L115+16
+	bmi	.L36
+	ldr	r1, .L127+16
 	add	r0, r1, ip
 	ldrb	r0, [r0, r2, lsl #9]	@ zero_extendqisi2
 	cmp	r0, #0
-	beq	.L24
+	beq	.L36
 	ldr	r0, [sp, #4]
 	add	r1, r1, r0
 	ldrb	r1, [r1, r2, lsl #9]	@ zero_extendqisi2
 	cmp	r1, #0
 	strne	r2, [r4, #20]
-.L24:
+.L36:
 	tst	r3, #128
-	bne	.L106
+	bne	.L118
 	mov	r1, #1
 	mov	r2, #3
 	ldr	r3, [r4, #20]
@@ -192,28 +257,28 @@ updateStartPlayer:
 	rsb	r1, lr, #512
 	cmp	r3, r1
 	str	r2, [r4, #36]
-	bge	.L30
-	ldr	r1, .L115+16
-.L111:
+	bge	.L42
+	ldr	r1, .L127+16
+.L123:
 	add	lr, lr, r3
 	add	ip, r1, ip
 	ldrb	r2, [ip, lr, lsl #9]	@ zero_extendqisi2
 	cmp	r2, #0
 	add	r2, r3, #1
-	beq	.L30
+	beq	.L42
 	ldr	r3, [sp, #4]
 	add	r1, r1, r3
 	ldrb	r3, [r1, lr, lsl #9]	@ zero_extendqisi2
 	cmp	r3, #0
-	beq	.L30
+	beq	.L42
 	ldr	r3, [r8, #12]
 	add	r3, r3, #1
 	str	r2, [r4, #20]
 	str	r3, [r8, #12]
-	b	.L29
-.L12:
+	b	.L41
+.L24:
 	mov	r10, #1
-	ldr	r9, .L115+16
+	ldr	r9, .L127+16
 	cmp	r8, #512
 	add	fp, r9, r2, lsl #9
 	add	r8, r5, ip
@@ -221,25 +286,25 @@ updateStartPlayer:
 	str	r10, [r4, #40]
 	ldrb	r0, [fp, r8]	@ zero_extendqisi2
 	add	fp, ip, r10
-	blt	.L112
-.L14:
+	blt	.L124
+.L26:
 	cmp	r0, #2
-	beq	.L18
+	beq	.L30
 	add	r9, r9, r1, lsl #9
 	ldrb	r10, [r9, r8]	@ zero_extendqisi2
-.L15:
+.L27:
 	cmp	r10, #2
-	bne	.L104
-.L18:
+	bne	.L116
+.L30:
 	mov	r0, #1
-	ldr	r8, .L115+12
+	ldr	r8, .L127+12
 	str	r0, [r8, #8]
-	b	.L13
-.L11:
+	b	.L25
+.L23:
 	cmp	r0, #0
-	bne	.L105
+	bne	.L117
 	mov	r10, #1
-	ldr	r9, .L115+20
+	ldr	r9, .L127+20
 	cmp	r8, #512
 	add	fp, r9, r2, lsl #9
 	add	r8, r5, ip
@@ -247,57 +312,57 @@ updateStartPlayer:
 	str	r10, [r4, #40]
 	ldrb	r0, [fp, r8]	@ zero_extendqisi2
 	add	fp, ip, r10
-	bge	.L33
+	bge	.L45
 	add	r10, r9, r1, lsl #9
 	cmp	r0, #0
 	ldrb	r10, [r10, r8]	@ zero_extendqisi2
-	beq	.L34
+	beq	.L46
 	cmp	r10, #0
-	bne	.L113
+	bne	.L125
 	cmp	r0, #2
-	beq	.L37
-.L105:
-	ldr	r8, .L115+12
-.L32:
+	beq	.L49
+.L117:
+	ldr	r8, .L127+12
+.L44:
 	tst	r3, #32
-	bne	.L40
+	bne	.L52
 	mov	r0, #1
 	ldr	r9, [r4, #16]
 	subs	r9, r9, #1
 	str	r0, [r4, #40]
 	str	r0, [r4, #36]
-	bmi	.L40
-	ldr	r0, .L115+20
+	bmi	.L52
+	ldr	r0, .L127+20
 	add	r10, r0, r2, lsl #9
 	ldrb	r10, [r10, r9]	@ zero_extendqisi2
 	cmp	r10, #0
-	beq	.L40
+	beq	.L52
 	add	r1, r0, r1, lsl #9
 	ldrb	r1, [r1, r9]	@ zero_extendqisi2
 	cmp	r1, #0
 	strne	r9, [r4, #16]
-.L40:
+.L52:
 	tst	r3, #64
-	bne	.L43
+	bne	.L55
 	mov	r0, #1
 	mov	r1, #2
 	subs	r2, r2, #1
 	str	r0, [r4, #40]
 	str	r1, [r4, #36]
-	bmi	.L43
-	ldr	r1, .L115+20
+	bmi	.L55
+	ldr	r1, .L127+20
 	add	r0, r1, ip
 	ldrb	r0, [r0, r2, lsl #9]	@ zero_extendqisi2
 	cmp	r0, #0
-	beq	.L43
+	beq	.L55
 	ldr	r0, [sp, #4]
 	add	r1, r1, r0
 	ldrb	r1, [r1, r2, lsl #9]	@ zero_extendqisi2
 	cmp	r1, #0
 	strne	r2, [r4, #20]
-.L43:
+.L55:
 	tst	r3, #128
-	bne	.L106
+	bne	.L118
 	mov	r1, #1
 	mov	r2, #3
 	ldr	r3, [r4, #20]
@@ -305,18 +370,18 @@ updateStartPlayer:
 	rsb	r1, lr, #512
 	cmp	r3, r1
 	str	r2, [r4, #36]
-	blt	.L114
-.L30:
+	blt	.L126
+.L42:
 	ldr	r3, [r8, #12]
 	add	r3, r3, #1
 	str	r3, [r8, #12]
-.L29:
-	ldr	r2, .L115+24
+.L41:
+	ldr	r2, .L127+24
 	ldr	r2, [r2]
 	cmp	r3, r2
-	ble	.L47
+	ble	.L59
 	ldr	r0, [r8, #16]
-	ldr	r3, .L115+28
+	ldr	r3, .L127+28
 	ldr	r1, [r4, #48]
 	add	r0, r0, #1
 	mov	lr, pc
@@ -324,7 +389,7 @@ updateStartPlayer:
 	mov	r3, #0
 	str	r1, [r8, #16]
 	str	r3, [r8, #12]
-.L47:
+.L59:
 	add	r5, r5, r5, lsr #31
 	ldr	r3, [r4, #16]
 	asr	r5, r5, #1
@@ -356,7 +421,7 @@ updateStartPlayer:
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L106:
+.L118:
 	ldr	r2, [r4, #40]
 	ldr	r3, [r8, #12]
 	cmp	r2, #0
@@ -364,42 +429,42 @@ updateStartPlayer:
 	str	r3, [r8, #12]
 	streq	r2, [r8, #16]
 	streq	r2, [r8, #12]
-	beq	.L47
-	b	.L29
-.L113:
+	beq	.L59
+	b	.L41
+.L125:
 	str	fp, [r4, #16]
-.L33:
+.L45:
 	cmp	r0, #2
-	beq	.L37
+	beq	.L49
 	add	r9, r9, r1, lsl #9
 	ldrb	r10, [r9, r8]	@ zero_extendqisi2
-.L34:
+.L46:
 	cmp	r10, #2
-	bne	.L105
-.L37:
+	bne	.L117
+.L49:
 	mov	r0, #1
-	ldr	r8, .L115+12
+	ldr	r8, .L127+12
 	str	r0, [r8, #8]
-	b	.L32
-.L112:
+	b	.L44
+.L124:
 	add	r10, r9, r1, lsl #9
 	cmp	r0, #0
 	ldrb	r10, [r10, r8]	@ zero_extendqisi2
-	beq	.L15
+	beq	.L27
 	cmp	r10, #0
-	beq	.L16
+	beq	.L28
 	str	fp, [r4, #16]
-	b	.L14
-.L114:
-	ldr	r1, .L115+20
-	b	.L111
-.L16:
+	b	.L26
+.L126:
+	ldr	r1, .L127+20
+	b	.L123
+.L28:
 	cmp	r0, #2
-	bne	.L104
-	b	.L18
-.L116:
+	bne	.L116
+	b	.L30
+.L128:
 	.align	2
-.L115:
+.L127:
 	.word	startPlayer
 	.word	talkedToGuide
 	.word	buttons
@@ -419,47 +484,47 @@ updateGuideSprite:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L126
-	ldr	r2, .L126+4
+	ldr	r3, .L138
+	ldr	r2, .L138+4
 	ldr	r1, [r3, #20]
 	ldr	r0, [r2, #4]
 	add	r1, r1, #1
 	cmp	r1, r0
 	push	{r4, lr}
 	str	r1, [r3, #20]
-	ble	.L118
+	ble	.L130
 	ldr	r0, [r2, #8]
 	ldr	r1, [r3, #24]
 	cmn	r0, #1
 	add	r1, r1, #1
-	beq	.L125
+	beq	.L137
 	rsbs	ip, r1, #0
 	and	ip, ip, #3
 	and	r0, r1, #3
 	rsbpl	r0, ip, #0
-.L120:
+.L132:
 	mov	r1, #0
 	str	r0, [r3, #24]
 	str	r1, [r3, #20]
-.L118:
+.L130:
 	ldr	r1, [r3, #28]
 	ldr	ip, [r2, #12]
 	add	r1, r1, #1
-	ldr	r0, .L126+8
+	ldr	r0, .L138+8
 	cmp	r1, ip
 	str	r1, [r3, #28]
 	ldr	r1, [r0, #16]
-	ble	.L121
+	ble	.L133
 	mov	ip, #0
 	ldr	lr, [r2, #16]
 	ldr	r4, [r2, #8]
 	mla	r1, r4, lr, r1
 	str	ip, [r3, #28]
 	str	r1, [r0, #16]
-.L121:
+.L133:
 	ldr	ip, [r3]
 	cmp	ip, r1
-	ble	.L122
+	ble	.L134
 	mov	lr, #1
 	mov	r1, #0
 	str	lr, [r2, #8]
@@ -467,7 +532,7 @@ updateGuideSprite:
 	str	r1, [r3, #24]
 	pop	{r4, lr}
 	bx	lr
-.L122:
+.L134:
 	ldr	ip, [r3, #4]
 	cmp	ip, r1
 	mvnlt	lr, #0
@@ -477,17 +542,17 @@ updateGuideSprite:
 	strlt	r1, [r3, #24]
 	pop	{r4, lr}
 	bx	lr
-.L125:
-	ldr	r0, .L126+12
+.L137:
+	ldr	r0, .L138+12
 	smull	lr, ip, r0, r1
 	asr	r0, r1, #31
 	rsb	r0, r0, ip, asr #1
 	add	r0, r0, r0, lsl #2
 	sub	r0, r1, r0
-	b	.L120
-.L127:
+	b	.L132
+.L139:
 	.align	2
-.L126:
+.L138:
 	.word	.LANCHOR0
 	.word	.LANCHOR1
 	.word	guide
@@ -504,17 +569,17 @@ drawStartPlayer:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, lr}
-	ldr	r2, .L136
-	ldr	r1, .L136+4
+	ldr	r2, .L148
+	ldr	r1, .L148+4
 	ldr	r3, [r2, #20]
 	ldr	r0, [r1]
-	ldr	r1, .L136+8
+	ldr	r1, .L148+8
 	ldrb	ip, [r2, #56]	@ zero_extendqisi2
 	ldr	r4, [r1]
 	sub	r3, r3, r0
 	ldr	r1, [r2, #36]
-	ldr	lr, .L136+12
-	ldr	r0, .L136+16
+	ldr	lr, .L148+12
+	ldr	r0, .L148+16
 	ldr	r2, [r2, #16]
 	and	r3, r3, #255
 	orr	r3, r3, lr
@@ -523,9 +588,9 @@ drawStartPlayer:
 	strh	r3, [r0, r5]	@ movhi
 	sub	r2, r2, r4
 	add	r0, r0, ip, lsl #3
-	bne	.L129
-	ldr	r3, .L136+20
-	ldr	r1, .L136+24
+	bne	.L141
+	ldr	r3, .L148+20
+	ldr	r1, .L148+24
 	ldr	r3, [r3, #16]
 	add	r1, r1, r3, lsl #2
 	ldr	r3, [r1, #20]
@@ -537,18 +602,18 @@ drawStartPlayer:
 	lsr	r3, r3, #22
 	strh	r2, [r0, #2]	@ movhi
 	strh	r3, [r0, #4]	@ movhi
-.L128:
+.L140:
 	pop	{r4, r5, lr}
 	bx	lr
-.L129:
+.L141:
 	cmp	r1, #1
-	beq	.L134
+	beq	.L146
 	cmp	r1, #2
-	beq	.L135
+	beq	.L147
 	cmp	r1, #3
-	bne	.L128
-	ldr	r1, .L136+20
-	ldr	r3, .L136+24
+	bne	.L140
+	ldr	r1, .L148+20
+	ldr	r3, .L148+24
 	ldr	r1, [r1, #16]
 	add	r3, r3, r1, lsl #2
 	ldr	r1, [r3, #60]
@@ -560,10 +625,10 @@ drawStartPlayer:
 	lsr	r2, r2, #22
 	strh	r3, [r0, #2]	@ movhi
 	strh	r2, [r0, #4]	@ movhi
-	b	.L128
-.L134:
-	ldr	r1, .L136+20
-	ldr	r3, .L136+24
+	b	.L140
+.L146:
+	ldr	r1, .L148+20
+	ldr	r3, .L148+24
 	ldr	r1, [r1, #16]
 	add	r3, r3, r1, lsl #2
 	ldr	r1, [r3, #20]
@@ -577,9 +642,9 @@ drawStartPlayer:
 	strh	r1, [r0, #4]	@ movhi
 	pop	{r4, r5, lr}
 	bx	lr
-.L135:
-	ldr	r1, .L136+20
-	ldr	r3, .L136+24
+.L147:
+	ldr	r1, .L148+20
+	ldr	r3, .L148+24
 	ldr	r1, [r1, #16]
 	add	r3, r3, r1, lsl #2
 	ldr	r1, [r3, #40]
@@ -593,9 +658,9 @@ drawStartPlayer:
 	strh	r1, [r0, #4]	@ movhi
 	pop	{r4, r5, lr}
 	bx	lr
-.L137:
+.L149:
 	.align	2
-.L136:
+.L148:
 	.word	startPlayer
 	.word	vOff
 	.word	hOff
@@ -615,12 +680,12 @@ drawGuideSprite:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r2, .L142
-	ldr	r1, .L142+4
-	ldr	lr, .L142+8
+	ldr	r2, .L154
+	ldr	r1, .L154+4
+	ldr	lr, .L154+8
 	ldr	r1, [r1]
 	ldr	r3, [r2, #20]
-	ldr	r4, .L142+12
+	ldr	r4, .L154+12
 	ldrb	ip, [r2, #56]	@ zero_extendqisi2
 	sub	r3, r3, r1
 	ldr	r1, [r2, #16]
@@ -638,10 +703,10 @@ drawGuideSprite:
 	mvn	r2, r2, lsl #17
 	mvn	r3, r3, lsr #17
 	mvn	r2, r2, lsr #17
-	ldr	r0, .L142+16
+	ldr	r0, .L154+16
 	lsl	ip, ip, #3
 	strh	r3, [r0, ip]	@ movhi
-	ldr	r3, .L142+20
+	ldr	r3, .L154+20
 	ldr	r3, [r3, #24]
 	addeq	lr, lr, r3, lsl #2
 	addne	lr, lr, r3, lsl #2
@@ -655,9 +720,9 @@ drawGuideSprite:
 	strh	r3, [r1, #4]	@ movhi
 	pop	{r4, lr}
 	bx	lr
-.L143:
+.L155:
 	.align	2
-.L142:
+.L154:
 	.word	guide
 	.word	vOff
 	.word	.LANCHOR1
@@ -676,29 +741,29 @@ checkPlayerGuideCollision:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L146
+	ldr	r3, .L158
 	add	r1, r3, #24
 	ldm	r1, {r1, ip}
 	ldr	r2, [r3, #20]
 	ldr	r3, [r3, #16]
 	sub	sp, sp, #16
-	ldr	r0, .L146+4
+	ldr	r0, .L158+4
 	str	ip, [sp, #12]
 	str	r1, [sp, #8]
 	str	r2, [sp, #4]
 	str	r3, [sp]
 	add	r0, r0, #16
 	ldm	r0, {r0, r1, r2, r3}
-	ldr	r4, .L146+8
+	ldr	r4, .L158+8
 	mov	lr, pc
 	bx	r4
 	add	sp, sp, #16
 	@ sp needed
 	pop	{r4, lr}
 	bx	lr
-.L147:
+.L159:
 	.align	2
-.L146:
+.L158:
 	.word	guide
 	.word	startPlayer
 	.word	collision
@@ -722,6 +787,9 @@ checkPlayerGuideCollision:
 	.global	guideAnimIndex
 	.global	guideFrameDelay
 	.global	guideFrameCounter
+	.comm	originalTiles,128,4
+	.global	tileFlashState
+	.global	tileFlashTimer
 	.global	next
 	.data
 	.align	2
@@ -819,5 +887,13 @@ guideAnimIndex:
 	.type	guideMoveCounter, %object
 	.size	guideMoveCounter, 4
 guideMoveCounter:
+	.space	4
+	.type	tileFlashState, %object
+	.size	tileFlashState, 4
+tileFlashState:
+	.space	4
+	.type	tileFlashTimer, %object
+	.size	tileFlashTimer, 4
+tileFlashTimer:
 	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

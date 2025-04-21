@@ -7,6 +7,9 @@
 #include "sprites.h"
 
 // Guide movement + animation vars
+int tileFlashTimer = 0;
+int tileFlashState = 0;
+u16 originalTiles[4][16];  // tile 84, 85, 116, 117
 
 // Timing for guide animation
 int guideFrameCounter = 0;
@@ -54,6 +57,39 @@ inline unsigned char startColorAt(int x, int y) {
 inline unsigned char start2ColorAt(int x, int y) {
     return townCM2Bitmap[OFFSET(x, y, 512)];
 }
+
+void flashColorInTile(int tileId, u8 targetIndex, u8 flashIndex, int flashOn, u16* originalTileData) {
+    volatile u16* tile = &CHARBLOCK[0].tileimg[tileId * 16];
+
+    for (int i = 0; i < 16; i++) {
+        u16 original = originalTileData[i];
+        u16 result = 0;
+
+        for (int j = 0; j < 4; j++) {
+            u8 pixel = (original >> (j * 4)) & 0xF;
+
+            if (pixel == targetIndex && flashOn) {
+                pixel = flashIndex;
+            }
+
+            result |= (pixel << (j * 4));
+        }
+
+        tile[i] = result;
+    }
+}
+
+
+
+void fillTileWithColor(int tileId, u8 colorIndex) {
+    u8 packed = (colorIndex << 4) | colorIndex;
+    u16 word = (packed << 8) | packed;
+    volatile u16* tile = &CHARBLOCK[0].tileimg[tileId * 16]; // 4bpp = 16 u16s per tile
+    for (int i = 0; i < 16; i++) {
+        tile[i] = word;
+    }
+}
+
 
 // Initialize
 void initStartPlayer() {

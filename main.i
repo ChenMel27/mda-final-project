@@ -227,7 +227,8 @@ int winPhaseThree;
 # 1 "start.h" 1
 # 9 "start.h"
 int next;
-
+int tileFlashTimer;
+int tileFlashState;
 void initStartPlayer();
 void initGuideSprite();
 void updateStartPlayer(int* hOff, int* vOff);
@@ -235,6 +236,8 @@ void updateGuideSprite();
 void drawStartPlayer();
 void drawGuideSprite();
 int checkPlayerGuideCollision();
+void fillTileWithColor(int tileId, u8 colorIndex);
+void flashColorInTile(int tileId, u8 targetIndex, u8 flashIndex, int flashOn, u16* originalTileData);
 # 39 "main.c" 2
 # 1 "splashScreen.h" 1
 # 21 "splashScreen.h"
@@ -252,7 +255,7 @@ extern unsigned char snowtilesPal[512];
 # 41 "main.c" 2
 # 1 "townCM.h" 1
 # 20 "townCM.h"
-extern unsigned char townCMBitmap[262144] __attribute__((section(".ewram")));
+extern const unsigned char townCMBitmap[262144];
 # 42 "main.c" 2
 # 1 "town.h" 1
 
@@ -604,7 +607,7 @@ int talkedToGuide = 0;
 int begin = 0;
 int startPage = 0;
 int resumingFromPause = 0;
-
+u16 originalTiles[4][16];
 
 
 
@@ -724,13 +727,28 @@ void goToStart() {
     DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
     DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
 
+
+
     for (int y = 0; y < 10; y++) {
         for (int x = 0; x < 10; x++) {
             int r = y + 27;
             int c = 57 + x;
+
+
             int blk = 18 + (r / 32) * 2 + (c / 32);
+
+
             volatile u16* m = ((SB*) 0x6000000)[blk].tilemap;
-            m[(r % 32) * 32 + (c % 32)] = (364) | (0 << 12);
+
+
+            m[(r % 32) * 32 + (c % 32)] = ((364) & 1023) | (((0) & 15) << 12);
+        }
+    }
+
+    int tileIds[4] = {84, 85, 116, 117};
+    for (int t = 0; t < 4; t++) {
+        for (int i = 0; i < 16; i++) {
+            originalTiles[t][i] = ((CB*) 0x6000000)[0].tileimg[tileIds[t] * 16 + i];
         }
     }
 
@@ -785,7 +803,6 @@ void goToStartThree() {
 
     startPlayer.worldX = savedStartX;
     startPlayer.worldY = savedStartY;
-
     hOff = 0;
     vOff = (256 - 160);
 
@@ -813,6 +830,20 @@ void start() {
         stopSounds();
         goToPhaseOne();
     }
+
+    tileFlashTimer++;
+    if (tileFlashTimer > 15) {
+        tileFlashTimer = 0;
+        tileFlashState = !tileFlashState;
+
+        flashColorInTile(84, 3, 4, tileFlashState, originalTiles[0]);
+        flashColorInTile(85, 3, 4, tileFlashState, originalTiles[1]);
+        flashColorInTile(116, 3, 4, tileFlashState, originalTiles[2]);
+        flashColorInTile(117, 3, 4, tileFlashState, originalTiles[3]);
+    }
+
+
+
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
 
