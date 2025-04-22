@@ -380,3 +380,4 @@ int checkPlayerGuideCollision() {
         guide.worldX, guide.worldY, guide.width, guide.height
     );
 }
+

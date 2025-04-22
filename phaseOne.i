@@ -224,6 +224,13 @@ void updatePlayer(int* hOff, int* vOff) {
         return;
     }
 
+    static int colorCycleTimer = 0;
+    if (cheatOn && (++colorCycleTimer % 4 == 0)) {
+        cyclePaletteColors();
+    }
+
+
+
 
     player.isAnimating = 0;
 
@@ -534,4 +541,15 @@ void resetPlayerAfterFall(void) {
 
 inline unsigned char colorAt(int x, int y) {
     return ((unsigned char*) bgOneFrontCMBitmap)[((y) * (512) + (x))];
+}
+
+void cyclePaletteColors() {
+
+
+        int r = (rand() & 31);
+        int g = (rand() >> 2) & 31;
+        int b = (rand() >> 4) & 31;
+
+        ((u16 *)0x5000200)[3] = (b << 10) | (g << 5) | r;
+
 }

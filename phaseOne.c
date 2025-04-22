@@ -79,6 +79,13 @@ void updatePlayer(int* hOff, int* vOff) {
         return;
     }
 
+    static int colorCycleTimer = 0;
+    if (cheatOn && (++colorCycleTimer % 4 == 0)) {
+        cyclePaletteColors();
+    }
+
+    
+
     // reset animation
     player.isAnimating = 0;
 
@@ -389,4 +396,11 @@ void resetPlayerAfterFall(void) {
 // Get color at function for phase one
 inline unsigned char colorAt(int x, int y) {
     return ((unsigned char*) bgOneFrontCMBitmap)[OFFSET(x, y, MAPWIDTH1)];
+}
+
+void cyclePaletteColors() {
+    int r = (rand() & 31);         // 0–31
+    int g = (rand() >> 2) & 31;    // 0–31
+    int b = (rand() >> 4) & 31;    // 0–31
+    SPRITE_PAL[3] = (b << 10) | (g << 5) | r;
 }
