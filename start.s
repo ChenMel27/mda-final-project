@@ -626,12 +626,16 @@ updateGuideSprite:
 .L164:
 	ldr	r3, [r3, #12]
 	cmp	r3, #0
-	movne	r1, #11
-	movne	r2, #6
-	ldrne	r3, .L171+12
+	beq	.L158
+	mov	r0, #11
+	mov	r1, #6
+	mov	r2, #3
+	ldr	r3, .L171+12
+	str	r0, [r3, #28]
+	str	r1, [r3, #24]
+	str	r2, [r3, #48]
+.L158:
 	pop	{r4, lr}
-	strne	r1, [r3, #28]
-	strne	r2, [r3, #24]
 	bx	lr
 .L163:
 	ldr	ip, [r3, #4]
@@ -670,105 +674,153 @@ drawStartPlayer:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, lr}
-	ldr	r2, .L183
-	ldr	lr, .L183+4
+	ldr	r2, .L188
+	ldr	r4, .L188+4
 	ldr	r2, [r2]
-	ldr	r3, [lr, #20]
-	ldrb	r1, [lr, #56]	@ zero_extendqisi2
+	ldr	r3, [r4, #20]
+	ldrb	r1, [r4, #56]	@ zero_extendqisi2
 	sub	r3, r3, r2
-	ldr	ip, .L183+8
-	ldr	r2, .L183+12
-	ldr	r4, .L183+16
+	ldr	lr, .L188+8
+	ldr	r2, .L188+12
+	ldr	r5, .L188+16
 	and	r3, r3, #255
-	orr	r3, r3, ip
-	lsl	r5, r1, #3
-	strh	r3, [r2, r5]	@ movhi
-	ldr	r0, .L183+20
-	ldr	r3, [r4, #12]
+	orr	r3, r3, lr
+	lsl	ip, r1, #3
+	ldr	r0, .L188+20
+	strh	r3, [r2, ip]	@ movhi
+	ldr	r3, [r5, #12]
 	ldr	r0, [r0]
+	ldr	ip, [r4, #16]
 	cmp	r3, #0
-	ldr	r3, [lr, #16]
 	add	r2, r2, r1, lsl #3
-	sub	r3, r3, r0
+	ldr	r3, [r4, #36]
+	sub	ip, ip, r0
 	beq	.L174
-	lsl	r3, r3, #23
-	ldr	r1, .L183+24
-	lsr	r3, r3, #23
-	orr	r3, r3, #16384
-	strh	r3, [r2, #2]	@ movhi
-	strh	r1, [r2, #4]	@ movhi
+	cmp	r3, #0
+	bne	.L175
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r0, [r3, #20]
+	lsl	ip, ip, #23
+	add	r0, r0, #448
+	lsr	ip, ip, #23
+	lsl	r0, r0, #22
+	orr	ip, ip, #16384
+	lsr	r0, r0, #22
+	strh	ip, [r2, #2]	@ movhi
+	strh	r0, [r2, #4]	@ movhi
 .L173:
 	pop	{r4, r5, lr}
 	bx	lr
+.L175:
+	cmp	r3, #1
+	beq	.L184
+	cmp	r3, #2
+	beq	.L185
+	cmp	r3, #3
+	bne	.L173
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r1, [r3, #44]
+	b	.L183
 .L174:
-	ldr	r1, [lr, #36]
-	cmp	r1, #0
-	bne	.L176
-	ldr	r0, [r4, #20]
-	ldr	r1, .L183+28
-	add	r1, r1, r0, lsl #2
-	ldr	r0, [r1, #20]
-	lsl	r3, r3, #23
+	cmp	r3, #0
+	bne	.L179
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r0, [r3, #56]
+	lsl	ip, ip, #23
 	add	r0, r0, #32
-	lsr	r3, r3, #23
+	lsr	ip, ip, #23
 	lsl	r0, r0, #22
-	orr	r3, r3, ip
+	orr	ip, ip, lr
 	lsr	r0, r0, #22
-	strh	r3, [r2, #2]	@ movhi
+	strh	ip, [r2, #2]	@ movhi
 	strh	r0, [r2, #4]	@ movhi
 	pop	{r4, r5, lr}
 	bx	lr
-.L176:
-	cmp	r1, #1
-	beq	.L181
-	cmp	r1, #2
-	beq	.L182
-	cmp	r1, #3
+.L179:
+	cmp	r3, #1
+	beq	.L186
+	cmp	r3, #2
+	beq	.L187
+	cmp	r3, #3
 	bne	.L173
-	ldr	r0, [r4, #20]
-	ldr	r1, .L183+28
-	add	r1, r1, r0, lsl #2
-	ldr	r1, [r1, #60]
-	b	.L180
-.L181:
-	ldr	r0, [r4, #20]
-	ldr	r1, .L183+28
-	add	r1, r1, r0, lsl #2
-	ldr	r1, [r1, #20]
-	lsl	r3, r3, #23
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r1, [r3, #96]
+	lsl	r3, ip, #23
 	add	r1, r1, #32
 	lsr	r3, r3, #23
 	lsl	r1, r1, #22
-	orr	r3, r3, #36864
+	orr	r3, r3, lr
 	lsr	r1, r1, #22
 	strh	r3, [r2, #2]	@ movhi
 	strh	r1, [r2, #4]	@ movhi
 	b	.L173
-.L182:
-	ldr	r0, [r4, #20]
-	ldr	r1, .L183+28
-	add	r1, r1, r0, lsl #2
-	ldr	r1, [r1, #40]
-.L180:
-	lsl	r3, r3, #23
+.L186:
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r1, [r3, #56]
+	lsl	ip, ip, #23
 	add	r1, r1, #32
-	lsr	r3, r3, #23
+	lsr	ip, ip, #23
 	lsl	r1, r1, #22
-	orr	r3, r3, ip
+	orr	ip, ip, #36864
 	lsr	r1, r1, #22
-	strh	r3, [r2, #2]	@ movhi
+	strh	ip, [r2, #2]	@ movhi
 	strh	r1, [r2, #4]	@ movhi
 	b	.L173
 .L184:
-	.align	2
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r1, [r3, #20]
 .L183:
+	lsl	ip, ip, #23
+	add	r1, r1, #448
+	lsr	ip, ip, #23
+	lsl	r1, r1, #22
+	orr	ip, ip, #16384
+	lsr	r1, r1, #22
+	strh	ip, [r2, #2]	@ movhi
+	strh	r1, [r2, #4]	@ movhi
+	pop	{r4, r5, lr}
+	bx	lr
+.L185:
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r1, [r3, #32]
+	b	.L183
+.L187:
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r1, [r3, #76]
+	lsl	ip, ip, #23
+	add	r1, r1, #32
+	lsr	ip, ip, #23
+	lsl	r1, r1, #22
+	orr	ip, ip, lr
+	lsr	r1, r1, #22
+	strh	ip, [r2, #2]	@ movhi
+	strh	r1, [r2, #4]	@ movhi
+	b	.L173
+.L189:
+	.align	2
+.L188:
 	.word	vOff
 	.word	startPlayer
 	.word	-32768
 	.word	shadowOAM
 	.word	.LANCHOR0
 	.word	hOff
-	.word	458
 	.word	.LANCHOR1
 	.size	drawStartPlayer, .-drawStartPlayer
 	.align	2
@@ -782,12 +834,12 @@ drawGuideSprite:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r2, .L189
-	ldr	r1, .L189+4
-	ldr	lr, .L189+8
+	ldr	r2, .L194
+	ldr	r1, .L194+4
+	ldr	lr, .L194+8
 	ldr	r1, [r1]
 	ldr	r3, [r2, #20]
-	ldr	r4, .L189+12
+	ldr	r4, .L194+12
 	ldrb	ip, [r2, #56]	@ zero_extendqisi2
 	sub	r3, r3, r1
 	ldr	r1, [r2, #16]
@@ -805,15 +857,15 @@ drawGuideSprite:
 	mvn	r2, r2, lsl #17
 	mvn	r3, r3, lsr #17
 	mvn	r2, r2, lsr #17
-	ldr	r0, .L189+16
+	ldr	r0, .L194+16
 	lsl	ip, ip, #3
 	strh	r3, [r0, ip]	@ movhi
-	ldr	r3, .L189+20
+	ldr	r3, .L194+20
 	ldr	r3, [r3, #28]
 	addeq	lr, lr, r3, lsl #2
 	addne	lr, lr, r3, lsl #2
-	ldreq	r3, [lr, #80]
-	ldrne	r3, [lr, #100]
+	ldreq	r3, [lr, #116]
+	ldrne	r3, [lr, #136]
 	add	r3, r3, #288
 	lsl	r3, r3, #22
 	add	r1, r0, ip
@@ -822,9 +874,9 @@ drawGuideSprite:
 	strh	r3, [r1, #4]	@ movhi
 	pop	{r4, lr}
 	bx	lr
-.L190:
+.L195:
 	.align	2
-.L189:
+.L194:
 	.word	guide
 	.word	vOff
 	.word	.LANCHOR1
@@ -843,45 +895,49 @@ checkPlayerGuideCollision:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
-	ldr	r3, .L193
+	ldr	r3, .L198
 	add	r1, r3, #24
 	ldm	r1, {r1, ip}
 	ldr	r2, [r3, #20]
 	ldr	r3, [r3, #16]
 	sub	sp, sp, #16
-	ldr	r0, .L193+4
+	ldr	r0, .L198+4
 	str	ip, [sp, #12]
 	str	r1, [sp, #8]
 	str	r2, [sp, #4]
 	str	r3, [sp]
 	add	r0, r0, #16
 	ldm	r0, {r0, r1, r2, r3}
-	ldr	r4, .L193+8
+	ldr	r4, .L198+8
 	mov	lr, pc
 	bx	r4
 	add	sp, sp, #16
 	@ sp needed
 	pop	{r4, lr}
 	bx	lr
-.L194:
+.L199:
 	.align	2
-.L193:
+.L198:
 	.word	guide
 	.word	startPlayer
 	.word	collision
 	.size	checkPlayerGuideCollision, .-checkPlayerGuideCollision
 	.comm	guide,60,4
 	.comm	startPlayer,60,4
+	.global	startHikerFramesDownCheat
+	.global	startHikerFramesUpCheat
+	.global	startHikerFramesHorizontalCheat
 	.global	startHikerFramesDown
 	.global	startHikerFramesUp
 	.global	startHikerFramesHorizontal
 	.global	startHikerFrame
 	.global	startHikerFrameCounter
 	.global	startHikerFrameDelay
+	.global	guideRightFramesCHEAT
+	.global	guideLeftFramesCHEAT
 	.global	guideRightFrames
 	.global	guideLeftFrames
 	.global	guideMoveDirection
-	.global	transformedPlayer
 	.global	guideMoveDelay
 	.global	guideMoveCounter
 	.global	guidePatrolRightBound
@@ -893,6 +949,7 @@ checkPlayerGuideCollision:
 	.comm	originalTiles,128,4
 	.global	tileFlashState
 	.global	tileFlashTimer
+	.global	cheatOn
 	.global	next
 	.data
 	.align	2
@@ -917,6 +974,24 @@ guideMoveDelay:
 	.size	guideSpeed, 4
 guideSpeed:
 	.word	1
+	.type	startHikerFramesHorizontalCheat, %object
+	.size	startHikerFramesHorizontalCheat, 12
+startHikerFramesHorizontalCheat:
+	.word	13
+	.word	14
+	.word	15
+	.type	startHikerFramesUpCheat, %object
+	.size	startHikerFramesUpCheat, 12
+startHikerFramesUpCheat:
+	.word	16
+	.word	17
+	.word	18
+	.type	startHikerFramesDownCheat, %object
+	.size	startHikerFramesDownCheat, 12
+startHikerFramesDownCheat:
+	.word	10
+	.word	11
+	.word	12
 	.type	startHikerFramesHorizontal, %object
 	.size	startHikerFramesHorizontal, 20
 startHikerFramesHorizontal:
@@ -956,6 +1031,20 @@ guideRightFrames:
 	.word	14
 	.word	16
 	.word	18
+	.type	guideRightFramesCHEAT, %object
+	.size	guideRightFramesCHEAT, 12
+guideRightFramesCHEAT:
+	.word	13
+	.word	14
+	.word	15
+	.type	guideLeftFramesCHEAT, %object
+	.size	guideLeftFramesCHEAT, 20
+guideLeftFramesCHEAT:
+	.word	18
+	.word	16
+	.word	14
+	.word	12
+	.word	10
 	.bss
 	.align	2
 	.set	.LANCHOR0,. + 0
@@ -971,9 +1060,9 @@ guidePatrolRightBound:
 	.size	next, 4
 next:
 	.space	4
-	.type	transformedPlayer, %object
-	.size	transformedPlayer, 4
-transformedPlayer:
+	.type	cheatOn, %object
+	.size	cheatOn, 4
+cheatOn:
 	.space	4
 	.type	startHikerFrameCounter, %object
 	.size	startHikerFrameCounter, 4

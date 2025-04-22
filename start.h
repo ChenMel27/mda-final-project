@@ -7,6 +7,7 @@
 #define STARTMAPHEIGHT 512
 
 int next;
+int cheatOn;
 int tileFlashTimer;
 int tileFlashState;
 void initStartPlayer();

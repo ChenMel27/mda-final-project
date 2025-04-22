@@ -16,6 +16,7 @@
 int fallingX;
 int fallingY;
 const int fallSpeed = 3;
+extern int cheatOn;
 
 // global var
 int hikerFrameDelay = 4;
