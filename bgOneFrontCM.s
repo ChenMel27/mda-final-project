@@ -77799,7 +77799,7 @@ bgOneFrontCMBitmap:
 	.byte	8
 	.byte	8
 	.byte	8
-	.byte	6
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -78307,11 +78307,11 @@ bgOneFrontCMBitmap:
 	.byte	8
 	.byte	8
 	.byte	8
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -78817,13 +78817,13 @@ bgOneFrontCMBitmap:
 	.byte	8
 	.byte	8
 	.byte	8
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -79328,14 +79328,14 @@ bgOneFrontCMBitmap:
 	.byte	8
 	.byte	8
 	.byte	8
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -79838,16 +79838,16 @@ bgOneFrontCMBitmap:
 	.byte	8
 	.byte	8
 	.byte	8
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -80347,19 +80347,19 @@ bgOneFrontCMBitmap:
 	.byte	8
 	.byte	8
 	.byte	8
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -80858,20 +80858,20 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	8
 	.byte	8
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -81368,22 +81368,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -81880,22 +81880,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -82392,22 +82392,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -82904,22 +82904,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -83416,22 +83416,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -83928,22 +83928,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -84440,22 +84440,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -84952,22 +84952,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -85464,22 +85464,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -85976,22 +85976,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -86253,9 +86253,10 @@ bgOneFrontCMBitmap:
 	.byte	7
 	.byte	7
 	.byte	7
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -86287,7 +86288,6 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -86488,22 +86488,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -86763,11 +86763,12 @@ bgOneFrontCMBitmap:
 	.byte	7
 	.byte	7
 	.byte	7
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -86799,7 +86800,6 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -87000,22 +87000,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -87273,13 +87273,14 @@ bgOneFrontCMBitmap:
 	.byte	7
 	.byte	7
 	.byte	7
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -87311,7 +87312,6 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -87512,22 +87512,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -87784,14 +87784,15 @@ bgOneFrontCMBitmap:
 	.byte	7
 	.byte	7
 	.byte	7
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -87823,7 +87824,6 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -88024,22 +88024,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -88294,16 +88294,17 @@ bgOneFrontCMBitmap:
 	.byte	7
 	.byte	7
 	.byte	7
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -88335,7 +88336,6 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -88536,22 +88536,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -88802,20 +88802,20 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	7
 	.byte	7
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -89048,22 +89048,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -89313,21 +89313,21 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	7
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -89560,22 +89560,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -89824,22 +89824,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -90072,22 +90072,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -90336,22 +90336,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -90584,22 +90584,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -90848,22 +90848,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -91096,22 +91096,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -91360,22 +91360,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -91608,22 +91608,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -91872,22 +91872,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -92120,22 +92120,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -92384,22 +92384,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -92632,22 +92632,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -92896,22 +92896,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -93144,22 +93144,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -93408,22 +93408,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -93656,22 +93656,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -93920,22 +93920,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -94168,22 +94168,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -94432,22 +94432,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -94680,22 +94680,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -94944,22 +94944,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -95192,22 +95192,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -95456,22 +95456,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -95704,22 +95704,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -95968,22 +95968,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -96216,22 +96216,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -96480,22 +96480,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -96728,22 +96728,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -96992,22 +96992,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -97240,22 +97240,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -97504,22 +97504,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -97752,22 +97752,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -98016,22 +98016,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -98264,22 +98264,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -98528,22 +98528,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -98776,22 +98776,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -99040,22 +99040,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -99288,22 +99288,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -99552,22 +99552,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -99800,22 +99800,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -100064,22 +100064,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -100312,22 +100312,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -100576,22 +100576,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -100824,22 +100824,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -101088,22 +101088,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -101336,22 +101336,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -101600,22 +101600,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -101848,22 +101848,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -102112,22 +102112,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -102360,22 +102360,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -102624,22 +102624,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -102872,22 +102872,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -103136,22 +103136,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -103384,22 +103384,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -103648,22 +103648,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -103896,22 +103896,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -104160,22 +104160,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -104408,22 +104408,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -104672,22 +104672,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -104920,22 +104920,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -105184,22 +105184,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -105432,22 +105432,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -105696,22 +105696,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -105944,22 +105944,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -106208,22 +106208,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -106456,22 +106456,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -106720,22 +106720,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -106968,22 +106968,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -107232,22 +107232,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -107480,22 +107480,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -107744,22 +107744,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -107992,22 +107992,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -108256,22 +108256,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -108504,22 +108504,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -108768,22 +108768,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -109016,22 +109016,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -109280,22 +109280,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -109528,22 +109528,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -109792,22 +109792,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -110040,22 +110040,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -110304,22 +110304,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -110552,22 +110552,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -110816,22 +110816,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -111064,22 +111064,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -111328,22 +111328,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -111576,22 +111576,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -111840,22 +111840,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -112088,22 +112088,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -112352,22 +112352,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -112600,22 +112600,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -112864,22 +112864,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -113112,22 +113112,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -113376,22 +113376,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -113624,22 +113624,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -113888,22 +113888,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -114136,22 +114136,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -114400,22 +114400,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -114648,22 +114648,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -114912,22 +114912,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -115160,22 +115160,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -115424,22 +115424,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -115672,22 +115672,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -115936,22 +115936,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -116184,22 +116184,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -116448,22 +116448,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -116696,22 +116696,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -116960,22 +116960,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -117208,22 +117208,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -117472,22 +117472,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -117720,22 +117720,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -117984,22 +117984,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -118232,22 +118232,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -118496,22 +118496,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -118744,22 +118744,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -119008,22 +119008,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -119256,22 +119256,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -119520,22 +119520,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -119768,22 +119768,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -120032,22 +120032,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -120280,22 +120280,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -120544,22 +120544,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -120792,22 +120792,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -121056,22 +121056,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -121304,22 +121304,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -121568,22 +121568,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -121816,22 +121816,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -122080,22 +122080,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -122328,22 +122328,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -122592,22 +122592,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -122840,22 +122840,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -123104,22 +123104,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -123352,22 +123352,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -123616,22 +123616,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -123864,22 +123864,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -124128,22 +124128,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -124376,22 +124376,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -124640,22 +124640,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -124888,22 +124888,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -125152,22 +125152,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -125400,22 +125400,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -125664,22 +125664,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -125912,22 +125912,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -126176,22 +126176,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -126424,22 +126424,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -126608,7 +126608,6 @@ bgOneFrontCMBitmap:
 	.byte	6
 	.byte	6
 	.byte	6
-	.byte	4
 	.byte	4
 	.byte	4
 	.byte	4
@@ -126688,23 +126687,23 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
 	.byte	4
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -126936,23 +126935,23 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
 	.byte	4
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -127104,6 +127103,7 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
+	.byte	4
 	.byte	6
 	.byte	6
 	.byte	6
@@ -127200,22 +127200,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -127448,22 +127448,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -127712,22 +127712,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -127960,22 +127960,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -128224,22 +128224,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -128472,22 +128472,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -128736,22 +128736,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -128984,22 +128984,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -129248,22 +129248,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -129496,22 +129496,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -129760,22 +129760,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -130008,22 +130008,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -130272,22 +130272,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -130520,22 +130520,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4
@@ -130784,22 +130784,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
+	.byte	7
 	.byte	4
 	.byte	4
 	.byte	4
@@ -131032,22 +131032,22 @@ bgOneFrontCMBitmap:
 	.byte	4
 	.byte	4
 	.byte	4
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
-	.byte	6
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
+	.byte	8
 	.byte	4
 	.byte	4
 	.byte	4

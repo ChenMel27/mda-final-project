@@ -17,12 +17,14 @@ int fallingX;
 int fallingY;
 const int fallSpeed = 3;
 extern int cheatOn;
+int playerSubPixelX = 0;
 
 // global var
 int hikerFrameDelay = 4;
 int hikerFrameCounter = 0;
 int hikerFrame = 0;
 int hikerFrames[] = {24, 26, 28, 20, 22};
+int hikerFramesCheat[] = {13, 14, 15};
 extern int hOff, vOff;
 int isDucking = 0;
 int gameOver = 0;
@@ -62,7 +64,8 @@ void initPlayer() {
     player.isAnimating = 1;
     player.direction = 0;
     player.active = 1;
-    player.xVel = 1;
+    player.xVel = cheatOn ? (12) : (8);
+    playerSubPixelX = PLAYER1_START_X << 3;
     player.yVel = 0;
     DMANow(3, (void*) playerPal, SPRITE_PAL, playerPalLen / 2);
     DMANow(3, (void*) playerTiles, &CHARBLOCK[4], playerTilesLen / 2);
@@ -82,20 +85,31 @@ void updatePlayer(int* hOff, int* vOff) {
     // ducking check
     isDucking = BUTTON_HELD(BUTTON_DOWN);
 
+    if (cheatOn) {
+        player.height = 16;
+        player.width = 6;
+        player.numFrames = 3;
+    }
+    
     // Horizontal
     int leftX = player.worldX;
     int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
 
+    // Use fixed-point velocity: 1.5x speed if cheatOn (12) else normal (8)
+    int xVel = cheatOn ? 12 : 8;
+
     if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
         player.direction = 1;
         player.isAnimating = 1;
-        // iterate 3 up (left 1) for mountains + smooth movement
+
+        playerSubPixelX -= xVel;
+        player.worldX = playerSubPixelX >> 3;
+
         for (int step = 0; step <= 3; step++) {
-            if ((colorAt(leftX - player.xVel, topY - step) != 0x04) &&
-                (colorAt(leftX - player.xVel, bottomY - step) != 0x04)) {
-                player.worldX -= player.xVel;
+            if ((colorAt(player.worldX, topY - step) != 0x04) &&
+                (colorAt(player.worldX, bottomY - step) != 0x04)) {
                 player.worldY -= (step > 0 ? step - 1 : 0);
                 movedHorizontally = 1;
                 break;
@@ -106,17 +120,21 @@ void updatePlayer(int* hOff, int* vOff) {
     if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH1 - player.width) {
         player.direction = 0;
         player.isAnimating = 1;
-        // iterate 3 up (right 1) for mountains + smooth movement
+
+        playerSubPixelX += xVel;
+        player.worldX = playerSubPixelX >> 3;
+
         for (int step = 0; step <= 3; step++) {
-            if ((colorAt(rightX + player.xVel, topY - step) != 0x04) &&
-                (colorAt(rightX + player.xVel, bottomY - step) != 0x04)) {
-                player.worldX += player.xVel;
+            if ((colorAt(player.worldX + player.width - 1, topY - step) != 0x04) &&
+                (colorAt(player.worldX + player.width - 1, bottomY - step) != 0x04)) {
                 player.worldY -= step;
                 movedHorizontally = 1;
                 break;
             }
         }
     }
+
+    
 
     // Gravity + vertical movement for jumping
     int grounded = 0;
@@ -188,7 +206,6 @@ void updatePlayer(int* hOff, int* vOff) {
     }
 }
 
-
 // Draw
 void drawPlayer() {
     // If falling, draw the falling sprite (ie skip collision checking)
@@ -205,24 +222,26 @@ void drawPlayer() {
     
     // Check collision with rock
     if (colorAt(leftX, topY) == 0x05 ||
-        colorAt(rightX, topY) == 0x05 ||
-        colorAt(leftX, bottomY) == 0x05 ||
-        colorAt(rightX, bottomY) == 0x05) {
-        
-        if (health.active > 0) {
-            health.active--;
-            if (health.active == 0) {
-                gameOver = 1;
-            }
-        }
+    colorAt(rightX, topY) == 0x05 ||
+    colorAt(leftX, bottomY) == 0x05 ||
+    colorAt(rightX, bottomY) == 0x05) {
 
-        player.worldX = PLAYER1_START_X;
-        player.worldY = PLAYER1_START_Y;
-        player.yVel = 0;
-        hOff = 0;
-        vOff = 0;
-        return;
+    if (health.active > 0) {
+        health.active--;
+        if (health.active == 0) {
+            gameOver = 1;
+        }
     }
+
+    player.worldX = PLAYER1_START_X;
+    player.worldY = PLAYER1_START_Y;
+    playerSubPixelX = PLAYER1_START_X << 3; // ✅ FIX
+    player.yVel = 0;
+    hOff = 0;
+    vOff = 0;
+    return;
+}
+
     
     // Check collision with left crevasse
     if (colorAt(leftX, topY) == 0x06 ||
@@ -236,7 +255,11 @@ void drawPlayer() {
                 gameOver = 1;
             }
             // Start at left crevasse coordinate
-            startFallingAnimation(110, 332);
+            if (cheatOn) {
+                startFallingAnimation(114, 332);
+            } else {
+                startFallingAnimation(110, 332);
+            }
         }
         return;
     }
@@ -253,7 +276,11 @@ void drawPlayer() {
                 gameOver = 1;
             }
             // Start at middle crevasse coordinate
-            startFallingAnimation(125, 332);
+            if (cheatOn) {
+                startFallingAnimation(129, 332);
+            } else {
+                startFallingAnimation(125, 332);
+            }
         }
         return;
     }
@@ -270,7 +297,11 @@ void drawPlayer() {
                 gameOver = 1;
             }
             // Start at right crevasse coordinate
-            startFallingAnimation(183, 332);
+            if (cheatOn) {
+                startFallingAnimation(187, 332);
+            } else {
+                startFallingAnimation(183, 332);
+            }
         }
         return;
     }
@@ -279,18 +310,28 @@ void drawPlayer() {
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
     
-    shadowOAM[player.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
-    if (player.direction == 0) {
-        shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+    if (cheatOn) {
+        shadowOAM[player.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
+        if (player.direction == 0) {
+            shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_SMALL;
+        } else {
+            shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_SMALL | ATTR1_HFLIP;
+        }
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFramesCheat[hikerFrame], 14);
     } else {
-        shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
-    }
-    
-    // If ducking, then change tile
-    if (isDucking) {
-        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 5);
-    } else {
-        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
+        shadowOAM[player.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
+        if (player.direction == 0) {
+            shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        } else {
+            shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
+        }
+        
+        // If ducking, then change tile
+        if (isDucking) {
+            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 5);
+        } else {
+            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
+        }
     }
 }
 
@@ -301,6 +342,7 @@ void resetPlayerState() {
     hikerFrame = 0;
     isDucking = 0;
     gameOver = 0;
+    playerSubPixelX = PLAYER1_START_X << 3;
 }
 
 /* ===================== Falling Animation ===================== */
@@ -322,9 +364,15 @@ void updateFallingAnimation(void) {
 
 // Draw the falling sprite at curr fall coordinates
 void drawFallingSprite(void) {
-    shadowOAM[player.oamIndex].attr0 = ATTR0_Y(fallingY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
-    shadowOAM[player.oamIndex].attr1 = ATTR1_X(fallingX) | ATTR1_MEDIUM;
-    shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[0], 1);
+    if (cheatOn) {
+        shadowOAM[player.oamIndex].attr0 = ATTR0_Y(fallingY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
+        shadowOAM[player.oamIndex].attr1 = ATTR1_X(fallingX) | ATTR1_SMALL;
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFramesCheat[0], 14);
+    } else {
+        shadowOAM[player.oamIndex].attr0 = ATTR0_Y(fallingY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
+        shadowOAM[player.oamIndex].attr1 = ATTR1_X(fallingX) | ATTR1_MEDIUM;
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[0], 1);
+    }
 }
 
 // Reset the player's state after fall animation
@@ -334,6 +382,7 @@ void resetPlayerAfterFall(void) {
     player.yVel = 0;
     hOff = 0;
     vOff = 0;
+    playerSubPixelX = PLAYER1_START_X << 3;
     playerState = PLAYER_NORMAL;
 }
 

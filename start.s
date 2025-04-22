@@ -781,6 +781,20 @@ drawStartPlayer:
 	ldr	r3, .L188+24
 	add	r3, r3, r1, lsl #2
 	ldr	r1, [r3, #20]
+	lsl	ip, ip, #23
+	add	r1, r1, #448
+	lsr	ip, ip, #23
+	lsl	r1, r1, #22
+	orr	ip, ip, #20480
+	lsr	r1, r1, #22
+	strh	ip, [r2, #2]	@ movhi
+	strh	r1, [r2, #4]	@ movhi
+	b	.L173
+.L185:
+	ldr	r1, [r5, #20]
+	ldr	r3, .L188+24
+	add	r3, r3, r1, lsl #2
+	ldr	r1, [r3, #32]
 .L183:
 	lsl	ip, ip, #23
 	add	r1, r1, #448
@@ -790,14 +804,7 @@ drawStartPlayer:
 	lsr	r1, r1, #22
 	strh	ip, [r2, #2]	@ movhi
 	strh	r1, [r2, #4]	@ movhi
-	pop	{r4, r5, lr}
-	bx	lr
-.L185:
-	ldr	r1, [r5, #20]
-	ldr	r3, .L188+24
-	add	r3, r3, r1, lsl #2
-	ldr	r1, [r3, #32]
-	b	.L183
+	b	.L173
 .L187:
 	ldr	r1, [r5, #20]
 	ldr	r3, .L188+24

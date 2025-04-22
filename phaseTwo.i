@@ -106,7 +106,7 @@ struct oam_attrs {
   struct attr0 attr0;
   struct attr1 attr1;
 };
-# 93 "sprites.h"
+# 94 "sprites.h"
 void hideSprites();
 
 
@@ -980,9 +980,12 @@ extern int hikerFrameDelay;
 extern int hikerFrameCounter;
 extern int hikerFrame;
 extern int hikerFrames[4];
+extern int hikerFramesCheat[3];
 extern int hOff, vOff;
 extern int isDucking;
 extern int gameOver;
+extern int cheatOn;
+extern int playerSubPixelX;
 int winPhaseTwo = 0;
 extern SPRITE player;
 extern SPRITE health;
@@ -1020,9 +1023,16 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     int bottomY = player.worldY + player.height - 1;
 
 
+    int xVel = cheatOn ? 12 : 8;
+
+
+
     if ((~(buttons) & ((1<<5))) && player.worldX > 0) {
         player.isAnimating = 1;
         player.direction = 1;
+
+        playerSubPixelX -= xVel;
+        player.worldX = playerSubPixelX >> 3;
 
         for (int step = 0; step <= 3; step++) {
             int testLeftX = player.worldX - player.xVel;
@@ -1043,6 +1053,9 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     if ((~(buttons) & ((1<<4))) && player.worldX < 512 - player.width) {
         player.isAnimating = 1;
         player.direction = 0;
+        playerSubPixelX += xVel;
+        player.worldX = playerSubPixelX >> 3;
+
         for (int step = 0; step <= 3; step++) {
             if ((colorAtTwo(rightX + player.xVel, topY - step) != 0x02) &&
                 (colorAtTwo(rightX + player.xVel, bottomY - step) != 0x02)) {
@@ -1123,6 +1136,12 @@ void updatePlayerTwo(int* hOff, int* vOff) {
     if (player.worldX + player.width >= 512 - 1) {
         winPhaseTwo = 1;
     }
+
+    if (cheatOn) {
+        player.height = 16;
+        player.width = 6;
+        player.numFrames = 3;
+    }
 }
 
 void drawPlayerTwo() {
@@ -1161,11 +1180,19 @@ void drawPlayerTwo() {
     int screenX = player.worldX - hOff;
     int screenY = player.worldY - vOff;
 
-    if (player.active) {
+    if (cheatOn) {
+        shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
+        if (player.direction == 0) {
+            shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14);
+        } else {
+            shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14) | (1<<12);
+        }
+        shadowOAM[player.oamIndex].attr2 = ((((14) * (32) + (hikerFramesCheat[hikerFrame]))) & 0x3FF);
+    } else {
         shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
         if (player.direction == 0) {
             shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14);
-        } else if (player.direction == 1) {
+        } else {
             shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
         }
 
@@ -1175,8 +1202,6 @@ void drawPlayerTwo() {
         } else {
             shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
         }
-    } else {
-        gameOver = 1;
     }
 }
 

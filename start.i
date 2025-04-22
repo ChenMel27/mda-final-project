@@ -473,7 +473,7 @@ void drawStartPlayer() {
                 shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14);
                 shadowOAM[startPlayer.oamIndex].attr2 = ((((14) * (32) + (startHikerFramesHorizontalCheat[startHikerFrame]))) & 0x3FF);
             } else if (startPlayer.direction == LEFT) {
-                shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14);
+                shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14) | (1<<12);
                 shadowOAM[startPlayer.oamIndex].attr2 = ((((14) * (32) + (startHikerFramesHorizontalCheat[startHikerFrame]))) & 0x3FF);
             } else if (startPlayer.direction == UP) {
                 shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14);
