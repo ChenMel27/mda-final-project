@@ -544,12 +544,8 @@ inline unsigned char colorAt(int x, int y) {
 }
 
 void cyclePaletteColors() {
-
-
-        int r = (rand() & 31);
-        int g = (rand() >> 2) & 31;
-        int b = (rand() >> 4) & 31;
-
-        ((u16 *)0x5000200)[3] = (b << 10) | (g << 5) | r;
-
+    int r = (rand() & 31);
+    int g = (rand() >> 2) & 31;
+    int b = (rand() >> 4) & 31;
+    ((u16 *)0x5000200)[3] = (b << 10) | (g << 5) | r;
 }

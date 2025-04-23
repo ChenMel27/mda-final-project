@@ -68,6 +68,9 @@ Project: The Summit Ascent
 #include "speakingMan.h"
 #include "speakingMan2.h"
 #include "largemantiles.h"
+#include "splashSound.h"
+#include "splashp1.h"
+#include "splashp3.h"
 
 #define MENU_START 0
 #define MENU_INSTR 1
@@ -202,54 +205,112 @@ int main() {
 
 // ============================= [ INITIALIZING GAME ] ===========================
 
+u16 blendColor(u16 c1, u16 c2, int t, int max) {
+    int r1 = c1 & 0x1F;
+    int g1 = (c1 >> 5) & 0x1F;
+    int b1 = (c1 >> 10) & 0x1F;
+
+    int r2 = c2 & 0x1F;
+    int g2 = (c2 >> 5) & 0x1F;
+    int b2 = (c2 >> 10) & 0x1F;
+
+    int r = r1 + ((r2 - r1) * t) / max;
+    int g = g1 + ((g2 - g1) * t) / max;
+    int b = b1 + ((b2 - b1) * t) / max;
+
+    return RGB(r, g, b);
+}
+
 void initialize() {
     mgba_open();
     setupSounds();
     goToSplashScreen();
 }
 
+int primaryIndices[3] = {13, 14, 15};
+int altIndices[3]     = {16, 17, 18};
+
+
 void goToSplashScreen() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
 
-    // load initialize splash palette and img with start highlighted red
-    DMANow(3, (volatile void*)splash1Pal, BG_PALETTE, 256 | DMA_ON);
-    drawFullscreenImage4(splash1Bitmap);
+    // Step 1: Load and display splashp1
+    DMANow(3, splashp1Pal, BG_PALETTE, 256);
+    drawFullscreenImage4(splashp1Bitmap);
 
-    // initialize selection
-    splashSelection = MENU_START;
+    // Play splash sound once
+    playSoundA(splashSound_data, splashSound_length, 1);
 
-    // make start red, instructions black
-    BG_PALETTE[14] = RED;
-    BG_PALETTE[15] = BLACK;
+    // Wait ~3 seconds (~180 frames)
+    for (int i = 0; i < 180; i++) {
+        waitForVBlank();
+    }
+
+    // Step 2: Transition to splashp3 with its own palette
+    DMANow(3, splashp3Pal, BG_PALETTE, 256);
+    drawFullscreenImage4(splashp3Bitmap);
+
     resetGameState();
-
     state = SPLASH;
 }
 
 void splashScreen() {
-    // handle up/down to move selecting start vs instructions
-    if (BUTTON_PRESSED(BUTTON_DOWN) && splashSelection == MENU_START) {
-        splashSelection = MENU_INSTR;
-    } else if (BUTTON_PRESSED(BUTTON_UP) && splashSelection == MENU_INSTR) {
-        splashSelection = MENU_START;
+    static int t = 0;
+    static int direction = 1;
+    const int max = 30;
+
+    static int* animatedIndices;
+    static int usingAltIndices = 0;
+
+    // --- Handle UP/DOWN input and reset palette ---
+    if (BUTTON_PRESSED(BUTTON_DOWN) && !usingAltIndices) {
+        // Restore top option (13–15)
+        for (int i = 0; i < 3; i++) {
+            BG_PALETTE[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
+        }
+
+        animatedIndices = altIndices;
+        usingAltIndices = 1;
+        t = 0;
+        direction = 1;
+    } else if (BUTTON_PRESSED(BUTTON_UP) && usingAltIndices) {
+        // Restore bottom option (16–18)
+        for (int i = 0; i < 3; i++) {
+            BG_PALETTE[altIndices[i]] = splashp3Pal[altIndices[i]];
+        }
+
+        animatedIndices = primaryIndices;
+        usingAltIndices = 0;
+        t = 0;
+        direction = 1;
     }
 
-    // swap palette entries
-    if (splashSelection == MENU_START) {
-        BG_PALETTE[14] = RED;
-        BG_PALETTE[15] = BLACK;
-    } else {
-        BG_PALETTE[14] = BLACK;
-        BG_PALETTE[15] = RED;
+    if (!animatedIndices) {
+        animatedIndices = primaryIndices;
     }
 
-    // confirm choice
+    // --- Animate selected palette indices toward index 2 ---
+    waitForVBlank();
+
+    u16 target = BG_PALETTE[2];
+    for (int i = 0; i < 3; i++) {
+        int index = animatedIndices[i];
+        u16 base = splashp3Pal[index];
+        BG_PALETTE[index] = blendColor(base, target, t, max);
+    }
+
+    t += direction;
+    if (t >= max || t <= 0) {
+        direction = -direction;
+    }
+
+    // --- Press START based on which is selected ---
     if (BUTTON_PRESSED(BUTTON_START)) {
-        if (splashSelection == MENU_START) {
-            goToStart();
+        if (usingAltIndices) {
+            goToGameInstructions();  // bottom option
         } else {
-            goToGameInstructions();
+            goToStart();     // top option
         }
     }
 }
@@ -825,7 +886,7 @@ void goToGameInstructions() {
 
 void gameInstructions() {
     if (BUTTON_PRESSED(BUTTON_START)) {
-        goToSplashScreen();
+        goToStart();
     }
 }
 

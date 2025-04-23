@@ -227,6 +227,7 @@ int winPhaseThree;
 # 1 "start.h" 1
 # 9 "start.h"
 int next;
+int cheatOn;
 int tileFlashTimer;
 int tileFlashState;
 void initStartPlayer();
@@ -536,7 +537,28 @@ extern const unsigned short largemantilesTiles[1024];
 
 extern const unsigned short largemantilesPal[256];
 # 71 "main.c" 2
-# 79 "main.c"
+# 1 "splashSound.h" 1
+
+
+extern const unsigned int splashSound_sampleRate;
+extern const unsigned int splashSound_length;
+extern const signed char splashSound_data[];
+# 72 "main.c" 2
+# 1 "splashp1.h" 1
+# 21 "splashp1.h"
+extern const unsigned short splashp1Bitmap[19200];
+
+
+extern const unsigned short splashp1Pal[256];
+# 73 "main.c" 2
+# 1 "splashp3.h" 1
+# 21 "splashp3.h"
+extern const unsigned short splashp3Bitmap[19200];
+
+
+extern const unsigned short splashp3Pal[256];
+# 74 "main.c" 2
+# 82 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -663,54 +685,112 @@ int main() {
 
 
 
+u16 blendColor(u16 c1, u16 c2, int t, int max) {
+    int r1 = c1 & 0x1F;
+    int g1 = (c1 >> 5) & 0x1F;
+    int b1 = (c1 >> 10) & 0x1F;
+
+    int r2 = c2 & 0x1F;
+    int g2 = (c2 >> 5) & 0x1F;
+    int b2 = (c2 >> 10) & 0x1F;
+
+    int r = r1 + ((r2 - r1) * t) / max;
+    int g = g1 + ((g2 - g1) * t) / max;
+    int b = b1 + ((b2 - b1) * t) / max;
+
+    return (((r) & 31) | ((g) & 31) << 5 | ((b) & 31) << 10);
+}
+
 void initialize() {
     mgba_open();
     setupSounds();
     goToSplashScreen();
 }
 
+int primaryIndices[3] = {13, 14, 15};
+int altIndices[3] = {16, 17, 18};
+
+
 void goToSplashScreen() {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
     videoBuffer = ((unsigned short*) 0x06000000);
 
 
-    DMANow(3, (volatile void*)splash1Pal, ((unsigned short *)0x5000000), 256 | (1 << 31));
-    drawFullscreenImage4(splash1Bitmap);
+    DMANow(3, splashp1Pal, ((unsigned short *)0x5000000), 256);
+    drawFullscreenImage4(splashp1Bitmap);
 
 
-    splashSelection = 0;
+    playSoundA(splashSound_data, splashSound_length, 1);
 
 
-    ((unsigned short *)0x5000000)[14] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
-    ((unsigned short *)0x5000000)[15] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+    for (int i = 0; i < 180; i++) {
+        waitForVBlank();
+    }
+
+
+    DMANow(3, splashp3Pal, ((unsigned short *)0x5000000), 256);
+    drawFullscreenImage4(splashp3Bitmap);
+
     resetGameState();
-
     state = SPLASH;
 }
 
 void splashScreen() {
+    static int t = 0;
+    static int direction = 1;
+    const int max = 30;
 
-    if ((!(~(oldButtons) & ((1<<7))) && (~(buttons) & ((1<<7)))) && splashSelection == 0) {
-        splashSelection = 1;
-    } else if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && splashSelection == 1) {
-        splashSelection = 0;
+    static int* animatedIndices;
+    static int usingAltIndices = 0;
+
+
+    if ((!(~(oldButtons) & ((1<<7))) && (~(buttons) & ((1<<7)))) && !usingAltIndices) {
+
+        for (int i = 0; i < 3; i++) {
+            ((unsigned short *)0x5000000)[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
+        }
+
+        animatedIndices = altIndices;
+        usingAltIndices = 1;
+        t = 0;
+        direction = 1;
+    } else if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && usingAltIndices) {
+
+        for (int i = 0; i < 3; i++) {
+            ((unsigned short *)0x5000000)[altIndices[i]] = splashp3Pal[altIndices[i]];
+        }
+
+        animatedIndices = primaryIndices;
+        usingAltIndices = 0;
+        t = 0;
+        direction = 1;
+    }
+
+    if (!animatedIndices) {
+        animatedIndices = primaryIndices;
     }
 
 
-    if (splashSelection == 0) {
-        ((unsigned short *)0x5000000)[14] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
-        ((unsigned short *)0x5000000)[15] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
-    } else {
-        ((unsigned short *)0x5000000)[14] = (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
-        ((unsigned short *)0x5000000)[15] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+    waitForVBlank();
+
+    u16 target = ((unsigned short *)0x5000000)[2];
+    for (int i = 0; i < 3; i++) {
+        int index = animatedIndices[i];
+        u16 base = splashp3Pal[index];
+        ((unsigned short *)0x5000000)[index] = blendColor(base, target, t, max);
+    }
+
+    t += direction;
+    if (t >= max || t <= 0) {
+        direction = -direction;
     }
 
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        if (splashSelection == 0) {
-            goToStart();
-        } else {
+        if (usingAltIndices) {
             goToGameInstructions();
+        } else {
+            goToStart();
         }
     }
 }
@@ -1286,7 +1366,7 @@ void goToGameInstructions() {
 
 void gameInstructions() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToSplashScreen();
+        goToStart();
     }
 }
 

@@ -38,6 +38,7 @@
         "diaseven.h": "c",
         "bgonefrontcm.h": "c",
         "gameinstructions2.h": "c",
-        "action.h": "c"
+        "action.h": "c",
+        "splashp2.h": "c"
     }
 }
