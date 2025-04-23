@@ -719,11 +719,24 @@ void goToSplashScreen() {
     DMANow(3, splashp1Pal, ((unsigned short *)0x5000000), 256);
     drawFullscreenImage4(splashp1Bitmap);
 
-
     playSoundA(splashSound_data, splashSound_length, 1);
 
+    const int max = 150;
+    u16 baseColors[17];
+    for (int i = 0; i <= 16; i++) {
+        baseColors[i] = splashp1Pal[i];
+    }
 
-    for (int i = 0; i < 180; i++) {
+
+    for (int t = 0; t <= max; t++) {
+        waitForVBlank();
+        for (int i = 0; i <= 16; i++) {
+            ((unsigned short *)0x5000000)[i] = blendColor(baseColors[i], (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10), t, max);
+        }
+    }
+
+
+    for (int hold = 0; hold < 5; hold++) {
         waitForVBlank();
     }
 
@@ -738,7 +751,7 @@ void goToSplashScreen() {
 void splashScreen() {
     static int t = 0;
     static int direction = 1;
-    const int max = 30;
+    const int max = 20;
 
     static int* animatedIndices;
     static int usingAltIndices = 0;

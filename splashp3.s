@@ -1994,7 +1994,7 @@ splashp3Bitmap:
 	.short	514
 	.short	514
 	.short	514
-	.short	3586
+	.short	3597
 	.short	3598
 	.short	3342
 	.short	514
@@ -2114,7 +2114,7 @@ splashp3Bitmap:
 	.short	514
 	.short	514
 	.short	514
-	.short	3586
+	.short	3597
 	.short	3598
 	.short	3598
 	.short	525
@@ -2234,7 +2234,7 @@ splashp3Bitmap:
 	.short	514
 	.short	514
 	.short	514
-	.short	3586
+	.short	3597
 	.short	3342
 	.short	3598
 	.short	525
