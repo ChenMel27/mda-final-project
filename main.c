@@ -71,6 +71,7 @@ Project: The Summit Ascent
 #include "splashSound.h"
 #include "splashp1.h"
 #include "splashp3.h"
+#include "helper.h"
 
 #define MENU_START 0
 #define MENU_INSTR 1
@@ -114,8 +115,7 @@ void goToPhaseTwoInstructions();
 void goToPhaseThreeInstructions();
 void resetPlayerState();
 void mgba_open();
-static void patchSquare(int startRow, int startCol, int size, int tileId);
-void        resetGameState(void);
+void resetGameState(void);
 
 
 // ============================= [ VARIABLES ] ============================
@@ -150,6 +150,8 @@ int begin = 0;
 int startPage = 0;
 int resumingFromPause = 0;
 u16 originalTiles[4][16];
+int primaryIndices[3] = {13, 14, 15};
+int altIndices[3]     = {16, 17, 18};
 
 // ============================= [ ! MAIN GAME STATES ! ] ============================
 
@@ -203,23 +205,7 @@ int main() {
     }
 }
 
-// ============================= [ INITIALIZING GAME ] ===========================
-
-u16 blendColor(u16 c1, u16 c2, int t, int max) {
-    int r1 = c1 & 0x1F;
-    int g1 = (c1 >> 5) & 0x1F;
-    int b1 = (c1 >> 10) & 0x1F;
-
-    int r2 = c2 & 0x1F;
-    int g2 = (c2 >> 5) & 0x1F;
-    int b2 = (c2 >> 10) & 0x1F;
-
-    int r = r1 + ((r2 - r1) * t) / max;
-    int g = g1 + ((g2 - g1) * t) / max;
-    int b = b1 + ((b2 - b1) * t) / max;
-
-    return RGB(r, g, b);
-}
+// ============================== [ INITIALIZING GAME ] ==============================
 
 void initialize() {
     mgba_open();
@@ -227,106 +213,110 @@ void initialize() {
     goToSplashScreen();
 }
 
-int primaryIndices[3] = {13, 14, 15};
-int altIndices[3]     = {16, 17, 18};
-
+// ============================== [ SPLASH SCREEN SETUP ] =============================
 
 void goToSplashScreen() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
 
-    // Step 1: Load and display splashp1
-    DMANow(3, splashp1Pal, BG_PALETTE, 256);
+    // Display the first splash screen
+    DMANow(3, (volatile void*)splashp1Pal, BG_PALETTE, 256);
     drawFullscreenImage4(splashp1Bitmap);
 
+    // Play intro sound
     playSoundA(splashSound_data, splashSound_length, 1);
 
-    const int max = 150; // how many steps to fade
-    u16 baseColors[17];
+    const int fadeDuration = 120;
+    u16 originalColors[17];
+
+    // Store original palette colors
     for (int i = 0; i <= 16; i++) {
-        baseColors[i] = splashp1Pal[i];
+        originalColors[i] = splashp1Pal[i];
     }
 
-    // Animate palette indices 0–16 fading to black once
-    for (int t = 0; t <= max; t++) {
+    // Gradually blend palette to black
+    for (int t = 0; t <= fadeDuration; t++) {
         waitForVBlank();
         for (int i = 0; i <= 16; i++) {
-            BG_PALETTE[i] = blendColor(baseColors[i], RGB(0, 0, 0), t, max);
+            BG_PALETTE[i] = blendColor(originalColors[i], RGB(0, 0, 0), t, fadeDuration);
         }
     }
 
-    // Hold final black-faded state for the remainder of splashp1 duration
-    for (int hold = 0; hold < 5; hold++) {
+    // Hold black screen briefly
+    for (int i = 0; i < 5; i++) {
         waitForVBlank();
     }
 
-    // Step 2: Transition to splashp3 with its own palette
-    DMANow(3, splashp3Pal, BG_PALETTE, 256);
+    // Display second splash screen with menu options
+    DMANow(3, (volatile void*)splashp3Pal, BG_PALETTE, 256);
     drawFullscreenImage4(splashp3Bitmap);
 
     resetGameState();
     state = SPLASH;
 }
 
+// ============================== [ SPLASH SCREEN LOGIC ] =============================
+
 void splashScreen() {
-    static int t = 0;
-    static int direction = 1;
-    const int max = 20;
+    static int time = 0;
+    static int fadeDirection = 1;
+    const int fadeMax = 20;
 
-    static int* animatedIndices;
-    static int usingAltIndices = 0;
+    static int* currentIndices;
+    static int keySelection = 0;
 
-    // --- Handle UP/DOWN input and reset palette ---
-    if (BUTTON_PRESSED(BUTTON_DOWN) && !usingAltIndices) {
-        // Restore top option (13–15)
+    // DOWN press and switch to selecting key menu option
+    if (BUTTON_PRESSED(BUTTON_DOWN) && !keySelection) {
         for (int i = 0; i < 3; i++) {
             BG_PALETTE[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
         }
+        currentIndices = altIndices;
+        keySelection = 1;
+        time = 0;
+        fadeDirection = 1;
+    }
 
-        animatedIndices = altIndices;
-        usingAltIndices = 1;
-        t = 0;
-        direction = 1;
-    } else if (BUTTON_PRESSED(BUTTON_UP) && usingAltIndices) {
-        // Restore bottom option (16–18)
+    // Detect UP press and switch to primary menu option
+    else if (BUTTON_PRESSED(BUTTON_UP) && keySelection) {
         for (int i = 0; i < 3; i++) {
             BG_PALETTE[altIndices[i]] = splashp3Pal[altIndices[i]];
         }
-
-        animatedIndices = primaryIndices;
-        usingAltIndices = 0;
-        t = 0;
-        direction = 1;
+        currentIndices = primaryIndices;
+        keySelection = 0;
+        time = 0;
+        fadeDirection = 1;
     }
 
-    if (!animatedIndices) {
-        animatedIndices = primaryIndices;
+    // Default to primary indices if none set
+    if (!currentIndices) {
+        currentIndices = primaryIndices;
     }
 
-    // --- Animate selected palette indices toward index 2 ---
+    // Animate selection highlight by blending toward color at palette index 2
     waitForVBlank();
+    u16 highlightColor = BG_PALETTE[2];
 
-    u16 target = BG_PALETTE[2];
     for (int i = 0; i < 3; i++) {
-        int index = animatedIndices[i];
+        int index = currentIndices[i];
         u16 base = splashp3Pal[index];
-        BG_PALETTE[index] = blendColor(base, target, t, max);
+        BG_PALETTE[index] = blendColor(base, highlightColor, time, fadeMax);
     }
 
-    t += direction;
-    if (t >= max || t <= 0) {
-        direction = -direction;
+    time += fadeDirection;
+    if (time >= fadeMax || time <= 0) {
+        fadeDirection = -fadeDirection;
     }
 
-    // --- Press START based on which is selected ---
+    // Handle START button press
     if (BUTTON_PRESSED(BUTTON_START)) {
-        if (usingAltIndices) {
-            goToGameInstructions();  // bottom option
+        if (keySelection) {
+            goToGameInstructions();
         } else {
-            goToStart();     // top option
+            goToStart();
         }
     }
 }
+
 
 // ============================= [ START PHASE STATE ] ===========================
 

@@ -1,0 +1,1 @@
+unsigned short blendColor(unsigned short c1, unsigned short c2, int t, int max);
