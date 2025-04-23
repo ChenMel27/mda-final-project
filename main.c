@@ -72,6 +72,7 @@ Project: The Summit Ascent
 #include "splashp1.h"
 #include "splashp3.h"
 #include "helper.h"
+#include "animateStart.h"
 
 #define MENU_START 0
 #define MENU_INSTR 1
@@ -151,7 +152,7 @@ int startPage = 0;
 int resumingFromPause = 0;
 u16 originalTiles[4][16];
 int primaryIndices[3] = {13, 14, 15};
-int altIndices[3]     = {16, 17, 18};
+int altIndices[3] = {16, 17, 18};
 
 // ============================= [ ! MAIN GAME STATES ! ] ============================
 
@@ -247,6 +248,40 @@ void goToSplashScreen() {
         waitForVBlank();
     }
 
+    // === Show animateStart screen and do palette animations ===
+    DMANow(3, (volatile void*)animateStartPal, BG_PALETTE, 256);
+    drawFullscreenImage4(animateStartBitmap);
+
+    // Reveal index timings (white)
+    const int totalFrames = 180;
+    const int revealDelays[3] = {30, 60, 90};
+
+    // Flicker colors for indices 3 and 4
+    u16 flickerColorsA = RGB(31, 31, 0);   // Bright yellow (pure light)
+    u16 flickerColorsB = RGB(24, 24, 8);  // Softer yellow
+
+    for (int i = 0; i < totalFrames; i++) {
+        waitForVBlank();
+
+        // Flicker palette 3 and 4 every 10 frames
+        if ((i / 10) % 2 == 0) {
+            BG_PALETTE[3] = flickerColorsA;
+            BG_PALETTE[4] = flickerColorsB;
+        } else {
+            BG_PALETTE[3] = flickerColorsB;
+            BG_PALETTE[4] = flickerColorsA;
+        }
+
+        // Gradually reveal indices 16–18 as white
+        if (i == revealDelays[0]) {
+            BG_PALETTE[16] = RGB(31, 31, 31);
+        } else if (i == revealDelays[1]) {
+            BG_PALETTE[17] = RGB(31, 31, 31);
+        } else if (i == revealDelays[2]) {
+            BG_PALETTE[18] = RGB(31, 31, 31);
+        }
+    }
+
     // Display second splash screen with menu options
     DMANow(3, (volatile void*)splashp3Pal, BG_PALETTE, 256);
     drawFullscreenImage4(splashp3Bitmap);
@@ -258,65 +293,52 @@ void goToSplashScreen() {
 // ============================== [ SPLASH SCREEN LOGIC ] =============================
 
 void splashScreen() {
-    static int time = 0;
-    static int fadeDirection = 1;
-    const int fadeMax = 20;
+    static int t = 0;
+    static int direction = 1;
+    const int max = 30;
 
-    static int* currentIndices;
-    static int keySelection = 0;
+    static int* animatedIndices;
+    static int usingAltIndices = 0;
 
-    // DOWN press and switch to selecting key menu option
-    if (BUTTON_PRESSED(BUTTON_DOWN) && !keySelection) {
-        for (int i = 0; i < 3; i++) {
+    // Switch selection on DOWN/UP and restore original palette
+    if (BUTTON_PRESSED(BUTTON_DOWN) && !usingAltIndices) {
+        for (int i = 0; i < 3; i++)
             BG_PALETTE[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
-        }
-        currentIndices = altIndices;
-        keySelection = 1;
-        time = 0;
-        fadeDirection = 1;
+        animatedIndices  = altIndices;
+        usingAltIndices  = 1;
+        t = 0; direction = 1;
     }
-
-    // Detect UP press and switch to primary menu option
-    else if (BUTTON_PRESSED(BUTTON_UP) && keySelection) {
-        for (int i = 0; i < 3; i++) {
+    else if (BUTTON_PRESSED(BUTTON_UP) && usingAltIndices) {
+        for (int i = 0; i < 3; i++)
             BG_PALETTE[altIndices[i]] = splashp3Pal[altIndices[i]];
-        }
-        currentIndices = primaryIndices;
-        keySelection = 0;
-        time = 0;
-        fadeDirection = 1;
+        animatedIndices  = primaryIndices;
+        usingAltIndices  = 0;
+        t = 0; direction = 1;
     }
 
-    // Default to primary indices if none set
-    if (!currentIndices) {
-        currentIndices = primaryIndices;
-    }
+    // Default to primary menu if none set
+    if (!animatedIndices)
+        animatedIndices = primaryIndices;
 
-    // Animate selection highlight by blending toward color at palette index 2
+    // Pulse the selected palette entries toward palette[2]
     waitForVBlank();
-    u16 highlightColor = BG_PALETTE[2];
-
+    u16 target = BG_PALETTE[2];
     for (int i = 0; i < 3; i++) {
-        int index = currentIndices[i];
-        u16 base = splashp3Pal[index];
-        BG_PALETTE[index] = blendColor(base, highlightColor, time, fadeMax);
+        int idx = animatedIndices[i];
+        BG_PALETTE[idx] = blendColor(splashp3Pal[idx], target, t, max);
     }
+    t += direction;
+    if (t >= max || t <= 0)
+        direction = -direction;
 
-    time += fadeDirection;
-    if (time >= fadeMax || time <= 0) {
-        fadeDirection = -fadeDirection;
-    }
-
-    // Handle START button press
+    // Confirm selection on START
     if (BUTTON_PRESSED(BUTTON_START)) {
-        if (keySelection) {
+        if (usingAltIndices)
             goToGameInstructions();
-        } else {
+        else
             goToStart();
-        }
     }
 }
-
 
 // ============================= [ START PHASE STATE ] ===========================
 

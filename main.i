@@ -561,7 +561,14 @@ extern const unsigned short splashp3Pal[256];
 # 1 "helper.h" 1
 unsigned short blendColor(unsigned short c1, unsigned short c2, int t, int max);
 # 75 "main.c" 2
-# 83 "main.c"
+# 1 "animateStart.h" 1
+# 21 "animateStart.h"
+extern const unsigned short animateStartBitmap[19200];
+
+
+extern const unsigned short animateStartPal[256];
+# 76 "main.c" 2
+# 84 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -730,6 +737,40 @@ void goToSplashScreen() {
     }
 
 
+    DMANow(3, (volatile void*)animateStartPal, ((unsigned short *)0x5000000), 256);
+    drawFullscreenImage4(animateStartBitmap);
+
+
+    const int totalFrames = 180;
+    const int revealDelays[3] = {30, 60, 90};
+
+
+    u16 flickerColorsA = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10);
+    u16 flickerColorsB = (((24) & 31) | ((24) & 31) << 5 | ((8) & 31) << 10);
+
+    for (int i = 0; i < totalFrames; i++) {
+        waitForVBlank();
+
+
+        if ((i / 10) % 2 == 0) {
+            ((unsigned short *)0x5000000)[3] = flickerColorsA;
+            ((unsigned short *)0x5000000)[4] = flickerColorsB;
+        } else {
+            ((unsigned short *)0x5000000)[3] = flickerColorsB;
+            ((unsigned short *)0x5000000)[4] = flickerColorsA;
+        }
+
+
+        if (i == revealDelays[0]) {
+            ((unsigned short *)0x5000000)[16] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+        } else if (i == revealDelays[1]) {
+            ((unsigned short *)0x5000000)[17] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+        } else if (i == revealDelays[2]) {
+            ((unsigned short *)0x5000000)[18] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+        }
+    }
+
+
     DMANow(3, (volatile void*)splashp3Pal, ((unsigned short *)0x5000000), 256);
     drawFullscreenImage4(splashp3Bitmap);
 
@@ -740,65 +781,52 @@ void goToSplashScreen() {
 
 
 void splashScreen() {
-    static int time = 0;
-    static int fadeDirection = 1;
-    const int fadeMax = 20;
+    static int t = 0;
+    static int direction = 1;
+    const int max = 30;
 
-    static int* currentIndices;
-    static int keySelection = 0;
+    static int* animatedIndices;
+    static int usingAltIndices = 0;
 
 
-    if ((!(~(oldButtons) & ((1<<7))) && (~(buttons) & ((1<<7)))) && !keySelection) {
-        for (int i = 0; i < 3; i++) {
+    if ((!(~(oldButtons) & ((1<<7))) && (~(buttons) & ((1<<7)))) && !usingAltIndices) {
+        for (int i = 0; i < 3; i++)
             ((unsigned short *)0x5000000)[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
-        }
-        currentIndices = altIndices;
-        keySelection = 1;
-        time = 0;
-        fadeDirection = 1;
+        animatedIndices = altIndices;
+        usingAltIndices = 1;
+        t = 0; direction = 1;
     }
-
-
-    else if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && keySelection) {
-        for (int i = 0; i < 3; i++) {
+    else if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && usingAltIndices) {
+        for (int i = 0; i < 3; i++)
             ((unsigned short *)0x5000000)[altIndices[i]] = splashp3Pal[altIndices[i]];
-        }
-        currentIndices = primaryIndices;
-        keySelection = 0;
-        time = 0;
-        fadeDirection = 1;
+        animatedIndices = primaryIndices;
+        usingAltIndices = 0;
+        t = 0; direction = 1;
     }
 
 
-    if (!currentIndices) {
-        currentIndices = primaryIndices;
-    }
+    if (!animatedIndices)
+        animatedIndices = primaryIndices;
 
 
     waitForVBlank();
-    u16 highlightColor = ((unsigned short *)0x5000000)[2];
-
+    u16 target = ((unsigned short *)0x5000000)[2];
     for (int i = 0; i < 3; i++) {
-        int index = currentIndices[i];
-        u16 base = splashp3Pal[index];
-        ((unsigned short *)0x5000000)[index] = blendColor(base, highlightColor, time, fadeMax);
+        int idx = animatedIndices[i];
+        ((unsigned short *)0x5000000)[idx] = blendColor(splashp3Pal[idx], target, t, max);
     }
-
-    time += fadeDirection;
-    if (time >= fadeMax || time <= 0) {
-        fadeDirection = -fadeDirection;
-    }
+    t += direction;
+    if (t >= max || t <= 0)
+        direction = -direction;
 
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        if (keySelection) {
+        if (usingAltIndices)
             goToGameInstructions();
-        } else {
+        else
             goToStart();
-        }
     }
 }
-
 
 
 
