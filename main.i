@@ -559,6 +559,15 @@ extern const unsigned short splashp3Bitmap[19200];
 extern const unsigned short splashp3Pal[256];
 # 74 "main.c" 2
 # 1 "helper.h" 1
+
+
+
+
+
+
+u16 currentBlock[4][4];
+u16 originalBlock[4][4];
+void animateTilemapShift();
 unsigned short blendColor(unsigned short c1, unsigned short c2, int t, int max);
 # 75 "main.c" 2
 # 1 "animateStart.h" 1
@@ -568,10 +577,12 @@ extern const unsigned short animateStartBitmap[19200];
 
 extern const unsigned short animateStartPal[256];
 # 76 "main.c" 2
-# 84 "main.c"
+# 85 "main.c"
 static int savedStartX;
 static int savedStartY;
-
+int shiftingRight = 1;
+int shiftOffset = 0;
+int shiftTimer = 0;
 static int splashSelection;
 
 
@@ -840,6 +851,14 @@ void goToStart() {
     DMANow(3, (volatile void*)sTSPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
     DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+    for (int y = 0; y < 4; y++) {
+        for (int x = 0; x < 4; x++) {
+            int row = 3 + y;
+            int col = 20 + x;
+            originalBlock[y][x] = ((SB*) 0x6000000)[21].tilemap[row * 32 + col];
+            currentBlock[y][x] = originalBlock[y][x];
+        }
+    }
 
 
 
@@ -925,6 +944,7 @@ void goToStartThree() {
 }
 
 void start() {
+    animateTilemapShift();
     updateStartPlayer(&hOff, &vOff);
     updateGuideSprite();
     (*(volatile unsigned short*) 0x04000014) = hOff;

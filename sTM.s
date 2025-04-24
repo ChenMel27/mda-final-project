@@ -3204,9 +3204,9 @@ sTMMap:
 	.short	507
 	.short	367
 	.short	0
-	.short	0
-	.short	487
-	.short	488
+	.short	417
+	.short	418
+	.short	419
 	.short	489
 	.short	0
 	.short	212
@@ -3236,13 +3236,13 @@ sTMMap:
 	.short	365
 	.short	399
 	.short	0
+	.short	449
+	.short	450
+	.short	451
 	.short	0
-	.short	84
-	.short	85
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	420
+	.short	420
+	.short	420
 	.short	0
 	.short	0
 	.short	0
@@ -3268,13 +3268,13 @@ sTMMap:
 	.short	339
 	.short	0
 	.short	0
-	.short	0
-	.short	116
-	.short	117
-	.short	212
-	.short	0
-	.short	0
-	.short	0
+	.short	481
+	.short	482
+	.short	483
+	.short	420
+	.short	420
+	.short	420
+	.short	420
 	.short	0
 	.short	0
 	.short	0
@@ -3304,9 +3304,9 @@ sTMMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	481
+	.short	420
+	.short	420
 	.short	0
 	.short	0
 	.short	0

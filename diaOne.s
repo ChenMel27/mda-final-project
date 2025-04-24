@@ -142,7 +142,7 @@ diaOneMap:
 	.short	296
 	.short	297
 	.short	296
-	.short	225
+	.short	0
 	.short	0
 	.short	258
 	.short	258
@@ -174,7 +174,7 @@ diaOneMap:
 	.short	272
 	.short	272
 	.short	292
-	.short	272
+	.short	0
 	.short	0
 	.short	258
 	.short	258
@@ -206,7 +206,7 @@ diaOneMap:
 	.short	135
 	.short	132
 	.short	324
-	.short	272
+	.short	0
 	.short	0
 	.short	258
 	.short	225
@@ -238,7 +238,7 @@ diaOneMap:
 	.short	272
 	.short	272
 	.short	292
-	.short	272
+	.short	0
 	.short	0
 	.short	258
 	.short	225
@@ -270,7 +270,7 @@ diaOneMap:
 	.short	134
 	.short	272
 	.short	324
-	.short	272
+	.short	0
 	.short	0
 	.short	225
 	.short	225
@@ -302,7 +302,7 @@ diaOneMap:
 	.short	272
 	.short	272
 	.short	292
-	.short	272
+	.short	0
 	.short	0
 	.short	225
 	.short	225
@@ -334,7 +334,7 @@ diaOneMap:
 	.short	133
 	.short	100
 	.short	324
-	.short	272
+	.short	0
 	.short	0
 	.short	225
 	.short	225
@@ -366,7 +366,7 @@ diaOneMap:
 	.short	224
 	.short	224
 	.short	292
-	.short	272
+	.short	0
 	.short	0
 	.short	225
 	.short	225
@@ -398,7 +398,7 @@ diaOneMap:
 	.short	360
 	.short	360
 	.short	361
-	.short	272
+	.short	0
 	.short	0
 	.short	225
 	.short	225
@@ -430,7 +430,7 @@ diaOneMap:
 	.short	224
 	.short	224
 	.short	224
-	.short	258
+	.short	0
 	.short	0
 	.short	225
 	.short	225

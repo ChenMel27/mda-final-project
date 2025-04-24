@@ -29,10 +29,10 @@ sTSPal:
 	.short	9653
 	.short	17214
 	.short	27372
-	.short	9705
+	.short	9637
 	.short	27516
-	.short	0
-	.short	0
+	.short	15881
+	.short	16971
 	.short	0
 	.short	0
 	.short	0
@@ -6958,6 +6958,28 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-16384
+	.short	-13108
+	.short	0
+	.short	-13108
+	.short	0
+	.short	-13120
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	-8192
+	.short	0
+	.short	-4608
+	.short	0
+	.short	-4608
+	.short	14
+	.short	-276
+	.short	-13106
+	.short	-2
+	.short	-12562
 	.short	0
 	.short	0
 	.short	0
@@ -6966,35 +6988,13 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	192
 	.short	0
+	.short	204
 	.short	0
+	.short	204
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	12
 	.short	0
 	.short	0
 	.short	0
@@ -7461,52 +7461,52 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-4384
 	.short	0
+	.short	-18
+	.short	-8192
+	.short	-2
+	.short	-4384
+	.short	-274
 	.short	0
+	.short	-4608
 	.short	0
+	.short	-13120
 	.short	0
+	.short	-13120
 	.short	0
+	.short	204
+	.short	-18
+	.short	-12545
+	.short	-273
+	.short	-4369
+	.short	-4353
+	.short	-18
+	.short	-4353
+	.short	-1
+	.short	-4114
+	.short	-18
+	.short	-2
+	.short	-4370
+	.short	-18
+	.short	-13106
+	.short	-4128
+	.short	-13108
+	.short	12
 	.short	0
+	.short	236
 	.short	0
+	.short	-4369
+	.short	14
+	.short	-4097
+	.short	14
+	.short	-4369
 	.short	0
+	.short	238
 	.short	0
+	.short	12
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	12
 	.short	0
 	.short	0
 	.short	0
@@ -7988,6 +7988,10 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-4384
+	.short	-13120
+	.short	3808
+	.short	-16384
 	.short	0
 	.short	0
 	.short	0
@@ -8000,13 +8004,9 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	12
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	204
 	.short	0
 	.short	0
 	.short	0

@@ -80,10 +80,13 @@ Project: The Summit Ascent
 #define BLACK RGB(0, 0, 0)
 #define BG_PRIORITY(n) ((n) & 3)
 #define TILEMAP_WIDTH 64
+
 // save player coordinates
 static int savedStartX;
 static int savedStartY;
-
+int shiftingRight = 1;
+int shiftOffset = 0;
+int shiftTimer = 0;
 static int splashSelection;
 
 
@@ -348,10 +351,18 @@ void goToStart() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     hideSprites();
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
-
+    
     DMANow(3, (volatile void*)sTSPal,   BG_PALETTE,      sTSPalLen   / 2);
     DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0],  sTSTilesLen / 2);
     DMANow(3, (volatile void*)sTMMap,   &SCREENBLOCK[18], sTMLen / 2);
+    for (int y = 0; y < TILEMAP_SHIFT_ROWS; y++) {
+        for (int x = 0; x < TILEMAP_SHIFT_COLS; x++) {
+            int row = SHIFT_TILEMAP_START_ROW + y;
+            int col = SHIFT_TILEMAP_START_COL + x;
+            originalBlock[y][x] = SCREENBLOCK[SHIFT_SCREENBLOCK_INDEX].tilemap[row * 32 + col];
+            currentBlock[y][x] = originalBlock[y][x];
+        }
+    }
     
     // Modifying start tilemap at runtime
     // 10x10 block at (27, 57) that will be uncovered when player meets guide and can cross bridge
@@ -437,6 +448,7 @@ void goToStartThree() {
 }
 
 void start() {
+    animateTilemapShift();
     updateStartPlayer(&hOff, &vOff);
     updateGuideSprite();
     REG_BG1HOFF = hOff;
