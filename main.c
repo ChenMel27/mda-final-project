@@ -613,7 +613,7 @@ void phaseOne() {
     REG_BG0VOFF = vOff;
 
     // Parallax background scrolls half speed
-    REG_BG1HOFF = hOff / 4;
+    REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
     
     // Draw sprites
