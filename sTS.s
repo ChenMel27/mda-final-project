@@ -1984,10 +1984,10 @@ sTSTiles:
 	.short	6280
 	.short	-32376
 	.short	6280
-	.short	-32376
-	.short	6280
-	.short	-32376
-	.short	6280
+	.short	30584
+	.short	30583
+	.short	17528
+	.short	17476
 	.short	-30584
 	.short	17529
 	.short	-30584
@@ -2000,10 +2000,10 @@ sTSTiles:
 	.short	17529
 	.short	-30584
 	.short	17529
-	.short	-30584
-	.short	-26215
-	.short	-30584
-	.short	17481
+	.short	30583
+	.short	30583
+	.short	17476
+	.short	17476
 	.short	-26812
 	.short	-30584
 	.short	-26812
@@ -2016,10 +2016,10 @@ sTSTiles:
 	.short	-30584
 	.short	-26812
 	.short	-30584
-	.short	-26215
-	.short	-30584
-	.short	-27580
-	.short	-30584
+	.short	30583
+	.short	30583
+	.short	17476
+	.short	17476
 	.short	4369
 	.short	4369
 	.short	-30591
@@ -2032,10 +2032,10 @@ sTSTiles:
 	.short	4369
 	.short	-30591
 	.short	-30584
-	.short	-30591
-	.short	-30584
-	.short	6273
-	.short	4369
+	.short	30583
+	.short	-30857
+	.short	17476
+	.short	5956
 	.short	4369
 	.short	4369
 	.short	-30584
@@ -2484,70 +2484,70 @@ sTSTiles:
 	.short	-30696
 	.short	-30695
 	.short	-30696
-	.short	-32376
-	.short	6280
-	.short	-32376
-	.short	6280
-	.short	-32376
-	.short	6280
-	.short	-32376
-	.short	6280
-	.short	-32376
-	.short	-26488
-	.short	-32376
-	.short	18824
-	.short	-32376
-	.short	17560
-	.short	-32376
-	.short	17481
-	.short	-26488
+	.short	17528
 	.short	17476
-	.short	18824
+	.short	17528
+	.short	-8746
+	.short	17528
+	.short	26324
+	.short	17528
+	.short	18132
+	.short	17528
+	.short	18132
+	.short	17528
+	.short	19924
+	.short	17528
+	.short	19924
+	.short	17528
+	.short	19924
 	.short	17476
-	.short	17560
 	.short	17476
-	.short	17481
-	.short	-21852
+	.short	17478
+	.short	-8860
+	.short	17629
+	.short	-8892
+	.short	19926
+	.short	-8892
+	.short	19924
+	.short	-8892
+	.short	19812
+	.short	-10684
+	.short	19924
+	.short	-10684
+	.short	18141
+	.short	26180
 	.short	17476
-	.short	30586
-	.short	-23484
-	.short	30583
-	.short	31300
-	.short	30583
-	.short	30628
-	.short	30583
 	.short	17476
-	.short	-30583
+	.short	19933
+	.short	-8860
+	.short	19780
+	.short	-8892
 	.short	17476
-	.short	-30572
+	.short	-8892
 	.short	17476
-	.short	-30396
-	.short	19114
-	.short	-27580
-	.short	-22665
+	.short	27972
+	.short	17629
+	.short	27972
 	.short	17476
-	.short	30583
-	.short	17482
-	.short	30583
-	.short	17575
-	.short	30583
-	.short	19063
-	.short	-30591
-	.short	4369
-	.short	-30591
-	.short	-30584
-	.short	-30591
-	.short	-30584
-	.short	-30591
-	.short	4376
-	.short	-30583
-	.short	4376
-	.short	-30572
-	.short	-30696
-	.short	-30396
-	.short	-30696
-	.short	-27580
-	.short	6168
+	.short	27972
+	.short	17476
+	.short	27972
+	.short	17476
+	.short	5956
+	.short	-8892
+	.short	-30906
+	.short	-8892
+	.short	-30906
+	.short	19780
+	.short	5956
+	.short	19789
+	.short	5956
+	.short	19933
+	.short	-30908
+	.short	19924
+	.short	-30908
+	.short	19780
+	.short	5956
 	.short	4369
 	.short	4369
 	.short	-30584
@@ -2996,14 +2996,14 @@ sTSTiles:
 	.short	17560
 	.short	-30692
 	.short	17481
-	.short	-28280
+	.short	17528
+	.short	-8746
+	.short	17528
+	.short	18022
+	.short	17528
 	.short	17476
-	.short	18824
-	.short	-23484
-	.short	17560
-	.short	31300
-	.short	17481
-	.short	30628
+	.short	30585
+	.short	30583
 	.short	17476
 	.short	30586
 	.short	-23484
@@ -3012,14 +3012,14 @@ sTSTiles:
 	.short	30583
 	.short	30628
 	.short	-26761
-	.short	30586
+	.short	17517
+	.short	-8860
+	.short	17476
+	.short	26212
+	.short	17476
+	.short	17476
 	.short	30583
 	.short	30583
-	.short	-26217
-	.short	30583
-	.short	-8743
-	.short	-26761
-	.short	-8739
 	.short	-9865
 	.short	-8739
 	.short	-8809
@@ -3028,14 +3028,14 @@ sTSTiles:
 	.short	30621
 	.short	-8739
 	.short	-26247
+	.short	19933
+	.short	28004
+	.short	18022
+	.short	26212
+	.short	17476
+	.short	17476
 	.short	30583
-	.short	-22665
-	.short	31129
 	.short	30583
-	.short	-25123
-	.short	30583
-	.short	-8739
-	.short	30585
 	.short	-8739
 	.short	30621
 	.short	-8807
@@ -3044,14 +3044,14 @@ sTSTiles:
 	.short	-25123
 	.short	-26727
 	.short	-8739
+	.short	19780
+	.short	-30908
+	.short	26182
+	.short	-30908
 	.short	17476
-	.short	-30695
-	.short	17482
-	.short	-30572
-	.short	17575
-	.short	-30396
-	.short	19063
-	.short	-27580
+	.short	-30908
+	.short	30583
+	.short	-26761
 	.short	-22665
 	.short	17476
 	.short	30583

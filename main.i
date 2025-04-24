@@ -1109,8 +1109,8 @@ void phaseOne() {
     (*(volatile unsigned short*) 0x04000012) = vOff;
 
 
-    (*(volatile unsigned short*) 0x04000014) = hOff / 2;
-    (*(volatile unsigned short*) 0x04000016) = vOff / 2;
+    (*(volatile unsigned short*) 0x04000014) = hOff * 4;
+    (*(volatile unsigned short*) 0x04000016) = vOff * 4;
 
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);

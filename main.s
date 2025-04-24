@@ -1656,48 +1656,40 @@ phaseOne:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r5, .L186
+	ldr	r4, .L186
 	ldr	r3, .L186+4
-	mov	r0, r5
-	add	r1, r5, #4
+	mov	r0, r4
+	add	r1, r4, #4
 	mov	lr, pc
 	bx	r3
 	ldr	r3, .L186+8
 	mov	lr, pc
 	bx	r3
-	mov	r4, #512
-	mov	lr, #67108864
-	ldr	ip, [r5]
-	ldr	r1, [r5, #4]
-	ldr	r3, .L186+12
-	add	r0, ip, ip, lsr #31
-	add	r2, r1, r1, lsr #31
-	ldrb	r3, [r3, #56]	@ zero_extendqisi2
-	asr	r0, r0, #1
-	asr	r2, r2, #1
-	ldr	r5, .L186+16
-	lsl	r0, r0, #16
-	lsl	ip, ip, #16
-	lsl	r1, r1, #16
-	lsl	r2, r2, #16
-	lsr	r0, r0, #16
+	mov	r5, #512
+	mov	r2, #67108864
+	ldr	r0, .L186+12
+	ldrh	r1, [r4]
+	ldrh	r3, [r4, #4]
+	ldrb	r0, [r0, #56]	@ zero_extendqisi2
+	lsl	lr, r1, #18
+	ldr	r4, .L186+16
+	lsl	ip, r3, #18
+	lsr	lr, lr, #16
 	lsr	ip, ip, #16
-	lsr	r1, r1, #16
-	lsl	r3, r3, #3
-	lsr	r2, r2, #16
-	strh	ip, [lr, #16]	@ movhi
-	strh	r1, [lr, #18]	@ movhi
-	strh	r0, [lr, #20]	@ movhi
-	strh	r2, [lr, #22]	@ movhi
-	ldr	r2, .L186+20
-	strh	r4, [r5, r3]	@ movhi
+	lsl	r0, r0, #3
+	strh	r1, [r2, #16]	@ movhi
+	strh	r3, [r2, #18]	@ movhi
+	strh	lr, [r2, #20]	@ movhi
+	ldr	r3, .L186+20
+	strh	ip, [r2, #22]	@ movhi
+	strh	r5, [r4, r0]	@ movhi
 	mov	lr, pc
-	bx	r2
+	bx	r3
 	ldr	r3, .L186+24
 	mov	lr, pc
 	bx	r3
-	mov	r3, r4
-	mov	r1, r5
+	mov	r3, r5
+	mov	r1, r4
 	mov	r2, #117440512
 	mov	r0, #3
 	ldr	r4, .L186+28
