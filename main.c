@@ -214,7 +214,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToStart();
+    goToSplashScreen();
 }
 
 // ============================== [ SPLASH SCREEN SETUP ] =============================
