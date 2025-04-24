@@ -699,7 +699,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToSplashScreen();
+    goToStart();
 }
 
 
@@ -831,6 +831,7 @@ void splashScreen() {
 
 
 void goToStart() {
+    cheatOn = 0;
     resumingFromPause = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     hideSprites();
@@ -887,8 +888,8 @@ void goToStartTwo() {
     initStartPlayer();
     initGuideSprite();
 
-    startPlayer.worldX = 134;
-    startPlayer.worldX = 436;
+    startPlayer.worldY = 170;
+    startPlayer.worldX = 430;
     next = 0;
 
     talkedToGuide = 1;

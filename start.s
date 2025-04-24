@@ -86,32 +86,33 @@ initStartPlayer:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	mov	r3, #0
 	push	{r4, r5, r6, lr}
-	mov	r2, #72
+	mov	r0, #16
 	mov	r4, #112
-	mov	r1, #5
-	mov	r0, #1
-	mov	lr, #16
+	mov	r3, #72
+	mov	r2, #5
+	mov	r1, #1
+	mov	lr, #0
+	mov	r6, #100
 	mov	r5, #165
 	ldr	ip, .L16
-	str	r3, [ip, #16]
-	strb	r3, [ip, #56]
-	str	r3, [ip, #44]
-	str	r3, [ip, #36]
-	str	r3, [ip, #12]
 	str	r4, [ip]
-	str	r2, [ip, #4]
-	str	r1, [ip, #48]
-	str	r0, [ip, #40]
+	str	r3, [ip, #4]
+	str	r2, [ip, #48]
+	str	r1, [ip, #40]
+	str	r0, [ip, #24]
+	str	r0, [ip, #28]
 	ldr	r4, .L16+4
 	mov	r3, #256
 	mov	r0, #3
 	ldr	r2, .L16+8
 	ldr	r1, .L16+12
+	str	r6, [ip, #16]
 	str	r5, [ip, #20]
-	str	lr, [ip, #24]
-	str	lr, [ip, #28]
+	strb	lr, [ip, #56]
+	str	lr, [ip, #44]
+	str	lr, [ip, #36]
+	str	lr, [ip, #12]
 	mov	lr, pc
 	bx	r4
 	mov	r3, #16384
@@ -147,7 +148,7 @@ initGuideSprite:
 	push	{r4, r5, r6, lr}
 	mov	r2, #0
 	mov	r6, #436
-	mov	r5, #127
+	mov	r5, #137
 	mov	r4, #16
 	mov	lr, #416
 	mov	ip, #456

@@ -211,7 +211,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToSplashScreen();
+    goToStart();
 }
 
 // ============================== [ SPLASH SCREEN SETUP ] =============================
@@ -343,6 +343,7 @@ void splashScreen() {
 // ============================= [ START PHASE STATE ] ===========================
 
 void goToStart() {
+    cheatOn = 0;
     resumingFromPause = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     hideSprites();
@@ -399,8 +400,8 @@ void goToStartTwo() {
     initStartPlayer();
     initGuideSprite();
 
-    startPlayer.worldX = 134;
-    startPlayer.worldX = 436;
+    startPlayer.worldY = 170;
+    startPlayer.worldX = 430;
     next = 0;
 
     talkedToGuide = 1;

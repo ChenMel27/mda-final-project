@@ -249,7 +249,7 @@ void fillTileWithColor(int tileId, u8 colorIndex) {
 
 
 void initStartPlayer() {
-    startPlayer.worldX = 0;
+    startPlayer.worldX = 100;
     startPlayer.worldY = 165;
     startPlayer.x = 240 / 2 - 8;
     startPlayer.y = 160 / 2 - 8;
@@ -268,7 +268,7 @@ void initStartPlayer() {
 
 void initGuideSprite() {
     guide.worldX = 436;
-    guide.worldY = 127;
+    guide.worldY = 137;
     guide.width = 16;
     guide.height = 32;
     guide.oamIndex = 1;
