@@ -20,7 +20,7 @@ sTSPal:
 	.short	17071
 	.short	14611
 	.short	32762
-	.short	15881
+	.short	6464
 	.short	17151
 	.short	23242
 	.short	19026
@@ -1177,49 +1177,49 @@ sTSTiles:
 	.short	0
 	.short	-16384
 	.short	0
-	.short	3072
+	.short	-5120
 	.short	0
-	.short	192
+	.short	-4416
 	.short	0
-	.short	12
+	.short	-4372
 	.short	-16384
-	.short	0
-	.short	3072
-	.short	0
-	.short	51
-	.short	0
-	.short	192
-	.short	170
-	.short	-24564
-	.short	2730
-	.short	-22016
-	.short	-21846
-	.short	-22016
-	.short	-21846
-	.short	-22016
-	.short	-21846
-	.short	-24576
-	.short	2730
-	.short	0
-	.short	170
-	.short	0
-	.short	0
-	.short	12
-	.short	0
-	.short	3264
-	.short	0
-	.short	-16384
-	.short	0
-	.short	0
+	.short	-4370
+	.short	-5120
+	.short	-4370
+	.short	-4557
+	.short	-4370
+	.short	-4416
+	.short	-4489
+	.short	32492
+	.short	-6281
+	.short	30702
+	.short	30583
+	.short	30702
+	.short	30583
+	.short	30702
+	.short	30583
+	.short	32494
+	.short	-6281
+	.short	-4370
+	.short	-4489
+	.short	-4370
+	.short	-4370
 	.short	12
 	.short	0
-	.short	192
+	.short	3278
 	.short	0
-	.short	3072
+	.short	-12562
 	.short	0
-	.short	-16384
-	.short	0
-	.short	0
+	.short	-4370
+	.short	12
+	.short	-4370
+	.short	206
+	.short	-4370
+	.short	3310
+	.short	-4370
+	.short	-12562
+	.short	-4370
+	.short	-4370
 	.short	0
 	.short	0
 	.short	0
@@ -1684,67 +1684,67 @@ sTSTiles:
 	.short	-13261
 	.short	12288
 	.short	-13117
-	.short	195
-	.short	0
-	.short	12
-	.short	0
-	.short	12
-	.short	0
-	.short	204
-	.short	0
-	.short	204
-	.short	0
-	.short	12
-	.short	0
-	.short	12
-	.short	0
-	.short	12
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	-4413
+	.short	-4370
+	.short	-4372
+	.short	-4370
+	.short	-4372
+	.short	-4370
+	.short	-4404
+	.short	-4370
+	.short	-4404
+	.short	-4370
+	.short	-4372
+	.short	-4370
+	.short	-4372
+	.short	-4370
+	.short	-4372
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
 	.short	828
 	.short	0
-	.short	13248
+	.short	13262
 	.short	0
-	.short	15552
+	.short	15566
 	.short	0
 	.short	15564
 	.short	3
 	.short	15564
 	.short	3
-	.short	-13120
+	.short	-13106
 	.short	51
-	.short	-13120
+	.short	-13106
 	.short	819
 	.short	-13108
 	.short	828
@@ -2196,49 +2196,49 @@ sTSTiles:
 	.short	-13261
 	.short	13104
 	.short	-15565
-	.short	3276
-	.short	0
+	.short	-4916
+	.short	-4370
 	.short	-13108
-	.short	0
+	.short	-4370
 	.short	-13108
-	.short	0
+	.short	-4370
 	.short	-13108
-	.short	12
-	.short	-13108
-	.short	-13108
+	.short	-4372
 	.short	-13108
 	.short	-13108
 	.short	-13108
 	.short	-13108
 	.short	-13108
 	.short	-13108
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	12
-	.short	3276
+	.short	-13108
+	.short	-13108
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4372
+	.short	-4916
 	.short	-13108
 	.short	-13108
 	.short	-13108
 	.short	-13108
-	.short	0
-	.short	-16384
-	.short	0
-	.short	-16384
-	.short	0
-	.short	-13312
-	.short	-16384
-	.short	-13312
-	.short	-16384
+	.short	-4370
+	.short	-12562
+	.short	-4370
+	.short	-12562
+	.short	-4370
+	.short	-13074
+	.short	-12562
+	.short	-13074
+	.short	-12562
 	.short	-13108
-	.short	-13312
+	.short	-13074
 	.short	-13108
 	.short	-13108
 	.short	-13108
@@ -2306,7 +2306,7 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	2720
+	.short	1904
 	.short	0
 	.short	0
 	.short	0
@@ -2791,50 +2791,50 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	-24576
+	.short	28672
 	.short	0
-	.short	-24576
+	.short	32480
 	.short	0
+	.short	-4370
+	.short	-5120
+	.short	-4370
+	.short	-4608
+	.short	-4370
+	.short	-4416
+	.short	-4370
+	.short	-4928
+	.short	-4370
+	.short	30583
 	.short	0
-	.short	3072
-	.short	0
-	.short	0
-	.short	0
-	.short	192
-	.short	0
-	.short	3264
-	.short	0
-	.short	-21846
-	.short	0
-	.short	-21846
-	.short	10
-	.short	-21846
-	.short	10
-	.short	-21846
-	.short	0
-	.short	2720
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	30583
+	.short	7
+	.short	30583
+	.short	3815
+	.short	30583
+	.short	-4370
+	.short	-6274
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
-	.short	192
 	.short	0
 	.short	0
+	.short	206
 	.short	0
-	.short	3072
+	.short	238
 	.short	0
-	.short	3264
+	.short	3310
+	.short	0
+	.short	3310
 	.short	0
 	.short	0
 	.short	-32368
@@ -3300,43 +3300,43 @@ sTSTiles:
 	.short	12288
 	.short	0
 	.short	12288
-	.short	195
-	.short	0
-	.short	195
-	.short	0
-	.short	3267
-	.short	0
-	.short	3276
-	.short	0
-	.short	3276
-	.short	0
+	.short	-4413
+	.short	-4370
+	.short	-4413
+	.short	-4370
+	.short	-4925
+	.short	-4370
+	.short	-4916
+	.short	-4370
+	.short	-4916
+	.short	-4370
 	.short	-13117
-	.short	3072
+	.short	-4882
 	.short	-13108
-	.short	3276
+	.short	-4916
 	.short	-13117
 	.short	-13108
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	-16372
-	.short	0
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-4370
+	.short	-12564
+	.short	-4370
 	.short	-13108
-	.short	-16384
+	.short	-12562
 	.short	-13108
-	.short	15360
+	.short	15598
 	.short	0
-	.short	15552
+	.short	15566
 	.short	0
-	.short	15552
+	.short	15566
 	.short	0
 	.short	-13108
 	.short	3
@@ -8068,25 +8068,25 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	-21852
 	.short	-21846
+	.short	-23542
+	.short	1092
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	2634
 	.short	-21846
-	.short	-22006
-	.short	2570
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	2560
-	.short	-21846
-	.short	0
+	.short	4
 	.short	-22016
 	.short	0
 	.short	0
@@ -8101,9 +8101,9 @@ sTSTiles:
 	.short	0
 	.short	0
 	.short	-21846
-	.short	2720
-	.short	-24566
-	.short	0
+	.short	19114
+	.short	-23484
+	.short	64
 	.short	0
 	.short	0
 	.short	0
