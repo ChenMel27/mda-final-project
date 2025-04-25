@@ -578,7 +578,14 @@ extern const unsigned short animateStartBitmap[19200];
 
 extern const unsigned short animateStartPal[256];
 # 76 "main.c" 2
-# 85 "main.c"
+# 1 "pOAudio.h" 1
+
+
+extern const unsigned int pOAudio_sampleRate;
+extern const unsigned int pOAudio_length;
+extern const signed char pOAudio_data[];
+# 77 "main.c" 2
+# 86 "main.c"
 static int savedStartX;
 static int savedStartY;
 int shiftingRight = 1;
@@ -711,7 +718,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToPhaseOne();
+    goToSplashScreen();
 }
 
 
@@ -719,6 +726,7 @@ void initialize() {
 void goToSplashScreen() {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
     videoBuffer = ((unsigned short*) 0x06000000);
+    stopSounds();
 
 
     DMANow(3, (volatile void*)splashp1Pal, ((unsigned short *)0x5000000), 256);
@@ -1120,6 +1128,14 @@ tileFadeStep = 0;
 
 
 void phaseOne() {
+
+    static int hasPlayedPOAudio = 0;
+
+if (!hasPlayedPOAudio) {
+    hasPlayedPOAudio = 1;
+    playSoundB(pOAudio_data, pOAudio_length, 1);
+}
+
     static int flashState = 0;
     static int flashTimer = 0;
     static int flashFrame = 0;

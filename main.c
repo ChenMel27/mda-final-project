@@ -73,6 +73,7 @@ Project: The Summit Ascent
 #include "splashp3.h"
 #include "helper.h"
 #include "animateStart.h"
+#include "pOAudio.h"
 
 #define MENU_START 0
 #define MENU_INSTR 1
@@ -214,7 +215,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToPhaseOne();
+    goToSplashScreen();
 }
 
 // ============================== [ SPLASH SCREEN SETUP ] =============================
@@ -222,6 +223,7 @@ void initialize() {
 void goToSplashScreen() {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
+    stopSounds();
 
     // Display the first splash screen
     DMANow(3, (volatile void*)splashp1Pal, BG_PALETTE, 256);
@@ -623,6 +625,14 @@ tileFadeStep = 0;
 
 
 void phaseOne() {
+
+    static int hasPlayedPOAudio = 0;
+
+if (!hasPlayedPOAudio) {
+    hasPlayedPOAudio = 1;
+    playSoundB(pOAudio_data, pOAudio_length, 1);  // 0 = no loop
+}
+
     static int flashState = 0;
     static int flashTimer = 0;
     static int flashFrame = 0;
