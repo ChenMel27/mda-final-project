@@ -565,6 +565,7 @@ extern const unsigned short splashp3Pal[256];
 
 
 
+
 u16 currentBlock[4][4];
 u16 originalBlock[4][4];
 void animateTilemapShift();
@@ -1068,6 +1069,17 @@ void startInstructions() {
 
 
 
+
+
+u8 originalTile358[64];
+int tileFadeTimer = 0;
+int tileFadeStep = 0;
+
+
+int isFlashing = 0;
+int flashFrame = 0;
+u16 savedFadePalette[256];
+
 void goToPhaseOne() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
@@ -1080,6 +1092,14 @@ void goToPhaseOne() {
     DMANow(3, (volatile void*)bgOneBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
     DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
+
+u8* tileData = (u8*) &((CB*) 0x6000000)[1];
+for (int i = 0; i < 64; i++) {
+    originalTile358[i] = tileData[(358 * 64) + i];
+}
+
+tileFadeTimer = 0;
+tileFadeStep = 0;
 
 
 
@@ -1095,7 +1115,15 @@ void goToPhaseOne() {
     state = PHASEONE;
 }
 
+
+
+
+
 void phaseOne() {
+    static int flashState = 0;
+    static int flashTimer = 0;
+    static int flashFrame = 0;
+    static int isFlashing = 0;
 
 
     updatePlayer(&hOff, &vOff);
@@ -1133,6 +1161,104 @@ void phaseOne() {
             }
         }
     }
+
+
+tileFadeTimer++;
+if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
+    tileFadeStep++;
+
+    u8* tileData = (u8*) &((CB*) 0x6000000)[1];
+
+    for (int i = 0; i < 64; i++) {
+        u8 colorIndex = originalTile358[i];
+
+        if (colorIndex == 0) continue;
+
+        u16 origColor = ((unsigned short *)0x5000000)[colorIndex];
+        u16 newColor = blendColor(origColor, (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10), tileFadeStep, 2000);
+        ((unsigned short *)0x5000000)[colorIndex] = newColor;
+    }
+}
+static int swapTimer = 0;
+static int swapped = 0;
+static int swapDelayFrames = 0;
+static int hasFlashedOnce = 0;
+swapDelayFrames++;
+
+if (swapDelayFrames > 200 && !hasFlashedOnce) {
+    swapTimer++;
+
+    if (swapTimer > 60) {
+        swapTimer = 0;
+        swapped = !swapped;
+        isFlashing = 1;
+        flashState = 0;
+        flashFrame = 0;
+        flashTimer = 0;
+        hasFlashedOnce = 1;
+
+
+
+
+        for (int i = 0; i < 256; i++) {
+            savedFadePalette[i] = ((unsigned short *)0x5000000)[i];
+        }
+
+
+        for (int row = 0; row < 32; row++) {
+            for (int col = 0; col < 32; col++) {
+                u16* tile = &((SB*) 0x6000000)[28].tilemap[row * 32 + col];
+                u16 tileId = *tile & 0x03FF;
+                u16 palRow = *tile & 0xFC00;
+
+                if (!swapped) {
+                    if (tileId == 323) *tile = (322 | palRow);
+                    if (tileId == 348) *tile = (347 | palRow);
+                } else {
+                    if (tileId == 322) *tile = (323 | palRow);
+                    if (tileId == 347) *tile = (348 | palRow);
+                }
+            }
+        }
+    }
+}
+
+if (isFlashing) {
+    flashTimer++;
+
+
+    if (flashTimer > 8) {
+        flashTimer = 0;
+        flashState = !flashState;
+        flashFrame++;
+    }
+
+    if (flashFrame >= 4) {
+        isFlashing = 0;
+
+
+        for (int i = 0; i < 64; i++) {
+            u8 colorIndex = originalTile358[i];
+            if (colorIndex == 0) continue;
+            ((unsigned short *)0x5000000)[colorIndex] = (((10) & 31) | ((10) & 31) << 5 | ((10) & 31) << 10);
+        }
+    } else {
+        for (int i = 0; i < 64; i++) {
+            u8 colorIndex = originalTile358[i];
+            if (colorIndex == 0) continue;
+
+            if (flashState) {
+                u16 c = savedFadePalette[colorIndex];
+                int r = ((c) & 0x1F) / 2;
+                int g = (((c) >> 5) & 0x1F) / 2;
+                int b = (((c) >> 10) & 0x1F) / 2;
+                ((unsigned short *)0x5000000)[colorIndex] = (((r) & 31) | ((g) & 31) << 5 | ((b) & 31) << 10);
+            } else {
+                ((unsigned short *)0x5000000)[colorIndex] = savedFadePalette[colorIndex];
+            }
+        }
+    }
+}
 
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);

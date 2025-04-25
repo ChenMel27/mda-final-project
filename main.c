@@ -571,6 +571,17 @@ void startInstructions() {
 }
 
 // ============================= [ PHASE ONE STATE ] ============================
+#define TILE358_INDEX 358
+#define TILE358_OFFSET (TILE358_INDEX * 64) // 8x8 tile, 1 byte per pixel in 8bpp
+
+u8 originalTile358[64];  // save original pixels
+int tileFadeTimer = 0;
+int tileFadeStep = 0;
+#define FLASH_FRAMES_TOTAL 20
+
+int isFlashing = 0;
+int flashFrame = 0;
+u16 savedFadePalette[256]; // Backup of current palette state for smooth return
 
 void goToPhaseOne() {
     REG_DISPCTL = 0;
@@ -584,6 +595,14 @@ void goToPhaseOne() {
     DMANow(3, (volatile void*)bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
 
+// Save original pixels from tile 358 (CHARBLOCK[1] is BG tiles in Mode 0, 8bpp)
+u8* tileData = (u8*) &CHARBLOCK[1];
+for (int i = 0; i < 64; i++) {
+    originalTile358[i] = tileData[TILE358_OFFSET + i];
+}
+
+tileFadeTimer = 0;
+tileFadeStep = 0;
 
 
     // only reset coordinates in beginning
@@ -598,8 +617,16 @@ void goToPhaseOne() {
     vOff = MAX_VOFF;
     state = PHASEONE;
 }
+#define RED(c)   ((c) & 0x1F)
+#define GREEN(c) (((c) >> 5) & 0x1F)
+#define BLUE(c)  (((c) >> 10) & 0x1F)
+
 
 void phaseOne() {
+    static int flashState = 0;
+    static int flashTimer = 0;
+    static int flashFrame = 0;
+    static int isFlashing = 0;
     
     // Update sprites
     updatePlayer(&hOff, &vOff);
@@ -612,7 +639,7 @@ void phaseOne() {
     // Parallax background scrolls half speed
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
-    
+
     static int tileAnimTimer = 0;
     static int tileAnimState = 0;
     tileAnimTimer++;
@@ -638,6 +665,104 @@ void phaseOne() {
         }
     }
     
+    // Smooth fade every ~4 frames (about 15 times a second)
+tileFadeTimer++;
+if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
+    tileFadeStep++;  // up to 100 steps for slow smooth darkening
+
+    u8* tileData = (u8*) &CHARBLOCK[1];
+
+    for (int i = 0; i < 64; i++) {
+        u8 colorIndex = originalTile358[i];
+
+        if (colorIndex == 0) continue; // skip transparent
+
+        u16 origColor = BG_PALETTE[colorIndex];
+        u16 newColor = blendColor(origColor, RGB(0, 0, 0), tileFadeStep, 2000);
+        BG_PALETTE[colorIndex] = newColor;
+    }
+}
+static int swapTimer = 0;
+static int swapped = 0;
+static int swapDelayFrames = 0;
+static int hasFlashedOnce = 0;  
+swapDelayFrames++; // count frames until 15 seconds (15 * 60 = 900)
+
+if (swapDelayFrames > 200 && !hasFlashedOnce) {
+    swapTimer++;
+
+    if (swapTimer > 60) {
+        swapTimer = 0;
+        swapped = !swapped;
+        isFlashing = 1;
+        flashState = 0;
+        flashFrame = 0;
+        flashTimer = 0;
+        hasFlashedOnce = 1;
+        
+
+
+        // Save current palette state before flash
+        for (int i = 0; i < 256; i++) {
+            savedFadePalette[i] = BG_PALETTE[i];
+        }
+
+        // Swap tiles
+        for (int row = 0; row < 32; row++) {
+            for (int col = 0; col < 32; col++) {
+                u16* tile = &SCREENBLOCK[28].tilemap[row * 32 + col];
+                u16 tileId = *tile & 0x03FF;
+                u16 palRow = *tile & 0xFC00;
+
+                if (!swapped) {
+                    if (tileId == 323) *tile = (322 | palRow);
+                    if (tileId == 348) *tile = (347 | palRow);
+                } else {
+                    if (tileId == 322) *tile = (323 | palRow);
+                    if (tileId == 347) *tile = (348 | palRow);
+                }
+            }
+        }
+    }
+}
+
+if (isFlashing) {
+    flashTimer++;
+
+    // Toggle flash state every 8 frames
+    if (flashTimer > 8) {
+        flashTimer = 0;
+        flashState = !flashState;
+        flashFrame++;
+    }
+
+    if (flashFrame >= 4) {
+        isFlashing = 0;
+
+        // After 2 flashes, set palette to RGB(10,10,10) permanently
+        for (int i = 0; i < 64; i++) {
+            u8 colorIndex = originalTile358[i];
+            if (colorIndex == 0) continue;
+            BG_PALETTE[colorIndex] = RGB(10, 10, 10);
+        }
+    } else {
+        for (int i = 0; i < 64; i++) {
+            u8 colorIndex = originalTile358[i];
+            if (colorIndex == 0) continue;
+
+            if (flashState) {
+                u16 c = savedFadePalette[colorIndex];
+                int r = RED(c) / 2;
+                int g = GREEN(c) / 2;
+                int b = BLUE(c) / 2;
+                BG_PALETTE[colorIndex] = RGB(r, g, b);
+            } else {
+                BG_PALETTE[colorIndex] = savedFadePalette[colorIndex];
+            }
+        }
+    }
+}
+
     // Draw sprites
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayer();

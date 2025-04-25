@@ -251,10 +251,10 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	137
+	.short	137
+	.short	137
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -283,21 +283,21 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	137
+	.short	0
+	.short	0
+	.short	137
+	.short	137
+	.short	137
+	.short	137
+	.short	137
+	.short	137
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	322
 	.short	0
 	.short	0
 	.short	0
@@ -315,6 +315,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -323,13 +324,12 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	137
+	.short	137
+	.short	137
+	.short	137
+	.short	137
+	.short	347
 	.short	0
 	.short	0
 	.short	0
@@ -347,6 +347,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -378,8 +379,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -410,7 +410,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -442,7 +442,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	137
 	.short	0
 	.short	0
 	.short	276
@@ -473,7 +473,7 @@ bgOneBackMap:
 	.short	303
 	.short	0
 	.short	0
-	.short	0
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -501,11 +501,17 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	137
+	.short	137
 	.short	0
+	.short	137
+	.short	137
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	137
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -527,11 +533,16 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	137
+	.short	137
+	.short	137
+	.short	137
 	.short	0
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -554,10 +565,16 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	137
+	.short	137
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	137
+	.short	137
+	.short	137
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -581,28 +598,11 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	137
+	.short	137
+	.short	137
+	.short	137
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -1234,7 +1234,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	322
 	.short	304
 	.short	0
 	.short	0
@@ -1266,7 +1266,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	347
 	.short	0
 	.short	0
 	.short	0
@@ -1305,6 +1305,7 @@ bgOneBackMap:
 	.short	276
 	.short	277
 	.short	278
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -1315,8 +1316,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
+	.short	322
 	.short	0
 	.short	0
 	.short	0
@@ -1337,6 +1337,18 @@ bgOneBackMap:
 	.short	301
 	.short	302
 	.short	303
+	.short	137
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	347
 	.short	0
 	.short	0
 	.short	0
@@ -1355,21 +1367,9 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	322
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	137
 	.short	0
 	.short	0
 	.short	0
@@ -1399,7 +1399,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	347
 	.short	0
 	.short	0
 	.short	0
@@ -1527,6 +1527,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	322
 	.short	0
 	.short	0
 	.short	0
@@ -1558,8 +1559,7 @@ bgOneBackMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
+	.short	347
 	.short	0
 	.short	0
 	.short	0

@@ -9135,7 +9135,37 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	10496
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
 	.short	0
 	.short	0
 	.short	0
@@ -9157,21 +9187,6 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	10537
-	.short	0
-	.short	0
-	.short	10537
-	.short	10537
-	.short	10537
-	.short	0
-	.short	10537
-	.short	10537
-	.short	10537
-	.short	10537
-	.short	10537
-	.short	10537
-	.short	10537
-	.short	10537
 	.short	0
 	.short	0
 	.short	0
@@ -9186,21 +9201,6 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	41
-	.short	0
-	.short	0
-	.short	0
-	.short	10537
 	.short	0
 	.short	0
 	.short	0
@@ -9910,6 +9910,18 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	10496
+	.short	0
+	.short	0
+	.short	0
+	.short	10537
+	.short	0
+	.short	0
 	.short	10496
 	.short	10537
 	.short	0
@@ -9928,17 +9940,9 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	10496
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	10537
+	.short	10537
+	.short	10537
 	.short	0
 	.short	10537
 	.short	10537
@@ -9960,15 +9964,23 @@ foregroundTiles:
 	.short	10537
 	.short	10537
 	.short	10537
+	.short	10537
+	.short	10537
+	.short	10537
+	.short	10537
+	.short	10537
+	.short	10537
+	.short	10537
+	.short	10537
 	.short	0
 	.short	0
 	.short	0
 	.short	0
+	.short	41
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
+	.short	10537
 	.short	0
 	.short	0
 	.short	0
@@ -9990,18 +10002,6 @@ foregroundTiles:
 	.short	41
 	.short	10537
 	.short	10537
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
 	.short	0
 	.short	0
 	.short	0
@@ -10613,36 +10613,36 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	13878
+	.short	13878
+	.short	6939
+	.short	13824
+	.short	13878
+	.short	6966
+	.short	27
+	.short	13824
+	.short	13878
+	.short	6939
+	.short	0
+	.short	13878
+	.short	6966
+	.short	6939
+	.short	6939
+	.short	13878
+	.short	13878
+	.short	13878
+	.short	6939
 	.short	0
 	.short	0
+	.short	6966
+	.short	27
 	.short	0
+	.short	13824
+	.short	6966
+	.short	27
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	13824
+	.short	6939
 	.short	0
 	.short	0
 	.short	0
@@ -11413,15 +11413,15 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	6966
+	.short	27
 	.short	0
 	.short	0
+	.short	6939
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	13824
+	.short	27
 	.short	0
 	.short	0
 	.short	0
