@@ -7654,6 +7654,20 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	28
+	.short	0
+	.short	0
+	.short	7196
+	.short	7169
+	.short	0
+	.short	7196
+	.short	257
+	.short	1542
+	.short	7196
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	13062
 	.short	0
 	.short	0
 	.short	0
@@ -7675,31 +7689,17 @@ foregroundTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	3840
+	.short	15
 	.short	0
 	.short	0
+	.short	13071
+	.short	3891
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	3855
+	.short	1542
+	.short	13062
+	.short	3855
 	.short	0
 	.short	0
 	.short	0

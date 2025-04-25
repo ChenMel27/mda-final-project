@@ -1713,25 +1713,25 @@ bgOneFrontMap:
 	.short	26
 	.short	26
 	.short	255
+	.short	231
 	.short	255
+	.short	231
 	.short	255
+	.short	231
 	.short	255
+	.short	231
 	.short	255
+	.short	231
 	.short	255
+	.short	231
 	.short	255
+	.short	231
 	.short	255
+	.short	231
 	.short	255
+	.short	231
 	.short	255
-	.short	255
-	.short	255
-	.short	255
-	.short	255
-	.short	255
-	.short	255
-	.short	255
-	.short	255
-	.short	255
-	.short	255
+	.short	231
 	.short	51
 	.short	52
 	.short	26

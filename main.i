@@ -710,7 +710,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 
@@ -1081,11 +1081,12 @@ void goToPhaseOne() {
     DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
 
+
+
     if (!resumingFromPause) {
         initPlayer();
         initHealth();
     }
-
 
     resumingFromPause = 0;
 
@@ -1093,10 +1094,6 @@ void goToPhaseOne() {
     vOff = (256 - 160);
     state = PHASEONE;
 }
-
-
-
-
 
 void phaseOne() {
 
@@ -1111,6 +1108,31 @@ void phaseOne() {
 
     (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff / 2;
+
+    static int tileAnimTimer = 0;
+    static int tileAnimState = 0;
+    tileAnimTimer++;
+
+    if (tileAnimTimer > 15) {
+        tileAnimTimer = 0;
+        tileAnimState = !tileAnimState;
+
+        for (int row = 0; row < 32; row++) {
+            for (int col = 0; col < 32; col++) {
+                u16* tile = &((SB*) 0x6000000)[27].tilemap[row * 32 + col];
+
+                u16 tileId = *tile & 0x03FF;
+                u16 palRow = *tile & 0xFC00;
+
+
+                if (tileId == 231) {
+                    *tile = (255 | palRow);
+                } else if (tileId == 255) {
+                    *tile = (231 | palRow);
+                }
+            }
+        }
+    }
 
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);
