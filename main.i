@@ -585,7 +585,24 @@ extern const unsigned int pOAudio_sampleRate;
 extern const unsigned int pOAudio_length;
 extern const signed char pOAudio_data[];
 # 77 "main.c" 2
-# 86 "main.c"
+# 1 "loselose.h" 1
+
+
+
+
+
+
+
+extern const unsigned short loseloseMap[2048];
+# 78 "main.c" 2
+# 1 "startPause.h" 1
+# 21 "startPause.h"
+extern const unsigned short startPauseBitmap[19200];
+
+
+extern const unsigned short startPausePal[256];
+# 79 "main.c" 2
+# 88 "main.c"
 static int savedStartX;
 static int savedStartY;
 int shiftingRight = 1;
@@ -718,7 +735,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 
@@ -1101,13 +1118,13 @@ void goToPhaseOne() {
     DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
 
-u8* tileData = (u8*) &((CB*) 0x6000000)[1];
-for (int i = 0; i < 64; i++) {
-    originalTile358[i] = tileData[(358 * 64) + i];
-}
+    u8* tileData = (u8*) &((CB*) 0x6000000)[1];
+    for (int i = 0; i < 64; i++) {
+        originalTile358[i] = tileData[(358 * 64) + i];
+    }
 
-tileFadeTimer = 0;
-tileFadeStep = 0;
+    tileFadeTimer = 0;
+    tileFadeStep = 0;
 
 
 
@@ -1195,6 +1212,7 @@ if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
         ((unsigned short *)0x5000000)[colorIndex] = newColor;
     }
 }
+
 static int swapTimer = 0;
 static int swapped = 0;
 static int swapDelayFrames = 0;
@@ -1498,20 +1516,41 @@ void phaseThree() {
 
 void goToPause() {
     (*(volatile unsigned short *)0x4000000) = 0;
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, (volatile void*) dialogueFontPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, (volatile void*) dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
-    DMANow(3, (volatile void*) dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-    DMANow(3, (volatile void*) pauseMap, &((SB*) 0x6000000)[20], (2048) / 2);
-    (*(volatile unsigned short*) 0x04000010) = 0;
-    (*(volatile unsigned short*) 0x04000012) = 0;
+
+
+    initAnimatedPlayer();
+
+
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
+
+
+    DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
+
+
+    DMANow(3, (volatile void*)loseloseMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+
+    hOff = 0;
+    vOff = (256 - 160);
 
     state = PAUSE;
 }
 
 void pause() {
+
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
+    videoBuffer = ((unsigned short*) 0x06000000);
+
+    DMANow(3, (volatile void*)startPausePal, ((unsigned short *)0x5000000), 256 | (1 << 31));
+    drawFullscreenImage4(startPauseBitmap);
+    state = PAUSE;
+
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
 
         resumingFromPause = 1;
@@ -1520,7 +1559,7 @@ void pause() {
             case PHASETWO: goToPhaseTwo(); break;
             case START: goToStartThree(); break;
             case DIALOGUE: goToStartInstructions(); break;
-            case DIALOGUE2: goToPhaseTwoInstructions();break;
+            case DIALOGUE2: goToPhaseTwoInstructions(); break;
             case DIALOGUE3: goToPhaseThreeInstructions(); break;
             default: goToStart(); break;
         }
@@ -1530,19 +1569,49 @@ void pause() {
 
 
 
-
 void goToLose() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
-    videoBuffer = ((unsigned short*) 0x06000000);
+    initAnimatedPlayer();
 
-    DMANow(3, (volatile void*)splashScreenPal, ((unsigned short *)0x5000000), 256 | (1 << 31));
-    drawFullscreenImage4(splashScreenBitmap);
-    drawString4(100, 70, "LOSE", 15);
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
+
+    DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
+
+    DMANow(3, (volatile void*)loseloseMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+
+
+    hOff = 0;
+    vOff = 0;
+
     state = LOSE;
 }
 
 void lose() {
+    hideSprites();
+
+    hOff++;
+
+
+    (*(volatile unsigned short*) 0x04000012) = 0;
+    (*(volatile unsigned short*) 0x04000016) = 0;
+    (*(volatile unsigned short*) 0x0400001A) = 0;
+
+    (*(volatile unsigned short*) 0x04000010) = hOff;
+    (*(volatile unsigned short*) 0x04000014) = hOff / 2;
+    (*(volatile unsigned short*) 0x04000018) = hOff / 4;
+
+    updateAnimatedPlayer();
+    drawAnimatedPlayer();
+
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToSplashScreen();
         state = SPLASH;
@@ -1551,18 +1620,51 @@ void lose() {
 
 
 
+
 void goToWin() {
+    (*(volatile unsigned short *)0x4000000) = 0;
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
-    videoBuffer = ((unsigned short*) 0x06000000);
 
-    DMANow(3, (volatile void*)splashScreenPal, ((unsigned short *)0x5000000), 256 | (1 << 31));
-    drawFullscreenImage4(splashScreenBitmap);
-    drawString4(100, 70, "WIN", 15);
+
+    initAnimatedPlayer();
+
+
+    (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+    (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
+
+
+    DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
+
+
+    DMANow(3, (volatile void*)loseloseMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+    DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+
+    hOff = 0;
+    vOff = (256 - 160);
     state = WIN;
 }
 
 void win() {
+    hideSprites();
+
+
+    hOff++;
+
+
+    (*(volatile unsigned short*) 0x04000010) = hOff;
+    (*(volatile unsigned short*) 0x04000014) = hOff / 2;
+    (*(volatile unsigned short*) 0x04000018) = hOff / 4;
+
+    updateAnimatedPlayer();
+    drawAnimatedPlayer();
+
+
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToSplashScreen();
         state = SPLASH;

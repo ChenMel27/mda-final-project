@@ -74,6 +74,8 @@ Project: The Summit Ascent
 #include "helper.h"
 #include "animateStart.h"
 #include "pOAudio.h"
+#include "loselose.h"
+#include "startPause.h"
 
 #define MENU_START 0
 #define MENU_INSTR 1
@@ -597,14 +599,14 @@ void goToPhaseOne() {
     DMANow(3, (volatile void*)bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
 
-// Save original pixels from tile 358 (CHARBLOCK[1] is BG tiles in Mode 0, 8bpp)
-u8* tileData = (u8*) &CHARBLOCK[1];
-for (int i = 0; i < 64; i++) {
-    originalTile358[i] = tileData[TILE358_OFFSET + i];
-}
+    // Save original pixels from tile 358 (CHARBLOCK[1] is BG tiles in Mode 0, 8bpp)
+    u8* tileData = (u8*) &CHARBLOCK[1];
+    for (int i = 0; i < 64; i++) {
+        originalTile358[i] = tileData[TILE358_OFFSET + i];
+    }
 
-tileFadeTimer = 0;
-tileFadeStep = 0;
+    tileFadeTimer = 0;
+    tileFadeStep = 0;
 
 
     // only reset coordinates in beginning
@@ -692,6 +694,7 @@ if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
         BG_PALETTE[colorIndex] = newColor;
     }
 }
+
 static int swapTimer = 0;
 static int swapped = 0;
 static int swapDelayFrames = 0;
@@ -995,29 +998,50 @@ void phaseThree() {
 
 void goToPause() {
     REG_DISPCTL = 0;
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, (volatile void*) dialogueFontPal, BG_PALETTE, dialogueFontPalLen / 2);
-    DMANow(3, (volatile void*) dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
-    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    DMANow(3, (volatile void*) dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
-    DMANow(3, (volatile void*) pauseMap, &SCREENBLOCK[20], pauseLen / 2);
-    REG_BG0HOFF = 0;
-    REG_BG0VOFF = 0;
+
+    // Initialize animated player
+    initAnimatedPlayer();
+
+    // Set BG0/1/2 to 8BPP
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+
+    // Load correct palette and tiles for pause/lose
+    DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+
+    // Load background maps
+    DMANow(3, (volatile void*)loseloseMap, &SCREENBLOCK[26], loseloseLen / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
+
+    hOff = 0;
+    vOff = MAX_VOFF;
 
     state = PAUSE;
 }
 
 void pause() {
+        // Switch to mode 4 and draw bitmap image
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
+    videoBuffer = FRONTBUFFER;
+    
+    DMANow(3, (volatile void*)startPausePal, BG_PALETTE, 256 | DMA_ON);
+    drawFullscreenImage4(startPauseBitmap);
+    state = PAUSE;
+
     if (BUTTON_PRESSED(BUTTON_START)) {
-        // flag to skip init next time
+        // Flag to skip re-initializing stuff
         resumingFromPause = 1;
         switch (prevState) {
             case PHASEONE: goToPhaseOne(); break;
             case PHASETWO: goToPhaseTwo(); break;
             case START: goToStartThree(); break;
             case DIALOGUE: goToStartInstructions(); break;
-            case DIALOGUE2: goToPhaseTwoInstructions();break;
+            case DIALOGUE2: goToPhaseTwoInstructions(); break;
             case DIALOGUE3: goToPhaseThreeInstructions(); break;
             default: goToStart(); break;
         }
@@ -1025,21 +1049,52 @@ void pause() {
     }
 }
 
-
 // ============================= [ LOSE STATE ] =================================
 
 void goToLose() {
-    // Switch to mode 4 and draw bitmap image
-    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    videoBuffer = FRONTBUFFER;
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
-    drawFullscreenImage4(splashScreenBitmap);
-    drawString4(100, 70, "LOSE", 15);
+
+    // Initialize animated player
+    initAnimatedPlayer();
+    
+    // Set BG0/1/2 to 8BPP
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+
+    // Load correct palette and tiles for pause/lose
+    DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+
+    // Load background maps
+    DMANow(3, (volatile void*)loseloseMap, &SCREENBLOCK[26], loseloseLen / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
+
+    hOff = 0;
+    vOff = MAX_VOFF;
     state = LOSE;
 }
 
 void lose() {
+    hideSprites();
+
+    // Parallax scrolling even while paused
+    hOff++;  // Advance horizontal offset
+
+    // Scroll backgrounds at different speeds
+    REG_BG0HOFF = hOff;           // Foreground scrolls fastest
+    REG_BG1HOFF = hOff / 2;       // Midground scrolls slower
+    REG_BG2HOFF = hOff / 4;       // Background scrolls slowest (optional, or keep static)
+
+    updateAnimatedPlayer();
+    drawAnimatedPlayer();
+
+    // Push shadowOAM to OAM
+    DMANow(3, shadowOAM, OAM, 128 * 4);
+
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToSplashScreen();
         state = SPLASH;
@@ -1049,17 +1104,49 @@ void lose() {
 // ============================= [ WIN STATE ] =================================
 
 void goToWin() {
-    // Switch to mode 4 and draw bitmap image
-    REG_DISPCTL = MODE(4) | BG_ENABLE(2);
-    videoBuffer = FRONTBUFFER;
+    REG_DISPCTL = 0;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    DMANow(3, (volatile void*)splashScreenPal, BG_PALETTE, 256 | DMA_ON);
-    drawFullscreenImage4(splashScreenBitmap);
-    drawString4(100, 70, "WIN", 15);
+
+    // Initialize animated player
+    initAnimatedPlayer();
+    
+    // Set BG0/1/2 to 8BPP
+    REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+    REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+
+    // Load correct palette and tiles for pause/lose
+    DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
+    DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
+
+    // Load background maps
+    DMANow(3, (volatile void*)loseloseMap, &SCREENBLOCK[26], loseloseLen / 2);
+    DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
+
+    hOff = 0;
+    vOff = MAX_VOFF;
     state = WIN;
 }
 
 void win() {
+    hideSprites();
+
+    // Parallax scrolling even while paused
+    hOff++;  // Advance horizontal offset
+
+    // Scroll backgrounds at different speeds
+    REG_BG0HOFF = hOff;           // Foreground scrolls fastest
+    REG_BG1HOFF = hOff / 2;       // Midground scrolls slower
+    REG_BG2HOFF = hOff / 4;       // Background scrolls slowest (optional, or keep static)
+
+    updateAnimatedPlayer();
+    drawAnimatedPlayer();
+
+    // Push shadowOAM to OAM
+    DMANow(3, shadowOAM, OAM, 128 * 4);
+
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToSplashScreen();
         state = SPLASH;
