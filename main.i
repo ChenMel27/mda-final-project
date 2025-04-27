@@ -755,7 +755,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToPhaseOne();
+    goToSplashScreen();
 }
 
 
@@ -897,30 +897,13 @@ void goToStart() {
     DMANow(3, (volatile void*)sTSPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
     DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+
     for (int y = 0; y < 4; y++) {
         for (int x = 0; x < 4; x++) {
             int row = 3 + y;
             int col = 20 + x;
             originalBlock[y][x] = ((SB*) 0x6000000)[21].tilemap[row * 32 + col];
             currentBlock[y][x] = originalBlock[y][x];
-        }
-    }
-
-
-
-    for (int y = 0; y < 10; y++) {
-        for (int x = 0; x < 10; x++) {
-            int r = y + 27;
-            int c = 57 + x;
-
-
-            int blk = 18 + (r / 32) * 2 + (c / 32);
-
-
-            volatile u16* m = ((SB*) 0x6000000)[blk].tilemap;
-
-
-            m[(r % 32) * 32 + (c % 32)] = ((364) & 1023) | (((0) & 15) << 12);
         }
     }
 
@@ -931,10 +914,10 @@ void goToStart() {
         }
     }
 
-
     initStartPlayer();
     initGuideSprite();
-    hOff = 0; vOff = (256 - 160);
+    hOff = 0;
+    vOff = (256 - 160);
 
     playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
@@ -989,6 +972,8 @@ void goToStartThree() {
     state = START;
 }
 
+int bridgeUncovered = 0;
+
 void start() {
     animateTilemapShift();
     updateStartPlayer(&hOff, &vOff);
@@ -1001,10 +986,24 @@ void start() {
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
 
+    if (!talkedToGuide && !bridgeUncovered) {
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+                int r = y + 27;
+                int c = 57 + x;
+                int blk = 18 + (r / 32) * 2 + (c / 32);
+                volatile u16* m = ((SB*) 0x6000000)[blk].tilemap;
+                m[(r % 32) * 32 + (c % 32)] = ((364) & 1023) | (((0) & 15) << 12);
+            }
+        }
+        bridgeUncovered = 1;
+    }
+
+
+
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
     }
-
 
     if (next == 1 && talkedToGuide) {
         stopSounds();
@@ -1015,29 +1014,22 @@ void start() {
     if (tileFlashTimer > 15) {
         tileFlashTimer = 0;
         tileFlashState = !tileFlashState;
-
         flashColorInTile(84, 3, 4, tileFlashState, originalTiles[0]);
         flashColorInTile(85, 3, 4, tileFlashState, originalTiles[1]);
         flashColorInTile(116, 3, 4, tileFlashState, originalTiles[2]);
         flashColorInTile(117, 3, 4, tileFlashState, originalTiles[3]);
     }
 
-
-
-
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
-
-
         stopSounds();
         goToPause();
         return;
     }
-
 }
+
 
 
 

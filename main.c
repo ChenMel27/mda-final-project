@@ -361,30 +361,13 @@ void goToStart() {
     DMANow(3, (volatile void*)sTSPal,   BG_PALETTE,      sTSPalLen   / 2);
     DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0],  sTSTilesLen / 2);
     DMANow(3, (volatile void*)sTMMap,   &SCREENBLOCK[18], sTMLen / 2);
+
     for (int y = 0; y < TILEMAP_SHIFT_ROWS; y++) {
         for (int x = 0; x < TILEMAP_SHIFT_COLS; x++) {
             int row = SHIFT_TILEMAP_START_ROW + y;
             int col = SHIFT_TILEMAP_START_COL + x;
             originalBlock[y][x] = SCREENBLOCK[SHIFT_SCREENBLOCK_INDEX].tilemap[row * 32 + col];
             currentBlock[y][x] = originalBlock[y][x];
-        }
-    }
-    
-    // Modifying start tilemap at runtime
-    // 10x10 block at (27, 57) that will be uncovered when player meets guide and can cross bridge
-    for (int y = 0; y < 10; y++) {
-        for (int x = 0; x < 10; x++) {
-            int r = y + 27; // row offset
-            int c = 57 + x; // col offset
-
-            // Find which screenblock this tile is in
-            int blk = 18 + (r / 32) * 2 + (c / 32);
-
-            // Get pointer to the tilemap for this block
-            volatile u16* m = SCREENBLOCK[blk].tilemap;
-
-            // Write tile ID 364 at (r, c) using palette 0
-            m[(r % 32) * 32 + (c % 32)] = TILEMAP_ENTRY_TILEID(364) | TILEMAP_ENTRY_PALROW(0);
         }
     }
 
@@ -395,10 +378,10 @@ void goToStart() {
         }
     }
 
-
     initStartPlayer();
     initGuideSprite();
-    hOff = 0;  vOff = MAX_VOFF;
+    hOff = 0;
+    vOff = MAX_VOFF;
 
     playSoundA(animaljam_data, animaljam_length, 1);
     state = START;
@@ -453,6 +436,8 @@ void goToStartThree() {
     state = START;
 }
 
+int bridgeUncovered = 0; // Declare globally or at the top
+
 void start() {
     animateTilemapShift();
     updateStartPlayer(&hOff, &vOff);
@@ -464,44 +449,51 @@ void start() {
     drawGuideSprite();
     DMANow(3, shadowOAM, OAM, 512);
 
-    // go to initialize instructions when collide with guide
+    // ==== NEW ==== TILEMAP MODIFICATION only after meeting guide
+    if (!talkedToGuide && !bridgeUncovered) {
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+                int r = y + 27;
+                int c = 57 + x;
+                int blk = 18 + (r / 32) * 2 + (c / 32);
+                volatile u16* m = SCREENBLOCK[blk].tilemap;
+                m[(r % 32) * 32 + (c % 32)] = TILEMAP_ENTRY_TILEID(364) | TILEMAP_ENTRY_PALROW(0);
+            }
+        }
+        bridgeUncovered = 1;
+    }
+
+    // ==== your normal logic ====
+
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
     }
 
-    // next is for hitting the right side and guide has been collided with
     if (next == 1 && talkedToGuide) {
         stopSounds();
         goToPhaseOne();
     }
-    // Flash tile ID 84 every ~15 frames
+
     tileFlashTimer++;
     if (tileFlashTimer > 15) {
         tileFlashTimer = 0;
         tileFlashState = !tileFlashState;
-
         flashColorInTile(84, 3, 4, tileFlashState, originalTiles[0]);
         flashColorInTile(85, 3, 4, tileFlashState, originalTiles[1]);
         flashColorInTile(116, 3, 4, tileFlashState, originalTiles[2]);
         flashColorInTile(117, 3, 4, tileFlashState, originalTiles[3]);
     }
 
-
-
-
     if (BUTTON_PRESSED(BUTTON_START)) {
-        // save player position before pausing
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
-
-        // stop sound and go to pause
         stopSounds();
         goToPause();
         return;
     }
-    
 }
+
 
 // ============================= [ DIALOGUE STATE ] =============================
 
