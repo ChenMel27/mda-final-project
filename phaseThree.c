@@ -191,13 +191,7 @@ void drawPlayerThree() {
     } else if (player.direction == 1) {
         shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
     }
-        
-    // If ducking use the duck tile
-    if (isDucking) {
-        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 5);
-    } else {
-        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 5);
-    }
+
 }
 
 inline unsigned char colorAtThree(int x, int y) {
