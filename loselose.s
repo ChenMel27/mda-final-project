@@ -767,19 +767,19 @@ loseloseMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	42
+	.short	43
+	.short	44
+	.short	44
+	.short	45
+	.short	46
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	92
+	.short	67
+	.short	45
+	.short	93
+	.short	70
+	.short	72
 	.short	0
 	.short	0
 	.short	0

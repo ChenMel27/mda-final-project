@@ -76,6 +76,8 @@ Project: The Summit Ascent
 #include "pOAudio.h"
 #include "loselose.h"
 #include "startPause.h"
+#include "winwin.h"
+#include "bgAnimatedBack.h"
 
 #define MENU_START 0
 #define MENU_INSTR 1
@@ -201,7 +203,7 @@ int main() {
                 lose();
                 break;
             case WIN:
-                lose();
+                win();
                 break;
             case GAMEINSTRUCTIONS:
                 gameInstructions();
@@ -1070,8 +1072,8 @@ void goToLose() {
 
     // Load background maps
     DMANow(3, (volatile void*)loseloseMap, &SCREENBLOCK[26], loseloseLen / 2);
-    DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
-    DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
+    DMANow(3, (volatile void*)bgAnimatedBackMap, &SCREENBLOCK[28], bgAnimatedBackLen / 2);
+    DMANow(3, (volatile void*)duskTMMap, &SCREENBLOCK[30], duskTMLen / 2);
 
     hOff = 0;
     vOff = MAX_VOFF;
@@ -1081,14 +1083,23 @@ void goToLose() {
 void lose() {
     hideSprites();
 
+
     // Parallax scrolling even while paused
-    hOff++;  // Advance horizontal offset
+    // Move horizontally if you want (like you do now)
+    hOff++;
 
-    // Scroll backgrounds at different speeds
-    REG_BG0HOFF = hOff;           // Foreground scrolls fastest
-    REG_BG1HOFF = hOff / 2;       // Midground scrolls slower
-    REG_BG2HOFF = hOff / 4;       // Background scrolls slowest (optional, or keep static)
+    // Optional: move vertically if you want
+    // vOff++; (only if you want vertical scroll effect)
 
+    // During VBlank (or right after it), update:
+    REG_BG0HOFF = hOff;
+    REG_BG0VOFF = vOff;
+
+    REG_BG1HOFF = hOff / 2;
+    REG_BG1VOFF = vOff / 2;
+
+    REG_BG2HOFF = hOff / 4;
+    REG_BG2VOFF = vOff / 4;
     updateAnimatedPlayer();
     drawAnimatedPlayer();
 
@@ -1107,10 +1118,10 @@ void goToWin() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-
     // Initialize animated player
     initAnimatedPlayer();
-    
+    REG_BG0HOFF = 0;
+    REG_BG0VOFF = 0;
     // Set BG0/1/2 to 8BPP
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
@@ -1121,8 +1132,8 @@ void goToWin() {
     DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
 
     // Load background maps
-    DMANow(3, (volatile void*)loseloseMap, &SCREENBLOCK[26], loseloseLen / 2);
-    DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    DMANow(3, (volatile void*)winwinMap, &SCREENBLOCK[26], winwinLen / 2);
+    DMANow(3, (volatile void*)bgAnimatedBackMap, &SCREENBLOCK[28], bgAnimatedBackLen / 2);
     DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
 
     hOff = 0;
@@ -1134,12 +1145,22 @@ void win() {
     hideSprites();
 
     // Parallax scrolling even while paused
-    hOff++;  // Advance horizontal offset
+    // Move horizontally if you want (like you do now)
+    hOff++;
 
-    // Scroll backgrounds at different speeds
-    REG_BG0HOFF = hOff;           // Foreground scrolls fastest
-    REG_BG1HOFF = hOff / 2;       // Midground scrolls slower
-    REG_BG2HOFF = hOff / 4;       // Background scrolls slowest (optional, or keep static)
+    // Optional: move vertically if you want
+    // vOff++; (only if you want vertical scroll effect)
+
+    // During VBlank (or right after it), update:
+    REG_BG0HOFF = hOff;
+    REG_BG0VOFF = vOff;
+
+    REG_BG1HOFF = hOff / 2;
+    REG_BG1VOFF = vOff / 2;
+
+    REG_BG2HOFF = hOff / 4;
+    REG_BG2VOFF = vOff / 4;
+      // Background scrolls slowest (optional, or keep static)
 
     updateAnimatedPlayer();
     drawAnimatedPlayer();
