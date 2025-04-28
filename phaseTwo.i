@@ -1148,7 +1148,7 @@ void drawPlayerTwo() {
         }
 
 
-        player.worldX = 0;
+        player.worldX = 240;
         player.worldY = 101;
         player.yVel = 0;
 
@@ -1208,7 +1208,7 @@ void updateSnow() {
             if (health.active == 0) gameOver = 1;
 
 
-            player.worldX = 0;
+            player.worldX = 240;
             player.worldY = 101;
             player.yVel = 0;
             hOff = 0;

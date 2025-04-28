@@ -84,6 +84,9 @@ Project: The Summit Ascent
 #define BG_PRIORITY(n) ((n) & 3)
 #define TILEMAP_WIDTH 64
 
+#define MOSAIC_BG(h,b,v,a) ((h) | ((b) << 4) | ((v) << 8) | ((a) << 12))
+
+
 // ============================= [ GLOBAL VARIABLES ] =============================
 
 // Saved player position when pausing
@@ -137,6 +140,7 @@ int altIndices[3] = {16, 17, 18};
 // External sprites
 extern SPRITE guide;
 extern SPRITE startPlayer;
+extern SPRITE player;
 
 // ============================= [ FUNCTION PROTOTYPES ] =============================
 
@@ -932,6 +936,22 @@ void phaseThreeInstructions() {
 }
 
 // ============================= [ PHASE THREE STATE ] ============================
+#define REG_BLDCNT    (*(volatile unsigned short*)0x4000050)
+#define REG_BLDALPHA  (*(volatile unsigned short*)0x4000052)
+#define REG_BLDY      (*(volatile unsigned short*)0x4000054)
+
+// Blend modes
+#define BLD_OFF    0
+#define BLD_STD    1
+#define BLD_WHITE  2
+#define BLD_BLACK  3
+
+// Layer flags
+#define BLD_BG0    (1<<0)
+#define BLD_BG1    (1<<1)
+#define BLD_BG2    (1<<2)
+#define BLD_OBJ    (1<<3)
+#define BLD_BD     (1<<4)  // backdrop
 
 void goToPhaseThree() {
 
@@ -960,8 +980,8 @@ void goToPhaseThree() {
     vOff = MAX_VOFF;
     state = PHASETHREE;
 }
-
-
+#define REG_MOSAIC   (*(volatile unsigned short*) 0x400004C)
+#define BG_MOSAIC_ON (1<<6)
 void phaseThree() {
 
     // Update sprites
@@ -969,6 +989,55 @@ void phaseThree() {
     updateSnow();
     updateHealth();
     updatePlayerPalette();
+
+   // Oxygen blur effect in last 5 seconds
+    int secondsPassed = REG_TM3D;
+    int countdown = 20 - secondsPassed;
+
+    if (countdown <= 3 && countdown > 0) {
+        int blurStrength = 6 - countdown;
+        if (blurStrength > 5) blurStrength = 5;
+
+        // Mosaic pixelation
+        REG_MOSAIC = MOSAIC_BG(blurStrength, blurStrength, blurStrength, blurStrength);
+        REG_BG0CNT |= BG_MOSAIC_ON;
+        REG_BG1CNT |= BG_MOSAIC_ON;
+        REG_BG2CNT |= BG_MOSAIC_ON;
+
+        // Blending fade to black
+        REG_BLDCNT = (BLD_BG0 | BLD_BG1 | BLD_BG2) | (BLD_BLACK << 6);
+        REG_BLDY = (6 - countdown) * 3;   // Increase darkness toward max (5*3=15)
+    } else if (countdown > 3) {
+        // Disable mosaic
+        REG_MOSAIC = 0;
+        REG_BG0CNT &= ~BG_MOSAIC_ON;
+        REG_BG1CNT &= ~BG_MOSAIC_ON;
+        REG_BG2CNT &= ~BG_MOSAIC_ON;
+
+        // Disable blending
+        REG_BLDCNT = 0;
+        REG_BLDY = 0;
+    }
+    if (leftWallTouched) {
+        volatile u16* tilemap = SCREENBLOCK[26].tilemap;
+    
+        for (int row = 0; row < 32; row++) {
+            for (int col = 0; col < 32; col++) {
+                u16 tileEntry = tilemap[row * 32 + col];
+                u16 tileID = tileEntry & 0x03FF;  // Lower 10 bits
+                u16 palRow = tileEntry & 0xFC00;  // Palette row
+    
+                // If tileID is 101, 102, or 103, change to tile 0
+                if (tileID == 399) {
+                    tilemap[row * 32 + col] = TILEMAP_ENTRY_TILEID(105) | palRow;
+                }
+            }
+        }
+    }
+    
+    
+    
+    
 
     // Front background scrolls regular
     REG_BG0HOFF = hOff;
@@ -1053,10 +1122,14 @@ void pause() {
 // ============================= [ LOSE STATE ] =================================
 
 void goToLose() {
+    REG_BLDCNT = 0;
+    REG_BLDALPHA = 0;
+    REG_BLDY = 0;
+    REG_MOSAIC = 0;
+    
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
-
-
+    
     // Initialize animated player
     initAnimatedPlayer();
     

@@ -167,6 +167,7 @@ extern int hikerFrames[4];
 extern int hOff, vOff;
 extern int isDucking;
 extern int gameOver;
+int leftWallTouched = 0;
 int winPhaseThree = 0;
 extern SPRITE player;
 extern SPRITE health;
@@ -177,7 +178,7 @@ static int timerPaused = 0;
 
 
 void initPlayerThree() {
-    player.worldX = 0;
+    player.worldX = 20;
     player.worldY = 102;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
@@ -219,6 +220,11 @@ void updatePlayerThree(int* hOff, int* vOff) {
             *(volatile unsigned short*)0x400010A &= ~(1<<7);
             timerPaused = 1;
         }
+    }
+
+    if (colorAtThree(leftX, topY) == 0x04 || colorAtThree(rightX, topY) == 0x04 ||
+    colorAtThree(leftX, bottomY) == 0x04 || colorAtThree(rightX, bottomY) == 0x04) {
+        leftWallTouched = 1;
     }
 
 

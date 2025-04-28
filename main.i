@@ -191,6 +191,7 @@ int isDucking;
 int gameOver;
 int winPhaseOne;
 int movedHorizontally;
+int leftWallTouched;
 
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
@@ -622,7 +623,7 @@ extern const unsigned short winwinMap[2048];
 
 extern const unsigned short bgAnimatedBackMap[2048];
 # 72 "main.c" 2
-# 90 "main.c"
+# 93 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -673,6 +674,7 @@ int altIndices[3] = {16, 17, 18};
 
 extern SPRITE guide;
 extern SPRITE startPlayer;
+extern SPRITE player;
 
 
 
@@ -1466,9 +1468,7 @@ void phaseThreeInstructions() {
         goToPhaseThree();
     }
 }
-
-
-
+# 956 "main.c"
 void goToPhaseThree() {
 
     (*(volatile unsigned short *)0x4000000) = 0;
@@ -1505,6 +1505,57 @@ void phaseThree() {
     updateSnow();
     updateHealth();
     updatePlayerPalette();
+
+
+    int secondsPassed = *(volatile unsigned short*)0x400010C;
+    int countdown = 20 - secondsPassed;
+
+    if (countdown <= 5 && countdown > 0) {
+        int blurStrength = 6 - countdown;
+        if (blurStrength > 5) blurStrength = 5;
+
+
+        (*(volatile unsigned short*) 0x400004C) = ((blurStrength) | ((blurStrength) << 4) | ((blurStrength) << 8) | ((blurStrength) << 12));
+        (*(volatile unsigned short*) 0x4000008) |= (1<<6);
+        (*(volatile unsigned short*) 0x400000A) |= (1<<6);
+        (*(volatile unsigned short*) 0x400000C) |= (1<<6);
+
+
+        (*(volatile unsigned short*)0x4000050) = ((1<<0) | (1<<1) | (1<<2)) | (3 << 6);
+        (*(volatile unsigned short*)0x4000054) = (6 - countdown) * 3;
+    } else if (countdown > 5) {
+
+        (*(volatile unsigned short*) 0x400004C) = 0;
+        (*(volatile unsigned short*) 0x4000008) &= ~(1<<6);
+        (*(volatile unsigned short*) 0x400000A) &= ~(1<<6);
+        (*(volatile unsigned short*) 0x400000C) &= ~(1<<6);
+
+
+        (*(volatile unsigned short*)0x4000050) = 0;
+        (*(volatile unsigned short*)0x4000054) = 0;
+    }
+    if (leftWallTouched) {
+
+
+        volatile u16* tilemap = ((SB*) 0x6000000)[26].tilemap;
+
+        for (int row = 0; row < 32; row++) {
+            for (int col = 0; col < 32; col++) {
+                u16 tileEntry = tilemap[row * 32 + col];
+                u16 tileID = tileEntry & 0x03FF;
+                u16 palRow = tileEntry & 0xFC00;
+
+
+                if (tileID == 399) {
+                    tilemap[row * 32 + col] = ((105) & 1023) | palRow;
+                }
+            }
+        }
+    }
+
+
+
+
 
 
     (*(volatile unsigned short*) 0x04000010) = hOff;
@@ -1589,9 +1640,13 @@ void pause() {
 
 
 void goToLose() {
+    (*(volatile unsigned short*)0x4000050) = 0;
+    (*(volatile unsigned short*)0x4000052) = 0;
+    (*(volatile unsigned short*)0x4000054) = 0;
+    (*(volatile unsigned short*) 0x400004C) = 0;
+
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
-
 
 
     initAnimatedPlayer();

@@ -197,7 +197,7 @@ inline unsigned char colorAt(int x, int y);
 
 
 void initPlayer() {
-    player.worldX = 0;
+    player.worldX = 240;
     player.worldY = 102;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
@@ -210,7 +210,7 @@ void initPlayer() {
     player.direction = 0;
     player.active = 1;
     player.xVel = cheatOn ? (12) : (8);
-    playerSubPixelX = 0 << 3;
+    playerSubPixelX = 240 << 3;
     player.yVel = 0;
     DMANow(3, (void*) playerPal, ((u16 *)0x5000200), 512 / 2);
     DMANow(3, (void*) playerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
@@ -385,9 +385,9 @@ void drawPlayer() {
         }
     }
 
-    player.worldX = 0;
+    player.worldX = 240;
     player.worldY = 102;
-    playerSubPixelX = 0 << 3;
+    playerSubPixelX = 240 << 3;
     player.yVel = 0;
     hOff = 0;
     vOff = 0;
@@ -498,7 +498,7 @@ void resetPlayerState() {
     hikerFrame = 0;
     isDucking = 0;
     gameOver = 0;
-    playerSubPixelX = 0 << 3;
+    playerSubPixelX = 240 << 3;
 }
 
 
@@ -533,12 +533,12 @@ void drawFallingSprite(void) {
 
 
 void resetPlayerAfterFall(void) {
-    player.worldX = 0;
+    player.worldX = 240;
     player.worldY = 102;
     player.yVel = 0;
     hOff = 0;
     vOff = 0;
-    playerSubPixelX = 0 << 3;
+    playerSubPixelX = 240 << 3;
     playerState = PLAYER_NORMAL;
 }
 

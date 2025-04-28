@@ -20,27 +20,29 @@ updateFallingAnimation.part.0:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
+	mov	r1, #102
+	mov	ip, #240
 	mov	r3, #0
-	mov	r0, #102
-	ldr	r1, .L4
+	mov	r0, #1920
+	ldr	r2, .L4
 	str	lr, [sp, #-4]!
-	ldr	r2, .L4+4
+	str	r1, [r2, #20]
+	ldr	r1, .L4+4
 	ldr	lr, .L4+8
+	str	ip, [r2, #16]
 	ldr	ip, .L4+12
 	strb	r3, [r1, #4]
 	str	r3, [lr]
-	str	r3, [ip]
-	str	r3, [r2, #16]
 	str	r3, [r2, #12]
-	str	r0, [r2, #20]
-	str	r3, [r1]
+	str	r3, [ip]
+	str	r0, [r1]
 	ldr	lr, [sp], #4
 	bx	lr
 .L5:
 	.align	2
 .L4:
-	.word	.LANCHOR0
 	.word	player
+	.word	.LANCHOR0
 	.word	hOff
 	.word	vOff
 	.size	updateFallingAnimation.part.0, .-updateFallingAnimation.part.0
@@ -55,41 +57,43 @@ initPlayer:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	ldr	r3, .L10
-	mov	r0, #12
 	ldr	r3, [r3]
-	push	{r4, r5, r6, r7, r8, lr}
-	mov	r1, #0
+	mov	ip, #24
 	cmp	r3, #0
-	mov	r4, #64
-	mov	r3, #24
-	mov	r2, #5
-	mov	lr, #1
-	movne	r7, #12
-	moveq	r7, #8
-	mov	r6, #102
-	mov	r5, #112
-	ldr	ip, .L10+4
-	str	r0, [ip, #24]
-	ldr	r0, .L10+8
-	str	r4, [ip, #4]
-	str	r3, [ip, #28]
-	str	r2, [ip, #48]
-	str	r1, [ip, #16]
-	strb	r1, [ip, #56]
-	str	r1, [ip, #44]
-	str	r1, [ip, #36]
-	str	r1, [ip, #12]
-	str	r1, [r0]
+	push	{r4, r5, r6, r7, r8, r9, r10, lr}
+	mov	r2, #0
+	movne	r9, #12
+	moveq	r9, #8
+	mov	r0, #1
+	mov	r8, #240
+	mov	r7, #102
+	mov	r6, #112
+	mov	r5, #64
+	mov	r4, #12
+	mov	r3, #5
+	mov	lr, #1920
+	ldr	r1, .L10+4
+	str	ip, [r1, #28]
+	ldr	ip, .L10+8
+	str	r9, [r1, #8]
+	str	r8, [r1, #16]
+	str	r7, [r1, #20]
+	str	r6, [r1]
+	str	r5, [r1, #4]
+	str	r4, [r1, #24]
+	str	r3, [r1, #48]
+	strb	r2, [r1, #56]
+	str	r2, [r1, #44]
+	str	r2, [r1, #36]
+	str	r2, [r1, #12]
+	str	r0, [r1, #40]
+	str	r0, [r1, #52]
 	ldr	r4, .L10+12
 	mov	r3, #256
 	mov	r0, #3
 	ldr	r2, .L10+16
 	ldr	r1, .L10+20
-	str	r7, [ip, #8]
-	str	r6, [ip, #20]
-	str	r5, [ip]
-	str	lr, [ip, #40]
-	str	lr, [ip, #52]
+	str	lr, [ip]
 	mov	lr, pc
 	bx	r4
 	mov	r3, #16384
@@ -98,7 +102,7 @@ initPlayer:
 	ldr	r1, .L10+28
 	mov	lr, pc
 	bx	r4
-	pop	{r4, r5, r6, r7, r8, lr}
+	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
 	bx	lr
 .L11:
 	.align	2
@@ -124,15 +128,16 @@ resetPlayerState:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	r2, #0
-	mov	r0, #4
+	mov	ip, #4
+	mov	r1, #1920
 	ldr	r3, .L13
-	ldr	r1, .L13+4
+	ldr	r0, .L13+4
 	str	r2, [r3, #8]
-	str	r0, [r1]
+	str	ip, [r0]
 	str	r2, [r3, #12]
 	str	r2, [r3, #16]
 	str	r2, [r3, #20]
-	str	r2, [r3]
+	str	r1, [r3]
 	bx	lr
 .L14:
 	.align	2
@@ -337,16 +342,18 @@ drawPlayer:
 	moveq	r3, #1
 	streq	r3, [lr, #20]
 .L35:
-	mov	r3, #0
+	mov	r0, #240
 	mov	r2, #102
-	ldr	ip, .L66+28
-	ldr	r0, .L66+32
-	str	r3, [r1, #16]
-	str	r3, [lr]
-	str	r3, [r1, #12]
-	str	r3, [ip]
-	str	r3, [r0]
+	mov	r3, #0
+	mov	ip, #1920
+	str	r0, [r1, #16]
 	str	r2, [r1, #20]
+	ldr	r0, .L66+28
+	ldr	r2, .L66+32
+	str	ip, [lr]
+	str	r3, [r1, #12]
+	str	r3, [r0]
+	str	r3, [r2]
 .L30:
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
@@ -489,27 +496,29 @@ resetPlayerAfterFall:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
+	mov	r1, #102
+	mov	ip, #240
 	mov	r3, #0
-	mov	r0, #102
-	ldr	r1, .L70
+	mov	r0, #1920
+	ldr	r2, .L70
 	str	lr, [sp, #-4]!
-	ldr	r2, .L70+4
+	str	r1, [r2, #20]
+	ldr	r1, .L70+4
 	ldr	lr, .L70+8
+	str	ip, [r2, #16]
 	ldr	ip, .L70+12
 	strb	r3, [r1, #4]
 	str	r3, [lr]
-	str	r3, [ip]
-	str	r3, [r2, #16]
 	str	r3, [r2, #12]
-	str	r0, [r2, #20]
-	str	r3, [r1]
+	str	r3, [ip]
+	str	r0, [r1]
 	ldr	lr, [sp], #4
 	bx	lr
 .L71:
 	.align	2
 .L70:
-	.word	.LANCHOR0
 	.word	player
+	.word	.LANCHOR0
 	.word	hOff
 	.word	vOff
 	.size	resetPlayerAfterFall, .-resetPlayerAfterFall

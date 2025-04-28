@@ -16,6 +16,8 @@
 	.type	bgThreeFrontCMBitmap, %object
 	.size	bgThreeFrontCMBitmap, 131072
 bgThreeFrontCMBitmap:
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -526,6 +528,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -1036,6 +1040,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -1546,6 +1552,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -2056,6 +2064,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -2566,6 +2576,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -3076,6 +3088,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -3586,6 +3600,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -4096,6 +4112,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -4606,6 +4624,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -5116,6 +5136,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -5626,6 +5648,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -6136,6 +6160,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -6646,6 +6672,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -7156,6 +7184,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -7666,6 +7696,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -8176,6 +8208,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -8686,6 +8720,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -9196,6 +9232,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -9706,6 +9744,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -10216,6 +10256,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -10726,6 +10768,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -11236,6 +11280,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -11746,6 +11792,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -12256,6 +12304,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -12766,6 +12816,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -13276,6 +13328,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -13786,6 +13840,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -14296,6 +14352,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -14806,6 +14864,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -15316,6 +15376,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -15826,6 +15888,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -16336,6 +16400,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -16846,6 +16912,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -17356,6 +17424,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -17866,6 +17936,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -18376,6 +18448,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -18886,6 +18960,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -19396,6 +19472,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -19906,6 +19984,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -20416,6 +20496,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -20926,6 +21008,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -21436,6 +21520,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -21946,6 +22032,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -22456,6 +22544,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -22966,6 +23056,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -23476,6 +23568,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -23986,6 +24080,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -24496,6 +24592,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -25006,6 +25104,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -25516,6 +25616,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -26026,6 +26128,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -26536,6 +26640,8 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -27042,118 +27148,12 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -27664,6 +27664,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -28167,8 +28169,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -28176,8 +28176,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -28688,6 +28688,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -29188,8 +29190,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -29200,8 +29200,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -29712,6 +29712,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -30207,8 +30209,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -30224,8 +30224,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -30736,6 +30736,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -31228,8 +31230,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -31248,8 +31248,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -31760,6 +31760,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -32248,8 +32250,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -32272,6 +32272,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -32758,8 +32760,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -32784,7 +32784,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -33269,7 +33270,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -33296,7 +33296,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -33779,7 +33780,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -33808,7 +33808,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -34289,7 +34290,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -34320,7 +34320,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -34799,7 +34800,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -34832,7 +34832,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -35309,7 +35310,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -35344,7 +35344,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -35819,7 +35820,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -35856,7 +35856,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -36329,7 +36330,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -36368,7 +36368,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -36839,7 +36840,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -36880,7 +36880,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -37349,7 +37350,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -37392,7 +37392,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -37859,7 +37860,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -37904,7 +37904,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -38369,7 +38370,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -38416,7 +38416,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -38879,7 +38880,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -38928,7 +38928,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -39389,7 +39390,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -39440,7 +39440,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -39899,7 +39900,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -39952,7 +39952,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -40409,7 +40410,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -40464,7 +40464,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -40919,7 +40920,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -40976,7 +40976,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -41183,7 +41184,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -41488,7 +41488,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -41695,7 +41696,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -42000,7 +42000,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -42207,7 +42208,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -42512,7 +42512,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -42719,7 +42720,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -43024,7 +43024,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -43231,7 +43232,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -43536,7 +43536,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -43743,7 +43744,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -44048,7 +44048,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -44255,7 +44256,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -44560,7 +44560,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -44767,7 +44768,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -45072,7 +45072,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -45279,7 +45280,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -45584,7 +45584,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -45791,7 +45792,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -46096,7 +46096,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -46303,7 +46304,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -46608,7 +46608,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -46815,7 +46816,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -47120,7 +47120,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -47327,7 +47328,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -47632,7 +47632,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -47839,7 +47840,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -48144,7 +48144,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -48351,7 +48352,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -48656,7 +48656,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -48863,7 +48864,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	3
 	.byte	3
 	.byte	3
@@ -49168,7 +49168,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -49367,7 +49368,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -49680,7 +49680,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -49879,7 +49880,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -50192,7 +50192,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -50391,7 +50392,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -50704,7 +50704,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -50903,7 +50904,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -51216,7 +51216,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -51415,7 +51416,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -51728,7 +51728,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -51927,7 +51928,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -52240,7 +52240,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -52439,7 +52440,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -52752,7 +52752,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -52951,7 +52952,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -53264,7 +53264,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -53668,7 +53669,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -53776,7 +53776,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -54179,7 +54180,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -54288,7 +54288,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -54688,7 +54689,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -54800,7 +54800,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -55198,7 +55199,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -55312,7 +55312,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -55708,7 +55709,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -55824,7 +55824,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -56218,7 +56219,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -56336,7 +56336,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -56729,7 +56730,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	1
@@ -56848,7 +56848,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -57239,7 +57240,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -57360,7 +57360,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -57749,7 +57750,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -57872,7 +57872,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -58259,7 +58260,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -58384,7 +58384,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -58769,7 +58770,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -58896,7 +58896,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -59279,7 +59280,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -59408,7 +59408,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -59789,7 +59790,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -59920,7 +59920,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -60299,7 +60300,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -60432,7 +60432,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -60809,7 +60810,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -60944,7 +60944,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -61319,7 +61320,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -61456,7 +61456,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -61615,7 +61616,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -61968,7 +61968,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -62127,7 +62128,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -62480,7 +62480,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -62639,7 +62640,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -62992,7 +62992,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -63151,7 +63152,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -63504,7 +63504,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -63663,7 +63664,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -64016,7 +64016,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -64175,7 +64176,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -64528,7 +64528,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -64687,7 +64688,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -65040,7 +65040,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -65199,7 +65200,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -65552,8 +65552,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -66064,6 +66064,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -66418,8 +66420,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -66576,8 +66576,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -67088,6 +67088,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -67437,8 +67439,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -67600,8 +67600,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -68112,6 +68112,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -68457,8 +68459,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -68624,8 +68624,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -69136,6 +69136,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -69478,8 +69480,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -69648,8 +69648,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -70160,6 +70160,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -70498,8 +70500,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -70672,8 +70672,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -71184,6 +71184,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -71518,8 +71520,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -71696,8 +71696,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -72208,6 +72208,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -72537,8 +72539,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -72720,8 +72720,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -73232,6 +73232,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -73558,8 +73560,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -73744,6 +73744,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -73870,8 +73872,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -74256,7 +74256,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -74383,7 +74384,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -74768,7 +74768,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -74895,7 +74896,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -75280,7 +75280,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -75407,7 +75408,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -75792,7 +75792,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -75919,7 +75920,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -76304,7 +76304,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -76431,7 +76432,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -76816,7 +76816,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -76943,7 +76944,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -77328,7 +77328,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -77455,7 +77456,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -77840,7 +77840,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -78149,7 +78150,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -78352,8 +78352,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -78864,6 +78864,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -79168,8 +79170,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -79376,8 +79376,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -79888,6 +79888,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -80188,8 +80190,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -80400,8 +80400,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -80912,6 +80912,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -81208,8 +81210,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -81424,8 +81424,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -81936,6 +81936,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -82227,8 +82229,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	1
@@ -82448,6 +82448,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -82738,8 +82740,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	1
@@ -82960,7 +82960,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -83248,7 +83249,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -83472,7 +83472,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -83758,7 +83759,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -83984,7 +83984,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -84268,7 +84269,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -84496,7 +84496,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -84778,7 +84779,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -85008,7 +85008,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -85289,7 +85290,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -85520,7 +85520,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -85799,7 +85800,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -86032,7 +86032,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -86119,7 +86120,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -86544,7 +86544,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -86631,7 +86632,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -87056,7 +87056,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -87143,7 +87144,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -87568,7 +87568,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -87655,7 +87656,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -88080,7 +88080,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -88167,7 +88168,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -88592,7 +88592,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -88679,7 +88680,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -89104,7 +89104,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -89191,7 +89192,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -89616,7 +89616,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -89703,7 +89704,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -90128,7 +90128,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -90388,7 +90389,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -90640,7 +90640,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -90899,7 +90900,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -91152,8 +91152,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -91664,6 +91664,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -91917,8 +91919,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -92176,8 +92176,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -92688,6 +92688,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -92937,8 +92939,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -93200,8 +93200,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -93712,6 +93712,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -93958,8 +93960,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -94224,8 +94224,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -94736,6 +94736,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -94978,8 +94980,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -95248,6 +95248,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -95488,8 +95490,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -95760,7 +95760,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -95999,7 +96000,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -96272,7 +96272,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -96509,7 +96510,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -96784,7 +96784,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -97019,7 +97020,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -97296,7 +97296,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -97529,7 +97530,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -97808,7 +97808,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -98039,7 +98040,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -98320,7 +98320,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -98367,7 +98368,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -98832,7 +98832,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -98879,7 +98880,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -99344,7 +99344,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -99391,7 +99392,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -99856,8 +99856,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -100368,6 +100368,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -100414,8 +100416,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -100484,43 +100484,34 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -100589,6 +100580,15 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -100880,7 +100880,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -100927,7 +100928,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -100996,43 +100996,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
 	.byte	0
 	.byte	0
 	.byte	0
@@ -101100,26 +101063,43 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
-	.byte	1
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -101392,8 +101372,28 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
-	.byte	0
-	.byte	0
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -101508,43 +101508,12 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -101610,6 +101579,37 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -101904,6 +101904,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -101950,8 +101952,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -102020,43 +102020,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -102120,6 +102115,11 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -102416,6 +102416,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -102532,43 +102534,32 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -102630,6 +102621,15 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -102928,6 +102928,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -103044,43 +103046,25 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -103140,6 +103124,22 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -103440,6 +103440,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -103556,43 +103558,19 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -103650,6 +103628,28 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -103952,6 +103952,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -104068,43 +104070,12 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -104160,6 +104131,35 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -104464,6 +104464,45 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -104580,44 +104619,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -104669,7 +104670,6 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -104976,6 +104976,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -105092,43 +105094,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -105180,6 +105177,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -105488,6 +105488,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -105604,43 +105606,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -105689,6 +105686,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -106000,6 +106000,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -106116,43 +106118,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -106200,6 +106197,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -106512,6 +106512,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -106628,43 +106630,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -106710,6 +106707,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -107024,6 +107024,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -107140,43 +107142,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -107220,6 +107217,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -107536,6 +107536,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -107652,43 +107654,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -107730,6 +107727,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -108048,6 +108048,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -108164,43 +108166,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -108240,6 +108237,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -108560,6 +108560,41 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -108676,43 +108711,7 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -108750,6 +108749,7 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -109072,6 +109072,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -109188,43 +109190,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -109260,6 +109257,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -109584,6 +109584,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -109700,43 +109702,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -109770,6 +109767,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -110096,6 +110096,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -110212,43 +110214,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -110280,6 +110277,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -110608,6 +110608,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -110724,43 +110726,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -110789,6 +110786,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -111120,6 +111120,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -111236,43 +111238,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -111300,6 +111297,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -111632,6 +111632,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -111748,43 +111750,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -111809,6 +111806,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -112144,6 +112144,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -112260,43 +112262,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -112319,6 +112316,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -112656,6 +112656,41 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -112772,43 +112807,7 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -112829,6 +112828,7 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -113168,6 +113168,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -113284,43 +113286,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -113339,6 +113336,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -113680,6 +113680,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -113796,43 +113798,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -113850,6 +113847,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -114192,6 +114192,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -114308,43 +114310,38 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -114360,6 +114357,9 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	2
 	.byte	2
 	.byte	2
@@ -114704,6 +114704,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -114820,43 +114822,35 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -114870,6 +114864,12 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	2
@@ -115216,6 +115216,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -115332,43 +115334,31 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -115380,6 +115370,16 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -115728,6 +115728,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -115844,43 +115846,27 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -115890,6 +115876,20 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -116240,6 +116240,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -116356,43 +116358,23 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
@@ -116400,6 +116382,24 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -116752,6 +116752,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -116868,48 +116870,46 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -117264,6 +117264,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -117380,46 +117382,44 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
 	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -117776,6 +117776,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -117892,44 +117894,42 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
 	.byte	1
 	.byte	1
 	.byte	1
@@ -118288,6 +118288,8 @@ bgThreeFrontCMBitmap:
 	.byte	1
 	.byte	1
 	.byte	1
+	.byte	4
+	.byte	4
 	.byte	0
 	.byte	0
 	.byte	0
@@ -118404,43 +118406,41 @@ bgThreeFrontCMBitmap:
 	.byte	0
 	.byte	0
 	.byte	0
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
-	.byte	3
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	0
+	.byte	1
 	.byte	1
 	.byte	1
 	.byte	1

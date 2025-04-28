@@ -479,14 +479,15 @@ drawPlayerTwo:
 	streq	r1, [r3]
 .L116:
 	mov	r3, #0
-	mov	r1, #101
-	ldr	ip, .L133+12
-	ldr	r0, .L133+8
-	str	r3, [r2, #16]
+	mov	lr, #240
+	mov	ip, #101
+	ldr	r0, .L133+12
+	ldr	r1, .L133+8
+	str	lr, [r2, #16]
+	str	ip, [r2, #20]
 	str	r3, [r2, #12]
-	str	r3, [ip]
 	str	r3, [r0]
-	str	r1, [r2, #20]
+	str	r3, [r1]
 	pop	{r4, r5, lr}
 	bx	lr
 .L119:
@@ -720,20 +721,21 @@ updateSnow:
 	bx	r7
 	cmp	r0, #0
 	beq	.L158
-	mov	r3, #0
-	ldr	r2, [r8, #52]
-	sub	r2, r2, #1
-	cmp	r2, r3
+	mov	r2, #0
+	ldr	r3, [r8, #52]
+	sub	r3, r3, #1
+	cmp	r3, r2
+	mov	ip, #240
 	mov	r1, #101
-	str	r2, [r8, #52]
-	moveq	r2, #1
+	str	r3, [r8, #52]
+	moveq	r3, #1
 	mov	r0, r5
-	streq	r2, [fp]
-	str	r3, [r6, #16]
+	streq	r3, [fp]
+	str	ip, [r6, #16]
 	str	r1, [r6, #20]
-	str	r3, [r6, #12]
-	str	r3, [r10]
-	str	r3, [r9]
+	str	r2, [r6, #12]
+	str	r2, [r10]
+	str	r2, [r9]
 	bl	resetSnow
 .L157:
 	add	r5, r5, #1

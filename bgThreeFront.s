@@ -425,9 +425,9 @@ bgThreeFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	101
-	.short	102
-	.short	103
+	.short	399
+	.short	399
+	.short	399
 	.short	0
 	.short	0
 	.short	0
@@ -516,9 +516,9 @@ bgThreeFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	101
-	.short	102
-	.short	103
+	.short	399
+	.short	399
+	.short	399
 	.short	0
 	.short	0
 	.short	0
@@ -608,9 +608,9 @@ bgThreeFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	101
-	.short	102
-	.short	103
+	.short	399
+	.short	399
+	.short	399
 	.short	0
 	.short	0
 	.short	0
@@ -699,9 +699,9 @@ bgThreeFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	101
-	.short	102
-	.short	103
+	.short	399
+	.short	399
+	.short	399
 	.short	0
 	.short	0
 	.short	0
@@ -790,9 +790,9 @@ bgThreeFrontMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	101
-	.short	102
-	.short	103
+	.short	399
+	.short	399
+	.short	399
 	.short	0
 	.short	0
 	.short	0
