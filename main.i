@@ -229,6 +229,13 @@ void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
 int leftWallTouched;
+
+void initSnowThree();
+void updateSnowThree();
+void drawSnowThree();
+void resetSnowThree(int i);
+# 46 "phaseThree.h"
+SPRITE snows[3];
 # 29 "main.c" 2
 # 1 "start.h" 1
 # 9 "start.h"
@@ -1423,7 +1430,7 @@ void phaseTwoInstructions() {
 
 void goToPhaseTwo() {
     stopSounds();
-    playSoundB(phaseoneaudio_data, phaseoneaudio_length, 1);
+    playSoundA(phaseoneaudio_data, phaseoneaudio_length, 1);
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
@@ -1528,7 +1535,7 @@ void phaseThreeInstructions() {
 
 void goToPhaseThree() {
     stopSounds();
-    playSoundB(phasethreeaudio_data, phasethreeaudio_length, 1);
+    playSoundA(phasethreeaudio_data, phasethreeaudio_length, 1);
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
@@ -1553,7 +1560,7 @@ void goToPhaseThree() {
 
 
     initPlayerThree();
-    initSnow();
+    initSnowThree();
     initCountdownTimer();
 
 
@@ -1567,7 +1574,7 @@ void goToPhaseThree() {
 void phaseThree() {
 
     updatePlayerThree(&hOff, &vOff);
-    updateSnow();
+    updateSnowThree();
     updateHealth();
     updatePlayerPalette();
 
@@ -1629,7 +1636,7 @@ void phaseThree() {
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);
     drawPlayerThree();
-    drawSnow();
+    drawSnowThree();
     drawHealth();
     drawTimer();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);

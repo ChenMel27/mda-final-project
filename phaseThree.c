@@ -314,3 +314,74 @@ void updatePlayerPalette(void)
     DMANow(3, &playerPaletteWork[1], &SPRITE_PAL[1], 1);
 }
 
+
+// ============================= [ SNOW LOGIC ] =============================
+void initSnowThree() {
+    // seed
+    srand(1234);
+    for (int i = 0; i < MAX_SNOW; i++) {
+        snows[i].width    = SNOW_WIDTH;
+        snows[i].height   = SNOW_HEIGHT;
+        snows[i].oamIndex = 120 + i;
+        snows[i].active   = 1;
+        snows[i].yVel     = SNOW_SPEED;
+        resetSnowThree(i);
+    }
+}
+
+void updateSnowThree() {
+    for (int i = 0; i < MAX_SNOW; i++) {
+        if (!snows[i].active) continue;
+
+        snows[i].worldY += snows[i].yVel;
+
+        // collision with snow
+        if (collision(snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
+            player.worldX,   player.worldY,   player.width,   player.height)) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
+            health.active--;
+            // Lose if no more health
+            if (health.active == 0) gameOver = 1;
+
+            // Or reset player
+            player.worldX = PLAYER_START_X;
+            player.worldY = PLAYER_START_Y;
+            player.yVel = 0;
+            hOff = 0;
+            vOff = 0;
+            resetSnowThree(i);
+        }
+        // fell below bottom of view
+        else if (snows[i].worldY > vOff + SCREENHEIGHT) {
+            resetSnowThree(i);
+        }
+    }
+}
+
+void drawSnowThree() {
+    for (int i = 0; i < MAX_SNOW; i++) {
+        if (!snows[i].active) {
+            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_HIDE;
+            continue;
+        }
+
+        int sx = snows[i].worldX - hOff;
+        int sy = snows[i].worldY - vOff;
+
+        // hide if completely off‑screen
+        if (sx < -SNOW_WIDTH || sx > SCREENWIDTH || sy < -SNOW_HEIGHT|| sy > SCREENHEIGHT) {
+            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_HIDE;
+        } else {
+            shadowOAM[snows[i].oamIndex].attr0 = ATTR0_Y(sy) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_SQUARE;
+            shadowOAM[snows[i].oamIndex].attr1 = ATTR1_X(sx) | ATTR1_SMALL;
+            shadowOAM[snows[i].oamIndex].attr2 = ATTR2_TILEID(SNOW_TILE_COL, SNOW_TILE_ROW);
+        }
+    }
+}
+
+void resetSnowThree(int i) {
+    // spawn somewhere in the visible x range
+    snows[i].worldX = hOff + (rand() % SNOW_SPAWN_WIDTH);
+    // spawn just above the top of the screen
+    snows[i].worldY = vOff - (rand() % SNOW_SPAWN_HEIGHT) - SNOW_HEIGHT;
+}

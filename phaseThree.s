@@ -815,10 +815,271 @@ updatePlayerPalette:
 	.word	DMANow
 	.word	83886594
 	.size	updatePlayerPalette, .-updatePlayerPalette
+	.align	2
+	.global	drawSnowThree
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	drawSnowThree, %function
+drawSnowThree:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, r7, r8, r9, r10, lr}
+	mov	lr, #512
+	mov	r7, #448
+	ldr	r1, .L169
+	ldr	r2, .L169+4
+	ldr	r3, .L169+8
+	ldr	r4, [r1]
+	ldr	r5, [r2]
+	ldr	r0, .L169+12
+	ldr	r6, .L169+16
+	add	ip, r3, #180
+.L166:
+	ldr	r2, [r3, #52]
+	cmp	r2, #0
+	ldrb	r2, [r3, #56]	@ zero_extendqisi2
+	lsl	r9, r2, #3
+	moveq	r2, r9
+	strheq	lr, [r0, r2]	@ movhi
+	beq	.L163
+	ldr	r1, [r3, #16]
+	sub	r1, r1, r4
+	add	r8, r1, #16
+	cmp	r8, #256
+	bhi	.L164
+	ldr	r8, [r3, #20]
+	sub	r8, r8, r5
+	add	r10, r8, #16
+	cmp	r10, #176
+	bhi	.L164
+	and	r1, r1, r6
+	add	r9, r0, r2, lsl #3
+	and	r8, r8, #255
+	orr	r1, r1, #16384
+	lsl	r2, r2, #3
+	strh	r1, [r9, #2]	@ movhi
+	strh	r7, [r9, #4]	@ movhi
+	strh	r8, [r0, r2]	@ movhi
+.L163:
+	add	r3, r3, #60
+	cmp	r3, ip
+	bne	.L166
+	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
+	bx	lr
+.L164:
+	strh	lr, [r0, r9]	@ movhi
+	b	.L163
+.L170:
+	.align	2
+.L169:
+	.word	hOff
+	.word	vOff
+	.word	snows
+	.word	shadowOAM
+	.word	511
+	.size	drawSnowThree, .-drawSnowThree
+	.align	2
+	.global	resetSnowThree
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	resetSnowThree, %function
+resetSnowThree:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, lr}
+	ldr	r6, .L173
+	mov	r4, r0
+	mov	lr, pc
+	bx	r6
+	ldr	r3, .L173+4
+	smull	r2, r3, r0, r3
+	add	r2, r3, r0
+	asr	r3, r0, #31
+	rsb	r3, r3, r2, asr #7
+	ldr	r2, .L173+8
+	ldr	r1, .L173+12
+	ldr	r2, [r2]
+	rsb	r3, r3, r3, lsl #3
+	sub	r0, r0, r3, lsl #5
+	rsb	r4, r4, r4, lsl #4
+	add	r4, r1, r4, lsl #2
+	ldr	r3, .L173+16
+	add	r0, r0, r2
+	str	r0, [r4, #16]
+	ldr	r5, [r3]
+	mov	lr, pc
+	bx	r6
+	ldr	r3, .L173+20
+	smull	r1, r2, r3, r0
+	asr	r3, r0, #31
+	rsb	r3, r3, r2, asr #2
+	add	r3, r3, r3, lsl #2
+	sub	r0, r0, r3, lsl #1
+	sub	r0, r5, r0
+	sub	r0, r0, #16
+	str	r0, [r4, #20]
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L174:
+	.align	2
+.L173:
+	.word	rand
+	.word	-1840700269
+	.word	hOff
+	.word	snows
+	.word	vOff
+	.word	1717986919
+	.size	resetSnowThree, .-resetSnowThree
+	.align	2
+	.global	initSnowThree
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	initSnowThree, %function
+initSnowThree:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, r7, r8, lr}
+	ldr	r0, .L179
+	ldr	r3, .L179+4
+	mov	lr, pc
+	bx	r3
+	mov	r5, #0
+	mov	r7, #16
+	mov	r6, #1
+	ldr	r4, .L179+8
+.L176:
+	add	r3, r5, #120
+	mov	r0, r5
+	add	r5, r5, #1
+	str	r7, [r4, #24]
+	str	r7, [r4, #28]
+	str	r6, [r4, #52]
+	str	r6, [r4, #12]
+	strb	r3, [r4, #56]
+	bl	resetSnowThree
+	cmp	r5, #3
+	add	r4, r4, #60
+	bne	.L176
+	pop	{r4, r5, r6, r7, r8, lr}
+	bx	lr
+.L180:
+	.align	2
+.L179:
+	.word	1234
+	.word	srand
+	.word	snows
+	.size	initSnowThree, .-initSnowThree
+	.align	2
+	.global	updateSnowThree
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	updateSnowThree, %function
+updateSnowThree:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+	mov	r5, #0
+	ldr	r4, .L192
+	ldr	r6, .L192+4
+	ldr	r7, .L192+8
+	ldr	r8, .L192+12
+	ldr	fp, .L192+16
+	ldr	r10, .L192+20
+	ldr	r9, .L192+24
+	sub	sp, sp, #20
+.L187:
+	ldr	r3, [r4, #52]
+	cmp	r3, #0
+	beq	.L183
+	mov	r3, #16
+	add	r2, r6, #24
+	ldm	r2, {r2, ip}
+	ldr	r0, [r4, #20]
+	ldr	r1, [r4, #12]
+	str	r2, [sp, #8]
+	add	r1, r0, r1
+	ldr	r2, [r6, #16]
+	ldr	r0, [r6, #20]
+	str	r2, [sp]
+	str	r0, [sp, #4]
+	mov	r2, r3
+	str	ip, [sp, #12]
+	ldr	r0, [r4, #16]
+	str	r1, [r4, #20]
+	mov	lr, pc
+	bx	r7
+	cmp	r0, #0
+	bne	.L190
+	ldr	r3, [r8]
+	ldr	r2, [r4, #20]
+	add	r3, r3, #160
+	cmp	r2, r3
+	bgt	.L191
+.L183:
+	add	r5, r5, #1
+	cmp	r5, #3
+	add	r4, r4, #60
+	bne	.L187
+	add	sp, sp, #20
+	@ sp needed
+	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+	bx	lr
+.L190:
+	mov	r0, r10
+	ldr	r1, [fp]
+	mov	r2, #0
+	mov	lr, pc
+	bx	r9
+	mov	r3, #0
+	ldr	r1, .L192+28
+	ldr	r2, [r1, #52]
+	sub	r2, r2, #1
+	cmp	r2, r3
+	str	r2, [r1, #52]
+	mov	ip, #101
+	moveq	r1, #1
+	ldr	lr, .L192+32
+	ldreq	r2, .L192+36
+	mov	r0, r5
+	streq	r1, [r2]
+	str	r3, [r6, #16]
+	str	ip, [r6, #20]
+	str	r3, [r6, #12]
+	str	r3, [lr]
+	str	r3, [r8]
+	bl	resetSnowThree
+	b	.L183
+.L191:
+	mov	r0, r5
+	bl	resetSnowThree
+	b	.L183
+.L193:
+	.align	2
+.L192:
+	.word	snows
+	.word	player
+	.word	collision
+	.word	vOff
+	.word	healthaudio_length
+	.word	healthaudio_data
+	.word	playSoundB
+	.word	health
+	.word	hOff
+	.word	gameOver
+	.size	updateSnowThree, .-updateSnowThree
 	.global	secondsElapsed
 	.comm	soundB,24,4
 	.comm	soundA,24,4
 	.comm	healthBarFrames,72,4
+	.comm	snows,180,4
 	.global	leftWallTouched
 	.global	winPhaseThree
 	.comm	playerPaletteWork,512,4
@@ -833,9 +1094,9 @@ timerPaused:
 	.size	leftWallTouched, 4
 leftWallTouched:
 	.space	4
-	.type	slowCounter.4128, %object
-	.size	slowCounter.4128, 4
-slowCounter.4128:
+	.type	slowCounter.4134, %object
+	.size	slowCounter.4134, 4
+slowCounter.4134:
 	.space	4
 	.type	winPhaseThree, %object
 	.size	winPhaseThree, 4

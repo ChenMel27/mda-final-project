@@ -826,7 +826,7 @@ void phaseTwoInstructions() {
 
 void goToPhaseTwo() {
     stopSounds();
-    playSoundB(phaseoneaudio_data, phaseoneaudio_length, 1);
+    playSoundA(phaseoneaudio_data, phaseoneaudio_length, 1);
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
     
@@ -931,7 +931,7 @@ void phaseThreeInstructions() {
 
 void goToPhaseThree() {
     stopSounds();
-    playSoundB(phasethreeaudio_data, phasethreeaudio_length, 1);
+    playSoundA(phasethreeaudio_data, phasethreeaudio_length, 1);
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
@@ -956,7 +956,7 @@ void goToPhaseThree() {
 
     // Initialize Game Elements
     initPlayerThree();
-    initSnow();
+    initSnowThree();
     initCountdownTimer();
 
     // Initial Offsets
@@ -970,7 +970,7 @@ void goToPhaseThree() {
 void phaseThree() {
     // Update Game Elements
     updatePlayerThree(&hOff, &vOff);
-    updateSnow();
+    updateSnowThree();
     updateHealth();
     updatePlayerPalette();
 
@@ -1032,7 +1032,7 @@ void phaseThree() {
     // Sprite Drawing
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE; // Hide the guide sprite
     drawPlayerThree();
-    drawSnow();
+    drawSnowThree();
     drawHealth();
     drawTimer();
     DMANow(3, shadowOAM, OAM, 512);

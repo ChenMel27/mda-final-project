@@ -43,6 +43,7 @@
         "bgtwoback.h": "c",
         "bganimatedback.h": "c",
         "fortnite.h": "c",
-        "diatwo.h": "c"
+        "diatwo.h": "c",
+        "healthaudio.h": "c"
     }
 }

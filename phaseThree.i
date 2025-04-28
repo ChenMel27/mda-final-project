@@ -139,6 +139,13 @@ void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
 int leftWallTouched;
+
+void initSnowThree();
+void updateSnowThree();
+void drawSnowThree();
+void resetSnowThree(int i);
+# 46 "phaseThree.h"
+SPRITE snows[3];
 # 7 "phaseThree.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
@@ -491,4 +498,76 @@ void updatePlayerPalette(void)
 
 
     DMANow(3, &playerPaletteWork[1], &((u16 *)0x5000200)[1], 1);
+}
+
+
+
+void initSnowThree() {
+
+    srand(1234);
+    for (int i = 0; i < 3; i++) {
+        snows[i].width = 16;
+        snows[i].height = 16;
+        snows[i].oamIndex = 120 + i;
+        snows[i].active = 1;
+        snows[i].yVel = 1;
+        resetSnowThree(i);
+    }
+}
+
+void updateSnowThree() {
+    for (int i = 0; i < 3; i++) {
+        if (!snows[i].active) continue;
+
+        snows[i].worldY += snows[i].yVel;
+
+
+        if (collision(snows[i].worldX, snows[i].worldY, 16, 16,
+            player.worldX, player.worldY, player.width, player.height)) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
+            health.active--;
+
+            if (health.active == 0) gameOver = 1;
+
+
+            player.worldX = 0;
+            player.worldY = 101;
+            player.yVel = 0;
+            hOff = 0;
+            vOff = 0;
+            resetSnowThree(i);
+        }
+
+        else if (snows[i].worldY > vOff + 160) {
+            resetSnowThree(i);
+        }
+    }
+}
+
+void drawSnowThree() {
+    for (int i = 0; i < 3; i++) {
+        if (!snows[i].active) {
+            shadowOAM[snows[i].oamIndex].attr0 = (2<<8);
+            continue;
+        }
+
+        int sx = snows[i].worldX - hOff;
+        int sy = snows[i].worldY - vOff;
+
+
+        if (sx < -16 || sx > 240 || sy < -16|| sy > 160) {
+            shadowOAM[snows[i].oamIndex].attr0 = (2<<8);
+        } else {
+            shadowOAM[snows[i].oamIndex].attr0 = ((sy) & 0xFF) | (0<<8) | (0<<13) | (0<<14);
+            shadowOAM[snows[i].oamIndex].attr1 = ((sx) & 0x1FF) | (1<<14);
+            shadowOAM[snows[i].oamIndex].attr2 = ((((14) * (32) + (0))) & 0x3FF);
+        }
+    }
+}
+
+void resetSnowThree(int i) {
+
+    snows[i].worldX = hOff + (rand() % (240 - 16));
+
+    snows[i].worldY = vOff - (rand() % 10) - 16;
 }
