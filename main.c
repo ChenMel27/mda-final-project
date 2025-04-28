@@ -1,15 +1,15 @@
 /******************************************************************************
-File: main.c 
-Project: The Summit Ascent
-******************************************************************************/
+ * File: main.c
+ * Project: The Summit Ascent
+ ******************************************************************************/
 
 /*
-    Welcome to Summit Ascent!
+    Welcome to The Summit Ascent!
     Begin your journey at the base of Mount Rainier and climb through three
     phases to reach the summit before your health runs out.
 
-    - Start in a town and talk to an experienced villager to gather tips
-    - Progress through three side-scrolling phases with obstacles
+    - Start in a town and talk to an experienced villager to gather tips.
+    - Progress through three side-scrolling phases with obstacles.
 */
 
 // ============================= [ INCLUDES ] =============================
@@ -80,16 +80,21 @@ Project: The Summit Ascent
 #include "healthaudio.h"
 
 // ============================= [ DEFINES ] =============================
+
 #define MENU_START 0
 #define MENU_INSTR 1
-#define RED(c)   ((c) & 0x1F)
-#define GREEN(c) (((c) >> 5) & 0x1F)
-#define BLUE(c)  (((c) >> 10) & 0x1F)
+
+#define RED_VAL(c)   ((c) & 0x1F)
+#define GREEN_VAL(c) (((c) >> 5) & 0x1F)
+#define BLUE_VAL(c)  (((c) >> 10) & 0x1F)
+
 #define BG_PRIORITY(n) ((n) & 3)
 #define TILEMAP_WIDTH 64
 #define MOSAIC_BG(h,b,v,a) ((h) | ((b) << 4) | ((v) << 8) | ((a) << 12))
+
 #define TILE358_INDEX 358
 #define TILE358_OFFSET (TILE358_INDEX * 64)
+
 #define FLASH_FRAMES_TOTAL 20
 
 // ============================= [ GLOBAL VARIABLES ] =============================
@@ -98,13 +103,13 @@ Project: The Summit Ascent
 static int savedStartX;
 static int savedStartY;
 
-// Splash screen animation
+// Splash screen animation variables
 int shiftingRight = 1;
 int shiftOffset = 0;
 int shiftTimer = 0;
 static int splashSelection;
 
-// Phase one
+// Phase One animation variables
 u8 originalTile358[64];
 int tileFadeTimer = 0;
 int tileFadeStep = 0;
@@ -147,12 +152,12 @@ int startPage = 0;
 int resumingFromPause = 0;
 int bridgeUncovered = 0;
 
-// Tile animation
+// Tile animation helpers
 u16 originalTiles[4][16];
 int primaryIndices[3] = {13, 14, 15};
 int altIndices[3] = {16, 17, 18};
 
-// External sprites
+// External sprite objects
 extern SPRITE guide;
 extern SPRITE startPlayer;
 extern SPRITE player;
@@ -243,17 +248,10 @@ int main() {
     }
 }
 
-// ============================== [ INITIALIZING GAME ] ==================================
-
-void initialize() {
-    mgba_open();
-    setupSounds();
-    goToPhaseOne();
-}
-
-// ============================== [ SPLASH SCREEN SETUP ] =============================
+// ============================== [ SPLASH SCREEN ] ==============================
 
 void goToSplashScreen() {
+    // Set Mode 4 and enable Background 2
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
     stopSounds();
@@ -268,12 +266,12 @@ void goToSplashScreen() {
     const int fadeDuration = 120;
     u16 originalColors[17];
 
-    // Store original palette colors
+    // Save original palette colors
     for (int i = 0; i <= 16; i++) {
         originalColors[i] = splashp1Pal[i];
     }
 
-    // Gradually blend palette to black
+    // Gradually blend palette entries to black
     for (int t = 0; t <= fadeDuration; t++) {
         waitForVBlank();
         for (int i = 0; i <= 16; i++) {
@@ -281,27 +279,28 @@ void goToSplashScreen() {
         }
     }
 
-    // Hold black screen briefly
+    // Hold black screen for a few frames
     for (int i = 0; i < 5; i++) {
         waitForVBlank();
     }
 
-    // Show animateStart screen and do palette animations
+    // Load the animated start splash screen
     DMANow(3, (volatile void*)animateStartPal, BG_PALETTE, 256);
     drawFullscreenImage4(animateStartBitmap);
 
-    // Reveal index timings (white)
+    // Animate reveal timing
     const int totalFrames = 180;
     const int revealDelays[3] = {30, 60, 90};
 
-    // Flicker colors for indices 3 and 4
+    // Colors to flicker between
     u16 flickerColorsA = RGB(31, 31, 0);
     u16 flickerColorsB = RGB(24, 24, 8);
 
+    // Animate palette flicker and reveal
     for (int i = 0; i < totalFrames; i++) {
         waitForVBlank();
 
-        // Flicker palette 3 and 4 every 10 frames
+        // Alternate palette entries 3 and 4 every 10 frames
         if ((i / 10) % 2 == 0) {
             BG_PALETTE[3] = flickerColorsA;
             BG_PALETTE[4] = flickerColorsB;
@@ -310,87 +309,102 @@ void goToSplashScreen() {
             BG_PALETTE[4] = flickerColorsA;
         }
 
-        // Gradually reveal indices 16–18 as white
-        if (i == revealDelays[0]) {
-            BG_PALETTE[16] = RGB(31, 31, 31);
-        } else if (i == revealDelays[1]) {
-            BG_PALETTE[17] = RGB(31, 31, 31);
-        } else if (i == revealDelays[2]) {
-            BG_PALETTE[18] = RGB(31, 31, 31);
-        }
+        // Gradually reveal menu option tiles (white)
+        if (i == revealDelays[0]) BG_PALETTE[16] = RGB(31, 31, 31);
+        if (i == revealDelays[1]) BG_PALETTE[17] = RGB(31, 31, 31);
+        if (i == revealDelays[2]) BG_PALETTE[18] = RGB(31, 31, 31);
     }
 
-    // Display second splash screen with menu options
+    // Load second splash screen with menu choices
     DMANow(3, (volatile void*)splashp3Pal, BG_PALETTE, 256);
     drawFullscreenImage4(splashp3Bitmap);
 
+    // Reset game state
     resetGameState();
     state = SPLASH;
 }
 
+// Splash screen logic
 void splashScreen() {
     static int t = 0;
     static int direction = 1;
     const int max = 30;
 
-    static int* animatedIndices;
+    static int* animatedIndices = 0;
     static int usingAltIndices = 0;
 
-    // Switch selection on DOWN/UP and restore original palette
+    // Handle down press to switch to alternative menu selection
     if (BUTTON_PRESSED(BUTTON_DOWN) && !usingAltIndices) {
         playSoundB(click_data, click_length, 0);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++) {
             BG_PALETTE[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
-        animatedIndices  = altIndices;
-        usingAltIndices  = 1;
-        t = 0; direction = 1;
+        }
+        animatedIndices = altIndices;
+        usingAltIndices = 1;
+        t = 0;
+        direction = 1;
     }
+    // Handle up press to return to primary menu selection
     else if (BUTTON_PRESSED(BUTTON_UP) && usingAltIndices) {
         playSoundB(click_data, click_length, 0);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++) {
             BG_PALETTE[altIndices[i]] = splashp3Pal[altIndices[i]];
-        animatedIndices  = primaryIndices;
-        usingAltIndices  = 0;
-        t = 0; direction = 1;
+        }
+        animatedIndices = primaryIndices;
+        usingAltIndices = 0;
+        t = 0;
+        direction = 1;
     }
 
-    // Default to primary menu if none set
-    if (!animatedIndices)
+    // Default to primary menu if no selection exists
+    if (!animatedIndices) {
         animatedIndices = primaryIndices;
+    }
 
-    // Pulse the selected palette entries toward palette[2]
+    // Animate flashing effect on selected menu tiles
     waitForVBlank();
     u16 target = BG_PALETTE[2];
     for (int i = 0; i < 3; i++) {
         int idx = animatedIndices[i];
         BG_PALETTE[idx] = blendColor(splashp3Pal[idx], target, t, max);
     }
-    t += direction;
-    if (t >= max || t <= 0)
-        direction = -direction;
 
-    // Confirm selection on START
+    t += direction;
+    if (t >= max || t <= 0) {
+        direction = -direction;
+    }
+
+    // Confirm selection on START button press
     if (BUTTON_PRESSED(BUTTON_START)) {
-        if (usingAltIndices)
+        if (usingAltIndices) {
             goToGameInstructions();
-        else
+        } else {
             goToStart();
+        }
     }
 }
 
-// ============================= [ START PHASE STATE ] ===========================
 
+// ============================= [ START PHASE STATE ] =============================
+
+// Initialize the Start Phase from the beginning
 void goToStart() {
     cheatOn = 0;
     resumingFromPause = 0;
+
+    // Setup Mode 0 with BG1 enabled and sprites
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     hideSprites();
-    REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
-    
-    DMANow(3, (volatile void*)sTSPal,   BG_PALETTE,      sTSPalLen   / 2);
-    DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0],  sTSTilesLen / 2);
-    DMANow(3, (volatile void*)sTMMap,   &SCREENBLOCK[18], sTMLen / 2);
 
+    // Setup BG1 control
+    REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
+
+    // Load palette, tileset, and tilemap
+    DMANow(3, (volatile void*)sTSPal, BG_PALETTE, sTSPalLen / 2);
+    DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
+    DMANow(3, (volatile void*)sTMMap, &SCREENBLOCK[18], sTMLen / 2);
+
+    // Save the initial tilemap block
     for (int y = 0; y < TILEMAP_SHIFT_ROWS; y++) {
         for (int x = 0; x < TILEMAP_SHIFT_COLS; x++) {
             int row = SHIFT_TILEMAP_START_ROW + y;
@@ -400,6 +414,7 @@ void goToStart() {
         }
     }
 
+    // Save original tiles for flashing
     int tileIds[4] = {84, 85, 116, 117};
     for (int t = 0; t < 4; t++) {
         for (int i = 0; i < 16; i++) {
@@ -407,18 +422,24 @@ void goToStart() {
         }
     }
 
+    // Initialize player and guide
     initStartPlayer();
     initGuideSprite();
+
+    // Reset camera offsets
     hOff = 0;
     vOff = MAX_VOFF;
 
+    // Play start area music
     playSoundA(animaljam_data, animaljam_length, 1);
+
     state = START;
 }
 
-
+// Initialize the Start Phase after first dialogue
 void goToStartTwo() {
     resumingFromPause = 0;
+
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
@@ -429,22 +450,25 @@ void goToStartTwo() {
     initStartPlayer();
     initGuideSprite();
 
+    // Set player closer to bridge
     startPlayer.worldY = 170;
     startPlayer.worldX = 430;
     next = 0;
-
     talkedToGuide = 1;
+
     hOff = 0;
     vOff = MAX_VOFF;
 
+    // Play bridge unlock sound
     playSoundB(action_data, action_length, 0);
 
     state = START;
 }
 
-
+// Initialize Start Phase after returning from Pause
 void goToStartThree() {
     resumingFromPause = 0;
+
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(18) | BG_SIZE_LARGE | BG_4BPP;
 
@@ -455,28 +479,39 @@ void goToStartThree() {
     initStartPlayer();
     initGuideSprite();
 
-    // initalize player to previous coordinates after pause
+    // Restore player to saved position
     startPlayer.worldX = savedStartX;
     startPlayer.worldY = savedStartY;
+
     hOff = 0;
     vOff = MAX_VOFF;
 
     playSoundA(animaljam_data, animaljam_length, 1);
+
     state = START;
 }
 
+// Start Phase main update loop
 void start() {
+    // Animate tilemap shift
     animateTilemapShift();
+
+    // Update player and guide movement
     updateStartPlayer(&hOff, &vOff);
     updateGuideSprite();
+
+    // Update background scroll
     REG_BG1HOFF = hOff;
     REG_BG1VOFF = vOff;
 
+    // Draw player and guide
     drawStartPlayer();
     drawGuideSprite();
+
+    // Push updated sprites to OAM
     DMANow(3, shadowOAM, OAM, 512);
 
-    // Tilemap modifications only after meeting guide
+    // Unlock bridge after meeting guide
     if (!talkedToGuide && !bridgeUncovered) {
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 10; x++) {
@@ -490,15 +525,18 @@ void start() {
         bridgeUncovered = 1;
     }
 
+    // Check collision with guide to trigger dialogue
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
     }
 
+    // Move to Phase One after talking to guide
     if (next == 1 && talkedToGuide) {
         stopSounds();
         goToPhaseOne();
     }
 
+    // Animate flashing bridge tiles
     tileFlashTimer++;
     if (tileFlashTimer > 15) {
         tileFlashTimer = 0;
@@ -509,6 +547,7 @@ void start() {
         flashColorInTile(117, 3, 4, tileFlashState, originalTiles[3]);
     }
 
+    // Pause the game
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
@@ -522,41 +561,44 @@ void start() {
 
 // ============================= [ DIALOGUE STATE ] =============================
 
+// Transition to the Start Phase dialogue instructions
 void goToStartInstructions() {
+    // Reset display control
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1);
 
-    // Load dialogue font palette to palette 0 (index 0–15)
+    // Load dialogue font palette into palette 0
     DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
 
-    // Load largeman palette
+    // Load large character (guide) palette and tiles
     DMANow(3, (volatile void*)largemantilesTiles, &CHARBLOCK[3], largemantilesTilesLen / 2);
 
-    // Setup background control registers
+    // Setup background layers
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(1) | BG_4BPP;
     REG_BG1CNT = BG_CHARBLOCK(3) | BG_SCREENBLOCK(25) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
 
-    // Load maps (make sure tile IDs in speakingManMap use palette 1)
+    // Load initial dialogue and background maps
     DMANow(3, (volatile void*)diaOneMap, &SCREENBLOCK[20], diaOneLen / 2);
     DMANow(3, (volatile void*)speakingManMap, &SCREENBLOCK[25], speakingManLen / 2);
 
+    // Reset background offsets
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
     REG_BG1HOFF = 0;
     REG_BG1VOFF = 0;
 
+    // Initialize dialogue page tracking
     startPage = 0;
     state = DIALOGUE;
 }
 
-
-
+// Handle dialogue page transitions
 void startInstructions() {
     if (BUTTON_PRESSED(BUTTON_START)) {
-
         startPage++;
 
+        // Switch through dialogue pages
         switch (startPage) {
             case 1:
                 DMANow(3, (volatile void*)diaTwoMap, &SCREENBLOCK[20], diaTwoLen / 2);
@@ -585,6 +627,7 @@ void startInstructions() {
         }
     }
 
+    // After final dialogue page, move to updated Start Phase
     if (begin) {
         begin = 0;
         goToStartTwo();
@@ -592,23 +635,31 @@ void startInstructions() {
     }
 }
 
-// ============================= [ PHASE ONE STATE ] ============================
+// ============================= [ PHASE ONE STATE ] =============================
+
+// Transition to Phase One (first climbing area)
 void goToPhaseOne() {
     stopSounds();
     playSoundA(phasetwoaudio_data, phasetwoaudio_length, 1);
+
+    // Setup Mode 0 with backgrounds and sprites
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
+
+    // Setup background layers
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
+
+    // Load background tiles and tilemaps
     DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
     DMANow(3, (volatile void*)bgOneFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
     DMANow(3, (volatile void*)bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
 
-    // Save original pixels from tile 358
-    u8* tileData = (u8*) &CHARBLOCK[1];
+    // Save original tile 358 pixels for fade animation
+    u8* tileData = (u8*)&CHARBLOCK[1];
     for (int i = 0; i < 64; i++) {
         originalTile358[i] = tileData[TILE358_OFFSET + i];
     }
@@ -616,37 +667,38 @@ void goToPhaseOne() {
     tileFadeTimer = 0;
     tileFadeStep = 0;
 
-    // only reset coordinates in beginning
+    // Only reinitialize player if not coming from pause
     if (!resumingFromPause) {
         initPlayer();
         initHealth();
     }
-    // clear the flag so next goToPhaseOne() does full init again
     resumingFromPause = 0;
-    
+
+    // Reset camera offsets
     hOff = 0;
     vOff = MAX_VOFF;
+
     state = PHASEONE;
 }
 
+// Phase One main gameplay loop
 void phaseOne() {
     static int flashState = 0;
     static int flashTimer = 0;
     static int flashFrame = 0;
     static int isFlashing = 0;
-    
-    // Update sprites
+
+    // Update player and health
     updatePlayer(&hOff, &vOff);
     updateHealth();
 
-    // Front background scrolls regular
+    // Background scrolling
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
-
-    // Parallax background scrolls half speed
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
 
+    // Handle tilemap animation
     static int tileAnimTimer = 0;
     static int tileAnimState = 0;
     tileAnimTimer++;
@@ -658,11 +710,10 @@ void phaseOne() {
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
                 u16* tile = &SCREENBLOCK[27].tilemap[row * 32 + col];
-
                 u16 tileId = *tile & 0x03FF;
                 u16 palRow = *tile & 0xFC00;
 
-                // Swap 231 <--> 250
+                // Swap tiles 231 and 255
                 if (tileId == 231) {
                     *tile = (255 | palRow);
                 } else if (tileId == 255) {
@@ -671,18 +722,14 @@ void phaseOne() {
             }
         }
     }
-    
-    // Smooth fade every ~4 frames (about 15 times a second)
+
+    // Handle gradual tile fading
     tileFadeTimer++;
     if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
         tileFadeStep++;
 
-        u8* tileData = (u8*) &CHARBLOCK[1];
-
         for (int i = 0; i < 64; i++) {
             u8 colorIndex = originalTile358[i];
-
-            // skip transparent
             if (colorIndex == 0) continue;
 
             u16 origColor = BG_PALETTE[colorIndex];
@@ -691,12 +738,13 @@ void phaseOne() {
         }
     }
 
+    // Handle flashing background tiles after a delay
     static int swapTimer = 0;
     static int swapped = 0;
     static int swapDelayFrames = 0;
-    static int hasFlashedOnce = 0;  
-    swapDelayFrames++; // count frames until 15 seconds (15 * 60 = 900)
-    
+    static int hasFlashedOnce = 0;
+    swapDelayFrames++;
+
     if (swapDelayFrames > 200 && !hasFlashedOnce) {
         swapTimer++;
 
@@ -709,12 +757,12 @@ void phaseOne() {
             flashTimer = 0;
             hasFlashedOnce = 1;
 
-            // Save current palette state before flash
+            // Save current palette before flashing
             for (int i = 0; i < 256; i++) {
                 savedFadePalette[i] = BG_PALETTE[i];
             }
 
-            // Swap tiles
+            // Swap back layer tiles
             for (int row = 0; row < 32; row++) {
                 for (int col = 0; col < 32; col++) {
                     u16* tile = &SCREENBLOCK[28].tilemap[row * 32 + col];
@@ -733,10 +781,10 @@ void phaseOne() {
         }
     }
 
+    // Handle flashing palette
     if (isFlashing) {
         flashTimer++;
 
-        // Toggle flash state every 8 frames
         if (flashTimer > 8) {
             flashTimer = 0;
             flashState = !flashState;
@@ -746,7 +794,7 @@ void phaseOne() {
         if (flashFrame >= 4) {
             isFlashing = 0;
 
-            // After 2 flashes, set palette to RGB(10,10,10) permanently
+            // After 2 flashes, set palette to dark gray permanently
             for (int i = 0; i < 64; i++) {
                 u8 colorIndex = originalTile358[i];
                 if (colorIndex == 0) continue;
@@ -759,9 +807,9 @@ void phaseOne() {
 
                 if (flashState) {
                     u16 c = savedFadePalette[colorIndex];
-                    int r = RED(c) / 2;
-                    int g = GREEN(c) / 2;
-                    int b = BLUE(c) / 2;
+                    int r = RED_VAL(c) / 2;
+                    int g = GREEN_VAL(c) / 2;
+                    int b = BLUE_VAL(c) / 2;
                     BG_PALETTE[colorIndex] = RGB(r, g, b);
                 } else {
                     BG_PALETTE[colorIndex] = savedFadePalette[colorIndex];
@@ -770,28 +818,30 @@ void phaseOne() {
         }
     }
 
-    // Draw sprites
+    // Draw all sprites
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
     drawPlayer();
     drawHealth();
     DMANow(3, shadowOAM, OAM, 512);
-    
+
+    // Handle game over condition
     if (gameOver) {
         goToLose();
     }
 
+    // Handle win condition
     if (winPhaseOne) {
         stopSounds();
         playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseTwoInstructions();
     }
 
+    // Pause the game
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         prevState = state;
         goToPause();
         return;
     }
-    
 }
 
 // ============================= [ DIALOGUE 2 STATE ] =============================
@@ -898,7 +948,7 @@ void phaseTwo() {
     
 }
 
-// ============================= [ DIALOGUE 2 STATE ] =============================
+// ============================= [ DIALOGUE 3 STATE ] =============================
 
 void goToPhaseThreeInstructions() {
     REG_DISPCTL = 0;
@@ -1048,25 +1098,25 @@ void phaseThree() {
     }
 }
 
-// ============================= [ PAUSE STATE ] ================================
+// ============================= [ PAUSE STATE ] =============================
 
+// Transition to the Pause State
 void goToPause() {
+    // Reset display and set up Mode 0 with backgrounds and sprites
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    // Initialize animated player
+    // Initialize animated player sprite
     initAnimatedPlayer();
 
-    // Set BG0/1/2 to 8BPP
+    // Setup background layers for pause screen
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
 
-    // Load correct palette and tiles for pause/lose
+    // Load palette and tilemaps
     DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
-
-    // Load background maps
     DMANow(3, (volatile void*)loseloseMap, &SCREENBLOCK[26], loseloseLen / 2);
     DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
@@ -1077,15 +1127,18 @@ void goToPause() {
     state = PAUSE;
 }
 
+// Pause State main loop
 void pause() {
-        // Switch to mode 4 and draw bitmap image
+    // Switch to Mode 4 and draw pause bitmap
     REG_DISPCTL = MODE(4) | BG_ENABLE(2);
     videoBuffer = FRONTBUFFER;
-    
+
     DMANow(3, (volatile void*)startPausePal, BG_PALETTE, 256 | DMA_ON);
     drawFullscreenImage4(startPauseBitmap);
+
     state = PAUSE;
 
+    // Resume game if SELECT is pressed
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         // Flag to skip re-initializing stuff
         resumingFromPause = 1;
@@ -1102,145 +1155,169 @@ void pause() {
     }
 }
 
-// ============================= [ LOSE STATE ] =================================
+// ============================= [ LOSE STATE ] =============================
 
+// Transition to the Lose State
 void goToLose() {
     stopSounds();
     playSoundA(loseaudio_data, loseaudio_length, 1);
+
+    // Reset any blending or mosaic effects
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
     REG_BLDY = 0;
     REG_MOSAIC = 0;
-    
+
+    // Setup Mode 0 with backgrounds and sprites
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
-    
-    // Initialize animated player
+
+    // Initialize animated player sprite
     initAnimatedPlayer();
-    
-    // Set BG0/1/2 to 8BPP
+
+    // Setup background layers
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
 
-    // Load correct palette and tiles for pause/lose
+    // Load palette and background tiles
     DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
 
-    // Load background maps
+    // Load lose screen background maps
     DMANow(3, (volatile void*)loseloseMap, &SCREENBLOCK[26], loseloseLen / 2);
     DMANow(3, (volatile void*)bgAnimatedBackMap, &SCREENBLOCK[28], bgAnimatedBackLen / 2);
     DMANow(3, (volatile void*)duskTMMap, &SCREENBLOCK[30], duskTMLen / 2);
 
     hOff = 0;
     vOff = MAX_VOFF;
+
     state = LOSE;
 }
 
+// Lose State main loop
 void lose() {
     hideSprites();
 
-    // Parallax scrolling even while paused
-    // Move horizontally if you want (like you do now)
+    // Parallax scrolling even during lose screen
     hOff++;
 
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
-
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
-
     REG_BG2HOFF = hOff / 4;
     REG_BG2VOFF = vOff / 4;
+
+    // Update and draw animated player
     updateAnimatedPlayer();
     drawAnimatedPlayer();
 
-    // Push shadowOAM to OAM
+    // Push updated sprites to OAM
     DMANow(3, shadowOAM, OAM, 128 * 4);
 
+    // Restart game by returning to splash screen
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToSplashScreen();
         state = SPLASH;
     }
 }
 
-// ============================= [ WIN STATE ] =================================
+// ============================= [ WIN STATE ] =============================
 
+// Transition to the Win State
 void goToWin() {
     stopSounds();
     playSoundA(winaudio_data, winaudio_length, 1);
+
+    // Setup Mode 0 with backgrounds and sprites
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    // Initialize animated player
+    // Initialize animated player sprite
     initAnimatedPlayer();
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
-    // Set BG0/1/2 to 8BPP
+
+    // Set BG0, BG1, BG2 to 8BPP mode
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
 
-    // Load correct palette and tiles for pause/lose
+    // Load palette and background tiles
     DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
 
-    // Load background maps
+    // Load win background maps
     DMANow(3, (volatile void*)winwinMap, &SCREENBLOCK[26], winwinLen / 2);
     DMANow(3, (volatile void*)bgAnimatedBackMap, &SCREENBLOCK[28], bgAnimatedBackLen / 2);
     DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
 
     hOff = 0;
     vOff = MAX_VOFF;
+
     state = WIN;
 }
 
+// Win State main loop
 void win() {
     hideSprites();
 
-    // Parallax scrolling even while paused
+    // Parallax scrolling on victory screen
     hOff++;
 
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
-
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
-
     REG_BG2HOFF = hOff / 4;
     REG_BG2VOFF = vOff / 4;
 
+    // Update and draw the animated player
     updateAnimatedPlayer();
     drawAnimatedPlayer();
 
-    // Push shadowOAM to OAM
+    // Push updated sprites to OAM
     DMANow(3, shadowOAM, OAM, 128 * 4);
 
+    // Return to splash screen when START is pressed
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToSplashScreen();
         state = SPLASH;
     }
 }
 
+// ============================= [ GAME INSTRUCTIONS STATE ] =============================
+
+// Transition to Game Instructions screen
 void goToGameInstructions() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0);
-    DMANow(3, (volatile void*) largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
-    DMANow(3, (volatile void*) dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+
+    // Load dialogue font and palette
+    DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
+
+    // Setup BG0 for displaying instructions
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(20) | BG_SIZE_SMALL | BG_PRIORITY(0) | BG_4BPP;
-    DMANow(3,(volatile void*) gameInstructionsMap, &SCREENBLOCK[20], gameInstructionsLen / 2);
+    DMANow(3, (volatile void*)gameInstructionsMap, &SCREENBLOCK[20], gameInstructionsLen / 2);
+
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
 
     state = GAMEINSTRUCTIONS;
 }
 
+// Game Instructions main loop
 void gameInstructions() {
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToStart();
     }
 }
 
+// ============================= [ RESET GAME STATE ] =============================
+
+// Reset all game state variables
 void resetGameState() {
     hOff = 0;
     vOff = 0;
@@ -1249,15 +1326,15 @@ void resetGameState() {
     startPage = 0;
     resumingFromPause = 0;
 
-    // Reset win/lose state flags
+    // Reset win and lose flags
     gameOver = 0;
     winPhaseOne = 0;
     winPhaseTwo = 0;
     winPhaseThree = 0;
 
-    // Reset player progress / guide interaction
+    // Reset dialogue/guide interaction
     next = 0;
 
-    // Reset splash selection
+    // Reset splash menu selection
     splashSelection = MENU_START;
 }

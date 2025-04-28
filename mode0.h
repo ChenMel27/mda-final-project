@@ -20,7 +20,6 @@
 
 #define REG_BLDCNT    (*(volatile unsigned short*)0x4000050)
 #define REG_BLDALPHA  (*(volatile unsigned short*)0x4000052)
-#define REG_BLDY      (*(volatile unsigned short*)0x4000054)
 
 // Blend modes
 #define BLD_OFF    0

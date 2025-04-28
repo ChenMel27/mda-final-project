@@ -44,7 +44,7 @@ typedef volatile struct {
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 18 "main.c" 2
 # 1 "mode0.h" 1
-# 52 "mode0.h"
+# 51 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;
@@ -852,7 +852,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToPhaseOne();
+    goToSplashScreen();
 }
 
 
@@ -1281,8 +1281,6 @@ void phaseOne() {
     if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
         tileFadeStep++;
 
-        u8* tileData = (u8*) &((CB*) 0x6000000)[1];
-
         for (int i = 0; i < 64; i++) {
             u8 colorIndex = originalTile358[i];
 
@@ -1594,7 +1592,7 @@ void phaseThree() {
 
 
         (*(volatile unsigned short*)0x4000050) = ((1<<0) | (1<<1) | (1<<2)) | (3 << 6);
-        (*(volatile unsigned short*)0x4000054) = (6 - countdown) * 3;
+        (*(volatile unsigned short*)0x4000052) = (6 - countdown) * 3;
     } else if (countdown > 3) {
 
         (*(volatile unsigned short*) 0x400004C) = 0;
@@ -1604,7 +1602,7 @@ void phaseThree() {
 
 
         (*(volatile unsigned short*)0x4000050) = 0;
-        (*(volatile unsigned short*)0x4000054) = 0;
+        (*(volatile unsigned short*)0x4000052) = 0;
     }
 
 
@@ -1713,7 +1711,7 @@ void goToLose() {
     playSoundA(loseaudio_data, loseaudio_length, 1);
     (*(volatile unsigned short*)0x4000050) = 0;
     (*(volatile unsigned short*)0x4000052) = 0;
-    (*(volatile unsigned short*)0x4000054) = 0;
+    (*(volatile unsigned short*)0x4000052) = 0;
     (*(volatile unsigned short*) 0x400004C) = 0;
 
     (*(volatile unsigned short *)0x4000000) = 0;
