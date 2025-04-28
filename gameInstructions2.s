@@ -304,36 +304,36 @@ gameInstructions2Map:
 	.short	257
 	.short	0
 	.short	0
-	.short	292
+	.short	38
+	.short	38
+	.short	38
+	.short	130
+	.short	132
+	.short	100
+	.short	133
+	.short	133
 	.short	289
+	.short	133
+	.short	100
+	.short	107
+	.short	100
+	.short	98
+	.short	134
 	.short	289
+	.short	134
+	.short	129
 	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	257
+	.short	130
+	.short	96
+	.short	135
+	.short	133
+	.short	100
+	.short	38
+	.short	38
+	.short	38
+	.short	38
+	.short	38
+	.short	38
 	.short	0
 	.short	0
 	.short	292

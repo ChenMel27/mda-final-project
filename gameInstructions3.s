@@ -216,73 +216,73 @@ gameInstructions3Map:
 	.short	135
 	.short	99
 	.short	161
-	.short	139
-	.short	129
-	.short	135
-	.short	224
-	.short	102
-	.short	129
-	.short	224
+	.short	104
+	.short	134
+	.short	289
 	.short	133
 	.short	107
 	.short	129
 	.short	137
-	.short	100
-	.short	132
-	.short	165
-	.short	165
-	.short	165
+	.short	133
+	.short	225
+	.short	139
+	.short	129
+	.short	135
+	.short	289
+	.short	99
+	.short	129
+	.short	137
+	.short	128
+	.short	289
 	.short	96
 	.short	128
 	.short	99
 	.short	257
-	.short	257
-	.short	257
 	.short	0
 	.short	0
 	.short	292
 	.short	225
+	.short	139
+	.short	129
 	.short	135
-	.short	225
+	.short	289
 	.short	129
 	.short	128
 	.short	107
 	.short	139
-	.short	225
+	.short	226
 	.short	103
 	.short	96
 	.short	136
 	.short	100
-	.short	225
+	.short	229
 	.short	66
 	.short	64
+	.short	229
 	.short	133
 	.short	100
 	.short	98
+	.short	129
+	.short	128
+	.short	99
+	.short	133
 	.short	225
 	.short	129
 	.short	101
-	.short	225
-	.short	129
-	.short	66
-	.short	225
-	.short	225
-	.short	225
-	.short	225
 	.short	225
 	.short	0
 	.short	0
 	.short	292
 	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
-	.short	289
+	.short	129
+	.short	138
+	.short	139
+	.short	102
+	.short	100
+	.short	128
+	.short	165
+	.short	165
+	.short	165
 	.short	289
 	.short	289
 	.short	289
@@ -479,14 +479,6 @@ gameInstructions3Map:
 	.short	289
 	.short	292
 	.short	289
-	.short	2
-	.short	257
-	.short	99
-	.short	135
-	.short	98
-	.short	106
-	.short	257
-	.short	257
 	.short	4
 	.short	257
 	.short	105
@@ -494,6 +486,14 @@ gameInstructions3Map:
 	.short	108
 	.short	130
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	292
@@ -512,11 +512,11 @@ gameInstructions3Map:
 	.short	292
 	.short	289
 	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
-	.short	257
+	.short	289
+	.short	289
+	.short	289
+	.short	289
+	.short	289
 	.short	257
 	.short	257
 	.short	257

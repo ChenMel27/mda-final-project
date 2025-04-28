@@ -14,7 +14,7 @@ Project: The Summit Ascent
     Controls:
         ← → Move
         ↑ ↓ Climb / Jump / Duck
-        START Pause / Advance dialogue
+        SELECT Pause / Advance dialogue
 
     Known Bugs:
         • Sprite flicker on state transitions between modes
@@ -219,7 +219,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToSplashScreen();
+    goToStart();
 }
 
 // ============================== [ SPLASH SCREEN SETUP ] =============================
@@ -449,7 +449,7 @@ void start() {
     drawGuideSprite();
     DMANow(3, shadowOAM, OAM, 512);
 
-    // ==== NEW ==== TILEMAP MODIFICATION only after meeting guide
+    // TILEMAP MODIFICATION only after meeting guide
     if (!talkedToGuide && !bridgeUncovered) {
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 10; x++) {
@@ -484,7 +484,7 @@ void start() {
         flashColorInTile(117, 3, 4, tileFlashState, originalTiles[3]);
     }
 
-    if (BUTTON_PRESSED(BUTTON_START)) {
+    if (BUTTON_PRESSED(BUTTON_SELECT)) {
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
@@ -784,7 +784,7 @@ if (isFlashing) {
         goToPhaseTwoInstructions();
     }
 
-    if (BUTTON_PRESSED(BUTTON_START)) {
+    if (BUTTON_PRESSED(BUTTON_SELECT)) {
         prevState = state;
         goToPause();
         return;
@@ -887,7 +887,7 @@ void phaseTwo() {
         goToPhaseThreeInstructions();
     }
 
-    if (BUTTON_PRESSED(BUTTON_START)) {
+    if (BUTTON_PRESSED(BUTTON_SELECT)) {
         prevState = state;
         goToPause();
         return;
@@ -1027,7 +1027,7 @@ void pause() {
     drawFullscreenImage4(startPauseBitmap);
     state = PAUSE;
 
-    if (BUTTON_PRESSED(BUTTON_START)) {
+    if (BUTTON_PRESSED(BUTTON_SELECT)) {
         // Flag to skip re-initializing stuff
         resumingFromPause = 1;
         switch (prevState) {

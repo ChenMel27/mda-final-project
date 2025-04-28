@@ -106,7 +106,7 @@ struct oam_attrs {
   struct attr0 attr0;
   struct attr1 attr1;
 };
-# 93 "sprites.h"
+# 94 "sprites.h"
 void hideSprites();
 
 
@@ -341,12 +341,6 @@ void drawPlayerThree() {
         shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
     }
 
-
-    if (isDucking) {
-        shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (4))) & 0x3FF);
-    } else {
-        shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
-    }
 }
 
 inline unsigned char colorAtThree(int x, int y) {

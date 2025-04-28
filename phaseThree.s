@@ -474,44 +474,30 @@ drawPlayerThree:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, lr}
-	ldr	r2, .L122
-	ldr	r1, .L122+4
-	ldr	r3, [r2, #20]
-	ldr	r1, [r1]
-	ldr	ip, .L122+8
-	ldrb	r0, [r2, #56]	@ zero_extendqisi2
-	ldr	lr, [r2, #36]
-	sub	r3, r3, r1
-	ldr	r4, .L122+12
-	ldr	r1, .L122+16
-	ldr	r5, [ip]
-	ldr	r2, [r2, #16]
+	ldr	r1, .L120
+	ldr	r2, .L120+4
+	ldr	r3, [r1, #20]
+	ldr	r0, [r2]
+	ldr	r2, .L120+8
+	ldrb	ip, [r1, #56]	@ zero_extendqisi2
+	ldr	lr, [r1, #36]
+	sub	r3, r3, r0
+	ldr	r4, .L120+12
+	ldr	r0, .L120+16
+	ldr	r5, [r2]
 	and	r3, r3, #255
-	lsl	ip, r0, #3
+	ldr	r2, [r1, #16]
 	orr	r3, r3, r4
+	lsl	r1, ip, #3
 	cmp	lr, #0
-	strh	r3, [r1, ip]	@ movhi
-	add	r0, r1, r0, lsl #3
+	strh	r3, [r0, r1]	@ movhi
 	sub	r2, r2, r5
+	add	r0, r0, ip, lsl #3
 	bne	.L117
 	lsl	r3, r2, #23
 	lsr	r3, r3, #23
 	orr	r3, r3, r4
 	strh	r3, [r0, #2]	@ movhi
-.L118:
-	ldr	r3, .L122+20
-	ldr	r3, [r3]
-	cmp	r3, #0
-	movne	r3, #164
-	ldreq	r2, .L122+24
-	ldreq	r3, .L122+28
-	ldreq	r2, [r2]
-	ldreq	r3, [r3, r2, lsl #2]
-	addeq	r3, r3, #160
-	lsleq	r3, r3, #22
-	lsreq	r3, r3, #22
-	add	r1, r1, ip
-	strh	r3, [r1, #4]	@ movhi
 	pop	{r4, r5, lr}
 	bx	lr
 .L117:
@@ -520,18 +506,16 @@ drawPlayerThree:
 	lsreq	r2, r2, #23
 	orreq	r2, r2, #36864
 	strheq	r2, [r0, #2]	@ movhi
-	b	.L118
-.L123:
+	pop	{r4, r5, lr}
+	bx	lr
+.L121:
 	.align	2
-.L122:
+.L120:
 	.word	player
 	.word	vOff
 	.word	hOff
 	.word	-32768
 	.word	shadowOAM
-	.word	isDucking
-	.word	hikerFrame
-	.word	hikerFrames
 	.size	drawPlayerThree, .-drawPlayerThree
 	.align	2
 	.global	colorAtThree
@@ -544,13 +528,13 @@ colorAtThree:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r3, .L125
+	ldr	r3, .L123
 	add	r0, r0, r1, lsl #9
 	ldrb	r0, [r3, r0]	@ zero_extendqisi2
 	bx	lr
-.L126:
+.L124:
 	.align	2
-.L125:
+.L123:
 	.word	bgThreeFrontCMBitmap
 	.size	colorAtThree, .-colorAtThree
 	.align	2
@@ -568,7 +552,7 @@ initCountdownTimer:
 	mov	ip, #49152
 	mov	r0, #131
 	mov	r1, #132
-	ldr	r3, .L128
+	ldr	r3, .L126
 	strh	r2, [r3, #10]	@ movhi
 	strh	r2, [r3, #14]	@ movhi
 	strh	ip, [r3, #8]	@ movhi
@@ -576,9 +560,9 @@ initCountdownTimer:
 	strh	r2, [r3, #12]	@ movhi
 	strh	r1, [r3, #14]	@ movhi
 	bx	lr
-.L129:
+.L127:
 	.align	2
-.L128:
+.L126:
 	.word	67109120
 	.size	initCountdownTimer, .-initCountdownTimer
 	.align	2
@@ -591,17 +575,17 @@ drawTimer:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L133
+	ldr	r3, .L131
 	ldrh	r3, [r3, #12]
 	rsbs	r3, r3, #20
 	moveq	r1, #1
-	ldreq	r2, .L133+4
+	ldreq	r2, .L131+4
 	str	lr, [sp, #-4]!
 	streq	r1, [r2]
-	ldr	r1, .L133+8
+	ldr	r1, .L131+8
 	mov	ip, #10
 	mov	r0, r1
-	ldr	r2, .L133+12
+	ldr	r2, .L131+12
 	bic	r3, r3, r3, asr #31
 	umull	lr, r2, r3, r2
 	lsr	r2, r2, #3
@@ -609,11 +593,11 @@ drawTimer:
 	sub	r3, r3, lr, lsl #1
 	add	r3, r3, #480
 	lsl	r3, r3, #1
-	ldr	lr, .L133+16
+	ldr	lr, .L131+16
 	strh	ip, [r0, #8]!	@ movhi
 	strh	r3, [r1, #12]	@ movhi
 	add	r2, r2, #480
-	ldr	r3, .L133+20
+	ldr	r3, .L131+20
 	lsl	r2, r2, #1
 	strh	lr, [r1, #2]	@ movhi
 	strh	r2, [r1, #4]	@ movhi
@@ -621,9 +605,9 @@ drawTimer:
 	strh	r3, [r0, #2]	@ movhi
 	ldr	lr, [sp], #4
 	bx	lr
-.L134:
+.L132:
 	.align	2
-.L133:
+.L131:
 	.word	67109120
 	.word	gameOver
 	.word	shadowOAM+400
@@ -647,29 +631,29 @@ updatePlayerPalette:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L137
+	ldr	r3, .L135
 	ldrh	r0, [r3, #12]
 	rsb	r0, r0, #20
 	push	{r4, r5, r6, r7, r8, r9, r10, lr}
 	bic	r0, r0, r0, asr #31
-	ldr	r9, .L137+4
+	ldr	r9, .L135+4
 	mov	lr, pc
 	bx	r9
-	ldr	r1, .L137+8
-	ldr	r3, .L137+12
+	ldr	r1, .L135+8
+	ldr	r3, .L135+12
 	mov	lr, pc
 	bx	r3
 	mov	r6, r0
-	ldr	r3, .L137+16
+	ldr	r3, .L135+16
 	ldrh	r7, [r3, #2]
 	and	r0, r7, #31
 	mov	lr, pc
 	bx	r9
-	ldr	r8, .L137+20
+	ldr	r8, .L135+20
 	mov	r1, r6
 	mov	lr, pc
 	bx	r8
-	ldr	r10, .L137+24
+	ldr	r10, .L135+24
 	mov	lr, pc
 	bx	r10
 	mov	r4, r0
@@ -691,16 +675,16 @@ updatePlayerPalette:
 	mov	lr, pc
 	bx	r8
 	mov	r3, r0
-	ldr	r2, .L137+28
+	ldr	r2, .L135+28
 	mov	r1, r6
 	mov	r0, #1065353216
 	mov	r6, r3
 	mov	lr, pc
 	bx	r2
-	ldr	r1, .L137+32
+	ldr	r1, .L135+32
 	mov	lr, pc
 	bx	r8
-	ldr	r3, .L137+36
+	ldr	r3, .L135+36
 	mov	r1, r0
 	mov	r0, r6
 	mov	lr, pc
@@ -715,20 +699,20 @@ updatePlayerPalette:
 	movlt	r3, r0
 	movge	r3, #31
 	orr	r0, r4, r5, lsl #5
-	ldr	r1, .L137+40
+	ldr	r1, .L135+40
 	orr	r0, r0, r3, lsl #10
 	strh	r0, [r1, #2]!	@ movhi
-	ldr	r4, .L137+44
+	ldr	r4, .L135+44
 	mov	r3, #1
 	mov	r0, #3
-	ldr	r2, .L137+48
+	ldr	r2, .L135+48
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
 	bx	lr
-.L138:
+.L136:
 	.align	2
-.L137:
+.L135:
 	.word	67109120
 	.word	__aeabi_i2f
 	.word	1101004800

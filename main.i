@@ -755,7 +755,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToSplashScreen();
+    goToStart();
 }
 
 
@@ -1020,7 +1020,7 @@ void start() {
         flashColorInTile(117, 3, 4, tileFlashState, originalTiles[3]);
     }
 
-    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
@@ -1320,7 +1320,7 @@ if (isFlashing) {
         goToPhaseTwoInstructions();
     }
 
-    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         prevState = state;
         goToPause();
         return;
@@ -1423,7 +1423,7 @@ void phaseTwo() {
         goToPhaseThreeInstructions();
     }
 
-    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         prevState = state;
         goToPause();
         return;

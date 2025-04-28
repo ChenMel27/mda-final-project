@@ -198,31 +198,6 @@ goToSplashScreen:
 	.word	state
 	.size	goToSplashScreen, .-goToSplashScreen
 	.align	2
-	.global	initialize
-	.syntax unified
-	.arm
-	.fpu softvfp
-	.type	initialize, %function
-initialize:
-	@ Function supports interworking.
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	ldr	r3, .L22
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L22+4
-	mov	lr, pc
-	bx	r3
-	pop	{r4, lr}
-	b	goToSplashScreen
-.L23:
-	.align	2
-.L22:
-	.word	mgba_open
-	.word	setupSounds
-	.size	initialize, .-initialize
-	.align	2
 	.global	goToStart
 	.syntax unified
 	.arm
@@ -236,12 +211,12 @@ goToStart:
 	mov	r3, #0
 	mov	r5, #67108864
 	mov	r1, #4608
-	ldr	r2, .L34
-	ldr	r4, .L34+4
+	ldr	r2, .L30
+	ldr	r4, .L30+4
 	str	r3, [r2]
 	sub	sp, sp, #16
 	strh	r1, [r5]	@ movhi
-	ldr	r2, .L34+8
+	ldr	r2, .L30+8
 	str	r3, [r4, #20]
 	mov	lr, pc
 	bx	r2
@@ -249,93 +224,93 @@ goToStart:
 	mov	r3, #256
 	strh	r2, [r5, #10]	@ movhi
 	mov	r0, #3
-	ldr	r5, .L34+12
+	ldr	r5, .L30+12
 	mov	r2, #83886080
-	ldr	r1, .L34+16
+	ldr	r1, .L30+16
 	mov	lr, pc
 	bx	r5
 	mov	r3, #8192
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L34+20
+	ldr	r1, .L30+20
 	mov	lr, pc
 	bx	r5
 	mov	r3, #4096
 	mov	r0, #3
-	ldr	r2, .L34+24
-	ldr	r1, .L34+28
+	ldr	r2, .L30+24
+	ldr	r1, .L30+28
 	mov	lr, pc
 	bx	r5
 	mov	ip, #120
-	ldr	r6, .L34+32
-	ldr	r5, .L34+36
-	ldr	lr, .L34+40
-.L25:
+	ldr	r6, .L30+32
+	ldr	r5, .L30+36
+	ldr	lr, .L30+40
+.L21:
 	mov	r0, r5
 	mov	r1, r6
 	sub	r3, ip, #4
-.L26:
+.L22:
 	lsl	r2, r3, #1
 	ldrh	r2, [lr, r2]
 	add	r3, r3, #1
 	cmp	r3, ip
 	strh	r2, [r1], #2	@ movhi
 	strh	r2, [r0], #2	@ movhi
-	bne	.L26
+	bne	.L22
 	cmp	r3, #216
 	add	r6, r6, #8
 	add	r5, r5, #8
 	add	ip, r3, #32
-	bne	.L25
+	bne	.L21
 	mov	ip, sp
-	ldr	r3, .L34+44
+	ldr	r3, .L30+44
 	ldm	r3, {r0, r1, r2, r3}
 	stm	ip, {r0, r1, r2, r3}
-	ldr	lr, .L34+48
+	ldr	lr, .L30+48
 	add	r5, sp, #16
-.L28:
+.L24:
 	mov	r1, lr
 	ldr	r3, [ip], #4
 	lsl	r3, r3, #4
 	add	r0, r3, #16
-.L29:
+.L25:
 	lsl	r2, r3, #1
 	add	r2, r2, #100663296
 	ldrh	r2, [r2]
 	add	r3, r3, #1
 	cmp	r3, r0
 	strh	r2, [r1, #2]!	@ movhi
-	bne	.L29
+	bne	.L25
 	cmp	ip, r5
 	add	lr, lr, #32
-	bne	.L28
-	ldr	r3, .L34+52
+	bne	.L24
+	ldr	r3, .L30+52
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L34+56
+	ldr	r3, .L30+56
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	mov	ip, #96
-	ldr	r1, .L34+60
+	ldr	r1, .L30+60
 	str	r3, [r4]
 	mov	r2, #1
 	ldr	r1, [r1]
-	ldr	r0, .L34+64
-	ldr	r3, .L34+68
+	ldr	r0, .L30+64
+	ldr	r3, .L30+68
 	str	ip, [r4, #4]
 	mov	lr, pc
 	bx	r3
 	mov	r2, #1
-	ldr	r3, .L34+72
+	ldr	r3, .L30+72
 	strb	r2, [r3]
 	add	sp, sp, #16
 	@ sp needed
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L35:
+.L31:
 	.align	2
-.L34:
+.L30:
 	.word	cheatOn
 	.word	.LANCHOR0
 	.word	hideSprites
@@ -356,6 +331,31 @@ goToStart:
 	.word	playSoundA
 	.word	state
 	.size	goToStart, .-goToStart
+	.align	2
+	.global	initialize
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	initialize, %function
+initialize:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, lr}
+	ldr	r3, .L34
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L34+4
+	mov	lr, pc
+	bx	r3
+	pop	{r4, lr}
+	b	goToStart
+.L35:
+	.align	2
+.L34:
+	.word	mgba_open
+	.word	setupSounds
+	.size	initialize, .-initialize
 	.align	2
 	.global	goToStartTwo
 	.syntax unified
@@ -1403,11 +1403,11 @@ start:
 .L123:
 	ldr	r3, .L141+44
 	ldrh	r3, [r3]
-	tst	r3, #8
+	tst	r3, #4
 	beq	.L115
 	ldr	r3, .L141+48
 	ldrh	r3, [r3]
-	tst	r3, #8
+	tst	r3, #4
 	beq	.L140
 .L115:
 	add	sp, sp, #12
@@ -1842,11 +1842,11 @@ phaseOne:
 .L199:
 	ldr	r3, .L232+68
 	ldrh	r3, [r3]
-	tst	r3, #8
+	tst	r3, #4
 	beq	.L164
 	ldr	r3, .L232+72
 	ldrh	r3, [r3]
-	tst	r3, #8
+	tst	r3, #4
 	beq	.L229
 .L164:
 	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
@@ -2119,11 +2119,11 @@ phaseTwo:
 .L236:
 	ldr	r3, .L251+48
 	ldrh	r3, [r3]
-	tst	r3, #8
+	tst	r3, #4
 	beq	.L234
 	ldr	r3, .L251+52
 	ldrh	r3, [r3]
-	tst	r3, #8
+	tst	r3, #4
 	beq	.L250
 .L234:
 	pop	{r4, r5, r6, lr}
@@ -2750,7 +2750,7 @@ main:
 	beq	.L317
 	tst	r3, #8
 	bne	.L317
-	ldr	r3, .L341+60
+	ldr	r3, .L341+8
 	mov	lr, pc
 	bx	r3
 	b	.L317
@@ -2759,12 +2759,12 @@ main:
 	bx	fp
 	b	.L317
 .L326:
-	ldr	r3, .L341+64
+	ldr	r3, .L341+60
 	mov	lr, pc
 	bx	r3
 	b	.L317
 .L327:
-	ldr	r3, .L341+68
+	ldr	r3, .L341+64
 	mov	lr, pc
 	bx	r3
 	b	.L317
@@ -2773,7 +2773,7 @@ main:
 	beq	.L317
 	tst	r3, #8
 	bne	.L317
-	ldr	r3, .L341+72
+	ldr	r3, .L341+68
 	mov	lr, pc
 	bx	r3
 	b	.L317
@@ -2782,7 +2782,7 @@ main:
 .L341:
 	.word	mgba_open
 	.word	setupSounds
-	.word	goToSplashScreen
+	.word	goToStart
 	.word	buttons
 	.word	oldButtons
 	.word	state
@@ -2795,7 +2795,6 @@ main:
 	.word	phaseThree
 	.word	goToPhaseThree
 	.word	phaseTwo
-	.word	goToStart
 	.word	phaseOne
 	.word	startInstructions
 	.word	goToPhaseTwo
