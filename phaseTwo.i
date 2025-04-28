@@ -50,7 +50,7 @@ typedef volatile struct {
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 3 "phaseTwo.c" 2
 # 1 "mode0.h" 1
-# 32 "mode0.h"
+# 52 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;
@@ -967,6 +967,39 @@ extern long double strtold (const char *restrict, char **restrict);
 # 336 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
 
 # 10 "phaseTwo.c" 2
+# 1 "healthaudio.h" 1
+
+
+
+# 3 "healthaudio.h"
+extern const unsigned int healthaudio_sampleRate;
+extern const unsigned int healthaudio_length;
+extern const signed char healthaudio_data[];
+# 11 "phaseTwo.c" 2
+# 1 "digitalSound.h" 1
+
+
+
+void setupSounds();
+void playSoundA(const signed char* sound, int length, int loops);
+void playSoundB(const signed char* sound, int length, int loops);
+
+void pauseSounds();
+void unpauseSounds();
+void stopSounds();
+# 49 "digitalSound.h"
+typedef struct{
+    const signed char* data;
+    int dataLength;
+    int isPlaying;
+    int looping;
+    int durationInVBlanks;
+    int vBlankCount;
+} SOUND;
+
+SOUND soundA;
+SOUND soundB;
+# 12 "phaseTwo.c" 2
 
 
 
@@ -974,8 +1007,6 @@ extern long double strtold (const char *restrict, char **restrict);
 
 
 
-
-# 17 "phaseTwo.c"
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
 extern int hikerFrame;
@@ -1141,6 +1172,7 @@ void drawPlayerTwo() {
 
         if (health.active > 0) {
             health.active--;
+            playSoundB(healthaudio_data, healthaudio_length, 0);
 
             if (health.active == 0) {
                 gameOver = 1;
@@ -1148,7 +1180,7 @@ void drawPlayerTwo() {
         }
 
 
-        player.worldX = 240;
+        player.worldX = 0;
         player.worldY = 101;
         player.yVel = 0;
 
@@ -1203,12 +1235,13 @@ void updateSnow() {
 
         if (collision(snows[i].worldX, snows[i].worldY, 16, 16,
             player.worldX, player.worldY, player.width, player.height)) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
             health.active--;
 
             if (health.active == 0) gameOver = 1;
 
 
-            player.worldX = 240;
+            player.worldX = 0;
             player.worldY = 101;
             player.yVel = 0;
             hOff = 0;

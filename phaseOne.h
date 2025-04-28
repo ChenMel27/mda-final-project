@@ -28,3 +28,8 @@ void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
+
+typedef enum {
+    PLAYER_NORMAL,
+    PLAYER_FALLING
+} PlayerState;

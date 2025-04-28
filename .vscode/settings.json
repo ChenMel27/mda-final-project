@@ -40,6 +40,9 @@
         "gameinstructions2.h": "c",
         "action.h": "c",
         "splashp2.h": "c",
-        "bgtwoback.h": "c"
+        "bgtwoback.h": "c",
+        "bganimatedback.h": "c",
+        "fortnite.h": "c",
+        "diatwo.h": "c"
     }
 }

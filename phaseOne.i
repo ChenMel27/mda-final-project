@@ -55,7 +55,7 @@ typedef volatile struct {
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 8 "phaseOne.c" 2
 # 1 "mode0.h" 1
-# 32 "mode0.h"
+# 52 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;
@@ -147,6 +147,11 @@ void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
+
+typedef enum {
+    PLAYER_NORMAL,
+    PLAYER_FALLING
+} PlayerState;
 # 12 "phaseOne.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
@@ -155,6 +160,37 @@ extern const unsigned short playerTiles[16384];
 
 extern const unsigned short playerPal[256];
 # 13 "phaseOne.c" 2
+# 1 "healthaudio.h" 1
+
+
+extern const unsigned int healthaudio_sampleRate;
+extern const unsigned int healthaudio_length;
+extern const signed char healthaudio_data[];
+# 14 "phaseOne.c" 2
+# 1 "digitalSound.h" 1
+
+
+
+void setupSounds();
+void playSoundA(const signed char* sound, int length, int loops);
+void playSoundB(const signed char* sound, int length, int loops);
+
+void pauseSounds();
+void unpauseSounds();
+void stopSounds();
+# 49 "digitalSound.h"
+typedef struct{
+    const signed char* data;
+    int dataLength;
+    int isPlaying;
+    int looping;
+    int durationInVBlanks;
+    int vBlankCount;
+} SOUND;
+
+SOUND soundA;
+SOUND soundB;
+# 15 "phaseOne.c" 2
 
 
 
@@ -180,11 +216,6 @@ int movedHorizontally = 0;
 SPRITE player;
 extern SPRITE health;
 
-
-typedef enum {
-    PLAYER_NORMAL,
-    PLAYER_FALLING
-} PlayerState;
 PlayerState playerState = PLAYER_NORMAL;
 
 
@@ -197,7 +228,7 @@ inline unsigned char colorAt(int x, int y);
 
 
 void initPlayer() {
-    player.worldX = 240;
+    player.worldX = 0;
     player.worldY = 102;
     player.x = 240 / 2 - 8;
     player.y = 160 / 2 - 16;
@@ -210,7 +241,7 @@ void initPlayer() {
     player.direction = 0;
     player.active = 1;
     player.xVel = cheatOn ? (12) : (8);
-    playerSubPixelX = 240 << 3;
+    playerSubPixelX = 0 << 3;
     player.yVel = 0;
     DMANow(3, (void*) playerPal, ((u16 *)0x5000200), 512 / 2);
     DMANow(3, (void*) playerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
@@ -228,8 +259,6 @@ void updatePlayer(int* hOff, int* vOff) {
     if (cheatOn && (++colorCycleTimer % 4 == 0)) {
         cyclePaletteColors();
     }
-
-
 
 
     player.isAnimating = 0;
@@ -379,15 +408,16 @@ void drawPlayer() {
     colorAt(rightX, bottomY) == 0x05) {
 
     if (health.active > 0) {
+    playSoundB(healthaudio_data, healthaudio_length, 0);
         health.active--;
         if (health.active == 0) {
             gameOver = 1;
         }
     }
 
-    player.worldX = 240;
+    player.worldX = 0;
     player.worldY = 102;
-    playerSubPixelX = 240 << 3;
+    playerSubPixelX = 0 << 3;
     player.yVel = 0;
     hOff = 0;
     vOff = 0;
@@ -402,6 +432,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x06) {
 
         if (health.active > 0) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
@@ -423,6 +454,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x07) {
 
         if (health.active > 0) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
@@ -444,6 +476,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x08) {
 
         if (health.active > 0) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
@@ -498,7 +531,7 @@ void resetPlayerState() {
     hikerFrame = 0;
     isDucking = 0;
     gameOver = 0;
-    playerSubPixelX = 240 << 3;
+    playerSubPixelX = 0 << 3;
 }
 
 
@@ -533,12 +566,12 @@ void drawFallingSprite(void) {
 
 
 void resetPlayerAfterFall(void) {
-    player.worldX = 240;
+    player.worldX = 0;
     player.worldY = 102;
     player.yVel = 0;
     hOff = 0;
     vOff = 0;
-    playerSubPixelX = 240 << 3;
+    playerSubPixelX = 0 << 3;
     playerState = PLAYER_NORMAL;
 }
 

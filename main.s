@@ -721,37 +721,35 @@ goToPhaseOne:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, lr}
+	ldr	r3, .L73
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L73+4
+	mov	r2, #1
+	ldr	r1, [r3]
+	ldr	r0, .L73+8
+	ldr	r3, .L73+12
+	mov	lr, pc
+	bx	r3
 	mov	r0, #67108864
 	mov	lr, #0
 	mov	r3, #5888
-	ldr	ip, .L73
-	ldr	r2, .L73+4
-	ldr	r1, .L73+8
+	ldr	ip, .L73+16
+	ldr	r2, .L73+20
+	ldr	r1, .L73+24
 	strh	lr, [r0]	@ movhi
-	ldr	r4, .L73+12
+	ldr	r4, .L73+28
 	strh	r3, [r0]	@ movhi
 	strh	r2, [r0, #8]	@ movhi
 	mov	r3, #256
 	strh	r1, [r0, #10]	@ movhi
 	mov	r2, #83886080
 	strh	ip, [r0, #12]	@ movhi
-	ldr	r1, .L73+16
+	ldr	r1, .L73+32
 	mov	r0, #3
 	mov	lr, pc
 	bx	r4
 	mov	r3, #12800
-	mov	r0, #3
-	ldr	r2, .L73+20
-	ldr	r1, .L73+24
-	mov	lr, pc
-	bx	r4
-	mov	r3, #2048
-	mov	r0, #3
-	ldr	r2, .L73+28
-	ldr	r1, .L73+32
-	mov	lr, pc
-	bx	r4
-	mov	r3, #2048
 	mov	r0, #3
 	ldr	r2, .L73+36
 	ldr	r1, .L73+40
@@ -759,12 +757,24 @@ goToPhaseOne:
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r1, .L73+44
-	ldr	r2, .L73+48
+	ldr	r2, .L73+44
+	ldr	r1, .L73+48
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L73+52
+	mov	r3, #2048
+	mov	r0, #3
+	ldr	r2, .L73+52
 	ldr	r1, .L73+56
+	mov	lr, pc
+	bx	r4
+	mov	r3, #2048
+	mov	r0, #3
+	ldr	r1, .L73+60
+	ldr	r2, .L73+64
+	mov	lr, pc
+	bx	r4
+	ldr	r3, .L73+68
+	ldr	r1, .L73+72
 	add	r0, r3, #64
 	sub	r1, r1, r3
 .L68:
@@ -773,7 +783,7 @@ goToPhaseOne:
 	cmp	r3, r0
 	bne	.L68
 	mov	r3, #0
-	ldr	r4, .L73+60
+	ldr	r4, .L73+76
 	ldr	r2, [r4, #20]
 	cmp	r2, r3
 	str	r3, [r4, #32]
@@ -783,7 +793,7 @@ goToPhaseOne:
 	mov	r1, #3
 	mov	r3, #0
 	mov	r0, #96
-	ldr	r2, .L73+64
+	ldr	r2, .L73+80
 	strb	r1, [r2]
 	str	r3, [r4, #20]
 	str	r3, [r4]
@@ -791,16 +801,20 @@ goToPhaseOne:
 	pop	{r4, lr}
 	bx	lr
 .L72:
-	ldr	r3, .L73+68
+	ldr	r3, .L73+84
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L73+72
+	ldr	r3, .L73+88
 	mov	lr, pc
 	bx	r3
 	b	.L69
 .L74:
 	.align	2
 .L73:
+	.word	stopSounds
+	.word	phasetwoaudio_length
+	.word	phasetwoaudio_data
+	.word	playSoundA
 	.word	24198
 	.word	23172
 	.word	23685
@@ -926,47 +940,57 @@ goToPhaseTwo:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
+	ldr	r3, .L87
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L87+4
+	mov	r2, #1
+	ldr	r1, [r3]
+	ldr	r0, .L87+8
+	ldr	r3, .L87+12
+	mov	lr, pc
+	bx	r3
 	mov	r0, #67108864
 	mov	lr, #0
 	mov	r3, #5888
-	ldr	ip, .L87
-	ldr	r2, .L87+4
-	ldr	r1, .L87+8
+	ldr	ip, .L87+16
+	ldr	r2, .L87+20
+	ldr	r1, .L87+24
 	strh	lr, [r0]	@ movhi
-	ldr	r4, .L87+12
+	ldr	r4, .L87+28
 	strh	r3, [r0]	@ movhi
 	strh	r2, [r0, #8]	@ movhi
 	mov	r3, #256
 	strh	r1, [r0, #10]	@ movhi
 	mov	r2, #83886080
 	strh	ip, [r0, #12]	@ movhi
-	ldr	r1, .L87+16
+	ldr	r1, .L87+32
 	mov	r0, #3
 	mov	lr, pc
 	bx	r4
 	mov	r3, #12800
 	mov	r0, #3
-	ldr	r2, .L87+20
-	ldr	r1, .L87+24
+	ldr	r2, .L87+36
+	ldr	r1, .L87+40
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L87+28
-	ldr	r1, .L87+32
+	ldr	r2, .L87+44
+	ldr	r1, .L87+48
 	mov	lr, pc
 	bx	r4
-	ldr	r5, .L87+36
+	ldr	r5, .L87+52
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L87+40
-	ldr	r1, .L87+44
+	ldr	r2, .L87+56
+	ldr	r1, .L87+60
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L87+48
-	ldr	r1, .L87+52
+	ldr	r2, .L87+64
+	ldr	r1, .L87+68
 	mov	lr, pc
 	bx	r4
 	ldr	r3, [r5, #20]
@@ -976,7 +1000,7 @@ goToPhaseTwo:
 	mov	r1, #5
 	mov	r3, #0
 	mov	r0, #96
-	ldr	r2, .L87+56
+	ldr	r2, .L87+72
 	strb	r1, [r2]
 	str	r3, [r5, #20]
 	str	r3, [r5]
@@ -984,16 +1008,20 @@ goToPhaseTwo:
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L86:
-	ldr	r3, .L87+60
+	ldr	r3, .L87+76
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L87+64
+	ldr	r3, .L87+80
 	mov	lr, pc
 	bx	r3
 	b	.L84
 .L88:
 	.align	2
 .L87:
+	.word	stopSounds
+	.word	phaseoneaudio_length
+	.word	phaseoneaudio_data
+	.word	playSoundB
 	.word	24198
 	.word	23172
 	.word	23685
@@ -1118,61 +1146,71 @@ goToPhaseThree:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	mov	r0, #67108864
+	ldr	r3, .L102
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L102+4
+	mov	r2, #1
+	ldr	r1, [r3]
+	ldr	r0, .L102+8
+	ldr	r3, .L102+12
+	mov	lr, pc
+	bx	r3
 	mov	r5, #0
+	mov	r0, #67108864
 	mov	r3, #5888
-	ldr	ip, .L102
-	ldr	r2, .L102+4
-	ldr	r1, .L102+8
+	ldr	ip, .L102+16
+	ldr	r2, .L102+20
+	ldr	r1, .L102+24
 	strh	r5, [r0]	@ movhi
-	ldr	r4, .L102+12
+	ldr	r4, .L102+28
 	strh	r3, [r0]	@ movhi
 	strh	r2, [r0, #8]	@ movhi
 	mov	r3, #256
 	strh	r1, [r0, #10]	@ movhi
 	mov	r2, #83886080
 	strh	ip, [r0, #12]	@ movhi
-	ldr	r1, .L102+16
+	ldr	r1, .L102+32
 	mov	r0, #3
 	mov	lr, pc
 	bx	r4
 	mov	r3, #12800
 	mov	r0, #3
-	ldr	r2, .L102+20
-	ldr	r1, .L102+24
-	mov	lr, pc
-	bx	r4
-	mov	r3, #2048
-	mov	r0, #3
-	ldr	r2, .L102+28
-	ldr	r1, .L102+32
-	mov	lr, pc
-	bx	r4
-	mov	r3, #2048
-	mov	r0, #3
 	ldr	r2, .L102+36
 	ldr	r1, .L102+40
 	mov	lr, pc
 	bx	r4
+	mov	r3, #2048
 	mov	r0, #3
 	ldr	r2, .L102+44
 	ldr	r1, .L102+48
+	mov	lr, pc
+	bx	r4
+	mov	r3, #2048
+	mov	r0, #3
+	ldr	r2, .L102+52
+	ldr	r1, .L102+56
+	mov	lr, pc
+	bx	r4
+	mov	r0, #3
+	ldr	r2, .L102+60
+	ldr	r1, .L102+64
 	mov	r3, #2048
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L102+52
+	ldr	r3, .L102+68
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L102+56
+	ldr	r3, .L102+72
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L102+60
+	ldr	r3, .L102+76
 	mov	lr, pc
 	bx	r3
 	mov	r1, #7
 	mov	r0, #96
-	ldr	r2, .L102+64
-	ldr	r3, .L102+68
+	ldr	r2, .L102+80
+	ldr	r3, .L102+84
 	strb	r1, [r2]
 	str	r5, [r3]
 	str	r0, [r3, #4]
@@ -1181,6 +1219,10 @@ goToPhaseThree:
 .L103:
 	.align	2
 .L102:
+	.word	stopSounds
+	.word	phasethreeaudio_length
+	.word	phasethreeaudio_data
+	.word	playSoundB
 	.word	24198
 	.word	23172
 	.word	23685
@@ -1616,11 +1658,21 @@ goToLose:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	mov	r2, #5888
+	ldr	r3, .L162
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L162+4
+	ldr	r0, .L162+8
+	ldr	r1, [r3]
+	mov	r2, #1
+	ldr	r3, .L162+12
+	mov	lr, pc
+	bx	r3
 	mov	r4, #67108864
 	mov	r5, #0
-	ldr	r3, .L162
+	mov	r2, #5888
 	strh	r5, [r4, #80]	@ movhi
+	ldr	r3, .L162+16
 	strh	r5, [r4, #82]	@ movhi
 	strh	r5, [r4, #84]	@ movhi
 	strh	r5, [r4, #76]	@ movhi
@@ -1628,32 +1680,20 @@ goToLose:
 	strh	r2, [r4]	@ movhi
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L162+4
-	ldr	r2, .L162+8
-	ldr	r1, .L162+12
+	ldr	r3, .L162+20
+	ldr	r2, .L162+24
+	ldr	r1, .L162+28
 	strh	r3, [r4, #8]	@ movhi
 	mov	r0, #3
 	strh	r2, [r4, #10]	@ movhi
 	mov	r3, #256
 	strh	r1, [r4, #12]	@ movhi
 	mov	r2, #83886080
-	ldr	r4, .L162+16
-	ldr	r1, .L162+20
-	mov	lr, pc
-	bx	r4
-	mov	r3, #12800
-	mov	r0, #3
-	ldr	r2, .L162+24
-	ldr	r1, .L162+28
-	mov	lr, pc
-	bx	r4
-	mov	r3, #2048
-	mov	r0, #3
-	ldr	r2, .L162+32
+	ldr	r4, .L162+32
 	ldr	r1, .L162+36
 	mov	lr, pc
 	bx	r4
-	mov	r3, #2048
+	mov	r3, #12800
 	mov	r0, #3
 	ldr	r2, .L162+40
 	ldr	r1, .L162+44
@@ -1665,10 +1705,22 @@ goToLose:
 	ldr	r1, .L162+52
 	mov	lr, pc
 	bx	r4
+	mov	r3, #2048
+	mov	r0, #3
+	ldr	r2, .L162+56
+	ldr	r1, .L162+60
+	mov	lr, pc
+	bx	r4
+	mov	r3, #2048
+	mov	r0, #3
+	ldr	r2, .L162+64
+	ldr	r1, .L162+68
+	mov	lr, pc
+	bx	r4
 	mov	r1, #9
 	mov	r0, #96
-	ldr	r2, .L162+56
-	ldr	r3, .L162+60
+	ldr	r2, .L162+72
+	ldr	r3, .L162+76
 	strb	r1, [r2]
 	str	r5, [r3]
 	str	r0, [r3, #4]
@@ -1677,6 +1729,10 @@ goToLose:
 .L163:
 	.align	2
 .L162:
+	.word	stopSounds
+	.word	loseaudio_length
+	.word	loseaudio_data
+	.word	playSoundA
 	.word	initAnimatedPlayer
 	.word	23172
 	.word	23685
@@ -1705,22 +1761,18 @@ phaseOne:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, lr}
-	ldr	r4, .L232
-	ldr	r3, [r4, #44]
-	cmp	r3, #0
-	beq	.L225
-.L165:
-	ldr	r1, .L232+4
-	ldr	r3, .L232+8
-	sub	r0, r1, #4
+	ldr	r4, .L230
+	ldr	r3, .L230+4
+	mov	r0, r4
+	add	r1, r4, #4
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L232+12
+	ldr	r3, .L230+8
 	mov	lr, pc
 	bx	r3
 	mov	lr, #67108864
 	ldm	r4, {r0, r1}
-	ldr	ip, [r4, #48]
+	ldr	ip, [r4, #44]
 	add	r2, r0, r0, lsr #31
 	add	r3, r1, r1, lsr #31
 	asr	r2, r2, #1
@@ -1739,59 +1791,59 @@ phaseOne:
 	strh	r1, [lr, #18]	@ movhi
 	strh	r2, [lr, #20]	@ movhi
 	strh	r3, [lr, #22]	@ movhi
-	strle	ip, [r4, #48]
-	ble	.L171
+	strle	ip, [r4, #44]
+	ble	.L170
 	mov	r2, #0
-	ldr	r3, [r4, #52]
+	ldr	r3, [r4, #48]
 	sub	r0, r3, r2
 	rsbs	r3, r0, #0
 	adc	r3, r3, r0
-	str	r2, [r4, #48]
-	str	r3, [r4, #52]
-	ldr	r0, .L232+16
-	ldr	lr, .L232+20
-	ldr	ip, .L232+24
-	ldr	r5, .L232+28
-.L167:
+	str	r2, [r4, #44]
+	str	r3, [r4, #48]
+	ldr	r0, .L230+12
+	ldr	lr, .L230+16
+	ldr	ip, .L230+20
+	ldr	r5, .L230+24
+.L166:
 	sub	r2, r0, #64
-.L170:
+.L169:
 	ldrh	r3, [r2]
 	and	r1, r3, lr
 	cmp	r1, #231
 	and	r3, r3, ip
 	orreq	r3, r3, #255
 	strheq	r3, [r2]	@ movhi
-	beq	.L169
+	beq	.L168
 	cmp	r1, #255
 	orreq	r3, r3, #231
 	strheq	r3, [r2]	@ movhi
-.L169:
+.L168:
 	add	r2, r2, #2
 	cmp	r0, r2
-	bne	.L170
+	bne	.L169
 	add	r0, r0, #64
 	cmp	r0, r5
-	bne	.L167
-.L171:
+	bne	.L166
+.L170:
 	ldr	r3, [r4, #32]
 	add	r3, r3, #1
 	tst	r3, #3
 	str	r3, [r4, #32]
-	bne	.L175
+	bne	.L174
 	ldr	r3, [r4, #36]
 	cmp	r3, #99
-	bgt	.L175
-	ldr	r6, .L232+32
+	bgt	.L174
+	ldr	r6, .L230+28
 	add	r3, r3, #1
 	str	r3, [r4, #36]
-	ldr	r8, .L232+36
+	ldr	r8, .L230+32
 	add	r7, r6, #64
-.L177:
+.L176:
 	ldrb	r3, [r6, #1]!	@ zero_extendqisi2
 	lsl	r5, r3, #1
 	cmp	r3, #0
 	add	r5, r5, #83886080
-	beq	.L176
+	beq	.L175
 	mov	r3, #2000
 	mov	r1, #0
 	ldr	r2, [r4, #36]
@@ -1799,187 +1851,185 @@ phaseOne:
 	mov	lr, pc
 	bx	r8
 	strh	r0, [r5]	@ movhi
-.L176:
-	cmp	r7, r6
-	bne	.L177
 .L175:
-	ldr	r3, [r4, #56]
+	cmp	r7, r6
+	bne	.L176
+.L174:
+	ldr	r3, [r4, #52]
 	add	r3, r3, #1
 	cmp	r3, #200
-	str	r3, [r4, #56]
-	ble	.L174
-	ldr	r10, [r4, #60]
+	str	r3, [r4, #52]
+	ble	.L173
+	ldr	r10, [r4, #56]
 	cmp	r10, #0
-	beq	.L226
-.L174:
-	ldr	r3, [r4, #72]
+	beq	.L224
+.L173:
+	ldr	r3, [r4, #68]
 	cmp	r3, #0
-	bne	.L187
-.L195:
+	bne	.L186
+.L194:
 	mov	r5, #512
-	ldr	r3, .L232+40
+	ldr	r3, .L230+36
 	ldrb	r2, [r3, #56]	@ zero_extendqisi2
-	ldr	r4, .L232+44
+	ldr	r4, .L230+40
 	lsl	r2, r2, #3
 	strh	r5, [r4, r2]	@ movhi
-	ldr	r3, .L232+48
+	ldr	r3, .L230+44
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L232+52
+	ldr	r3, .L230+48
 	mov	lr, pc
 	bx	r3
 	mov	r3, r5
 	mov	r1, r4
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r4, .L232+56
+	ldr	r4, .L230+52
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L232+60
+	ldr	r3, .L230+56
 	ldr	r3, [r3]
 	cmp	r3, #0
-	bne	.L227
-	ldr	r3, .L232+64
+	bne	.L225
+.L188:
+	ldr	r3, .L230+60
 	ldr	r3, [r3]
 	cmp	r3, #0
-	bne	.L228
-.L199:
-	ldr	r3, .L232+68
+	bne	.L226
+.L198:
+	ldr	r3, .L230+64
 	ldrh	r3, [r3]
 	tst	r3, #4
 	beq	.L164
-	ldr	r3, .L232+72
+	ldr	r3, .L230+68
 	ldrh	r3, [r3]
 	tst	r3, #4
-	beq	.L229
+	beq	.L227
 .L164:
 	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
 	bx	lr
-.L226:
-	ldr	r3, [r4, #64]
+.L224:
+	ldr	r3, [r4, #60]
 	add	r3, r3, #1
 	cmp	r3, #60
-	strle	r3, [r4, #64]
-	ble	.L174
-	ldr	r5, [r4, #68]
+	strle	r3, [r4, #60]
+	ble	.L173
+	ldr	r5, [r4, #64]
 	mov	r2, #1
 	rsbs	r1, r5, #1
 	movcc	r1, #0
-	ldr	r3, .L232+76
-	str	r10, [r4, #64]
+	ldr	r3, .L230+72
+	str	r10, [r4, #60]
+	str	r10, [r4, #72]
 	str	r10, [r4, #76]
-	str	r10, [r4, #80]
-	str	r2, [r4, #72]
-	str	r2, [r4, #60]
-	str	r1, [r4, #68]
+	str	r2, [r4, #68]
+	str	r2, [r4, #56]
+	str	r1, [r4, #64]
 	add	r0, r3, #512
 	rsb	r1, r3, #83886080
-.L179:
+.L178:
 	ldrh	r2, [r1, r3]
 	strh	r2, [r3, #2]!	@ movhi
 	cmp	r3, r0
-	bne	.L179
-	ldr	r0, .L232+28
-	ldr	r7, .L232+80
-	ldr	r8, .L232+84
-	ldr	r6, .L232+88
-.L180:
-	ldr	lr, .L232+20
-	ldr	ip, .L232+24
-	ldr	r9, .L232+88
+	bne	.L178
+	ldr	r0, .L230+24
+	ldr	r7, .L230+76
+	ldr	r8, .L230+80
+	ldr	r6, .L230+84
+.L179:
+	ldr	lr, .L230+16
+	ldr	ip, .L230+20
+	ldr	r9, .L230+84
 	sub	r2, r0, #64
-	b	.L185
-.L231:
+	b	.L184
+.L229:
 	cmp	r1, r6
 	orreq	r3, r3, #320
 	orreq	r3, r3, #2
 	strheq	r3, [r2]	@ movhi
-	beq	.L183
+	beq	.L182
 	orr	r3, r3, #344
 	cmp	r1, #348
 	orr	r3, r3, #3
-	bne	.L183
-.L224:
+	bne	.L182
+.L223:
 	strh	r3, [r2]	@ movhi
-.L183:
+.L182:
 	add	r2, r2, #2
 	cmp	r0, r2
-	beq	.L230
-.L185:
+	beq	.L228
+.L184:
 	ldrh	r3, [r2]
 	cmp	r5, #0
 	and	r1, r3, lr
 	and	r3, r3, ip
-	bne	.L231
+	bne	.L229
 	cmp	r1, r7
 	orreq	r3, r3, r9
 	strheq	r3, [r2]	@ movhi
-	beq	.L183
+	beq	.L182
 	cmp	r1, r8
-	bne	.L183
+	bne	.L182
 	orr	r3, r3, #348
-	b	.L224
-.L187:
-	ldr	r3, [r4, #84]
+	b	.L223
+.L186:
+	ldr	r3, [r4, #80]
 	add	r3, r3, #1
 	cmp	r3, #8
-	ldr	r10, [r4, #80]
-	ble	.L186
+	ldr	r10, [r4, #76]
+	ble	.L185
 	mov	r2, #0
-	ldr	r3, [r4, #76]
+	ldr	r3, [r4, #72]
 	sub	r1, r3, r2
 	rsbs	r3, r1, #0
 	adc	r3, r3, r1
 	add	r10, r10, #1
-	str	r10, [r4, #80]
-	str	r3, [r4, #76]
-	str	r2, [r4, #84]
-.L191:
-	cmp	r10, #3
-	ble	.L192
-	mov	r3, #0
-	ldr	r2, .L232+32
+	str	r10, [r4, #76]
 	str	r3, [r4, #72]
-	ldr	r0, .L232+92
+	str	r2, [r4, #80]
+.L190:
+	cmp	r10, #3
+	ble	.L191
+	mov	r3, #0
+	ldr	r2, .L230+28
+	str	r3, [r4, #68]
+	ldr	r0, .L230+88
 	add	r1, r2, #64
-.L194:
+.L193:
 	ldrb	r3, [r2, #1]!	@ zero_extendqisi2
 	cmp	r3, #0
 	lslne	r3, r3, #1
 	addne	r3, r3, #83886080
 	strhne	r0, [r3]	@ movhi
 	cmp	r1, r2
-	bne	.L194
-	b	.L195
-.L227:
-	bl	goToLose
-	ldr	r3, .L232+64
-	ldr	r3, [r3]
-	cmp	r3, #0
-	beq	.L199
-.L228:
-	bl	goToPhaseTwoInstructions
-	b	.L199
-.L225:
-	mov	r2, #1
-	ldr	r3, .L232+96
-	ldr	r0, .L232+100
-	ldr	r1, [r3]
-	ldr	r3, .L232+104
-	str	r2, [r4, #44]
+	bne	.L193
+	b	.L194
+.L226:
+	ldr	r3, .L230+92
 	mov	lr, pc
 	bx	r3
-	b	.L165
-.L192:
-	ldr	r2, .L232+32
-	ldr	r5, [r4, #76]
-	ldr	r4, .L232+108
+	ldr	r3, .L230+96
+	mov	r2, #0
+	ldr	r1, [r3]
+	ldr	r0, .L230+100
+	ldr	r3, .L230+104
+	mov	lr, pc
+	bx	r3
+	bl	goToPhaseTwoInstructions
+	b	.L198
+.L225:
+	bl	goToLose
+	b	.L188
+.L191:
+	ldr	r2, .L230+28
+	ldr	r5, [r4, #72]
+	ldr	r4, .L230+108
 	add	lr, r2, #64
-.L198:
+.L197:
 	ldrb	r3, [r2, #1]!	@ zero_extendqisi2
 	cmp	r3, #0
 	lsl	r3, r3, #1
-	beq	.L196
+	beq	.L195
 	ldrh	r1, [r4, r3]
 	add	ip, r3, #83886080
 	lsr	r3, r1, #1
@@ -1992,31 +2042,30 @@ phaseOne:
 	orr	r3, r3, r0, lsr #1
 	strhne	r3, [ip]	@ movhi
 	strheq	r1, [ip]	@ movhi
-.L196:
+.L195:
 	cmp	lr, r2
-	bne	.L198
-	b	.L195
-.L230:
-	ldr	r3, .L232+112
+	bne	.L197
+	b	.L194
+.L228:
+	ldr	r3, .L230+112
 	add	r0, r0, #64
 	cmp	r0, r3
-	bne	.L180
+	bne	.L179
 	mov	r3, #1
-.L186:
-	str	r3, [r4, #84]
-	b	.L191
-.L229:
-	ldr	r2, .L232+116
-	ldr	r3, .L232+120
+.L185:
+	str	r3, [r4, #80]
+	b	.L190
+.L227:
+	ldr	r2, .L230+116
+	ldr	r3, .L230+120
 	ldrb	r2, [r2]	@ zero_extendqisi2
 	strb	r2, [r3]
 	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
 	b	goToPause
-.L233:
+.L231:
 	.align	2
-.L232:
+.L230:
 	.word	.LANCHOR0
-	.word	.LANCHOR0+4
 	.word	updatePlayer
 	.word	updateHealth
 	.word	100718656
@@ -2039,9 +2088,10 @@ phaseOne:
 	.word	347
 	.word	323
 	.word	10570
-	.word	pOAudio_length
-	.word	pOAudio_data
-	.word	playSoundB
+	.word	stopSounds
+	.word	fortnite_length
+	.word	fortnite_data
+	.word	playSoundA
 	.word	savedFadePalette
 	.word	100722752
 	.word	state
@@ -2058,29 +2108,29 @@ phaseTwo:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r5, .L251
-	ldr	r3, .L251+4
+	ldr	r5, .L249
+	ldr	r3, .L249+4
 	mov	r0, r5
 	add	r1, r5, #4
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L251+8
+	ldr	r3, .L249+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L251+12
+	ldr	r3, .L249+12
 	mov	lr, pc
 	bx	r3
 	mov	r4, #512
 	mov	lr, #67108864
 	ldr	ip, [r5]
 	ldr	r1, [r5, #4]
-	ldr	r3, .L251+16
+	ldr	r3, .L249+16
 	add	r0, ip, ip, lsr #31
 	add	r2, r1, r1, lsr #31
 	ldrb	r3, [r3, #56]	@ zero_extendqisi2
 	asr	r0, r0, #1
 	asr	r2, r2, #1
-	ldr	r5, .L251+20
+	ldr	r5, .L249+20
 	lsl	r0, r0, #16
 	lsl	ip, ip, #16
 	lsl	r1, r1, #16
@@ -2094,60 +2144,70 @@ phaseTwo:
 	strh	r1, [lr, #18]	@ movhi
 	strh	r0, [lr, #20]	@ movhi
 	strh	r2, [lr, #22]	@ movhi
-	ldr	r2, .L251+24
+	ldr	r2, .L249+24
 	strh	r4, [r5, r3]	@ movhi
 	mov	lr, pc
 	bx	r2
-	ldr	r3, .L251+28
+	ldr	r3, .L249+28
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L251+32
+	ldr	r3, .L249+32
 	mov	lr, pc
 	bx	r3
 	mov	r3, r4
 	mov	r1, r5
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r4, .L251+36
+	ldr	r4, .L249+36
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L251+40
+	ldr	r3, .L249+40
 	ldr	r3, [r3]
 	cmp	r3, #0
-	bne	.L248
-.L235:
-	ldr	r3, .L251+44
+	bne	.L246
+.L233:
+	ldr	r3, .L249+44
 	ldr	r3, [r3]
 	cmp	r3, #0
-	bne	.L249
-.L236:
-	ldr	r3, .L251+48
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L234
-	ldr	r3, .L251+52
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L250
+	bne	.L247
 .L234:
+	ldr	r3, .L249+48
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L232
+	ldr	r3, .L249+52
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L248
+.L232:
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L249:
+.L247:
+	ldr	r3, .L249+56
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L249+60
+	mov	r2, #0
+	ldr	r1, [r3]
+	ldr	r0, .L249+64
+	ldr	r3, .L249+68
+	mov	lr, pc
+	bx	r3
 	bl	goToPhaseThreeInstructions
-	b	.L236
-.L248:
+	b	.L234
+.L246:
 	bl	goToLose
-	b	.L235
-.L250:
-	ldr	r2, .L251+56
-	ldr	r3, .L251+60
+	b	.L233
+.L248:
+	ldr	r2, .L249+72
+	ldr	r3, .L249+76
 	ldrb	r2, [r2]	@ zero_extendqisi2
 	strb	r2, [r3]
 	pop	{r4, r5, r6, lr}
 	b	goToPause
-.L252:
+.L250:
 	.align	2
-.L251:
+.L249:
 	.word	.LANCHOR0
 	.word	updatePlayerTwo
 	.word	updateSnow
@@ -2162,6 +2222,10 @@ phaseTwo:
 	.word	winPhaseTwo
 	.word	oldButtons
 	.word	buttons
+	.word	stopSounds
+	.word	fortnite_length
+	.word	fortnite_data
+	.word	playSoundA
 	.word	state
 	.word	prevState
 	.size	phaseTwo, .-phaseTwo
@@ -2176,8 +2240,8 @@ lose:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r5, .L260
-	ldr	r3, .L260+4
+	ldr	r5, .L258
+	ldr	r3, .L258+4
 	mov	lr, pc
 	bx	r3
 	ldr	r3, [r5]
@@ -2205,49 +2269,49 @@ lose:
 	lsl	r1, r1, #16
 	lsr	lr, lr, #16
 	lsr	ip, ip, #16
+	lsr	r0, r0, #16
 	lsr	r1, r1, #16
 	lsr	r3, r3, #16
 	lsr	r2, r2, #16
-	lsr	r0, r0, #16
 	strh	r1, [r4, #16]	@ movhi
 	strh	r2, [r4, #18]	@ movhi
 	strh	lr, [r4, #20]	@ movhi
-	ldr	r2, .L260+8
+	ldr	r2, .L258+8
 	strh	ip, [r4, #22]	@ movhi
 	strh	r3, [r4, #24]	@ movhi
 	strh	r0, [r4, #26]	@ movhi
 	mov	lr, pc
 	bx	r2
-	ldr	r3, .L260+12
+	ldr	r3, .L258+12
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L260+16
+	ldr	r4, .L258+16
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L260+20
+	ldr	r1, .L258+20
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L260+24
+	ldr	r3, .L258+24
 	ldrh	r3, [r3]
 	tst	r3, #8
-	beq	.L253
-	ldr	r3, .L260+28
+	beq	.L251
+	ldr	r3, .L258+28
 	ldrh	r3, [r3]
 	ands	r4, r3, #8
-	beq	.L259
-.L253:
+	beq	.L257
+.L251:
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L259:
+.L257:
 	bl	goToSplashScreen
-	ldr	r3, .L260+32
+	ldr	r3, .L258+32
 	strb	r4, [r3]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L261:
+.L259:
 	.align	2
-.L260:
+.L258:
 	.word	.LANCHOR0
 	.word	hideSprites
 	.word	updateAnimatedPlayer
@@ -2269,17 +2333,27 @@ goToWin:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	mov	r2, #5888
+	ldr	r3, .L262
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L262+4
+	ldr	r0, .L262+8
+	ldr	r1, [r3]
+	mov	r2, #1
+	ldr	r3, .L262+12
+	mov	lr, pc
+	bx	r3
 	mov	r4, #67108864
 	mov	r5, #0
-	ldr	r3, .L264
+	mov	r2, #5888
 	strh	r5, [r4]	@ movhi
+	ldr	r3, .L262+16
 	strh	r2, [r4]	@ movhi
 	mov	lr, pc
 	bx	r3
-	ldr	r2, .L264+4
-	ldr	r1, .L264+8
-	ldr	r0, .L264+12
+	ldr	r2, .L262+20
+	ldr	r1, .L262+24
+	ldr	r0, .L262+28
 	strh	r5, [r4, #16]	@ movhi
 	mov	r3, #256
 	strh	r5, [r4, #18]	@ movhi
@@ -2287,47 +2361,51 @@ goToWin:
 	strh	r1, [r4, #10]	@ movhi
 	mov	r2, #83886080
 	strh	r0, [r4, #12]	@ movhi
-	ldr	r1, .L264+16
-	ldr	r4, .L264+20
+	ldr	r1, .L262+32
+	ldr	r4, .L262+36
 	mov	r0, #3
 	mov	lr, pc
 	bx	r4
 	mov	r3, #12800
 	mov	r0, #3
-	ldr	r2, .L264+24
-	ldr	r1, .L264+28
+	ldr	r2, .L262+40
+	ldr	r1, .L262+44
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L264+32
-	ldr	r1, .L264+36
+	ldr	r2, .L262+48
+	ldr	r1, .L262+52
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L264+40
-	ldr	r1, .L264+44
+	ldr	r2, .L262+56
+	ldr	r1, .L262+60
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L264+48
-	ldr	r1, .L264+52
+	ldr	r2, .L262+64
+	ldr	r1, .L262+68
 	mov	lr, pc
 	bx	r4
 	mov	r1, #10
 	mov	r0, #96
-	ldr	r2, .L264+56
-	ldr	r3, .L264+60
+	ldr	r2, .L262+72
+	ldr	r3, .L262+76
 	strb	r1, [r2]
 	str	r5, [r3]
 	str	r0, [r3, #4]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L265:
+.L263:
 	.align	2
-.L264:
+.L262:
+	.word	stopSounds
+	.word	winaudio_length
+	.word	winaudio_data
+	.word	playSoundA
 	.word	initAnimatedPlayer
 	.word	23172
 	.word	23685
@@ -2355,26 +2433,26 @@ phaseThree:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r1, .L283
+	ldr	r1, .L281
 	push	{r4, r5, r6, lr}
 	sub	r0, r1, #4
-	ldr	r3, .L283+4
+	ldr	r3, .L281+4
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L283+8
+	ldr	r3, .L281+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L283+12
+	ldr	r3, .L281+12
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L283+16
+	ldr	r3, .L281+16
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L283+20
+	ldr	r3, .L281+20
 	ldrh	r3, [r3, #12]
 	rsb	r2, r3, #19
-	cmp	r2, #4
-	bhi	.L267
+	cmp	r2, #2
+	bhi	.L265
 	sub	r3, r3, #14
 	cmp	r3, #5
 	movlt	r0, r3
@@ -2402,19 +2480,19 @@ phaseThree:
 	strh	r2, [r1, #12]	@ movhi
 	strh	ip, [r1, #80]	@ movhi
 	strh	r3, [r1, #84]	@ movhi
-.L268:
-	ldr	r3, .L283+24
+.L266:
+	ldr	r3, .L281+24
 	ldr	r3, [r3]
 	cmp	r3, #0
-	beq	.L270
-	ldr	r0, .L283+28
-	ldr	lr, .L283+32
-	ldr	ip, .L283+36
-	ldr	r4, .L283+40
-	ldr	r5, .L283+44
-.L269:
+	beq	.L268
+	ldr	r0, .L281+28
+	ldr	lr, .L281+32
+	ldr	ip, .L281+36
+	ldr	r4, .L281+40
+	ldr	r5, .L281+44
+.L267:
 	sub	r2, r0, #64
-.L272:
+.L270:
 	ldrh	r3, [r2]
 	and	r1, r3, lr
 	cmp	r1, ip
@@ -2423,23 +2501,23 @@ phaseThree:
 	strheq	r3, [r2]	@ movhi
 	add	r2, r2, #2
 	cmp	r2, r0
-	bne	.L272
+	bne	.L270
 	add	r0, r0, #64
 	cmp	r0, r5
-	bne	.L269
-.L270:
+	bne	.L267
+.L268:
 	mov	lr, #67108864
 	mov	r4, #512
-	ldr	r3, .L283+48
+	ldr	r3, .L281+48
 	ldr	ip, [r3]
 	ldr	r1, [r3, #4]
-	ldr	r3, .L283+52
+	ldr	r3, .L281+52
 	add	r0, ip, ip, lsr #31
 	add	r2, r1, r1, lsr #31
 	ldrb	r3, [r3, #56]	@ zero_extendqisi2
 	asr	r0, r0, #1
 	asr	r2, r2, #1
-	ldr	r5, .L283+56
+	ldr	r5, .L281+56
 	lsl	r0, r0, #16
 	lsl	ip, ip, #16
 	lsl	r1, r1, #16
@@ -2453,68 +2531,68 @@ phaseThree:
 	strh	r1, [lr, #18]	@ movhi
 	strh	r0, [lr, #20]	@ movhi
 	strh	r2, [lr, #22]	@ movhi
-	ldr	r2, .L283+60
+	ldr	r2, .L281+60
 	strh	r4, [r5, r3]	@ movhi
 	mov	lr, pc
 	bx	r2
-	ldr	r3, .L283+64
+	ldr	r3, .L281+64
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L283+68
+	ldr	r3, .L281+68
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L283+72
+	ldr	r3, .L281+72
 	mov	lr, pc
 	bx	r3
 	mov	r3, r4
 	mov	r1, r5
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r4, .L283+76
+	ldr	r4, .L281+76
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L283+80
+	ldr	r3, .L281+80
 	ldr	r3, [r3]
 	cmp	r3, #0
-	bne	.L281
-.L273:
-	ldr	r3, .L283+84
+	bne	.L279
+.L271:
+	ldr	r3, .L281+84
 	ldr	r3, [r3]
 	cmp	r3, #0
-	bne	.L282
+	bne	.L280
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L267:
+.L265:
 	rsb	r2, r3, #20
-	cmp	r2, #5
-	ble	.L268
+	cmp	r2, #3
+	ble	.L266
 	mov	r3, #67108864
 	mov	r2, #0
 	strh	r2, [r3, #76]	@ movhi
-	ldr	r1, .L283+88
+	ldr	r1, .L281+88
 	ldrh	r0, [r3, #8]
 	and	r1, r1, r0
 	strh	r1, [r3, #8]	@ movhi
-	ldr	r1, .L283+88
+	ldr	r1, .L281+88
 	ldrh	r0, [r3, #10]
 	and	r1, r1, r0
 	strh	r1, [r3, #10]	@ movhi
-	ldr	r1, .L283+88
+	ldr	r1, .L281+88
 	ldrh	r0, [r3, #12]
 	and	r1, r1, r0
 	strh	r1, [r3, #12]	@ movhi
 	strh	r2, [r3, #80]	@ movhi
 	strh	r2, [r3, #84]	@ movhi
-	b	.L268
-.L282:
+	b	.L266
+.L280:
 	pop	{r4, r5, r6, lr}
 	b	goToWin
-.L281:
+.L279:
 	bl	goToLose
-	b	.L273
-.L284:
+	b	.L271
+.L282:
 	.align	2
-.L283:
+.L281:
 	.word	.LANCHOR0+4
 	.word	updatePlayerThree
 	.word	updateSnow
@@ -2566,38 +2644,38 @@ goToGameInstructions:
 	mov	r3, #256
 	mov	r4, #67108864
 	mov	r5, #0
-	ldr	r6, .L288
+	ldr	r6, .L286
 	strh	r5, [r4]	@ movhi
 	mov	r2, #83886080
 	strh	r3, [r4]	@ movhi
 	mov	r0, #3
-	ldr	r1, .L288+4
+	ldr	r1, .L286+4
 	mov	lr, pc
 	bx	r6
 	mov	r3, #16384
 	mov	r0, #3
-	ldr	r2, .L288+8
-	ldr	r1, .L288+12
+	ldr	r2, .L286+8
+	ldr	r1, .L286+12
 	mov	lr, pc
 	bx	r6
-	ldr	r2, .L288+16
+	ldr	r2, .L286+16
 	mov	r3, #1024
 	strh	r2, [r4, #8]	@ movhi
 	mov	r0, #3
-	ldr	r2, .L288+20
-	ldr	r1, .L288+24
+	ldr	r2, .L286+20
+	ldr	r1, .L286+24
 	mov	lr, pc
 	bx	r6
 	mov	r2, #11
-	ldr	r3, .L288+28
+	ldr	r3, .L286+28
 	strh	r5, [r4, #16]	@ movhi
 	strh	r5, [r4, #18]	@ movhi
 	strb	r2, [r3]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L289:
+.L287:
 	.align	2
-.L288:
+.L286:
 	.word	DMANow
 	.word	largemantilesPal
 	.word	100679680
@@ -2618,127 +2696,139 @@ splashScreen:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r10, .L322
+	ldr	r10, .L320
 	ldrh	r3, [r10]
 	tst	r3, #128
-	bne	.L317
-	ldr	r6, .L322+4
-.L291:
+	bne	.L315
+	ldr	r6, .L320+4
+.L289:
 	tst	r3, #64
-	bne	.L321
-.L294:
-	ldr	r3, [r6, #92]
-	ldr	r9, .L322+8
+	bne	.L319
+.L292:
+	ldr	r3, [r6, #88]
+	ldr	r9, .L320+8
 	cmp	r3, #0
-	ldr	r7, .L322+12
-	streq	r9, [r6, #92]
-.L300:
-	ldr	r3, .L322+16
+	ldr	r7, .L320+12
+	streq	r9, [r6, #88]
+.L298:
+	ldr	r3, .L320+16
 	mov	lr, pc
 	bx	r3
 	mov	r3, #83886080
 	mov	r5, #0
 	ldrh	fp, [r3, #4]
-	ldr	r8, .L322+20
-.L296:
-	ldr	r3, [r6, #92]
+	ldr	r8, .L320+20
+.L294:
+	ldr	r3, [r6, #88]
 	ldr	r4, [r3, r5]
 	lsl	r4, r4, #1
 	ldrh	r0, [r7, r4]
 	mov	r3, #30
 	mov	r1, fp
-	ldr	r2, [r6, #96]
+	ldr	r2, [r6, #92]
 	mov	lr, pc
 	bx	r8
 	add	r5, r5, #4
 	add	r4, r4, #83886080
 	cmp	r5, #12
 	strh	r0, [r4]	@ movhi
-	bne	.L296
+	bne	.L294
 	ldr	r2, [r9, #24]
-	ldr	r3, [r6, #96]
+	ldr	r3, [r6, #92]
 	add	r3, r2, r3
 	sub	r1, r3, #1
 	cmp	r1, #28
-	str	r3, [r6, #96]
+	str	r3, [r6, #92]
 	ldrh	r3, [r10]
 	rsbhi	r2, r2, #0
 	strhi	r2, [r9, #24]
 	tst	r3, #8
-	beq	.L290
-	ldr	r3, .L322+24
+	beq	.L288
+	ldr	r3, .L320+24
 	ldrh	r3, [r3]
 	tst	r3, #8
-	bne	.L290
-	ldr	r3, [r6, #88]
+	bne	.L288
+	ldr	r3, [r6, #84]
 	cmp	r3, #0
-	beq	.L299
+	beq	.L297
 	pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	b	goToGameInstructions
-.L290:
+.L288:
 	pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L317:
-	ldr	r2, .L322+24
+.L315:
+	ldr	r2, .L320+24
 	ldrh	r2, [r2]
 	tst	r2, #128
-	ldr	r6, .L322+4
-	bne	.L291
-	ldr	r2, [r6, #88]
+	ldr	r6, .L320+4
+	bne	.L289
+	ldr	r2, [r6, #84]
 	cmp	r2, #0
-	bne	.L291
-	ldr	r9, .L322+8
+	bne	.L289
+	ldr	r3, .L320+28
+	ldr	r9, .L320+8
+	ldr	r1, [r3]
+	ldr	r0, .L320+32
+	ldr	r3, .L320+36
+	mov	lr, pc
+	bx	r3
 	mov	r2, r9
-	ldr	r7, .L322+12
+	ldr	r7, .L320+12
 	add	r0, r9, #12
-.L292:
+.L290:
 	ldr	r3, [r2], #4
 	lsl	r3, r3, #1
 	ldrh	r1, [r7, r3]
 	cmp	r0, r2
 	add	r3, r3, #83886080
 	strh	r1, [r3]	@ movhi
-	bne	.L292
+	bne	.L290
 	mov	r3, #1
 	mov	r2, #0
-	str	r0, [r6, #92]
-	str	r3, [r6, #88]
+	str	r0, [r6, #88]
+	str	r3, [r6, #84]
 	str	r3, [r9, #24]
-	str	r2, [r6, #96]
-	b	.L300
-.L321:
-	ldr	r3, .L322+24
-	ldrh	r3, [r3]
-	tst	r3, #64
-	bne	.L294
-	ldr	r3, [r6, #88]
+	str	r2, [r6, #92]
+	b	.L298
+.L319:
+	ldr	r3, .L320+24
+	ldrh	r2, [r3]
+	ands	r2, r2, #64
+	bne	.L292
+	ldr	r3, [r6, #84]
 	cmp	r3, #0
-	beq	.L294
-	ldr	r2, .L322+28
-	ldr	r7, .L322+12
+	beq	.L292
+	ldr	r3, .L320+28
+	ldr	r0, .L320+32
+	ldr	r1, [r3]
+	ldr	r3, .L320+36
+	mov	lr, pc
+	bx	r3
+	ldr	r2, .L320+40
+	ldr	r7, .L320+12
 	add	r0, r2, #12
-.L295:
+.L293:
 	ldr	r3, [r2], #4
 	lsl	r3, r3, #1
 	ldrh	r1, [r7, r3]
 	cmp	r0, r2
 	add	r3, r3, #83886080
 	strh	r1, [r3]	@ movhi
-	bne	.L295
+	bne	.L293
 	mov	r3, #0
 	mov	r2, #1
-	ldr	r9, .L322+8
-	str	r3, [r6, #88]
-	str	r3, [r6, #96]
+	ldr	r9, .L320+8
+	str	r3, [r6, #84]
+	str	r3, [r6, #92]
 	str	r2, [r9, #24]
-	str	r9, [r6, #92]
-	b	.L300
-.L299:
+	str	r9, [r6, #88]
+	b	.L298
+.L297:
 	pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	b	goToStart
-.L323:
+.L321:
 	.align	2
-.L322:
+.L320:
 	.word	oldButtons
 	.word	.LANCHOR0
 	.word	.LANCHOR2
@@ -2746,6 +2836,9 @@ splashScreen:
 	.word	waitForVBlank
 	.word	blendColor
 	.word	buttons
+	.word	click_length
+	.word	click_data
+	.word	playSoundB
 	.word	.LANCHOR2+12
 	.size	splashScreen, .-splashScreen
 	.section	.text.startup,"ax",%progbits
@@ -2761,24 +2854,24 @@ main:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r7, fp, lr}
-	ldr	r3, .L349
+	ldr	r3, .L347
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L349+4
+	ldr	r3, .L347+4
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L349+8
+	ldr	r3, .L347+8
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L349+12
-	ldr	r7, .L349+16
-	ldr	r6, .L349+20
-	ldr	fp, .L349+24
-	ldr	r10, .L349+28
-	ldr	r9, .L349+32
-	ldr	r8, .L349+36
-	ldr	r5, .L349+40
-.L338:
+	ldr	r4, .L347+12
+	ldr	r7, .L347+16
+	ldr	r6, .L347+20
+	ldr	fp, .L347+24
+	ldr	r10, .L347+28
+	ldr	r9, .L347+32
+	ldr	r8, .L347+36
+	ldr	r5, .L347+40
+.L336:
 	ldrh	r1, [r4]
 	strh	r1, [r7]	@ movhi
 	ldrb	r2, [r6]	@ zero_extendqisi2
@@ -2786,10 +2879,8 @@ main:
 	strh	r3, [r4]	@ movhi
 	cmp	r2, #11
 	ldrls	pc, [pc, r2, asl #2]
-	b	.L325
-.L327:
-	.word	.L337
-	.word	.L336
+	b	.L323
+.L325:
 	.word	.L335
 	.word	.L334
 	.word	.L333
@@ -2798,78 +2889,80 @@ main:
 	.word	.L330
 	.word	.L329
 	.word	.L328
-	.word	.L328
+	.word	.L327
 	.word	.L326
-.L328:
+	.word	.L326
+	.word	.L324
+.L326:
 	mov	lr, pc
 	bx	r9
-.L325:
+.L323:
 	mov	lr, pc
 	bx	r8
-	b	.L338
+	b	.L336
+.L327:
+	ldr	r3, .L347+44
+	mov	lr, pc
+	bx	r3
+	b	.L323
+.L328:
+	ldr	r3, .L347+48
+	mov	lr, pc
+	bx	r3
+	b	.L323
 .L329:
-	ldr	r3, .L349+44
-	mov	lr, pc
-	bx	r3
-	b	.L325
-.L330:
-	ldr	r3, .L349+48
-	mov	lr, pc
-	bx	r3
-	b	.L325
-.L331:
 	tst	r1, #8
-	beq	.L325
+	beq	.L323
 	tst	r3, #8
-	bne	.L325
-	ldr	r3, .L349+52
+	bne	.L323
+	ldr	r3, .L347+52
 	mov	lr, pc
 	bx	r3
-	b	.L325
-.L332:
-	ldr	r3, .L349+56
+	b	.L323
+.L330:
+	ldr	r3, .L347+56
 	mov	lr, pc
 	bx	r3
-	b	.L325
-.L336:
+	b	.L323
+.L334:
 	mov	lr, pc
 	bx	r10
-	b	.L325
-.L326:
+	b	.L323
+.L324:
 	tst	r1, #8
-	beq	.L325
+	beq	.L323
 	tst	r3, #8
-	bne	.L325
-	ldr	r3, .L349+60
+	bne	.L323
+	ldr	r3, .L347+60
 	mov	lr, pc
 	bx	r3
-	b	.L325
-.L337:
+	b	.L323
+.L335:
 	mov	lr, pc
 	bx	fp
-	b	.L325
-.L334:
-	ldr	r3, .L349+64
+	b	.L323
+.L332:
+	ldr	r3, .L347+64
 	mov	lr, pc
 	bx	r3
-	b	.L325
-.L335:
-	ldr	r3, .L349+68
-	mov	lr, pc
-	bx	r3
-	b	.L325
+	b	.L323
 .L333:
-	tst	r1, #8
-	beq	.L325
-	tst	r3, #8
-	bne	.L325
-	ldr	r3, .L349+72
+	ldr	r3, .L347+68
 	mov	lr, pc
 	bx	r3
-	b	.L325
-.L350:
+	b	.L323
+.L331:
+	tst	r1, #8
+	beq	.L323
+	tst	r3, #8
+	bne	.L323
+	ldr	r3, .L347+72
+	mov	lr, pc
+	bx	r3
+	b	.L323
+.L348:
 	.align	2
-.L349:
+.L347:
 	.word	mgba_open
 	.word	setupSounds
 	.word	goToPhaseOne
@@ -2902,18 +2995,18 @@ gameInstructions:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r3, .L356
+	ldr	r3, .L354
 	ldrh	r3, [r3]
 	tst	r3, #8
 	bxeq	lr
-	ldr	r3, .L356+4
+	ldr	r3, .L354+4
 	ldrh	r3, [r3]
 	tst	r3, #8
 	bxne	lr
 	b	goToStart
-.L357:
+.L355:
 	.align	2
-.L356:
+.L354:
 	.word	oldButtons
 	.word	buttons
 	.size	gameInstructions, .-gameInstructions
@@ -2928,14 +3021,14 @@ resetGameState:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	mov	r3, #0
-	ldr	r2, .L360
+	ldr	r2, .L358
 	str	lr, [sp, #-4]!
-	ldr	ip, .L360+4
-	ldr	lr, .L360+8
+	ldr	ip, .L358+4
+	ldr	lr, .L358+8
 	str	r3, [r2]
-	ldr	r0, .L360+12
-	ldr	r2, .L360+16
-	ldr	r1, .L360+20
+	ldr	r0, .L358+12
+	ldr	r2, .L358+16
+	ldr	r1, .L358+20
 	str	r3, [lr]
 	str	r3, [ip]
 	str	r3, [r0]
@@ -2948,9 +3041,9 @@ resetGameState:
 	str	r3, [r2, #20]
 	ldr	lr, [sp], #4
 	bx	lr
-.L361:
+.L359:
 	.align	2
-.L360:
+.L358:
 	.word	gameOver
 	.word	winPhaseTwo
 	.word	winPhaseOne
@@ -2958,16 +3051,10 @@ resetGameState:
 	.word	.LANCHOR0
 	.word	next
 	.size	resetGameState, .-resetGameState
-	.comm	savedFadePalette,512,4
-	.global	flashFrame
-	.global	isFlashing
-	.global	tileFadeStep
-	.global	tileFadeTimer
-	.comm	originalTile358,64,4
-	.global	bridgeUncovered
 	.global	altIndices
 	.global	primaryIndices
 	.comm	originalTiles,128,4
+	.global	bridgeUncovered
 	.global	resumingFromPause
 	.global	startPage
 	.global	begin
@@ -2978,6 +3065,12 @@ resetGameState:
 	.comm	state,1,1
 	.comm	oldButtons,2,2
 	.comm	buttons,2,2
+	.comm	savedFadePalette,512,4
+	.global	flashFrame
+	.global	isFlashing
+	.global	tileFadeStep
+	.global	tileFadeTimer
+	.comm	originalTile358,64,4
 	.global	shiftTimer
 	.global	shiftOffset
 	.global	shiftingRight
@@ -2990,11 +3083,11 @@ resetGameState:
 	.comm	tileFlashTimer,4,4
 	.comm	cheatOn,4,4
 	.comm	next,4,4
+	.comm	leftWallTouched,4,4
 	.comm	winPhaseThree,4,4
 	.comm	playerPaletteWork,512,4
 	.comm	winPhaseTwo,4,4
 	.comm	snows,180,4
-	.comm	leftWallTouched,4,4
 	.comm	movedHorizontally,4,4
 	.comm	winPhaseOne,4,4
 	.comm	gameOver,4,4
@@ -3026,9 +3119,9 @@ altIndices:
 	.word	16
 	.word	17
 	.word	18
-	.type	direction.4368, %object
-	.size	direction.4368, 4
-direction.4368:
+	.type	direction.4410, %object
+	.size	direction.4410, 4
+direction.4410:
 	.word	1
 	.type	shiftingRight, %object
 	.size	shiftingRight, 4
@@ -3081,61 +3174,57 @@ tileFadeStep:
 	.size	bridgeUncovered, 4
 bridgeUncovered:
 	.space	4
-	.type	hasPlayedPOAudio.4454, %object
-	.size	hasPlayedPOAudio.4454, 4
-hasPlayedPOAudio.4454:
+	.type	tileAnimTimer.4493, %object
+	.size	tileAnimTimer.4493, 4
+tileAnimTimer.4493:
 	.space	4
-	.type	tileAnimTimer.4459, %object
-	.size	tileAnimTimer.4459, 4
-tileAnimTimer.4459:
+	.type	tileAnimState.4494, %object
+	.size	tileAnimState.4494, 4
+tileAnimState.4494:
 	.space	4
-	.type	tileAnimState.4460, %object
-	.size	tileAnimState.4460, 4
-tileAnimState.4460:
+	.type	swapDelayFrames.4517, %object
+	.size	swapDelayFrames.4517, 4
+swapDelayFrames.4517:
 	.space	4
-	.type	swapDelayFrames.4483, %object
-	.size	swapDelayFrames.4483, 4
-swapDelayFrames.4483:
+	.type	hasFlashedOnce.4518, %object
+	.size	hasFlashedOnce.4518, 4
+hasFlashedOnce.4518:
 	.space	4
-	.type	hasFlashedOnce.4484, %object
-	.size	hasFlashedOnce.4484, 4
-hasFlashedOnce.4484:
+	.type	swapTimer.4515, %object
+	.size	swapTimer.4515, 4
+swapTimer.4515:
 	.space	4
-	.type	swapTimer.4481, %object
-	.size	swapTimer.4481, 4
-swapTimer.4481:
+	.type	swapped.4516, %object
+	.size	swapped.4516, 4
+swapped.4516:
 	.space	4
-	.type	swapped.4482, %object
-	.size	swapped.4482, 4
-swapped.4482:
+	.type	isFlashing.4492, %object
+	.size	isFlashing.4492, 4
+isFlashing.4492:
 	.space	4
-	.type	isFlashing.4458, %object
-	.size	isFlashing.4458, 4
-isFlashing.4458:
+	.type	flashState.4489, %object
+	.size	flashState.4489, 4
+flashState.4489:
 	.space	4
-	.type	flashState.4455, %object
-	.size	flashState.4455, 4
-flashState.4455:
+	.type	flashFrame.4491, %object
+	.size	flashFrame.4491, 4
+flashFrame.4491:
 	.space	4
-	.type	flashFrame.4457, %object
-	.size	flashFrame.4457, 4
-flashFrame.4457:
+	.type	flashTimer.4490, %object
+	.size	flashTimer.4490, 4
+flashTimer.4490:
 	.space	4
-	.type	flashTimer.4456, %object
-	.size	flashTimer.4456, 4
-flashTimer.4456:
+	.type	usingAltIndices.4413, %object
+	.size	usingAltIndices.4413, 4
+usingAltIndices.4413:
 	.space	4
-	.type	usingAltIndices.4371, %object
-	.size	usingAltIndices.4371, 4
-usingAltIndices.4371:
+	.type	animatedIndices.4412, %object
+	.size	animatedIndices.4412, 4
+animatedIndices.4412:
 	.space	4
-	.type	animatedIndices.4370, %object
-	.size	animatedIndices.4370, 4
-animatedIndices.4370:
-	.space	4
-	.type	t.4367, %object
-	.size	t.4367, 4
-t.4367:
+	.type	t.4409, %object
+	.size	t.4409, 4
+t.4409:
 	.space	4
 	.type	flashFrame, %object
 	.size	flashFrame, 4

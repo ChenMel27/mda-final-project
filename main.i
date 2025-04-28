@@ -44,7 +44,7 @@ typedef volatile struct {
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 18 "main.c" 2
 # 1 "mode0.h" 1
-# 32 "mode0.h"
+# 52 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;
@@ -191,12 +191,16 @@ int isDucking;
 int gameOver;
 int winPhaseOne;
 int movedHorizontally;
-int leftWallTouched;
 
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
+
+typedef enum {
+    PLAYER_NORMAL,
+    PLAYER_FALLING
+} PlayerState;
 # 27 "main.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
@@ -224,6 +228,7 @@ void drawTimer(void);
 void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
+int leftWallTouched;
 # 29 "main.c" 2
 # 1 "start.h" 1
 # 9 "start.h"
@@ -623,7 +628,70 @@ extern const unsigned short winwinMap[2048];
 
 extern const unsigned short bgAnimatedBackMap[2048];
 # 72 "main.c" 2
-# 93 "main.c"
+# 1 "click.h" 1
+
+
+extern const unsigned int click_sampleRate;
+extern const unsigned int click_length;
+extern const signed char click_data[];
+# 73 "main.c" 2
+# 1 "fortnite.h" 1
+
+
+extern const unsigned int fortnite_sampleRate;
+extern const unsigned int fortnite_length;
+extern const signed char fortnite_data[];
+# 74 "main.c" 2
+# 1 "phaseoneaudio.h" 1
+
+
+extern const unsigned int phaseoneaudio_sampleRate;
+extern const unsigned int phaseoneaudio_length;
+extern const signed char phaseoneaudio_data[];
+# 75 "main.c" 2
+# 1 "phasetwoaudio.h" 1
+
+
+extern const unsigned int phasetwoaudio_sampleRate;
+extern const unsigned int phasetwoaudio_length;
+extern const signed char phasetwoaudio_data[];
+# 76 "main.c" 2
+# 1 "phasethreeaudio.h" 1
+
+
+extern const unsigned int phasethreeaudio_sampleRate;
+extern const unsigned int phasethreeaudio_length;
+extern const signed char phasethreeaudio_data[];
+# 77 "main.c" 2
+# 1 "winaudio.h" 1
+
+
+extern const unsigned int winaudio_sampleRate;
+extern const unsigned int winaudio_length;
+extern const signed char winaudio_data[];
+# 78 "main.c" 2
+# 1 "loseaudio.h" 1
+
+
+extern const unsigned int loseaudio_sampleRate;
+extern const unsigned int loseaudio_length;
+extern const signed char loseaudio_data[];
+# 79 "main.c" 2
+# 1 "falling.h" 1
+
+
+extern const unsigned int falling_sampleRate;
+extern const unsigned int falling_length;
+extern const signed char falling_data[];
+# 80 "main.c" 2
+# 1 "healthaudio.h" 1
+
+
+extern const unsigned int healthaudio_sampleRate;
+extern const unsigned int healthaudio_length;
+extern const signed char healthaudio_data[];
+# 81 "main.c" 2
+# 98 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -632,6 +700,14 @@ int shiftingRight = 1;
 int shiftOffset = 0;
 int shiftTimer = 0;
 static int splashSelection;
+
+
+u8 originalTile358[64];
+int tileFadeTimer = 0;
+int tileFadeStep = 0;
+int isFlashing = 0;
+int flashFrame = 0;
+u16 savedFadePalette[256];
 
 
 unsigned short buttons;
@@ -655,6 +731,7 @@ typedef enum {
 
 GameState state;
 GameState prevState;
+extern PlayerState playerState;
 
 
 int hOff = 0;
@@ -665,6 +742,7 @@ int talkedToGuide = 0;
 int begin = 0;
 int startPage = 0;
 int resumingFromPause = 0;
+int bridgeUncovered = 0;
 
 
 u16 originalTiles[4][16];
@@ -706,6 +784,9 @@ void goToPhaseThreeInstructions();
 void resetPlayerState();
 void mgba_open();
 void resetGameState(void);
+void initAnimatedPlayer();
+void updateAnimatedPlayer();
+void drawAnimatedPlayer();
 
 
 
@@ -844,8 +925,6 @@ void goToSplashScreen() {
     state = SPLASH;
 }
 
-
-
 void splashScreen() {
     static int t = 0;
     static int direction = 1;
@@ -856,6 +935,7 @@ void splashScreen() {
 
 
     if ((!(~(oldButtons) & ((1<<7))) && (~(buttons) & ((1<<7)))) && !usingAltIndices) {
+        playSoundB(click_data, click_length, 0);
         for (int i = 0; i < 3; i++)
             ((unsigned short *)0x5000000)[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
         animatedIndices = altIndices;
@@ -863,6 +943,7 @@ void splashScreen() {
         t = 0; direction = 1;
     }
     else if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && usingAltIndices) {
+        playSoundB(click_data, click_length, 0);
         for (int i = 0; i < 3; i++)
             ((unsigned short *)0x5000000)[altIndices[i]] = splashp3Pal[altIndices[i]];
         animatedIndices = primaryIndices;
@@ -981,8 +1062,6 @@ void goToStartThree() {
     state = START;
 }
 
-int bridgeUncovered = 0;
-
 void start() {
     animateTilemapShift();
     updateStartPlayer(&hOff, &vOff);
@@ -1007,8 +1086,6 @@ void start() {
         }
         bridgeUncovered = 1;
     }
-
-
 
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
@@ -1049,7 +1126,6 @@ void goToStartInstructions() {
 
     DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
-
 
 
     DMANow(3, (volatile void*)largemantilesTiles, &((CB*) 0x6000000)[3], 2048 / 2);
@@ -1114,19 +1190,9 @@ void startInstructions() {
 }
 
 
-
-
-
-u8 originalTile358[64];
-int tileFadeTimer = 0;
-int tileFadeStep = 0;
-
-
-int isFlashing = 0;
-int flashFrame = 0;
-u16 savedFadePalette[256];
-
 void goToPhaseOne() {
+    stopSounds();
+    playSoundA(phasetwoaudio_data, phasetwoaudio_length, 1);
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
@@ -1148,7 +1214,6 @@ void goToPhaseOne() {
     tileFadeStep = 0;
 
 
-
     if (!resumingFromPause) {
         initPlayer();
         initHealth();
@@ -1161,19 +1226,7 @@ void goToPhaseOne() {
     state = PHASEONE;
 }
 
-
-
-
-
 void phaseOne() {
-
-    static int hasPlayedPOAudio = 0;
-
-if (!hasPlayedPOAudio) {
-    hasPlayedPOAudio = 1;
-    playSoundB(pOAudio_data, pOAudio_length, 1);
-}
-
     static int flashState = 0;
     static int flashTimer = 0;
     static int flashFrame = 0;
@@ -1217,103 +1270,102 @@ if (!hasPlayedPOAudio) {
     }
 
 
-tileFadeTimer++;
-if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
-    tileFadeStep++;
+    tileFadeTimer++;
+    if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
+        tileFadeStep++;
 
-    u8* tileData = (u8*) &((CB*) 0x6000000)[1];
+        u8* tileData = (u8*) &((CB*) 0x6000000)[1];
 
-    for (int i = 0; i < 64; i++) {
-        u8 colorIndex = originalTile358[i];
-
-        if (colorIndex == 0) continue;
-
-        u16 origColor = ((unsigned short *)0x5000000)[colorIndex];
-        u16 newColor = blendColor(origColor, (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10), tileFadeStep, 2000);
-        ((unsigned short *)0x5000000)[colorIndex] = newColor;
-    }
-}
-
-static int swapTimer = 0;
-static int swapped = 0;
-static int swapDelayFrames = 0;
-static int hasFlashedOnce = 0;
-swapDelayFrames++;
-
-if (swapDelayFrames > 200 && !hasFlashedOnce) {
-    swapTimer++;
-
-    if (swapTimer > 60) {
-        swapTimer = 0;
-        swapped = !swapped;
-        isFlashing = 1;
-        flashState = 0;
-        flashFrame = 0;
-        flashTimer = 0;
-        hasFlashedOnce = 1;
+        for (int i = 0; i < 64; i++) {
+            u8 colorIndex = originalTile358[i];
 
 
+            if (colorIndex == 0) continue;
 
-
-        for (int i = 0; i < 256; i++) {
-            savedFadePalette[i] = ((unsigned short *)0x5000000)[i];
+            u16 origColor = ((unsigned short *)0x5000000)[colorIndex];
+            u16 newColor = blendColor(origColor, (((0) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10), tileFadeStep, 2000);
+            ((unsigned short *)0x5000000)[colorIndex] = newColor;
         }
+    }
+
+    static int swapTimer = 0;
+    static int swapped = 0;
+    static int swapDelayFrames = 0;
+    static int hasFlashedOnce = 0;
+    swapDelayFrames++;
+
+    if (swapDelayFrames > 200 && !hasFlashedOnce) {
+        swapTimer++;
+
+        if (swapTimer > 60) {
+            swapTimer = 0;
+            swapped = !swapped;
+            isFlashing = 1;
+            flashState = 0;
+            flashFrame = 0;
+            flashTimer = 0;
+            hasFlashedOnce = 1;
 
 
-        for (int row = 0; row < 32; row++) {
-            for (int col = 0; col < 32; col++) {
-                u16* tile = &((SB*) 0x6000000)[28].tilemap[row * 32 + col];
-                u16 tileId = *tile & 0x03FF;
-                u16 palRow = *tile & 0xFC00;
+            for (int i = 0; i < 256; i++) {
+                savedFadePalette[i] = ((unsigned short *)0x5000000)[i];
+            }
 
-                if (!swapped) {
-                    if (tileId == 323) *tile = (322 | palRow);
-                    if (tileId == 348) *tile = (347 | palRow);
-                } else {
-                    if (tileId == 322) *tile = (323 | palRow);
-                    if (tileId == 347) *tile = (348 | palRow);
+
+            for (int row = 0; row < 32; row++) {
+                for (int col = 0; col < 32; col++) {
+                    u16* tile = &((SB*) 0x6000000)[28].tilemap[row * 32 + col];
+                    u16 tileId = *tile & 0x03FF;
+                    u16 palRow = *tile & 0xFC00;
+
+                    if (!swapped) {
+                        if (tileId == 323) *tile = (322 | palRow);
+                        if (tileId == 348) *tile = (347 | palRow);
+                    } else {
+                        if (tileId == 322) *tile = (323 | palRow);
+                        if (tileId == 347) *tile = (348 | palRow);
+                    }
                 }
             }
         }
     }
-}
 
-if (isFlashing) {
-    flashTimer++;
-
-
-    if (flashTimer > 8) {
-        flashTimer = 0;
-        flashState = !flashState;
-        flashFrame++;
-    }
-
-    if (flashFrame >= 4) {
-        isFlashing = 0;
+    if (isFlashing) {
+        flashTimer++;
 
 
-        for (int i = 0; i < 64; i++) {
-            u8 colorIndex = originalTile358[i];
-            if (colorIndex == 0) continue;
-            ((unsigned short *)0x5000000)[colorIndex] = (((10) & 31) | ((10) & 31) << 5 | ((10) & 31) << 10);
+        if (flashTimer > 8) {
+            flashTimer = 0;
+            flashState = !flashState;
+            flashFrame++;
         }
-    } else {
-        for (int i = 0; i < 64; i++) {
-            u8 colorIndex = originalTile358[i];
-            if (colorIndex == 0) continue;
 
-            if (flashState) {
-                u16 c = savedFadePalette[colorIndex];
-                int r = ((c) & 0x1F) / 2;
-                int g = (((c) >> 5) & 0x1F) / 2;
-                int b = (((c) >> 10) & 0x1F) / 2;
-                ((unsigned short *)0x5000000)[colorIndex] = (((r) & 31) | ((g) & 31) << 5 | ((b) & 31) << 10);
-            } else {
-                ((unsigned short *)0x5000000)[colorIndex] = savedFadePalette[colorIndex];
+        if (flashFrame >= 4) {
+            isFlashing = 0;
+
+
+            for (int i = 0; i < 64; i++) {
+                u8 colorIndex = originalTile358[i];
+                if (colorIndex == 0) continue;
+                ((unsigned short *)0x5000000)[colorIndex] = (((10) & 31) | ((10) & 31) << 5 | ((10) & 31) << 10);
+            }
+        } else {
+            for (int i = 0; i < 64; i++) {
+                u8 colorIndex = originalTile358[i];
+                if (colorIndex == 0) continue;
+
+                if (flashState) {
+                    u16 c = savedFadePalette[colorIndex];
+                    int r = ((c) & 0x1F) / 2;
+                    int g = (((c) >> 5) & 0x1F) / 2;
+                    int b = (((c) >> 10) & 0x1F) / 2;
+                    ((unsigned short *)0x5000000)[colorIndex] = (((r) & 31) | ((g) & 31) << 5 | ((b) & 31) << 10);
+                } else {
+                    ((unsigned short *)0x5000000)[colorIndex] = savedFadePalette[colorIndex];
+                }
             }
         }
     }
-}
 
 
     shadowOAM[guide.oamIndex].attr0 = (2<<8);
@@ -1326,6 +1378,8 @@ if (isFlashing) {
     }
 
     if (winPhaseOne) {
+        stopSounds();
+        playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseTwoInstructions();
     }
 
@@ -1359,8 +1413,6 @@ void goToPhaseTwoInstructions() {
     state = DIALOGUE2;
 }
 
-
-
 void phaseTwoInstructions() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToPhaseTwo();
@@ -1370,7 +1422,8 @@ void phaseTwoInstructions() {
 
 
 void goToPhaseTwo() {
-
+    stopSounds();
+    playSoundB(phaseoneaudio_data, phaseoneaudio_length, 1);
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
@@ -1429,6 +1482,8 @@ void phaseTwo() {
     }
 
     if (winPhaseTwo) {
+        stopSounds();
+        playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseThreeInstructions();
     }
 
@@ -1468,38 +1523,48 @@ void phaseThreeInstructions() {
         goToPhaseThree();
     }
 }
-# 956 "main.c"
-void goToPhaseThree() {
 
+
+
+void goToPhaseThree() {
+    stopSounds();
+    playSoundB(phasethreeaudio_data, phasethreeaudio_length, 1);
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
 
+
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
+
     (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
+
     (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
+
 
 
     DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
 
-
     DMANow(3, (volatile void*)bgThreeFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
+
     DMANow(3, (volatile void*)bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
+
     DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
+
 
     initPlayerThree();
     initSnow();
     initCountdownTimer();
 
+
     hOff = 0;
     vOff = (256 - 160);
+
+
     state = PHASETHREE;
 }
 
-
 void phaseThree() {
-
 
     updatePlayerThree(&hOff, &vOff);
     updateSnow();
@@ -1510,7 +1575,7 @@ void phaseThree() {
     int secondsPassed = *(volatile unsigned short*)0x400010C;
     int countdown = 20 - secondsPassed;
 
-    if (countdown <= 5 && countdown > 0) {
+    if (countdown <= 3 && countdown > 0) {
         int blurStrength = 6 - countdown;
         if (blurStrength > 5) blurStrength = 5;
 
@@ -1523,7 +1588,7 @@ void phaseThree() {
 
         (*(volatile unsigned short*)0x4000050) = ((1<<0) | (1<<1) | (1<<2)) | (3 << 6);
         (*(volatile unsigned short*)0x4000054) = (6 - countdown) * 3;
-    } else if (countdown > 5) {
+    } else if (countdown > 3) {
 
         (*(volatile unsigned short*) 0x400004C) = 0;
         (*(volatile unsigned short*) 0x4000008) &= ~(1<<6);
@@ -1534,9 +1599,9 @@ void phaseThree() {
         (*(volatile unsigned short*)0x4000050) = 0;
         (*(volatile unsigned short*)0x4000054) = 0;
     }
+
+
     if (leftWallTouched) {
-
-
         volatile u16* tilemap = ((SB*) 0x6000000)[26].tilemap;
 
         for (int row = 0; row < 32; row++) {
@@ -1555,12 +1620,8 @@ void phaseThree() {
 
 
 
-
-
-
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
-
 
     (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff / 2;
@@ -1573,9 +1634,11 @@ void phaseThree() {
     drawTimer();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
+
     if (gameOver) {
         goToLose();
     }
+
 
     if (winPhaseThree) {
         goToWin();
@@ -1587,7 +1650,6 @@ void phaseThree() {
 void goToPause() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
-
 
 
     initAnimatedPlayer();
@@ -1640,6 +1702,8 @@ void pause() {
 
 
 void goToLose() {
+    stopSounds();
+    playSoundA(loseaudio_data, loseaudio_length, 1);
     (*(volatile unsigned short*)0x4000050) = 0;
     (*(volatile unsigned short*)0x4000052) = 0;
     (*(volatile unsigned short*)0x4000054) = 0;
@@ -1677,10 +1741,6 @@ void lose() {
 
     hOff++;
 
-
-
-
-
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
 
@@ -1704,6 +1764,8 @@ void lose() {
 
 
 void goToWin() {
+    stopSounds();
+    playSoundA(winaudio_data, winaudio_length, 1);
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 

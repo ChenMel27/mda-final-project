@@ -18,6 +18,26 @@
 #define REG_BG3HOFF (*(volatile unsigned short*) 0x0400001C) // Background 3 horizontal offset register
 #define REG_BG3VOFF (*(volatile unsigned short*) 0x0400001E) // Background 3 vertical offset register
 
+#define REG_BLDCNT    (*(volatile unsigned short*)0x4000050)
+#define REG_BLDALPHA  (*(volatile unsigned short*)0x4000052)
+#define REG_BLDY      (*(volatile unsigned short*)0x4000054)
+
+// Blend modes
+#define BLD_OFF    0
+#define BLD_STD    1
+#define BLD_WHITE  2
+#define BLD_BLACK  3
+
+// Layer flags
+#define BLD_BG0    (1<<0)
+#define BLD_BG1    (1<<1)
+#define BLD_BG2    (1<<2)
+#define BLD_OBJ    (1<<3)
+#define BLD_BD     (1<<4)
+
+#define REG_MOSAIC   (*(volatile unsigned short*) 0x400004C)
+#define BG_MOSAIC_ON (1<<6)
+
 // Background bits
 #define BG_CHARBLOCK(n) ((n) << 2)   // Sets which charblock this background should use
 #define BG_SCREENBLOCK(n) ((n) << 8) // Sets which screenblock this background should use

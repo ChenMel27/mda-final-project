@@ -69,23 +69,28 @@ Project: The Summit Ascent
 #include "startPause.h"
 #include "winwin.h"
 #include "bgAnimatedBack.h"
+#include "click.h"
+#include "fortnite.h"
+#include "phaseoneaudio.h"
+#include "phasetwoaudio.h"
+#include "phasethreeaudio.h"
+#include "winaudio.h"
+#include "loseaudio.h"
+#include "falling.h"
+#include "healthaudio.h"
 
 // ============================= [ DEFINES ] =============================
-
-// Menu options
 #define MENU_START 0
 #define MENU_INSTR 1
-
-// Colors
-#define RED RGB(31, 0, 0)
-#define BLACK RGB(0, 0, 0)
-
-// Helper macros
+#define RED(c)   ((c) & 0x1F)
+#define GREEN(c) (((c) >> 5) & 0x1F)
+#define BLUE(c)  (((c) >> 10) & 0x1F)
 #define BG_PRIORITY(n) ((n) & 3)
 #define TILEMAP_WIDTH 64
-
 #define MOSAIC_BG(h,b,v,a) ((h) | ((b) << 4) | ((v) << 8) | ((a) << 12))
-
+#define TILE358_INDEX 358
+#define TILE358_OFFSET (TILE358_INDEX * 64)
+#define FLASH_FRAMES_TOTAL 20
 
 // ============================= [ GLOBAL VARIABLES ] =============================
 
@@ -99,7 +104,15 @@ int shiftOffset = 0;
 int shiftTimer = 0;
 static int splashSelection;
 
-// Button input tracking
+// Phase one
+u8 originalTile358[64];
+int tileFadeTimer = 0;
+int tileFadeStep = 0;
+int isFlashing = 0;
+int flashFrame = 0;
+u16 savedFadePalette[256];
+
+// Button tracking
 unsigned short buttons;
 unsigned short oldButtons;
 
@@ -121,18 +134,20 @@ typedef enum {
 
 GameState state;
 GameState prevState;
+extern PlayerState playerState;
 
 // Camera offsets
 int hOff = 0;
 int vOff = 0;
 
-// Miscellaneous flags
+// Flags
 int talkedToGuide = 0;
 int begin = 0;
 int startPage = 0;
 int resumingFromPause = 0;
+int bridgeUncovered = 0;
 
-// Tile animation variables
+// Tile animation
 u16 originalTiles[4][16];
 int primaryIndices[3] = {13, 14, 15};
 int altIndices[3] = {16, 17, 18};
@@ -172,6 +187,9 @@ void goToPhaseThreeInstructions();
 void resetPlayerState();
 void mgba_open();
 void resetGameState(void);
+void initAnimatedPlayer();
+void updateAnimatedPlayer();
+void drawAnimatedPlayer();
 
 // ============================= [ MAIN GAME LOOP ] =============================
 
@@ -225,7 +243,7 @@ int main() {
     }
 }
 
-// ============================== [ INITIALIZING GAME ] ==============================
+// ============================== [ INITIALIZING GAME ] ==================================
 
 void initialize() {
     mgba_open();
@@ -268,7 +286,7 @@ void goToSplashScreen() {
         waitForVBlank();
     }
 
-    // === Show animateStart screen and do palette animations ===
+    // Show animateStart screen and do palette animations
     DMANow(3, (volatile void*)animateStartPal, BG_PALETTE, 256);
     drawFullscreenImage4(animateStartBitmap);
 
@@ -277,8 +295,8 @@ void goToSplashScreen() {
     const int revealDelays[3] = {30, 60, 90};
 
     // Flicker colors for indices 3 and 4
-    u16 flickerColorsA = RGB(31, 31, 0);   // Bright yellow (pure light)
-    u16 flickerColorsB = RGB(24, 24, 8);  // Softer yellow
+    u16 flickerColorsA = RGB(31, 31, 0);
+    u16 flickerColorsB = RGB(24, 24, 8);
 
     for (int i = 0; i < totalFrames; i++) {
         waitForVBlank();
@@ -310,8 +328,6 @@ void goToSplashScreen() {
     state = SPLASH;
 }
 
-// ============================== [ SPLASH SCREEN LOGIC ] =============================
-
 void splashScreen() {
     static int t = 0;
     static int direction = 1;
@@ -322,6 +338,7 @@ void splashScreen() {
 
     // Switch selection on DOWN/UP and restore original palette
     if (BUTTON_PRESSED(BUTTON_DOWN) && !usingAltIndices) {
+        playSoundB(click_data, click_length, 0);
         for (int i = 0; i < 3; i++)
             BG_PALETTE[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
         animatedIndices  = altIndices;
@@ -329,6 +346,7 @@ void splashScreen() {
         t = 0; direction = 1;
     }
     else if (BUTTON_PRESSED(BUTTON_UP) && usingAltIndices) {
+        playSoundB(click_data, click_length, 0);
         for (int i = 0; i < 3; i++)
             BG_PALETTE[altIndices[i]] = splashp3Pal[altIndices[i]];
         animatedIndices  = primaryIndices;
@@ -447,8 +465,6 @@ void goToStartThree() {
     state = START;
 }
 
-int bridgeUncovered = 0; // Declare globally or at the top
-
 void start() {
     animateTilemapShift();
     updateStartPlayer(&hOff, &vOff);
@@ -460,7 +476,7 @@ void start() {
     drawGuideSprite();
     DMANow(3, shadowOAM, OAM, 512);
 
-    // TILEMAP MODIFICATION only after meeting guide
+    // Tilemap modifications only after meeting guide
     if (!talkedToGuide && !bridgeUncovered) {
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 10; x++) {
@@ -473,8 +489,6 @@ void start() {
         }
         bridgeUncovered = 1;
     }
-
-    // ==== your normal logic ====
 
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
@@ -516,8 +530,7 @@ void goToStartInstructions() {
     DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
 
-    // Load largeman palette to palette 1 (index 16–31)
-    
+    // Load largeman palette
     DMANow(3, (volatile void*)largemantilesTiles, &CHARBLOCK[3], largemantilesTilesLen / 2);
 
     // Setup background control registers
@@ -580,19 +593,9 @@ void startInstructions() {
 }
 
 // ============================= [ PHASE ONE STATE ] ============================
-#define TILE358_INDEX 358
-#define TILE358_OFFSET (TILE358_INDEX * 64) // 8x8 tile, 1 byte per pixel in 8bpp
-
-u8 originalTile358[64];  // save original pixels
-int tileFadeTimer = 0;
-int tileFadeStep = 0;
-#define FLASH_FRAMES_TOTAL 20
-
-int isFlashing = 0;
-int flashFrame = 0;
-u16 savedFadePalette[256]; // Backup of current palette state for smooth return
-
 void goToPhaseOne() {
+    stopSounds();
+    playSoundA(phasetwoaudio_data, phasetwoaudio_length, 1);
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
@@ -604,7 +607,7 @@ void goToPhaseOne() {
     DMANow(3, (volatile void*)bgOneBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
     DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
 
-    // Save original pixels from tile 358 (CHARBLOCK[1] is BG tiles in Mode 0, 8bpp)
+    // Save original pixels from tile 358
     u8* tileData = (u8*) &CHARBLOCK[1];
     for (int i = 0; i < 64; i++) {
         originalTile358[i] = tileData[TILE358_OFFSET + i];
@@ -612,7 +615,6 @@ void goToPhaseOne() {
 
     tileFadeTimer = 0;
     tileFadeStep = 0;
-
 
     // only reset coordinates in beginning
     if (!resumingFromPause) {
@@ -626,20 +628,8 @@ void goToPhaseOne() {
     vOff = MAX_VOFF;
     state = PHASEONE;
 }
-#define RED(c)   ((c) & 0x1F)
-#define GREEN(c) (((c) >> 5) & 0x1F)
-#define BLUE(c)  (((c) >> 10) & 0x1F)
-
 
 void phaseOne() {
-
-    static int hasPlayedPOAudio = 0;
-
-if (!hasPlayedPOAudio) {
-    hasPlayedPOAudio = 1;
-    playSoundB(pOAudio_data, pOAudio_length, 1);  // 0 = no loop
-}
-
     static int flashState = 0;
     static int flashTimer = 0;
     static int flashFrame = 0;
@@ -683,103 +673,102 @@ if (!hasPlayedPOAudio) {
     }
     
     // Smooth fade every ~4 frames (about 15 times a second)
-tileFadeTimer++;
-if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
-    tileFadeStep++;  // up to 100 steps for slow smooth darkening
+    tileFadeTimer++;
+    if (tileFadeTimer % 4 == 0 && tileFadeStep < 100) {
+        tileFadeStep++;
 
-    u8* tileData = (u8*) &CHARBLOCK[1];
+        u8* tileData = (u8*) &CHARBLOCK[1];
 
-    for (int i = 0; i < 64; i++) {
-        u8 colorIndex = originalTile358[i];
+        for (int i = 0; i < 64; i++) {
+            u8 colorIndex = originalTile358[i];
 
-        if (colorIndex == 0) continue; // skip transparent
+            // skip transparent
+            if (colorIndex == 0) continue;
 
-        u16 origColor = BG_PALETTE[colorIndex];
-        u16 newColor = blendColor(origColor, RGB(0, 0, 0), tileFadeStep, 2000);
-        BG_PALETTE[colorIndex] = newColor;
-    }
-}
-
-static int swapTimer = 0;
-static int swapped = 0;
-static int swapDelayFrames = 0;
-static int hasFlashedOnce = 0;  
-swapDelayFrames++; // count frames until 15 seconds (15 * 60 = 900)
-
-if (swapDelayFrames > 200 && !hasFlashedOnce) {
-    swapTimer++;
-
-    if (swapTimer > 60) {
-        swapTimer = 0;
-        swapped = !swapped;
-        isFlashing = 1;
-        flashState = 0;
-        flashFrame = 0;
-        flashTimer = 0;
-        hasFlashedOnce = 1;
-        
-
-
-        // Save current palette state before flash
-        for (int i = 0; i < 256; i++) {
-            savedFadePalette[i] = BG_PALETTE[i];
+            u16 origColor = BG_PALETTE[colorIndex];
+            u16 newColor = blendColor(origColor, RGB(0, 0, 0), tileFadeStep, 2000);
+            BG_PALETTE[colorIndex] = newColor;
         }
+    }
 
-        // Swap tiles
-        for (int row = 0; row < 32; row++) {
-            for (int col = 0; col < 32; col++) {
-                u16* tile = &SCREENBLOCK[28].tilemap[row * 32 + col];
-                u16 tileId = *tile & 0x03FF;
-                u16 palRow = *tile & 0xFC00;
+    static int swapTimer = 0;
+    static int swapped = 0;
+    static int swapDelayFrames = 0;
+    static int hasFlashedOnce = 0;  
+    swapDelayFrames++; // count frames until 15 seconds (15 * 60 = 900)
+    
+    if (swapDelayFrames > 200 && !hasFlashedOnce) {
+        swapTimer++;
 
-                if (!swapped) {
-                    if (tileId == 323) *tile = (322 | palRow);
-                    if (tileId == 348) *tile = (347 | palRow);
-                } else {
-                    if (tileId == 322) *tile = (323 | palRow);
-                    if (tileId == 347) *tile = (348 | palRow);
+        if (swapTimer > 60) {
+            swapTimer = 0;
+            swapped = !swapped;
+            isFlashing = 1;
+            flashState = 0;
+            flashFrame = 0;
+            flashTimer = 0;
+            hasFlashedOnce = 1;
+
+            // Save current palette state before flash
+            for (int i = 0; i < 256; i++) {
+                savedFadePalette[i] = BG_PALETTE[i];
+            }
+
+            // Swap tiles
+            for (int row = 0; row < 32; row++) {
+                for (int col = 0; col < 32; col++) {
+                    u16* tile = &SCREENBLOCK[28].tilemap[row * 32 + col];
+                    u16 tileId = *tile & 0x03FF;
+                    u16 palRow = *tile & 0xFC00;
+
+                    if (!swapped) {
+                        if (tileId == 323) *tile = (322 | palRow);
+                        if (tileId == 348) *tile = (347 | palRow);
+                    } else {
+                        if (tileId == 322) *tile = (323 | palRow);
+                        if (tileId == 347) *tile = (348 | palRow);
+                    }
                 }
             }
         }
     }
-}
 
-if (isFlashing) {
-    flashTimer++;
+    if (isFlashing) {
+        flashTimer++;
 
-    // Toggle flash state every 8 frames
-    if (flashTimer > 8) {
-        flashTimer = 0;
-        flashState = !flashState;
-        flashFrame++;
-    }
-
-    if (flashFrame >= 4) {
-        isFlashing = 0;
-
-        // After 2 flashes, set palette to RGB(10,10,10) permanently
-        for (int i = 0; i < 64; i++) {
-            u8 colorIndex = originalTile358[i];
-            if (colorIndex == 0) continue;
-            BG_PALETTE[colorIndex] = RGB(10, 10, 10);
+        // Toggle flash state every 8 frames
+        if (flashTimer > 8) {
+            flashTimer = 0;
+            flashState = !flashState;
+            flashFrame++;
         }
-    } else {
-        for (int i = 0; i < 64; i++) {
-            u8 colorIndex = originalTile358[i];
-            if (colorIndex == 0) continue;
 
-            if (flashState) {
-                u16 c = savedFadePalette[colorIndex];
-                int r = RED(c) / 2;
-                int g = GREEN(c) / 2;
-                int b = BLUE(c) / 2;
-                BG_PALETTE[colorIndex] = RGB(r, g, b);
-            } else {
-                BG_PALETTE[colorIndex] = savedFadePalette[colorIndex];
+        if (flashFrame >= 4) {
+            isFlashing = 0;
+
+            // After 2 flashes, set palette to RGB(10,10,10) permanently
+            for (int i = 0; i < 64; i++) {
+                u8 colorIndex = originalTile358[i];
+                if (colorIndex == 0) continue;
+                BG_PALETTE[colorIndex] = RGB(10, 10, 10);
+            }
+        } else {
+            for (int i = 0; i < 64; i++) {
+                u8 colorIndex = originalTile358[i];
+                if (colorIndex == 0) continue;
+
+                if (flashState) {
+                    u16 c = savedFadePalette[colorIndex];
+                    int r = RED(c) / 2;
+                    int g = GREEN(c) / 2;
+                    int b = BLUE(c) / 2;
+                    BG_PALETTE[colorIndex] = RGB(r, g, b);
+                } else {
+                    BG_PALETTE[colorIndex] = savedFadePalette[colorIndex];
+                }
             }
         }
     }
-}
 
     // Draw sprites
     shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
@@ -792,6 +781,8 @@ if (isFlashing) {
     }
 
     if (winPhaseOne) {
+        stopSounds();
+        playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseTwoInstructions();
     }
 
@@ -825,8 +816,6 @@ void goToPhaseTwoInstructions() {
     state = DIALOGUE2;
 }
 
-
-
 void phaseTwoInstructions() {
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToPhaseTwo();
@@ -836,7 +825,8 @@ void phaseTwoInstructions() {
 // ============================= [ PHASE TWO STATE ] ============================
 
 void goToPhaseTwo() {
-
+    stopSounds();
+    playSoundB(phaseoneaudio_data, phaseoneaudio_length, 1);
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
     
@@ -895,6 +885,8 @@ void phaseTwo() {
     }
     
     if (winPhaseTwo) {
+        stopSounds();
+        playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseThreeInstructions();
     }
 
@@ -936,61 +928,53 @@ void phaseThreeInstructions() {
 }
 
 // ============================= [ PHASE THREE STATE ] ============================
-#define REG_BLDCNT    (*(volatile unsigned short*)0x4000050)
-#define REG_BLDALPHA  (*(volatile unsigned short*)0x4000052)
-#define REG_BLDY      (*(volatile unsigned short*)0x4000054)
-
-// Blend modes
-#define BLD_OFF    0
-#define BLD_STD    1
-#define BLD_WHITE  2
-#define BLD_BLACK  3
-
-// Layer flags
-#define BLD_BG0    (1<<0)
-#define BLD_BG1    (1<<1)
-#define BLD_BG2    (1<<2)
-#define BLD_OBJ    (1<<3)
-#define BLD_BD     (1<<4)  // backdrop
 
 void goToPhaseThree() {
-
+    stopSounds();
+    playSoundB(phasethreeaudio_data, phasethreeaudio_length, 1);
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
-    
-    // | Front background -> BG0 | Parallax background -> BG1 | Back day background -> BG2
+
+    // Background
+    // BG0: Front background
     REG_BG0CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE | BG_PRIORITY(0) | BG_8BPP;
+    // BG1: Parallax background
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(28) | BG_SIZE_WIDE | BG_PRIORITY(1) | BG_8BPP;
+    // BG2: Back day background
     REG_BG2CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(30) | BG_SIZE_WIDE | BG_PRIORITY(2) | BG_8BPP;
-    
-    // DMA background common tileset
+
+    // DMA Transfers for Background Resources
+    // Common foreground tileset
     DMANow(3, (volatile void*)foregroundPal, BG_PALETTE, foregroundPalLen / 2);
     DMANow(3, (volatile void*)foregroundTiles, &CHARBLOCK[1], foregroundTilesLen / 2);
-    
-    // DMA BG0/1/2 tile maps into screen blocks
+    // BG0 tile map
     DMANow(3, (volatile void*)bgThreeFrontMap, &SCREENBLOCK[26], bgOneFrontLen / 2);
+    // BG1 tile map
     DMANow(3, (volatile void*)bgTwoBackMap, &SCREENBLOCK[28], bgOneBackLen / 2);
+    // BG2 tile map
     DMANow(3, (volatile void*)dayTMMap, &SCREENBLOCK[30], dayTMLen / 2);
 
+    // Initialize Game Elements
     initPlayerThree();
     initSnow();
     initCountdownTimer();
 
+    // Initial Offsets
     hOff = 0;
     vOff = MAX_VOFF;
+
+    // Set Game State
     state = PHASETHREE;
 }
-#define REG_MOSAIC   (*(volatile unsigned short*) 0x400004C)
-#define BG_MOSAIC_ON (1<<6)
-void phaseThree() {
 
-    // Update sprites
+void phaseThree() {
+    // Update Game Elements
     updatePlayerThree(&hOff, &vOff);
     updateSnow();
     updateHealth();
     updatePlayerPalette();
 
-   // Oxygen blur effect in last 5 seconds
+    // Oxygen Blur Effect (Last 3 Seconds)
     int secondsPassed = REG_TM3D;
     int countdown = 20 - secondsPassed;
 
@@ -998,67 +982,67 @@ void phaseThree() {
         int blurStrength = 6 - countdown;
         if (blurStrength > 5) blurStrength = 5;
 
-        // Mosaic pixelation
+        // Apply Mosaic Pixelation
         REG_MOSAIC = MOSAIC_BG(blurStrength, blurStrength, blurStrength, blurStrength);
         REG_BG0CNT |= BG_MOSAIC_ON;
         REG_BG1CNT |= BG_MOSAIC_ON;
         REG_BG2CNT |= BG_MOSAIC_ON;
 
-        // Blending fade to black
+        // Apply Blending Fade to Black
         REG_BLDCNT = (BLD_BG0 | BLD_BG1 | BLD_BG2) | (BLD_BLACK << 6);
-        REG_BLDY = (6 - countdown) * 3;   // Increase darkness toward max (5*3=15)
+        REG_BLDY = (6 - countdown) * 3; // Increase darkness toward max (15)
     } else if (countdown > 3) {
-        // Disable mosaic
+        // Disable Mosaic
         REG_MOSAIC = 0;
         REG_BG0CNT &= ~BG_MOSAIC_ON;
         REG_BG1CNT &= ~BG_MOSAIC_ON;
         REG_BG2CNT &= ~BG_MOSAIC_ON;
 
-        // Disable blending
+        // Disable Blending
         REG_BLDCNT = 0;
         REG_BLDY = 0;
     }
+
+    // Left Wall Interaction
     if (leftWallTouched) {
         volatile u16* tilemap = SCREENBLOCK[26].tilemap;
-    
+
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
                 u16 tileEntry = tilemap[row * 32 + col];
-                u16 tileID = tileEntry & 0x03FF;  // Lower 10 bits
-                u16 palRow = tileEntry & 0xFC00;  // Palette row
-    
-                // If tileID is 101, 102, or 103, change to tile 0
+                u16 tileID = tileEntry & 0x03FF; // Lower 10 bits
+                u16 palRow = tileEntry & 0xFC00; // Palette row
+
+                // Change specific tile IDs to a new tile
                 if (tileID == 399) {
                     tilemap[row * 32 + col] = TILEMAP_ENTRY_TILEID(105) | palRow;
                 }
             }
         }
     }
-    
-    
-    
-    
 
-    // Front background scrolls regular
+    // Background Scrolling
+    // BG0: Regular speed
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
-
-    // Parallax background scrolls half speed:
+    // BG1: Half speed (parallax)
     REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff / 2;
-    
-    // Draw sprites
-    shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE;
+
+    // Sprite Drawing
+    shadowOAM[guide.oamIndex].attr0 = ATTR0_HIDE; // Hide the guide sprite
     drawPlayerThree();
     drawSnow();
     drawHealth();
     drawTimer();
     DMANow(3, shadowOAM, OAM, 512);
-    
+
+    // Game Over Condition
     if (gameOver) {
         goToLose();
     }
 
+    // Win Condition
     if (winPhaseThree) {
         goToWin();
     }
@@ -1069,7 +1053,6 @@ void phaseThree() {
 void goToPause() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
-
 
     // Initialize animated player
     initAnimatedPlayer();
@@ -1122,6 +1105,8 @@ void pause() {
 // ============================= [ LOSE STATE ] =================================
 
 void goToLose() {
+    stopSounds();
+    playSoundA(loseaudio_data, loseaudio_length, 1);
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
     REG_BLDY = 0;
@@ -1159,10 +1144,6 @@ void lose() {
     // Move horizontally if you want (like you do now)
     hOff++;
 
-    // Optional: move vertically if you want
-    // vOff++; (only if you want vertical scroll effect)
-
-    // During VBlank (or right after it), update:
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
 
@@ -1186,6 +1167,8 @@ void lose() {
 // ============================= [ WIN STATE ] =================================
 
 void goToWin() {
+    stopSounds();
+    playSoundA(winaudio_data, winaudio_length, 1);
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
@@ -1278,4 +1261,3 @@ void resetGameState() {
     // Reset splash selection
     splashSelection = MENU_START;
 }
-

@@ -50,7 +50,7 @@ typedef volatile struct {
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 3 "phaseThree.c" 2
 # 1 "mode0.h" 1
-# 32 "mode0.h"
+# 52 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;
@@ -138,6 +138,7 @@ void drawTimer(void);
 void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
+int leftWallTouched;
 # 7 "phaseThree.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
@@ -155,6 +156,37 @@ void updateHealth();
 void drawHealth();
 int healthBarFrames[9][2];
 # 9 "phaseThree.c" 2
+# 1 "digitalSound.h" 1
+
+
+
+void setupSounds();
+void playSoundA(const signed char* sound, int length, int loops);
+void playSoundB(const signed char* sound, int length, int loops);
+
+void pauseSounds();
+void unpauseSounds();
+void stopSounds();
+# 49 "digitalSound.h"
+typedef struct{
+    const signed char* data;
+    int dataLength;
+    int isPlaying;
+    int looping;
+    int durationInVBlanks;
+    int vBlankCount;
+} SOUND;
+
+SOUND soundA;
+SOUND soundB;
+# 10 "phaseThree.c" 2
+# 1 "healthaudio.h" 1
+
+
+extern const unsigned int healthaudio_sampleRate;
+extern const unsigned int healthaudio_length;
+extern const signed char healthaudio_data[];
+# 11 "phaseThree.c" 2
 
 
 
@@ -358,8 +390,11 @@ void drawPlayerThree() {
     } else if (player.direction == 1) {
         shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
     }
-    shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
-
+    if (timerPaused) {
+        shadowOAM[player.oamIndex].attr2 = ((((1) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
+    } else {
+        shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
+    }
 }
 
 inline unsigned char colorAtThree(int x, int y) {

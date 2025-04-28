@@ -6,6 +6,8 @@
 #include "phaseThree.h"
 #include "player.h"
 #include "health.h"
+#include "digitalSound.h"
+#include "healthaudio.h"
 
 // Update movement every 4 frames when in slow mode (on top of snow)
 #define SLOW_DELAY 4
@@ -209,8 +211,11 @@ void drawPlayerThree() {
     } else if (player.direction == 1) {
         shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
     }
-    shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 5);
-
+    if (timerPaused) {
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 1);
+    } else {
+        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 5);
+    }
 }
 
 inline unsigned char colorAtThree(int x, int y) {

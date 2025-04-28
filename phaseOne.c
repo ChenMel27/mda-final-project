@@ -10,6 +10,8 @@
 #include "sprites.h"
 #include "phaseOne.h"
 #include "player.h"
+#include "healthaudio.h"
+#include "digitalSound.h"
 
 // y val where the falling animation ends
 #define FALL_END_Y 400
@@ -35,11 +37,6 @@ int movedHorizontally = 0;
 SPRITE player;
 extern SPRITE health;
 
-
-typedef enum {
-    PLAYER_NORMAL,
-    PLAYER_FALLING
-} PlayerState;
 PlayerState playerState = PLAYER_NORMAL;
 
 // Function Prototypes
@@ -83,8 +80,6 @@ void updatePlayer(int* hOff, int* vOff) {
     if (cheatOn && (++colorCycleTimer % 4 == 0)) {
         cyclePaletteColors();
     }
-
-    
 
     // reset animation
     player.isAnimating = 0;
@@ -234,6 +229,7 @@ void drawPlayer() {
     colorAt(rightX, bottomY) == 0x05) {
 
     if (health.active > 0) {
+    playSoundB(healthaudio_data, healthaudio_length, 0);
         health.active--;
         if (health.active == 0) {
             gameOver = 1;
@@ -257,6 +253,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x06) {
         
         if (health.active > 0) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
@@ -278,6 +275,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x07) {
         
         if (health.active > 0) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
@@ -299,6 +297,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x08) {
         
         if (health.active > 0) {
+            playSoundB(healthaudio_data, healthaudio_length, 0);
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
