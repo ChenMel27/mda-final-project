@@ -39,6 +39,7 @@
         "bgonefrontcm.h": "c",
         "gameinstructions2.h": "c",
         "action.h": "c",
-        "splashp2.h": "c"
+        "splashp2.h": "c",
+        "bgtwoback.h": "c"
     }
 }

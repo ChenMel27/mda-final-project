@@ -23,6 +23,8 @@ extern SPRITE player;
 extern SPRITE health;
 volatile int secondsElapsed = 0;
 static int slowModeActive = 0;
+static int timerPaused = 0;
+
 
 
 void initPlayerThree() {
@@ -60,6 +62,16 @@ void updatePlayerThree(int* hOff, int* vOff) {
     int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
+
+    // Check if colliding with palette index 3 and pause timer
+    if (colorAtThree(leftX, topY) == 0x03 || colorAtThree(rightX, topY) == 0x03 ||
+    colorAtThree(leftX, bottomY) == 0x03 || colorAtThree(rightX, bottomY) == 0x03) {
+        if (!timerPaused) {
+            REG_TM2CNT &= ~TIMER_ON; // Turn off timer 2 (which drives timer 3)
+            timerPaused = 1;
+        }
+    }
+
 
     // On top of snow checking
     slowModeActive = colorAtThree(leftX, topY) == 0x02 || colorAtThree(rightX, topY) == 0x02 || colorAtThree(leftX, bottomY) == 0x02 || colorAtThree(rightX, bottomY) == 0x02;
@@ -191,6 +203,7 @@ void drawPlayerThree() {
     } else if (player.direction == 1) {
         shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
     }
+    shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFrames[hikerFrame], 5);
 
 }
 

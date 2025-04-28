@@ -172,6 +172,8 @@ extern SPRITE player;
 extern SPRITE health;
 volatile int secondsElapsed = 0;
 static int slowModeActive = 0;
+static int timerPaused = 0;
+
 
 
 void initPlayerThree() {
@@ -209,6 +211,16 @@ void updatePlayerThree(int* hOff, int* vOff) {
     int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
+
+
+    if (colorAtThree(leftX, topY) == 0x03 || colorAtThree(rightX, topY) == 0x03 ||
+    colorAtThree(leftX, bottomY) == 0x03 || colorAtThree(rightX, bottomY) == 0x03) {
+        if (!timerPaused) {
+            *(volatile unsigned short*)0x400010A &= ~(1<<7);
+            timerPaused = 1;
+        }
+    }
+
 
 
     slowModeActive = colorAtThree(leftX, topY) == 0x02 || colorAtThree(rightX, topY) == 0x02 || colorAtThree(leftX, bottomY) == 0x02 || colorAtThree(rightX, bottomY) == 0x02;
@@ -340,6 +352,7 @@ void drawPlayerThree() {
     } else if (player.direction == 1) {
         shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
     }
+    shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (hikerFrames[hikerFrame]))) & 0x3FF);
 
 }
 

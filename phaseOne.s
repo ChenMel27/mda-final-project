@@ -260,14 +260,14 @@ drawPlayer:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, lr}
-	ldr	lr, .L65
+	ldr	lr, .L66
 	ldrb	r3, [lr, #4]	@ zero_extendqisi2
 	cmp	r3, #1
-	beq	.L64
-	ldr	r1, .L65+4
+	beq	.L65
+	ldr	r1, .L66+4
 	ldr	ip, [r1, #16]
 	ldr	r4, [r1, #20]
-	ldr	r0, .L65+8
+	ldr	r0, .L66+8
 	add	r3, ip, r4, lsl #9
 	ldrb	r5, [r3, r0]	@ zero_extendqisi2
 	ldr	r3, [r1, #24]
@@ -302,7 +302,7 @@ drawPlayer:
 	orreq	r2, r2, #1
 	cmp	r2, #0
 	beq	.L38
-	ldr	r2, .L65+12
+	ldr	r2, .L66+12
 	ldr	r3, [r2, #52]
 	cmp	r3, #0
 	ble	.L30
@@ -311,23 +311,23 @@ drawPlayer:
 	str	r3, [r2, #52]
 	moveq	r3, #1
 	streq	r3, [lr, #20]
-	ldr	r3, .L65+16
+	ldr	r3, .L66+16
 	ldr	r3, [r3]
 	cmp	r3, #0
 	mov	ip, #1
 	movne	r0, #114
 	moveq	r0, #110
-.L63:
+.L64:
 	mov	r2, #332
-	ldr	r1, .L65+20
-	ldr	r3, .L65+24
+	ldr	r1, .L66+20
+	ldr	r3, .L66+24
 	strb	ip, [lr, #4]
 	str	r0, [r1]
 	str	r2, [r3]
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
 .L32:
-	ldr	r2, .L65+12
+	ldr	r2, .L66+12
 	ldr	r3, [r2, #52]
 	cmp	r3, #0
 	ble	.L35
@@ -339,8 +339,8 @@ drawPlayer:
 .L35:
 	mov	r3, #0
 	mov	r2, #102
-	ldr	ip, .L65+28
-	ldr	r0, .L65+32
+	ldr	ip, .L66+28
+	ldr	r0, .L66+32
 	str	r3, [r1, #16]
 	str	r3, [lr]
 	str	r3, [r1, #12]
@@ -361,7 +361,7 @@ drawPlayer:
 	orreq	r3, r3, #1
 	cmp	r3, #0
 	beq	.L41
-	ldr	r2, .L65+12
+	ldr	r2, .L66+12
 	ldr	r3, [r2, #52]
 	cmp	r3, #0
 	ble	.L30
@@ -370,14 +370,14 @@ drawPlayer:
 	str	r3, [r2, #52]
 	moveq	r3, #1
 	streq	r3, [lr, #20]
-	ldr	r3, .L65+16
+	ldr	r3, .L66+16
 	ldr	r3, [r3]
 	cmp	r3, #0
 	mov	ip, #1
 	movne	r0, #129
 	moveq	r0, #125
-	b	.L63
-.L64:
+	b	.L64
+.L65:
 	pop	{r4, r5, r6, r7, lr}
 	b	drawFallingSprite
 .L41:
@@ -391,7 +391,7 @@ drawPlayer:
 	orreq	r3, r3, #1
 	cmp	r3, #0
 	beq	.L44
-	ldr	r2, .L65+12
+	ldr	r2, .L66+12
 	ldr	r3, [r2, #52]
 	cmp	r3, #0
 	ble	.L30
@@ -400,69 +400,72 @@ drawPlayer:
 	str	r3, [r2, #52]
 	moveq	r3, #1
 	streq	r3, [lr, #20]
-	ldr	r3, .L65+16
+	ldr	r3, .L66+16
 	ldr	r3, [r3]
 	cmp	r3, #0
 	mov	ip, #1
 	movne	r0, #187
 	moveq	r0, #183
-	b	.L63
+	b	.L64
 .L44:
-	ldr	r2, .L65+28
-	ldr	r3, .L65+32
+	ldr	r2, .L66+28
+	ldr	r3, .L66+32
 	ldr	r0, [r2]
-	ldr	r2, .L65+16
+	ldr	r2, .L66+16
 	ldr	r3, [r3]
 	ldr	r2, [r2]
-	sub	ip, ip, r0
 	sub	r3, r4, r3
-	cmp	r2, #0
-	ldrb	r2, [r1, #56]	@ zero_extendqisi2
+	sub	ip, ip, r0
+	ldrb	r0, [r1, #56]	@ zero_extendqisi2
 	and	r3, r3, #255
 	lsl	ip, ip, #23
-	ldr	r1, [r1, #36]
-	ldr	r0, .L65+36
+	cmp	r2, #0
+	ldr	r4, [r1, #36]
+	ldr	r2, .L66+36
 	orr	r3, r3, #32768
 	lsr	ip, ip, #23
-	lsl	r2, r2, #3
+	lsl	r1, r0, #3
 	beq	.L47
-	cmp	r1, #0
-	strh	r3, [r0, r2]	@ movhi
-	ldr	r1, [lr, #12]
-	ldr	r3, .L65+40
-	add	r3, r3, r1, lsl #2
-	ldr	r3, [r3, #4]
-	add	r3, r3, #448
-	lsl	r3, r3, #22
-	add	r2, r0, r2
+	strh	r3, [r2, r1]	@ movhi
+	ldr	r3, [lr, #16]
+	cmp	r4, #0
 	orreq	ip, ip, #16384
 	orrne	ip, ip, #20480
-	lsr	r3, r3, #22
+	cmp	r3, #0
+	ldreq	r3, .L66+40
+	add	r2, r2, r1
+	ldreq	r1, [lr, #12]
+	addeq	r3, r3, r1, lsl #2
+	ldreq	r3, [r3, #4]
+	addeq	r3, r3, #448
+	lsleq	r3, r3, #22
+	ldrne	r3, .L66+44
+	lsreq	r3, r3, #22
 	strh	ip, [r2, #2]	@ movhi
 	strh	r3, [r2, #4]	@ movhi
 	b	.L30
 .L47:
-	strh	r3, [r0, r2]	@ movhi
+	strh	r3, [r2, r1]	@ movhi
 	ldr	r3, [lr, #16]
-	cmp	r1, #0
+	cmp	r4, #0
 	orreq	ip, ip, #32768
 	orrne	ip, ip, #36864
 	cmp	r3, #0
 	movne	r3, #164
-	ldreq	r3, .L65+40
+	ldreq	r3, .L66+40
+	add	r2, r2, r1
 	ldreq	r1, [lr, #12]
 	addeq	r3, r3, r1, lsl #2
 	ldreq	r3, [r3, #16]
 	addeq	r3, r3, #32
 	lsleq	r3, r3, #22
-	add	r2, r0, r2
 	lsreq	r3, r3, #22
 	strh	ip, [r2, #2]	@ movhi
 	strh	r3, [r2, #4]	@ movhi
 	b	.L30
-.L66:
+.L67:
 	.align	2
-.L65:
+.L66:
 	.word	.LANCHOR0
 	.word	player
 	.word	bgOneFrontCMBitmap
@@ -474,6 +477,7 @@ drawPlayer:
 	.word	vOff
 	.word	shadowOAM
 	.word	.LANCHOR1
+	.word	499
 	.size	drawPlayer, .-drawPlayer
 	.align	2
 	.global	resetPlayerAfterFall
@@ -487,11 +491,11 @@ resetPlayerAfterFall:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	mov	r3, #0
 	mov	r0, #102
-	ldr	r1, .L69
+	ldr	r1, .L70
 	str	lr, [sp, #-4]!
-	ldr	r2, .L69+4
-	ldr	lr, .L69+8
-	ldr	ip, .L69+12
+	ldr	r2, .L70+4
+	ldr	lr, .L70+8
+	ldr	ip, .L70+12
 	strb	r3, [r1, #4]
 	str	r3, [lr]
 	str	r3, [ip]
@@ -501,9 +505,9 @@ resetPlayerAfterFall:
 	str	r3, [r1]
 	ldr	lr, [sp], #4
 	bx	lr
-.L70:
+.L71:
 	.align	2
-.L69:
+.L70:
 	.word	.LANCHOR0
 	.word	player
 	.word	hOff
@@ -520,7 +524,7 @@ cyclePaletteColors:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r6, .L73
+	ldr	r6, .L74
 	mov	lr, pc
 	bx	r6
 	mov	r5, r0
@@ -535,14 +539,14 @@ cyclePaletteColors:
 	and	r3, r3, #31744
 	orr	r3, r3, r4
 	and	r0, r5, #31
-	ldr	r2, .L73+4
+	ldr	r2, .L74+4
 	orr	r0, r3, r0
 	strh	r0, [r2, #6]	@ movhi
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L74:
+.L75:
 	.align	2
-.L73:
+.L74:
 	.word	rand
 	.word	83886592
 	.size	cyclePaletteColors, .-cyclePaletteColors
@@ -558,28 +562,28 @@ updatePlayer:
 	@ args = 0, pretend = 0, frame = 16
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r5, .L193
+	ldr	r5, .L194
 	ldrb	r3, [r5, #4]	@ zero_extendqisi2
 	cmp	r3, #1
 	sub	sp, sp, #20
-	beq	.L183
-	ldr	r4, .L193+4
+	beq	.L184
+	ldr	r4, .L194+4
 	ldr	r3, [r4]
 	cmp	r3, #0
 	mov	r6, r0
 	mov	r7, r1
-	bne	.L184
-	ldr	r2, .L193+8
+	bne	.L185
+	ldr	r2, .L194+8
 	ldrh	r2, [r2]
 	str	r2, [sp, #4]
 	mvn	r2, r2
-	ldr	r4, .L193+12
+	ldr	r4, .L194+12
 	and	r2, r2, #128
 	str	r2, [r5, #16]
 	str	r3, [r4, #40]
 	ldr	fp, [r4, #16]
 	ldr	r1, [r4, #20]
-.L81:
+.L82:
 	add	r2, r4, #24
 	ldm	r2, {r2, r10}
 	add	r9, r10, r1
@@ -589,7 +593,7 @@ updatePlayer:
 	asr	r3, r3, #1
 	rsb	r3, r3, #120
 	str	r3, [sp, #12]
-.L113:
+.L114:
 	ldr	r3, [sp, #4]
 	lsr	r3, r3, #5
 	eor	r3, r3, #1
@@ -598,80 +602,80 @@ updatePlayer:
 	andgt	r3, r3, #1
 	cmp	r3, #0
 	moveq	r3, r1
-	bne	.L185
-.L82:
+	bne	.L186
+.L83:
 	ldr	r0, [sp, #4]
 	ands	ip, r0, #16
-	bne	.L85
+	bne	.L86
 	rsb	r0, r2, #512
 	cmp	r0, fp
-	bgt	.L86
-.L85:
+	bgt	.L87
+.L86:
 	ldr	r1, [r4, #40]
 	str	r1, [sp, #8]
-.L87:
+.L88:
 	ldr	ip, [r4, #12]
 	add	r1, ip, #1
 	cmp	r1, #4
 	str	r1, [r4, #12]
-	ble	.L90
+	ble	.L91
 	mov	r1, #4
 	str	r1, [r4, #12]
 	add	r0, r10, r3
-.L91:
+.L92:
 	add	r2, r2, fp
-	ldr	r9, .L193+16
+	ldr	r9, .L194+16
 	add	r2, r2, r10, lsl #9
 	sub	r2, r2, #1
 	add	r2, r9, r2
 	mov	ip, r0
 	mov	r10, #0
 	add	r9, r9, fp
-	b	.L106
-.L102:
+	b	.L107
+.L103:
 	ldrb	lr, [r9, ip, lsl #9]	@ zero_extendqisi2
 	add	ip, ip, #1
 	cmp	lr, #4
 	sub	r8, ip, r0
-	beq	.L105
+	beq	.L106
 	ldrb	lr, [r2, r3, lsl #9]	@ zero_extendqisi2
 	cmp	lr, #4
-	beq	.L105
+	beq	.L106
 	cmp	r1, r8
 	mov	r10, #1
 	add	r3, r3, #1
-	ble	.L186
-.L106:
+	ble	.L187
+.L107:
 	cmp	ip, #255
-	ble	.L102
-.L105:
+	ble	.L103
+.L106:
 	cmp	r10, #0
 	strne	r3, [r4, #20]
 	mov	r3, #0
-	ldr	r2, .L193+20
+	ldr	r2, .L194+20
 	ldrh	r2, [r2]
 	tst	r2, #64
 	str	r3, [r4, #12]
-	beq	.L100
-	b	.L180
-.L184:
+	beq	.L101
+	b	.L181
+.L185:
 	ldr	r3, [r5, #24]
 	add	r3, r3, #1
 	ands	r8, r3, #3
 	str	r3, [r5, #24]
-	beq	.L187
-	ldr	r3, .L193+8
+	beq	.L188
+	ldr	r3, .L194+8
 	ldrh	r3, [r3]
 	str	r3, [sp, #4]
 	mvn	r3, r3
 	mov	r2, #0
-	ldr	r4, .L193+12
+	ldr	r4, .L194+12
 	and	r3, r3, #128
 	str	r3, [r5, #16]
 	str	r2, [r4, #40]
 	ldr	fp, [r4, #16]
 	ldr	r1, [r4, #20]
-.L114:
+.L115:
 	mov	r0, #16
 	mov	r3, #6
 	mov	ip, #3
@@ -684,50 +688,50 @@ updatePlayer:
 	str	r3, [r4, #24]
 	str	ip, [r4, #48]
 	add	r8, r1, #15
-	b	.L113
-.L90:
+	b	.L114
+.L91:
 	cmp	r1, #0
-	bge	.L188
+	bge	.L189
 	mvn	ip, ip
-	ldr	lr, .L193+16
+	ldr	lr, .L194+16
 	add	r2, r2, fp
 	sub	r2, r2, #1
 	add	r2, r2, lr
 	mov	r8, #0
 	sub	ip, r3, ip
 	add	lr, lr, fp
-	b	.L98
-.L94:
+	b	.L99
+.L95:
 	ldrb	r0, [lr, r1, lsl #9]	@ zero_extendqisi2
 	cmp	r0, #4
-	beq	.L97
+	beq	.L98
 	ldrb	r0, [r2, r1, lsl #9]	@ zero_extendqisi2
 	cmp	r0, #4
-	beq	.L97
+	beq	.L98
 	cmp	r1, ip
 	mov	r8, #1
-	beq	.L189
+	beq	.L190
 	mov	r3, r1
-.L98:
+.L99:
 	cmp	r3, #0
 	sub	r1, r3, #1
-	bgt	.L94
-.L97:
+	bgt	.L95
+.L98:
 	cmp	r8, #0
 	strne	r3, [r4, #20]
 	mov	r3, #0
 	str	r3, [r4, #12]
-.L100:
+.L101:
 	ldr	r3, [r5, #8]
 	ldr	r2, [sp, #8]
 	add	r3, r3, #1
 	cmp	r2, #0
 	str	r3, [r5, #8]
-	bne	.L190
+	bne	.L191
 	ldr	r3, [sp, #8]
 	str	r3, [r5, #12]
 	str	r3, [r5, #8]
-.L111:
+.L112:
 	ldr	r3, [sp, #12]
 	sub	r3, fp, r3
 	str	r3, [r6]
@@ -754,23 +758,23 @@ updatePlayer:
 	str	r3, [r7]
 	ldr	r3, [r4, #16]
 	ldr	r1, [r4, #24]
-	ldr	r2, .L193+24
+	ldr	r2, .L194+24
 	add	r3, r3, r1
 	cmp	r3, r2
 	movgt	r3, #1
 	strgt	r3, [r5, #32]
-.L75:
+.L76:
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L190:
-	ldr	r2, .L193+28
+.L191:
+	ldr	r2, .L194+28
 	ldr	r2, [r2]
 	cmp	r3, r2
-	ble	.L111
+	ble	.L112
 	ldr	r0, [r5, #12]
-	ldr	r3, .L193+32
+	ldr	r3, .L194+32
 	ldr	r1, [r4, #48]
 	add	r0, r0, #1
 	mov	lr, pc
@@ -778,38 +782,38 @@ updatePlayer:
 	mov	r3, #0
 	str	r1, [r5, #12]
 	str	r3, [r5, #8]
-	b	.L111
-.L188:
+	b	.L112
+.L189:
 	add	r0, r10, r3
-	bne	.L91
-	ldr	r3, .L193+16
+	bne	.L92
+	ldr	r3, .L194+16
 	add	r1, fp, r0, lsl #9
 	ldrb	r1, [r1, r3]	@ zero_extendqisi2
 	cmp	r1, #4
 	lsl	r0, r0, #9
-	beq	.L182
+	beq	.L183
 	add	r2, r0, r2
 	add	r2, r2, fp
 	sub	r3, r3, #1
 	ldrb	r3, [r2, r3]	@ zero_extendqisi2
 	cmp	r3, #4
-	bne	.L100
-.L182:
-	ldr	r3, .L193+20
+	bne	.L101
+.L183:
+	ldr	r3, .L194+20
 	ldrh	r3, [r3]
 	tst	r3, #64
-	beq	.L100
-.L180:
+	beq	.L101
+.L181:
 	ldr	r3, [sp, #4]
 	tst	r3, #64
 	mvneq	r3, #11
 	streq	r3, [r4, #12]
-	b	.L100
-.L185:
+	b	.L101
+.L186:
 	ldr	lr, [r5]
 	sub	lr, lr, r9
 	asr	fp, lr, #3
-	ldr	r3, .L193+16
+	ldr	r3, .L194+16
 	mov	ip, #1
 	str	lr, [r5]
 	add	lr, fp, r8, lsl #9
@@ -823,34 +827,34 @@ updatePlayer:
 	str	fp, [r4, #16]
 	rsb	ip, r8, r8, lsl #23
 	lsl	ip, ip, #9
-.L84:
+.L85:
 	add	lr, r2, r3
 	ldrb	lr, [lr, ip]	@ zero_extendqisi2
 	cmp	lr, #4
-	beq	.L83
+	beq	.L84
 	ldrb	lr, [r3]	@ zero_extendqisi2
 	cmp	lr, #4
-	bne	.L191
-.L83:
+	bne	.L192
+.L84:
 	add	r0, r0, #1
 	cmp	r0, #4
 	sub	r3, r3, #512
-	bne	.L84
+	bne	.L85
 	mov	r3, r1
 	ldr	r2, [sp, #8]
-	b	.L82
-.L183:
-	ldr	r2, .L193+36
+	b	.L83
+.L184:
+	ldr	r2, .L194+36
 	ldr	r3, [r2]
 	add	r3, r3, #3
 	cmp	r3, #400
 	str	r3, [r2]
-	blt	.L75
+	blt	.L76
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	b	updateFallingAnimation.part.0
-.L86:
+.L87:
 	ldr	lr, [r5]
 	add	r9, r9, lr
 	asr	fp, r9, #3
@@ -861,52 +865,52 @@ updatePlayer:
 	str	ip, [r4, #36]
 	rsb	ip, r1, r1, lsl #23
 	add	r1, lr, r1, lsl #9
-	ldr	lr, .L193+16
+	ldr	lr, .L194+16
 	lsl	ip, ip, #9
 	str	fp, [r4, #16]
 	str	r9, [r4, #40]
 	sub	ip, ip, #1
 	lsl	r9, r8, #9
 	add	r1, r1, lr
-.L89:
+.L90:
 	ldrb	lr, [r1, #-1]	@ zero_extendqisi2
 	cmp	lr, #4
 	add	r8, r9, r1
-	beq	.L88
+	beq	.L89
 	ldrb	lr, [r8, ip]	@ zero_extendqisi2
 	cmp	lr, #4
-	bne	.L192
-.L88:
+	bne	.L193
+.L89:
 	add	r0, r0, #1
 	cmp	r0, #4
 	sub	r1, r1, #512
-	bne	.L89
+	bne	.L90
 	mov	r1, #1
 	str	r1, [sp, #8]
-	b	.L87
-.L187:
+	b	.L88
+.L188:
 	bl	cyclePaletteColors
-	ldr	r3, .L193+8
+	ldr	r3, .L194+8
 	ldrh	r3, [r3]
 	str	r3, [sp, #4]
 	mvn	r3, r3
 	ldr	r2, [r4]
-	ldr	r4, .L193+12
+	ldr	r4, .L194+12
 	and	r3, r3, #128
 	cmp	r2, #0
 	str	r3, [r5, #16]
 	str	r8, [r4, #40]
 	ldr	fp, [r4, #16]
 	ldr	r1, [r4, #20]
-	bne	.L114
-	b	.L81
-.L189:
+	bne	.L115
+	b	.L82
+.L190:
 	str	ip, [r4, #20]
-	b	.L100
-.L186:
+	b	.L101
+.L187:
 	str	r3, [r4, #20]
-	b	.L100
-.L191:
+	b	.L101
+.L192:
 	cmp	r0, #1
 	movge	r3, r0
 	movlt	r3, #1
@@ -916,17 +920,17 @@ updatePlayer:
 	ldr	r2, [sp, #8]
 	str	r3, [r4, #20]
 	str	ip, [r5, #28]
-	b	.L82
-.L192:
+	b	.L83
+.L193:
 	mov	r1, #1
 	sub	r3, r3, r0
 	str	r3, [r4, #20]
 	str	r1, [r5, #28]
 	str	r1, [sp, #8]
-	b	.L87
-.L194:
+	b	.L88
+.L195:
 	.align	2
-.L193:
+.L194:
 	.word	.LANCHOR0
 	.word	cheatOn
 	.word	buttons

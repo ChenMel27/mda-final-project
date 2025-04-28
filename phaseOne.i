@@ -469,7 +469,12 @@ void drawPlayer() {
         } else {
             shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14) | (1<<12);
         }
-        shadowOAM[player.oamIndex].attr2 = ((((14) * (32) + (hikerFramesCheat[hikerFrame]))) & 0x3FF);
+
+        if (isDucking) {
+            shadowOAM[player.oamIndex].attr2 = ((((15) * (32) + (19))) & 0x3FF);
+        } else {
+            shadowOAM[player.oamIndex].attr2 = ((((14) * (32) + (hikerFramesCheat[hikerFrame]))) & 0x3FF);
+        }
     } else {
         shadowOAM[player.oamIndex].attr0 = ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
         if (player.direction == 0) {
@@ -477,7 +482,6 @@ void drawPlayer() {
         } else {
             shadowOAM[player.oamIndex].attr1 = ((screenX) & 0x1FF) | (2<<14) | (1<<12);
         }
-
 
         if (isDucking) {
             shadowOAM[player.oamIndex].attr2 = ((((5) * (32) + (4))) & 0x3FF);

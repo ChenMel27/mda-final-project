@@ -2,7 +2,7 @@
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "main.c"
-# 26 "main.c"
+# 17 "main.c"
 # 1 "gba.h" 1
 
 
@@ -42,7 +42,7 @@ typedef volatile struct {
 } DMAChannel;
 # 103 "gba.h"
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
-# 27 "main.c" 2
+# 18 "main.c" 2
 # 1 "mode0.h" 1
 # 32 "mode0.h"
 typedef struct {
@@ -54,7 +54,7 @@ typedef struct {
 typedef struct {
  u16 tilemap[1024];
 } SB;
-# 28 "main.c" 2
+# 19 "main.c" 2
 # 1 "mode4.h" 1
 # 9 "mode4.h"
 void flipPages();
@@ -66,7 +66,7 @@ void drawFullscreenImage4(const u16* image);
 
 void drawChar4(int x, int y, char ch, u8 colorIndex);
 void drawString4(int x, int y, char* str, u8 colorIndex);
-# 29 "main.c" 2
+# 20 "main.c" 2
 # 1 "bgOneFront.h" 1
 
 
@@ -76,7 +76,7 @@ void drawString4(int x, int y, char* str, u8 colorIndex);
 
 
 extern const unsigned short bgOneFrontMap[2048];
-# 30 "main.c" 2
+# 21 "main.c" 2
 # 1 "bgOneBack.h" 1
 
 
@@ -86,7 +86,7 @@ extern const unsigned short bgOneFrontMap[2048];
 
 
 extern const unsigned short bgOneBackMap[2048];
-# 31 "main.c" 2
+# 22 "main.c" 2
 # 1 "bgTwoFront.h" 1
 
 
@@ -96,7 +96,7 @@ extern const unsigned short bgOneBackMap[2048];
 
 
 extern const unsigned short bgTwoFrontMap[2048];
-# 32 "main.c" 2
+# 23 "main.c" 2
 # 1 "bgTwoBack.h" 1
 
 
@@ -106,18 +106,18 @@ extern const unsigned short bgTwoFrontMap[2048];
 
 
 extern const unsigned short bgTwoBackMap[2048];
-# 33 "main.c" 2
+# 24 "main.c" 2
 # 1 "bgOneCM.h" 1
 # 20 "bgOneCM.h"
 extern const unsigned short bgOneCMBitmap[65536];
-# 34 "main.c" 2
+# 25 "main.c" 2
 # 1 "tilesetOne.h" 1
 # 21 "tilesetOne.h"
 extern const unsigned short tilesetOneTiles[4096];
 
 
 extern const unsigned short tilesetOnePal[256];
-# 35 "main.c" 2
+# 26 "main.c" 2
 # 1 "phaseOne.h" 1
 
 # 1 "sprites.h" 1
@@ -196,7 +196,7 @@ void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
-# 36 "main.c" 2
+# 27 "main.c" 2
 # 1 "phaseTwo.h" 1
 # 25 "phaseTwo.h"
 SPRITE snows[3];
@@ -211,7 +211,7 @@ void initSnow();
 void updateSnow();
 void drawSnow();
 int winPhaseTwo;
-# 37 "main.c" 2
+# 28 "main.c" 2
 # 1 "phaseThree.h" 1
 # 21 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
@@ -223,7 +223,7 @@ void drawTimer(void);
 void updatePlayerPalette();
 unsigned short playerPaletteWork[256];
 int winPhaseThree;
-# 38 "main.c" 2
+# 29 "main.c" 2
 # 1 "start.h" 1
 # 9 "start.h"
 int next;
@@ -239,25 +239,25 @@ void drawGuideSprite();
 int checkPlayerGuideCollision();
 void fillTileWithColor(int tileId, u8 colorIndex);
 void flashColorInTile(int tileId, u8 targetIndex, u8 flashIndex, int flashOn, u16* originalTileData);
-# 39 "main.c" 2
+# 30 "main.c" 2
 # 1 "splashScreen.h" 1
 # 21 "splashScreen.h"
 extern const unsigned short splashScreenBitmap[19200];
 
 
 extern const unsigned short splashScreenPal[256];
-# 40 "main.c" 2
+# 31 "main.c" 2
 # 1 "snowtiles.h" 1
 # 21 "snowtiles.h"
 extern unsigned char snowtilesTiles[7680];
 
 
 extern unsigned char snowtilesPal[512];
-# 41 "main.c" 2
+# 32 "main.c" 2
 # 1 "townCM.h" 1
 # 20 "townCM.h"
 extern const unsigned char townCMBitmap[262144];
-# 42 "main.c" 2
+# 33 "main.c" 2
 # 1 "town.h" 1
 
 
@@ -267,21 +267,21 @@ extern const unsigned char townCMBitmap[262144];
 
 
 extern unsigned short townMap[1024];
-# 43 "main.c" 2
+# 34 "main.c" 2
 # 1 "foreground.h" 1
 # 21 "foreground.h"
 extern const unsigned short foregroundTiles[12800];
 
 
 extern const unsigned short foregroundPal[256];
-# 44 "main.c" 2
+# 35 "main.c" 2
 # 1 "topdownrpg.h" 1
 # 21 "topdownrpg.h"
 extern const unsigned short topdownrpgTiles[32768];
 
 
 extern const unsigned short topdownrpgPal[256];
-# 45 "main.c" 2
+# 36 "main.c" 2
 # 1 "sTM.h" 1
 
 
@@ -291,14 +291,14 @@ extern const unsigned short topdownrpgPal[256];
 
 
 extern const unsigned short sTMMap[4096];
-# 46 "main.c" 2
+# 37 "main.c" 2
 # 1 "sTS.h" 1
 # 21 "sTS.h"
 extern const unsigned short sTSTiles[8192];
 
 
 extern const unsigned short sTSPal[256];
-# 47 "main.c" 2
+# 38 "main.c" 2
 # 1 "dayTM.h" 1
 
 
@@ -308,7 +308,7 @@ extern const unsigned short sTSPal[256];
 
 
 extern const unsigned short dayTMMap[2048];
-# 48 "main.c" 2
+# 39 "main.c" 2
 # 1 "health.h" 1
 
 
@@ -317,7 +317,7 @@ void initHealth();
 void updateHealth();
 void drawHealth();
 int healthBarFrames[9][2];
-# 49 "main.c" 2
+# 40 "main.c" 2
 # 1 "bgThreeFront.h" 1
 
 
@@ -327,14 +327,14 @@ int healthBarFrames[9][2];
 
 
 extern const unsigned short bgThreeFrontMap[2048];
-# 50 "main.c" 2
+# 41 "main.c" 2
 # 1 "dialogueFont.h" 1
 # 21 "dialogueFont.h"
 extern const unsigned short dialogueFontTiles[16384];
 
 
 extern const unsigned short dialogueFontPal[256];
-# 51 "main.c" 2
+# 42 "main.c" 2
 # 1 "diaOne.h" 1
 
 
@@ -344,7 +344,7 @@ extern const unsigned short dialogueFontPal[256];
 
 
 extern const unsigned short diaOneMap[1024];
-# 52 "main.c" 2
+# 43 "main.c" 2
 # 1 "diaTwo.h" 1
 
 
@@ -354,7 +354,7 @@ extern const unsigned short diaOneMap[1024];
 
 
 extern const unsigned short diaTwoMap[1024];
-# 53 "main.c" 2
+# 44 "main.c" 2
 # 1 "diaThree.h" 1
 
 
@@ -364,7 +364,7 @@ extern const unsigned short diaTwoMap[1024];
 
 
 extern const unsigned short diaThreeMap[1024];
-# 54 "main.c" 2
+# 45 "main.c" 2
 # 1 "diaFour.h" 1
 
 
@@ -374,7 +374,7 @@ extern const unsigned short diaThreeMap[1024];
 
 
 extern const unsigned short diaFourMap[1024];
-# 55 "main.c" 2
+# 46 "main.c" 2
 # 1 "diaFive.h" 1
 
 
@@ -384,7 +384,7 @@ extern const unsigned short diaFourMap[1024];
 
 
 extern const unsigned short diaFiveMap[1024];
-# 56 "main.c" 2
+# 47 "main.c" 2
 # 1 "diaSix.h" 1
 
 
@@ -394,7 +394,7 @@ extern const unsigned short diaFiveMap[1024];
 
 
 extern const unsigned short diaSixMap[1024];
-# 57 "main.c" 2
+# 48 "main.c" 2
 # 1 "diaSeven.h" 1
 
 
@@ -404,7 +404,7 @@ extern const unsigned short diaSixMap[1024];
 
 
 extern const unsigned short diaSevenMap[1024];
-# 58 "main.c" 2
+# 49 "main.c" 2
 # 1 "diaEight.h" 1
 
 
@@ -414,7 +414,7 @@ extern const unsigned short diaSevenMap[1024];
 
 
 extern const unsigned short diaEightMap[1024];
-# 59 "main.c" 2
+# 50 "main.c" 2
 # 1 "duskTM.h" 1
 
 
@@ -424,7 +424,7 @@ extern const unsigned short diaEightMap[1024];
 
 
 extern const unsigned short duskTMMap[2048];
-# 60 "main.c" 2
+# 51 "main.c" 2
 # 1 "pause.h" 1
 
 
@@ -434,14 +434,14 @@ extern const unsigned short duskTMMap[2048];
 
 
 extern const unsigned short pauseMap[1024];
-# 61 "main.c" 2
+# 52 "main.c" 2
 # 1 "splash1.h" 1
 # 21 "splash1.h"
 extern const unsigned short splash1Bitmap[19200];
 
 
 extern const unsigned short splash1Pal[256];
-# 62 "main.c" 2
+# 53 "main.c" 2
 # 1 "gameInstructions.h" 1
 
 
@@ -451,14 +451,14 @@ extern const unsigned short splash1Pal[256];
 
 
 extern const unsigned short gameInstructionsMap[1024];
-# 63 "main.c" 2
+# 54 "main.c" 2
 # 1 "animaljam.h" 1
 
 
 extern const unsigned int animaljam_sampleRate;
 extern const unsigned int animaljam_length;
 extern const signed char animaljam_data[];
-# 64 "main.c" 2
+# 55 "main.c" 2
 # 1 "digitalSound.h" 1
 
 
@@ -482,7 +482,7 @@ typedef struct{
 
 SOUND soundA;
 SOUND soundB;
-# 65 "main.c" 2
+# 56 "main.c" 2
 # 1 "gameInstructions2.h" 1
 
 
@@ -492,7 +492,7 @@ SOUND soundB;
 
 
 extern const unsigned short gameInstructions2Map[1024];
-# 66 "main.c" 2
+# 57 "main.c" 2
 # 1 "gameInstructions3.h" 1
 
 
@@ -502,14 +502,14 @@ extern const unsigned short gameInstructions2Map[1024];
 
 
 extern const unsigned short gameInstructions3Map[1024];
-# 67 "main.c" 2
+# 58 "main.c" 2
 # 1 "action.h" 1
 
 
 extern const unsigned int action_sampleRate;
 extern const unsigned int action_length;
 extern const signed char action_data[];
-# 68 "main.c" 2
+# 59 "main.c" 2
 # 1 "speakingMan.h" 1
 
 
@@ -519,7 +519,7 @@ extern const signed char action_data[];
 
 
 extern const unsigned short speakingManMap[1024];
-# 69 "main.c" 2
+# 60 "main.c" 2
 # 1 "speakingMan2.h" 1
 
 
@@ -529,35 +529,35 @@ extern const unsigned short speakingManMap[1024];
 
 
 extern const unsigned short speakingMan2Map[1024];
-# 70 "main.c" 2
+# 61 "main.c" 2
 # 1 "largemantiles.h" 1
 # 21 "largemantiles.h"
 extern const unsigned short largemantilesTiles[1024];
 
 
 extern const unsigned short largemantilesPal[256];
-# 71 "main.c" 2
+# 62 "main.c" 2
 # 1 "splashSound.h" 1
 
 
 extern const unsigned int splashSound_sampleRate;
 extern const unsigned int splashSound_length;
 extern const signed char splashSound_data[];
-# 72 "main.c" 2
+# 63 "main.c" 2
 # 1 "splashp1.h" 1
 # 21 "splashp1.h"
 extern const unsigned short splashp1Bitmap[19200];
 
 
 extern const unsigned short splashp1Pal[256];
-# 73 "main.c" 2
+# 64 "main.c" 2
 # 1 "splashp3.h" 1
 # 21 "splashp3.h"
 extern const unsigned short splashp3Bitmap[19200];
 
 
 extern const unsigned short splashp3Pal[256];
-# 74 "main.c" 2
+# 65 "main.c" 2
 # 1 "helper.h" 1
 
 
@@ -570,21 +570,21 @@ u16 currentBlock[4][4];
 u16 originalBlock[4][4];
 void animateTilemapShift();
 unsigned short blendColor(unsigned short c1, unsigned short c2, int t, int max);
-# 75 "main.c" 2
+# 66 "main.c" 2
 # 1 "animateStart.h" 1
 # 21 "animateStart.h"
 extern const unsigned short animateStartBitmap[19200];
 
 
 extern const unsigned short animateStartPal[256];
-# 76 "main.c" 2
+# 67 "main.c" 2
 # 1 "pOAudio.h" 1
 
 
 extern const unsigned int pOAudio_sampleRate;
 extern const unsigned int pOAudio_length;
 extern const signed char pOAudio_data[];
-# 77 "main.c" 2
+# 68 "main.c" 2
 # 1 "loselose.h" 1
 
 
@@ -594,14 +594,14 @@ extern const signed char pOAudio_data[];
 
 
 extern const unsigned short loseloseMap[2048];
-# 78 "main.c" 2
+# 69 "main.c" 2
 # 1 "startPause.h" 1
 # 21 "startPause.h"
 extern const unsigned short startPauseBitmap[19200];
 
 
 extern const unsigned short startPausePal[256];
-# 79 "main.c" 2
+# 70 "main.c" 2
 # 1 "winwin.h" 1
 
 
@@ -611,7 +611,7 @@ extern const unsigned short startPausePal[256];
 
 
 extern const unsigned short winwinMap[2048];
-# 80 "main.c" 2
+# 71 "main.c" 2
 # 1 "bgAnimatedBack.h" 1
 
 
@@ -621,15 +621,58 @@ extern const unsigned short winwinMap[2048];
 
 
 extern const unsigned short bgAnimatedBackMap[2048];
-# 81 "main.c" 2
+# 72 "main.c" 2
 # 90 "main.c"
 static int savedStartX;
 static int savedStartY;
+
+
 int shiftingRight = 1;
 int shiftOffset = 0;
 int shiftTimer = 0;
 static int splashSelection;
 
+
+unsigned short buttons;
+unsigned short oldButtons;
+
+
+typedef enum {
+    SPLASH,
+    START,
+    DIALOGUE,
+    PHASEONE,
+    DIALOGUE2,
+    PHASETWO,
+    DIALOGUE3,
+    PHASETHREE,
+    PAUSE,
+    LOSE,
+    WIN,
+    GAMEINSTRUCTIONS,
+} GameState;
+
+GameState state;
+GameState prevState;
+
+
+int hOff = 0;
+int vOff = 0;
+
+
+int talkedToGuide = 0;
+int begin = 0;
+int startPage = 0;
+int resumingFromPause = 0;
+
+
+u16 originalTiles[4][16];
+int primaryIndices[3] = {13, 14, 15};
+int altIndices[3] = {16, 17, 18};
+
+
+extern SPRITE guide;
+extern SPRITE startPlayer;
 
 
 
@@ -661,42 +704,6 @@ void goToPhaseThreeInstructions();
 void resetPlayerState();
 void mgba_open();
 void resetGameState(void);
-
-
-
-
-extern SPRITE guide;
-extern SPRITE startPlayer;
-unsigned short buttons;
-unsigned short oldButtons;
-
-typedef enum {
-    SPLASH,
-    START,
-    DIALOGUE,
-    PHASEONE,
-    DIALOGUE2,
-    PHASETWO,
-    DIALOGUE3,
-    PHASETHREE,
-    PAUSE,
-    LOSE,
-    WIN,
-    GAMEINSTRUCTIONS,
-} GameState;
-
-GameState state;
-GameState prevState;
-
-int hOff = 0;
-int vOff = 0;
-int talkedToGuide = 0;
-int begin = 0;
-int startPage = 0;
-int resumingFromPause = 0;
-u16 originalTiles[4][16];
-int primaryIndices[3] = {13, 14, 15};
-int altIndices[3] = {16, 17, 18};
 
 
 
@@ -755,7 +762,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToStart();
+    goToPhaseOne();
 }
 
 
@@ -1563,7 +1570,7 @@ void pause() {
     drawFullscreenImage4(startPauseBitmap);
     state = PAUSE;
 
-    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
 
         resumingFromPause = 1;
         switch (prevState) {
@@ -1610,7 +1617,6 @@ void goToLose() {
 
 void lose() {
     hideSprites();
-
 
 
 
@@ -1673,12 +1679,7 @@ void win() {
     hideSprites();
 
 
-
     hOff++;
-
-
-
-
 
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
@@ -1688,7 +1689,6 @@ void win() {
 
     (*(volatile unsigned short*) 0x04000018) = hOff / 4;
     (*(volatile unsigned short*) 0x0400001A) = vOff / 4;
-
 
     updateAnimatedPlayer();
     drawAnimatedPlayer();

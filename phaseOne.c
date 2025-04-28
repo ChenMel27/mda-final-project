@@ -324,7 +324,12 @@ void drawPlayer() {
         } else {
             shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_SMALL | ATTR1_HFLIP;
         }
-        shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFramesCheat[hikerFrame], 14);
+        // If ducking, then change tile
+        if (isDucking) {
+            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(19, 15);
+        } else {
+            shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(hikerFramesCheat[hikerFrame], 14);
+        }
     } else {
         shadowOAM[player.oamIndex].attr0 = ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
         if (player.direction == 0) {
@@ -332,7 +337,6 @@ void drawPlayer() {
         } else {
             shadowOAM[player.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM | ATTR1_HFLIP;
         }
-        
         // If ducking, then change tile
         if (isDucking) {
             shadowOAM[player.oamIndex].attr2 = ATTR2_TILEID(4, 5);

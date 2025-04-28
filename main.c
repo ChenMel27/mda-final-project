@@ -1,6 +1,6 @@
 /******************************************************************************
 File: main.c 
-Project: The Summit Ascent 
+Project: The Summit Ascent
 ******************************************************************************/
 
 /*
@@ -10,15 +10,6 @@ Project: The Summit Ascent
 
     - Start in a town and talk to an experienced villager to gather tips
     - Progress through three side-scrolling phases with obstacles
-
-    Controls:
-        ← → Move
-        ↑ ↓ Climb / Jump / Duck
-        SELECT Pause / Advance dialogue
-
-    Known Bugs:
-        • Sprite flicker on state transitions between modes
-        • Pause isn't working
 */
 
 // ============================= [ INCLUDES ] =============================
@@ -79,23 +70,75 @@ Project: The Summit Ascent
 #include "winwin.h"
 #include "bgAnimatedBack.h"
 
+// ============================= [ DEFINES ] =============================
+
+// Menu options
 #define MENU_START 0
 #define MENU_INSTR 1
+
+// Colors
 #define RED RGB(31, 0, 0)
 #define BLACK RGB(0, 0, 0)
+
+// Helper macros
 #define BG_PRIORITY(n) ((n) & 3)
 #define TILEMAP_WIDTH 64
 
-// save player coordinates
+// ============================= [ GLOBAL VARIABLES ] =============================
+
+// Saved player position when pausing
 static int savedStartX;
 static int savedStartY;
+
+// Splash screen animation
 int shiftingRight = 1;
 int shiftOffset = 0;
 int shiftTimer = 0;
 static int splashSelection;
 
+// Button input tracking
+unsigned short buttons;
+unsigned short oldButtons;
 
-// ============================= [ FUNCTION PROTOTYPES ] =======================
+// Game state enum
+typedef enum {
+    SPLASH,
+    START,
+    DIALOGUE,
+    PHASEONE,
+    DIALOGUE2,
+    PHASETWO,
+    DIALOGUE3,
+    PHASETHREE,
+    PAUSE,
+    LOSE,
+    WIN,
+    GAMEINSTRUCTIONS,
+} GameState;
+
+GameState state;
+GameState prevState;
+
+// Camera offsets
+int hOff = 0;
+int vOff = 0;
+
+// Miscellaneous flags
+int talkedToGuide = 0;
+int begin = 0;
+int startPage = 0;
+int resumingFromPause = 0;
+
+// Tile animation variables
+u16 originalTiles[4][16];
+int primaryIndices[3] = {13, 14, 15};
+int altIndices[3] = {16, 17, 18};
+
+// External sprites
+extern SPRITE guide;
+extern SPRITE startPlayer;
+
+// ============================= [ FUNCTION PROTOTYPES ] =============================
 
 void initialize();
 void goToSplashScreen();
@@ -126,43 +169,7 @@ void resetPlayerState();
 void mgba_open();
 void resetGameState(void);
 
-
-// ============================= [ VARIABLES ] ============================
-
-extern SPRITE guide;
-extern SPRITE startPlayer;
-unsigned short buttons;
-unsigned short oldButtons;
-
-typedef enum {
-    SPLASH,
-    START,
-    DIALOGUE,
-    PHASEONE,
-    DIALOGUE2,
-    PHASETWO,
-    DIALOGUE3,
-    PHASETHREE,
-    PAUSE,
-    LOSE,
-    WIN,
-    GAMEINSTRUCTIONS,
-} GameState;
-
-GameState state;
-GameState prevState;
-
-int hOff = 0;
-int vOff = 0;
-int talkedToGuide = 0;
-int begin = 0;
-int startPage = 0;
-int resumingFromPause = 0;
-u16 originalTiles[4][16];
-int primaryIndices[3] = {13, 14, 15};
-int altIndices[3] = {16, 17, 18};
-
-// ============================= [ ! MAIN GAME STATES ! ] ============================
+// ============================= [ MAIN GAME LOOP ] =============================
 
 int main() {
     initialize();
@@ -219,7 +226,7 @@ int main() {
 void initialize() {
     mgba_open();
     setupSounds();
-    goToStart();
+    goToPhaseOne();
 }
 
 // ============================== [ SPLASH SCREEN SETUP ] =============================
@@ -1075,7 +1082,6 @@ void goToLose() {
 void lose() {
     hideSprites();
 
-
     // Parallax scrolling even while paused
     // Move horizontally if you want (like you do now)
     hOff++;
@@ -1137,13 +1143,8 @@ void win() {
     hideSprites();
 
     // Parallax scrolling even while paused
-    // Move horizontally if you want (like you do now)
     hOff++;
 
-    // Optional: move vertically if you want
-    // vOff++; (only if you want vertical scroll effect)
-
-    // During VBlank (or right after it), update:
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
 
@@ -1152,7 +1153,6 @@ void win() {
 
     REG_BG2HOFF = hOff / 4;
     REG_BG2VOFF = vOff / 4;
-      // Background scrolls slowest (optional, or keep static)
 
     updateAnimatedPlayer();
     drawAnimatedPlayer();
