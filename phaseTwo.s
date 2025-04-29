@@ -81,9 +81,9 @@ updatePlayerTwo:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 16
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L110
+	ldr	r3, .L102
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r4, .L110+4
+	ldr	r4, .L102+4
 	ldrh	fp, [r3]
 	ldr	r2, [r4, #16]
 	lsr	r3, fp, #5
@@ -93,31 +93,31 @@ updatePlayerTwo:
 	andgt	r3, r3, #1
 	mov	r9, #0
 	mvn	lr, fp
-	ldr	r5, [r4, #24]
+	ldr	r7, [r4, #24]
 	sub	sp, sp, #20
-	ldr	r8, .L110+8
+	ldr	r8, .L102+8
 	ldr	ip, [r4, #20]
 	ldr	r10, [r4, #28]
 	cmp	r3, r9
-	add	r3, r5, r2
+	add	r3, r7, r2
 	and	lr, lr, #128
 	str	r3, [sp, #12]
 	sub	r3, r3, #1
 	str	lr, [r8]
-	mov	r7, r0
-	mov	r6, r1
+	mov	r6, r0
+	mov	r5, r1
 	str	r9, [r4, #40]
 	str	r3, [sp, #8]
 	add	lr, r10, ip
-	bne	.L103
-.L38:
+	bne	.L95
+.L37:
 	mov	r3, ip
 	str	r2, [sp]
 .L7:
 	ands	r1, fp, #16
 	bne	.L10
 	ldr	r8, [sp]
-	rsb	r0, r5, #512
+	rsb	r0, r7, #512
 	cmp	r0, r8
 	ble	.L10
 	mov	r8, #1
@@ -127,7 +127,7 @@ updatePlayerTwo:
 	ldr	r1, [sp, #8]
 	str	r8, [r4, #40]
 	add	r1, r9, r1
-	ldr	r8, .L110+12
+	ldr	r8, .L102+12
 	add	r1, r1, lr, lsl #9
 	rsb	lr, lr, lr, lsl #23
 	lsl	ip, ip, #9
@@ -140,7 +140,7 @@ updatePlayerTwo:
 	beq	.L13
 	ldrb	r8, [r1, #-512]	@ zero_extendqisi2
 	cmp	r8, #2
-	bne	.L104
+	bne	.L96
 .L13:
 	add	r0, r0, #1
 	cmp	r0, #4
@@ -163,7 +163,7 @@ updatePlayerTwo:
 	add	r9, r10, r3
 .L16:
 	ldr	r1, [sp, #12]
-	ldr	r0, .L110+12
+	ldr	r0, .L102+12
 	add	r1, r1, r10, lsl #9
 	sub	r1, r1, #1
 	add	r1, r0, r1
@@ -184,40 +184,97 @@ updatePlayerTwo:
 	cmp	ip, r8
 	mov	r10, #1
 	add	r3, r3, #1
-	ble	.L105
+	ble	.L97
 	cmp	r2, #255
 	ble	.L27
 .L30:
 	cmp	r10, #0
 	strne	r3, [r4, #20]
 	mov	r3, #0
-	ldr	r2, .L110+16
+	ldr	r2, .L102+16
 	ldrh	r2, [r2]
 	tst	r2, #64
 	str	r3, [r4, #12]
-	beq	.L25
-	b	.L100
+	beq	.L94
+	tst	fp, #64
+	lsr	r8, r7, #31
+	bne	.L25
+.L33:
+	mvn	r3, #11
+	str	r3, [r4, #12]
+.L25:
+	ldr	r9, .L102+20
+	ldr	r2, [sp, #4]
+	ldr	r3, [r9]
+	cmp	r2, #0
+	add	r3, r3, #1
+	str	r3, [r9]
+	bne	.L98
+	ldr	r2, [sp, #4]
+	ldr	r3, .L102+24
+	str	r2, [r9]
+	str	r2, [r3]
+.L35:
+	add	r7, r8, r7
+	ldr	r3, [sp]
+	asr	r7, r7, #1
+	rsb	r7, r7, #120
+	sub	r7, r3, r7
+	str	r7, [r6]
+	ldr	r3, [r4, #28]
+	add	r3, r3, r3, lsr #31
+	ldr	r2, [r4, #20]
+	asr	r3, r3, #1
+	rsb	r3, r3, #80
+	sub	r3, r2, r3
+	str	r3, [r5]
+	ldr	r3, [r6]
+	bic	r3, r3, r3, asr #31
+	str	r3, [r6]
+	ldr	r3, [r5]
+	bic	r3, r3, r3, asr #31
+	str	r3, [r5]
+	ldr	r3, [r6]
+	cmp	r3, #272
+	movge	r3, #272
+	str	r3, [r6]
+	ldr	r3, [r5]
+	cmp	r3, #96
+	movge	r3, #96
+	str	r3, [r5]
+	ldr	r3, [r4, #16]
+	ldr	r1, [r4, #24]
+	ldr	r2, .L102+28
+	add	r3, r3, r1
+	cmp	r3, r2
+	movgt	r2, #1
+	ldrgt	r3, .L102+32
+	strgt	r2, [r3]
+	add	sp, sp, #20
+	@ sp needed
+	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+	bx	lr
 .L15:
 	cmp	ip, #0
-	bge	.L106
+	bge	.L99
 	mvn	lr, lr
-	ldr	r8, .L110+12
-	add	r0, r2, r8
+	ldr	r9, .L102+12
+	add	r0, r2, r9
 	ldr	r2, [sp, #8]
 	sub	lr, r3, lr
-	add	r8, r8, r2
+	add	r9, r9, r2
 	mov	r2, #0
 	b	.L23
 .L19:
 	ldrb	ip, [r0, r1, lsl #9]	@ zero_extendqisi2
 	cmp	ip, #2
 	beq	.L22
-	ldrb	ip, [r8, r1, lsl #9]	@ zero_extendqisi2
+	ldrb	ip, [r9, r1, lsl #9]	@ zero_extendqisi2
 	cmp	ip, #2
 	beq	.L22
 	cmp	lr, r1
 	mov	r2, #1
-	beq	.L107
+	beq	.L100
 	mov	r3, r1
 .L23:
 	cmp	r3, #0
@@ -227,107 +284,61 @@ updatePlayerTwo:
 	cmp	r2, #0
 	strne	r3, [r4, #20]
 	mov	r3, #0
+	lsr	r8, r7, #31
 	str	r3, [r4, #12]
-.L25:
-	ldr	r8, .L110+20
-	ldr	r2, [sp, #4]
-	ldr	r3, [r8]
-	cmp	r2, #0
-	add	r3, r3, #1
-	str	r3, [r8]
-	bne	.L108
-	ldr	r2, [sp, #4]
-	ldr	r3, .L110+24
-	str	r2, [r8]
-	str	r2, [r3]
-.L36:
-	add	r5, r5, r5, lsr #31
-	ldr	r3, [sp]
-	asr	r5, r5, #1
-	rsb	r5, r5, #120
-	sub	r5, r3, r5
-	str	r5, [r7]
-	ldr	r3, [r4, #28]
-	add	r3, r3, r3, lsr #31
-	ldr	r2, [r4, #20]
-	asr	r3, r3, #1
-	rsb	r3, r3, #80
-	sub	r3, r2, r3
-	str	r3, [r6]
-	ldr	r3, [r7]
-	bic	r3, r3, r3, asr #31
-	str	r3, [r7]
-	ldr	r3, [r6]
-	bic	r3, r3, r3, asr #31
-	str	r3, [r6]
-	ldr	r3, [r7]
-	cmp	r3, #272
-	movge	r3, #272
-	str	r3, [r7]
-	ldr	r3, [r6]
-	cmp	r3, #96
-	movge	r3, #96
-	str	r3, [r6]
-	ldr	r3, [r4, #16]
-	ldr	r1, [r4, #24]
-	ldr	r2, .L110+28
-	add	r3, r3, r1
-	cmp	r3, r2
-	movgt	r2, #1
-	ldrgt	r3, .L110+32
-	strgt	r2, [r3]
-	add	sp, sp, #20
-	@ sp needed
-	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	bx	lr
-.L106:
+	b	.L25
+.L99:
 	add	r9, r10, r3
 	bne	.L16
-	ldr	r3, .L110+12
+	ldr	r1, .L102+12
 	add	r0, r2, r9, lsl #9
-	ldrb	r2, [r0, r3]	@ zero_extendqisi2
+	add	r3, r7, r7, lsr #31
+	add	r3, r0, r3, asr #1
+	ldrb	r3, [r3, r1]	@ zero_extendqisi2
+	ldrb	r2, [r0, r1]	@ zero_extendqisi2
 	cmp	r2, #2
-	lsl	r9, r9, #9
-	beq	.L102
+	cmpne	r3, #2
+	moveq	r3, #1
+	movne	r3, #0
 	ldr	r2, [sp, #8]
-	add	r9, r2, r9
-	ldrb	r3, [r9, r3]	@ zero_extendqisi2
-	cmp	r3, #2
-	bne	.L25
-.L102:
-	ldr	r3, .L110+16
+	add	r9, r2, r9, lsl #9
+	ldrb	r2, [r9, r1]	@ zero_extendqisi2
+	cmp	r2, #2
+	orreq	r3, r3, #1
+	cmp	r3, #0
+	lsr	r8, r7, #31
+	beq	.L25
+	ldr	r3, .L102+16
 	ldrh	r3, [r3]
 	tst	r3, #64
 	beq	.L25
-.L100:
 	tst	fp, #64
-	mvneq	r3, #11
-	streq	r3, [r4, #12]
+	beq	.L33
 	b	.L25
-.L108:
-	ldr	r2, .L110+36
+.L98:
+	ldr	r2, .L102+36
 	ldr	r2, [r2]
 	cmp	r3, r2
-	ble	.L36
-	ldr	r9, .L110+24
-	ldr	r0, [r9]
-	ldr	r3, .L110+40
+	ble	.L35
+	ldr	r10, .L102+24
+	ldr	r0, [r10]
+	ldr	r3, .L102+40
 	ldr	r1, [r4, #48]
 	add	r0, r0, #1
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
-	str	r1, [r9]
-	str	r3, [r8]
-	b	.L36
-.L103:
+	str	r1, [r10]
+	str	r3, [r9]
+	b	.L35
+.L95:
 	mov	r3, #1
 	mov	r1, ip
 	ldr	r0, [r4, #8]
 	sub	r8, lr, ip
 	sub	r9, r2, r0
 	add	r8, r9, r8, lsl #9
-	ldr	r0, .L110+12
+	ldr	r0, .L102+12
 	sub	r8, r8, #512
 	str	r3, [r4, #40]
 	str	r3, [r4, #36]
@@ -344,24 +355,27 @@ updatePlayerTwo:
 	ldr	r9, [sp, #4]
 	ldrb	r9, [r9, r1, lsl #9]	@ zero_extendqisi2
 	cmp	r9, #2
-	bne	.L109
+	bne	.L101
 .L8:
 	sub	r1, r1, #1
 	cmp	r8, r1
 	bne	.L9
-	b	.L38
-.L107:
-	str	lr, [r4, #20]
-	b	.L25
-.L105:
+	b	.L37
+.L97:
 	str	r3, [r4, #20]
+.L94:
+	lsr	r8, r7, #31
 	b	.L25
-.L109:
+.L100:
+	str	lr, [r4, #20]
+	lsr	r8, r7, #31
+	b	.L25
+.L101:
 	ldr	r1, [sp]
 	str	r3, [r4, #20]
 	str	r1, [r4, #16]
 	b	.L7
-.L104:
+.L96:
 	ldr	r1, [sp]
 	add	r1, r1, r9
 	str	r1, [sp]
@@ -371,9 +385,9 @@ updatePlayerTwo:
 	str	r3, [r4, #20]
 	str	r1, [sp, #4]
 	b	.L12
-.L111:
+.L103:
 	.align	2
-.L110:
+.L102:
 	.word	buttons
 	.word	player
 	.word	isDucking
@@ -396,23 +410,23 @@ drawPlayerTwo:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r2, .L133
+	ldr	r2, .L125
 	push	{r4, r5, lr}
 	ldr	ip, [r2, #16]
 	ldr	r0, [r2, #20]
-	ldr	lr, .L133+4
+	ldr	lr, .L125+4
 	add	r3, ip, r0, lsl #9
 	ldrb	r1, [r3, lr]	@ zero_extendqisi2
 	ldr	r3, [r2, #24]
 	cmp	r1, #1
 	add	r3, ip, r3
-	beq	.L113
+	beq	.L105
 	sub	r3, r3, #1
 	lsl	r1, r0, #9
 	add	r1, r3, r1
 	ldrb	r1, [r1, lr]	@ zero_extendqisi2
 	cmp	r1, #1
-	beq	.L113
+	beq	.L105
 	ldr	r1, [r2, #28]
 	add	r1, r0, r1
 	sub	r1, r1, #1
@@ -420,22 +434,22 @@ drawPlayerTwo:
 	ldrb	r4, [r4, lr]	@ zero_extendqisi2
 	cmp	r4, #1
 	lsl	r1, r1, #9
-	beq	.L113
+	beq	.L105
 	add	r3, r3, r1
 	ldrb	r3, [r3, lr]	@ zero_extendqisi2
 	cmp	r3, #1
-	beq	.L113
+	beq	.L105
 	ldr	r3, [r2, #52]
 	cmp	r3, #0
-	beq	.L119
-	ldr	r3, .L133+8
+	beq	.L111
+	ldr	r3, .L125+8
 	ldr	r3, [r3]
-	ldr	r5, .L133+12
+	ldr	r5, .L125+12
 	ldrb	r1, [r2, #56]	@ zero_extendqisi2
 	ldr	lr, [r2, #36]
 	sub	r0, r0, r3
-	ldr	r4, .L133+16
-	ldr	r3, .L133+20
+	ldr	r4, .L125+16
+	ldr	r3, .L125+20
 	ldr	r5, [r5]
 	and	r0, r0, #255
 	lsl	r2, r1, #3
@@ -444,18 +458,18 @@ drawPlayerTwo:
 	strh	r0, [r3, r2]	@ movhi
 	add	r1, r3, r1, lsl #3
 	sub	ip, ip, r5
-	bne	.L120
+	bne	.L112
 	lsl	ip, ip, #23
 	lsr	ip, ip, #23
 	orr	ip, ip, r4
 	strh	ip, [r1, #2]	@ movhi
-.L121:
-	ldr	r1, .L133+24
+.L113:
+	ldr	r1, .L125+24
 	ldr	r1, [r1]
 	cmp	r1, #0
 	movne	r1, #164
-	ldreq	r0, .L133+28
-	ldreq	r1, .L133+32
+	ldreq	r0, .L125+28
+	ldreq	r1, .L125+32
 	ldreq	r0, [r0]
 	ldreq	r1, [r1, r0, lsl #2]
 	addeq	r1, r1, #32
@@ -466,24 +480,24 @@ drawPlayerTwo:
 	strh	r1, [r3, #4]	@ movhi
 	pop	{r4, r5, lr}
 	bx	lr
-.L113:
-	ldr	r1, .L133+36
+.L105:
+	ldr	r1, .L125+36
 	ldr	r3, [r1, #52]
 	cmp	r3, #0
-	ble	.L116
+	ble	.L108
 	mov	r0, #1
 	sub	r3, r3, #1
 	cmp	r3, #0
-	ldr	ip, .L133+40
+	ldr	ip, .L125+40
 	str	r3, [r1, #52]
-	ldreq	r3, .L133+44
+	ldreq	r3, .L125+44
 	str	r0, [ip, #4]
 	streq	r0, [r3]
-.L116:
+.L108:
 	mov	r3, #0
 	mov	r1, #101
-	ldr	ip, .L133+12
-	ldr	r0, .L133+8
+	ldr	ip, .L125+12
+	ldr	r0, .L125+8
 	str	r3, [r2, #16]
 	str	r3, [r2, #12]
 	str	r3, [ip]
@@ -491,22 +505,22 @@ drawPlayerTwo:
 	str	r1, [r2, #20]
 	pop	{r4, r5, lr}
 	bx	lr
-.L119:
+.L111:
 	mov	r2, #1
-	ldr	r3, .L133+44
+	ldr	r3, .L125+44
 	pop	{r4, r5, lr}
 	str	r2, [r3]
 	bx	lr
-.L120:
+.L112:
 	cmp	lr, #1
 	lsleq	ip, ip, #23
 	lsreq	ip, ip, #23
 	orreq	ip, ip, #36864
 	strheq	ip, [r1, #2]	@ movhi
-	b	.L121
-.L134:
+	b	.L113
+.L126:
 	.align	2
-.L133:
+.L125:
 	.word	player
 	.word	bgTwoFrontCMBitmap
 	.word	vOff
@@ -533,32 +547,32 @@ drawSnow:
 	push	{r4, r5, r6, r7, r8, r9, r10, lr}
 	mov	lr, #512
 	mov	r7, #448
-	ldr	r1, .L143
-	ldr	r2, .L143+4
-	ldr	r3, .L143+8
+	ldr	r1, .L135
+	ldr	r2, .L135+4
+	ldr	r3, .L135+8
 	ldr	r4, [r1]
 	ldr	r5, [r2]
-	ldr	r0, .L143+12
-	ldr	r6, .L143+16
+	ldr	r0, .L135+12
+	ldr	r6, .L135+16
 	add	ip, r3, #180
-.L140:
+.L132:
 	ldr	r2, [r3, #52]
 	cmp	r2, #0
 	ldrb	r2, [r3, #56]	@ zero_extendqisi2
 	lsl	r9, r2, #3
 	moveq	r2, r9
 	strheq	lr, [r0, r2]	@ movhi
-	beq	.L137
+	beq	.L129
 	ldr	r1, [r3, #16]
 	sub	r1, r1, r4
 	add	r8, r1, #16
 	cmp	r8, #256
-	bhi	.L138
+	bhi	.L130
 	ldr	r8, [r3, #20]
 	sub	r8, r8, r5
 	add	r10, r8, #16
 	cmp	r10, #176
-	bhi	.L138
+	bhi	.L130
 	and	r1, r1, r6
 	add	r9, r0, r2, lsl #3
 	and	r8, r8, #255
@@ -567,18 +581,18 @@ drawSnow:
 	strh	r1, [r9, #2]	@ movhi
 	strh	r7, [r9, #4]	@ movhi
 	strh	r8, [r0, r2]	@ movhi
-.L137:
+.L129:
 	add	r3, r3, #60
 	cmp	r3, ip
-	bne	.L140
+	bne	.L132
 	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
 	bx	lr
-.L138:
+.L130:
 	strh	lr, [r0, r9]	@ movhi
-	b	.L137
-.L144:
+	b	.L129
+.L136:
 	.align	2
-.L143:
+.L135:
 	.word	hOff
 	.word	vOff
 	.word	snows
@@ -596,29 +610,29 @@ resetSnow:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r6, .L147
+	ldr	r6, .L139
 	mov	r4, r0
 	mov	lr, pc
 	bx	r6
-	ldr	r3, .L147+4
+	ldr	r3, .L139+4
 	smull	r2, r3, r0, r3
 	add	r2, r3, r0
 	asr	r3, r0, #31
 	rsb	r3, r3, r2, asr #7
-	ldr	r2, .L147+8
-	ldr	r1, .L147+12
+	ldr	r2, .L139+8
+	ldr	r1, .L139+12
 	ldr	r2, [r2]
 	rsb	r3, r3, r3, lsl #3
 	sub	r0, r0, r3, lsl #5
 	rsb	r4, r4, r4, lsl #4
 	add	r4, r1, r4, lsl #2
-	ldr	r3, .L147+16
+	ldr	r3, .L139+16
 	add	r0, r0, r2
 	str	r0, [r4, #16]
 	ldr	r5, [r3]
 	mov	lr, pc
 	bx	r6
-	ldr	r3, .L147+20
+	ldr	r3, .L139+20
 	smull	r1, r2, r3, r0
 	asr	r3, r0, #31
 	rsb	r3, r3, r2, asr #2
@@ -629,9 +643,9 @@ resetSnow:
 	str	r0, [r4, #20]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L148:
+.L140:
 	.align	2
-.L147:
+.L139:
 	.word	rand
 	.word	-1840700269
 	.word	hOff
@@ -650,15 +664,15 @@ initSnow:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, lr}
-	ldr	r0, .L153
-	ldr	r3, .L153+4
+	ldr	r0, .L145
+	ldr	r3, .L145+4
 	mov	lr, pc
 	bx	r3
 	mov	r5, #0
 	mov	r7, #16
 	mov	r6, #1
-	ldr	r4, .L153+8
-.L150:
+	ldr	r4, .L145+8
+.L142:
 	add	r3, r5, #120
 	mov	r0, r5
 	add	r5, r5, #1
@@ -670,12 +684,12 @@ initSnow:
 	bl	resetSnow
 	cmp	r5, #3
 	add	r4, r4, #60
-	bne	.L150
+	bne	.L142
 	pop	{r4, r5, r6, r7, r8, lr}
 	bx	lr
-.L154:
+.L146:
 	.align	2
-.L153:
+.L145:
 	.word	1234
 	.word	srand
 	.word	snows
@@ -692,18 +706,18 @@ updateSnow:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	mov	r5, #0
-	ldr	r4, .L164
-	ldr	r6, .L164+4
-	ldr	r7, .L164+8
-	ldr	r9, .L164+12
-	ldr	fp, .L164+16
-	ldr	r8, .L164+20
-	ldr	r10, .L164+24
+	ldr	r4, .L156
+	ldr	r6, .L156+4
+	ldr	r7, .L156+8
+	ldr	r9, .L156+12
+	ldr	fp, .L156+16
+	ldr	r8, .L156+20
+	ldr	r10, .L156+24
 	sub	sp, sp, #20
-.L161:
+.L153:
 	ldr	r3, [r4, #52]
 	cmp	r3, #0
-	beq	.L157
+	beq	.L149
 	mov	r3, #16
 	add	r2, r6, #24
 	ldm	r2, {r2, ip}
@@ -722,7 +736,7 @@ updateSnow:
 	mov	lr, pc
 	bx	r7
 	cmp	r0, #0
-	beq	.L158
+	beq	.L150
 	mov	r3, #0
 	mov	r1, #1
 	mov	ip, #101
@@ -730,7 +744,7 @@ updateSnow:
 	sub	r2, r2, #1
 	cmp	r2, r3
 	str	r2, [r8, #52]
-	ldreq	r2, .L164+28
+	ldreq	r2, .L156+28
 	mov	r0, r5
 	str	r1, [fp, #4]
 	streq	r1, [r2]
@@ -740,27 +754,27 @@ updateSnow:
 	str	r3, [r10]
 	str	r3, [r9]
 	bl	resetSnow
-.L157:
+.L149:
 	add	r5, r5, #1
 	cmp	r5, #3
 	add	r4, r4, #60
-	bne	.L161
+	bne	.L153
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L158:
+.L150:
 	ldr	r3, [r9]
 	ldr	r2, [r4, #20]
 	add	r3, r3, #160
 	cmp	r2, r3
-	ble	.L157
+	ble	.L149
 	mov	r0, r5
 	bl	resetSnow
-	b	.L157
-.L165:
+	b	.L149
+.L157:
 	.align	2
-.L164:
+.L156:
 	.word	snows
 	.word	player
 	.word	collision
@@ -781,13 +795,13 @@ colorAtTwo:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r3, .L167
+	ldr	r3, .L159
 	add	r0, r0, r1, lsl #9
 	ldrb	r0, [r3, r0]	@ zero_extendqisi2
 	bx	lr
-.L168:
+.L160:
 	.align	2
-.L167:
+.L159:
 	.word	bgTwoFrontCMBitmap
 	.size	colorAtTwo, .-colorAtTwo
 	.comm	soundB,24,4

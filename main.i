@@ -23,12 +23,12 @@ typedef unsigned long long u64;
 
 
 extern volatile unsigned short *videoBuffer;
-# 37 "gba.h"
+# 48 "gba.h"
 void waitForVBlank();
 
 
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 69 "gba.h"
+# 80 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -40,7 +40,7 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 103 "gba.h"
+# 114 "gba.h"
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 18 "main.c" 2
 # 1 "mode0.h" 1
@@ -221,7 +221,7 @@ int winPhaseTwo;
 int playSound;
 # 28 "main.c" 2
 # 1 "phaseThree.h" 1
-# 21 "phaseThree.h"
+# 19 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
@@ -237,7 +237,7 @@ void initSnowThree();
 void updateSnowThree();
 void drawSnowThree();
 void resetSnowThree(int i);
-# 46 "phaseThree.h"
+# 44 "phaseThree.h"
 SPRITE snows[3];
 # 29 "main.c" 2
 # 1 "start.h" 1
@@ -498,6 +498,8 @@ typedef struct{
 
 SOUND soundA;
 SOUND soundB;
+
+void interruptHandler();
 # 56 "main.c" 2
 # 1 "gameInstructions2.h" 1
 
@@ -645,63 +647,56 @@ extern const unsigned int click_sampleRate;
 extern const unsigned int click_length;
 extern const signed char click_data[];
 # 73 "main.c" 2
-# 1 "fortnite.h" 1
-
-
-extern const unsigned int fortnite_sampleRate;
-extern const unsigned int fortnite_length;
-extern const signed char fortnite_data[];
-# 74 "main.c" 2
 # 1 "phaseoneaudio.h" 1
 
 
 extern const unsigned int phaseoneaudio_sampleRate;
 extern const unsigned int phaseoneaudio_length;
 extern const signed char phaseoneaudio_data[];
-# 75 "main.c" 2
+# 74 "main.c" 2
 # 1 "phasetwoaudio.h" 1
 
 
 extern const unsigned int phasetwoaudio_sampleRate;
 extern const unsigned int phasetwoaudio_length;
 extern const signed char phasetwoaudio_data[];
-# 76 "main.c" 2
+# 75 "main.c" 2
 # 1 "phasethreeaudio.h" 1
 
 
 extern const unsigned int phasethreeaudio_sampleRate;
 extern const unsigned int phasethreeaudio_length;
 extern const signed char phasethreeaudio_data[];
-# 77 "main.c" 2
+# 76 "main.c" 2
 # 1 "winaudio.h" 1
 
 
 extern const unsigned int winaudio_sampleRate;
 extern const unsigned int winaudio_length;
 extern const signed char winaudio_data[];
-# 78 "main.c" 2
+# 77 "main.c" 2
 # 1 "loseaudio.h" 1
 
 
 extern const unsigned int loseaudio_sampleRate;
 extern const unsigned int loseaudio_length;
 extern const signed char loseaudio_data[];
-# 79 "main.c" 2
+# 78 "main.c" 2
 # 1 "falling.h" 1
 
 
 extern const unsigned int falling_sampleRate;
 extern const unsigned int falling_length;
 extern const signed char falling_data[];
-# 80 "main.c" 2
+# 79 "main.c" 2
 # 1 "healthaudio.h" 1
 
 
 extern const unsigned int healthaudio_sampleRate;
 extern const unsigned int healthaudio_length;
 extern const signed char healthaudio_data[];
-# 81 "main.c" 2
-# 103 "main.c"
+# 80 "main.c" 2
+# 102 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -850,12 +845,18 @@ int main() {
     }
 }
 
-
 void initialize() {
     mgba_open();
     stopSounds();
     setupSounds();
-    goToPhaseOne();
+
+
+    (*(volatile unsigned short*)0x4000004) |= (1 << 3);
+    (*(volatile unsigned short*)0x4000200) |= (1 << 0);
+    *((void (**)())0x3007FFC) = interruptHandler;
+    (*(volatile unsigned short*)0x4000208) = 1;
+
+    goToSplashScreen();
 }
 
 
@@ -1049,7 +1050,7 @@ void goToStart() {
 
 
 void goToStartTwo() {
-    stopSounds();
+    unpauseSounds();
     resumingFromPause = 0;
 
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
@@ -1080,7 +1081,7 @@ void goToStartTwo() {
 
 
 void goToStartThree() {
-    stopSounds();
+    unpauseSounds();
     resumingFromPause = 0;
 
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
@@ -1099,9 +1100,6 @@ void goToStartThree() {
 
     hOff = 0;
     vOff = (256 - 160);
-
-    playSoundA(animaljam_data, animaljam_length, 1);
-
     state = START;
 }
 
@@ -1141,6 +1139,7 @@ void start() {
 
 
     if (checkPlayerGuideCollision()) {
+        pauseSounds();
         goToStartInstructions();
     }
 
@@ -1166,7 +1165,7 @@ void start() {
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
-        stopSounds();
+        pauseSounds();
         goToPause();
         return;
     }
@@ -1253,9 +1252,6 @@ void startInstructions() {
 
 
 void goToPhaseOne() {
-    stopSounds();
-    playSoundA(phasetwoaudio_data, phasetwoaudio_length, 1);
-
 
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
@@ -1287,6 +1283,8 @@ void goToPhaseOne() {
         initHealth();
     }
     resumingFromPause = 0;
+
+    playSoundA(phasetwoaudio_data, phasetwoaudio_length, 0);
 
 
     hOff = 0;
@@ -1552,6 +1550,9 @@ void phaseTwo() {
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
     if (playSound) {
+        soundB.isPlaying = 0;
+        *(volatile unsigned short*)0x4000106 = (0<<7);
+        ((DMAChannel*)0x040000B0)[2].ctrl = 0;
         playSoundB(healthaudio_data, healthaudio_length, 0);
         playSound = 0;
     }
@@ -1579,7 +1580,7 @@ void goToPhaseThreeInstructions() {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
 
     stopSounds();
-    playSoundA(fortnite_data, fortnite_length, 0);
+    playSoundA(winaudio_data, winaudio_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);

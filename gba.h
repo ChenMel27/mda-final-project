@@ -30,6 +30,17 @@ extern volatile unsigned short *videoBuffer;
 #define BG_ENABLE(x) (1 << (8 + (x % 4))) // Enables specified background (REG_DISPCTL)
 #define SPRITE_ENABLE (1 << 12) // Enable sprites (REG_DISPCTL)
 
+
+#define REG_DISPSTAT (*(volatile unsigned short*)0x4000004)
+#define REG_IE       (*(volatile unsigned short*)0x4000200)
+#define REG_IF       (*(volatile unsigned short*)0x4000202)
+#define REG_IME      (*(volatile unsigned short*)0x4000208)
+#define REG_INTERRUPT ((void (**)())0x3007FFC)
+
+#define IRQ_VBLANK  (1 << 0)
+#define DISPSTAT_VBLANK_IRQ (1 << 3)
+
+
 // Read-only, holds which scanline is being drawn
 #define REG_VCOUNT (*(volatile unsigned short *)0x4000006)
 

@@ -1120,12 +1120,17 @@ void updatePlayerTwo(int* hOff, int* vOff) {
             }
         }
     } else {
-
         bottomY = player.worldY + player.height - 1;
-        if (colorAtTwo(leftX, bottomY + 1) == 0x02 || colorAtTwo(rightX, bottomY + 1) == 0x02) {
+
+        int groundedFarLeft = colorAtTwo(leftX, bottomY + 1) == 0x02;
+        int groundedMiddle = colorAtTwo(leftX + player.width / 2, bottomY + 1) == 0x02;
+        int groundedFarRight = colorAtTwo(rightX, bottomY + 1) == 0x02;
+
+        if (groundedFarLeft || groundedMiddle || groundedFarRight) {
             grounded = 1;
         }
     }
+
 
 
     if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && grounded) {

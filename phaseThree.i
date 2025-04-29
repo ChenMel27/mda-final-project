@@ -128,7 +128,7 @@ typedef struct {
 } SPRITE;
 # 6 "phaseThree.c" 2
 # 1 "phaseThree.h" 1
-# 21 "phaseThree.h"
+# 19 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
@@ -144,7 +144,7 @@ void initSnowThree();
 void updateSnowThree();
 void drawSnowThree();
 void resetSnowThree(int i);
-# 46 "phaseThree.h"
+# 44 "phaseThree.h"
 SPRITE snows[3];
 # 7 "phaseThree.c" 2
 # 1 "player.h" 1
@@ -1341,7 +1341,7 @@ void updateSnowThree() {
             if (health.active == 0) gameOver = 1;
 
 
-            player.worldX = 0;
+            player.worldX = 20;
             player.worldY = 101;
             player.yVel = 0;
             hOff = 0;

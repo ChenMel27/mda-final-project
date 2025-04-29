@@ -991,9 +991,9 @@ updateSnowThree:
 	ldr	r6, .L192+4
 	ldr	r7, .L192+8
 	ldr	r8, .L192+12
-	ldr	fp, .L192+16
-	ldr	r10, .L192+20
-	ldr	r9, .L192+24
+	ldr	r10, .L192+16
+	ldr	r9, .L192+20
+	ldr	fp, .L192+24
 	sub	sp, sp, #20
 .L187:
 	ldr	r3, [r4, #52]
@@ -1033,28 +1033,29 @@ updateSnowThree:
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
 .L190:
-	mov	r0, r10
-	ldr	r1, [fp]
+	mov	r0, r9
+	ldr	r1, [r10]
 	mov	r2, #0
 	mov	lr, pc
-	bx	r9
-	mov	r3, #0
+	bx	fp
+	mov	r2, #0
 	ldr	r1, .L192+28
-	ldr	r2, [r1, #52]
-	sub	r2, r2, #1
-	cmp	r2, r3
-	str	r2, [r1, #52]
-	mov	ip, #101
+	ldr	r3, [r1, #52]
+	sub	r3, r3, #1
+	cmp	r3, r2
+	str	r3, [r1, #52]
 	moveq	r1, #1
-	ldr	lr, .L192+32
-	ldreq	r2, .L192+36
+	mov	lr, #20
+	mov	ip, #101
+	ldreq	r3, .L192+32
+	streq	r1, [r3]
+	ldr	r3, .L192+36
 	mov	r0, r5
-	streq	r1, [r2]
-	str	r3, [r6, #16]
+	str	lr, [r6, #16]
 	str	ip, [r6, #20]
-	str	r3, [r6, #12]
-	str	r3, [lr]
-	str	r3, [r8]
+	str	r2, [r6, #12]
+	str	r2, [r3]
+	str	r2, [r8]
 	bl	resetSnowThree
 	b	.L183
 .L191:
@@ -1072,8 +1073,8 @@ updateSnowThree:
 	.word	healthaudio_data
 	.word	playSoundB
 	.word	health
-	.word	hOff
 	.word	gameOver
+	.word	hOff
 	.size	updateSnowThree, .-updateSnowThree
 	.global	secondsElapsed
 	.comm	soundB,24,4

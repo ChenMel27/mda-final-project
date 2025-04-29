@@ -77,6 +77,7 @@
 #include "loseaudio.h"
 #include "falling.h"
 #include "healthaudio.h"
+#include "fortnite.h"
 
 // ============================= [ DEFINES ] =============================
 
@@ -247,12 +248,18 @@ int main() {
     }
 }
 
-
 void initialize() {
     mgba_open();
     stopSounds();
     setupSounds();
-    goToPhaseOne();
+
+    // Set up VBlank interrupt
+    REG_DISPSTAT |= DISPSTAT_VBLANK_IRQ;
+    REG_IE |= IRQ_VBLANK;
+    *REG_INTERRUPT = interruptHandler;
+    REG_IME = 1;
+
+    goToSplashScreen();
 }
 
 // ============================== [ SPLASH SCREEN ] ==============================
@@ -446,7 +453,7 @@ void goToStart() {
 
 // Initialize the Start Phase after first dialogue
 void goToStartTwo() {
-    stopSounds();
+    unpauseSounds();
     resumingFromPause = 0;
 
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
@@ -477,7 +484,7 @@ void goToStartTwo() {
 
 // Initialize Start Phase after returning from Pause
 void goToStartThree() {
-    stopSounds();
+    unpauseSounds();
     resumingFromPause = 0;
 
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
@@ -496,9 +503,6 @@ void goToStartThree() {
 
     hOff = 0;
     vOff = MAX_VOFF;
-
-    playSoundA(animaljam_data, animaljam_length, 1);
-
     state = START;
 }
 
@@ -538,6 +542,7 @@ void start() {
 
     // Check collision with guide to trigger dialogue
     if (checkPlayerGuideCollision()) {
+        pauseSounds();
         goToStartInstructions();
     }
 
@@ -563,7 +568,7 @@ void start() {
         savedStartX = startPlayer.worldX;
         savedStartY = startPlayer.worldY;
         prevState = state;
-        stopSounds();
+        pauseSounds();
         goToPause();
         return;
     }
@@ -650,9 +655,6 @@ void startInstructions() {
 
 // Transition to Phase One (first climbing area)
 void goToPhaseOne() {
-    stopSounds();
-    playSoundA(phasetwoaudio_data, phasetwoaudio_length, 1);
-
     // Setup Mode 0 with backgrounds and sprites
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
@@ -684,6 +686,8 @@ void goToPhaseOne() {
         initHealth();
     }
     resumingFromPause = 0;
+
+    playSoundA(phasetwoaudio_data, phasetwoaudio_length, 0);
 
     // Reset camera offsets
     hOff = 0;
@@ -866,7 +870,7 @@ void goToPhaseTwoInstructions() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1);
 
     stopSounds();
-    playSoundA(winaudio_data, winaudio_length, 0);
+    playSoundA(fortnite_data, fortnite_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
@@ -949,6 +953,9 @@ void phaseTwo() {
     DMANow(3, shadowOAM, OAM, 512);
 
     if (playSound) {
+        soundB.isPlaying = 0;
+        REG_TM1CNT = TIMER_OFF;
+        DMA[2].ctrl = 0;
         playSoundB(healthaudio_data, healthaudio_length, 0);
         playSound = 0;
     }
@@ -976,7 +983,7 @@ void goToPhaseThreeInstructions() {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1);
 
     stopSounds();
-    playSoundA(winaudio_data, winaudio_length, 0);
+    playSoundA(fortnite_data, fortnite_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);

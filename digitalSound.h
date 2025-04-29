@@ -58,4 +58,6 @@ typedef struct{
 SOUND soundA;
 SOUND soundB;
 
+void interruptHandler();
+
 #endif

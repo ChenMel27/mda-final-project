@@ -22,12 +22,12 @@ typedef unsigned long long u64;
 
 
 extern volatile unsigned short *videoBuffer;
-# 37 "gba.h"
+# 48 "gba.h"
 void waitForVBlank();
 
 
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 69 "gba.h"
+# 80 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -39,7 +39,7 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 103 "gba.h"
+# 114 "gba.h"
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 2 "digitalSound.c" 2
 # 1 "digitalSound.h" 1
@@ -65,13 +65,14 @@ typedef struct{
 
 SOUND soundA;
 SOUND soundB;
+
+void interruptHandler();
 # 3 "digitalSound.c" 2
 
 void setupSounds() {
-
     *(volatile u16 *)0x04000084 = (1<<7);
 
- *(volatile u16*)0x04000082 = (1<<1) |
+    *(volatile u16*)0x04000082 = (1<<1) |
                      (1<<2) |
                      (3<<8) |
                      (0<<10) |
@@ -81,13 +82,12 @@ void setupSounds() {
                      (1<<14) |
                      (1<<15);
 
- *(u16*)0x04000080 = 0;
-
+    *(u16*)0x04000080 = 0;
 }
 
 void playSoundA(const signed char* data, int dataLength, int looping) {
 
-
+    ((DMAChannel*)0x040000B0)[1].ctrl = 0;
     DMANow(1, (volatile void*) data, (u16*)0x040000A0, (2 << 21) | (3 << 28) | (1 << 25) | (1 << 26));
 
 
@@ -103,11 +103,9 @@ void playSoundA(const signed char* data, int dataLength, int looping) {
     soundA.isPlaying = 1;
     soundA.durationInVBlanks = ((59.727) * dataLength) / 11025;
     soundA.vBlankCount = 0;
-
 }
 
 void playSoundB(const signed char* data, int dataLength, int looping) {
-
 
     ((DMAChannel*)0x040000B0)[2].ctrl = 0;
     DMANow(2, (volatile void*) data, (u16*)0x040000A4, (2 << 21) | (3 << 28) | (1 << 25) | (1 << 26));
@@ -125,7 +123,35 @@ void playSoundB(const signed char* data, int dataLength, int looping) {
     soundB.isPlaying = 1;
     soundB.durationInVBlanks = ((59.727) * dataLength) / 11025;
     soundB.vBlankCount = 0;
+}
 
+
+void soundUpdate() {
+    if (soundA.isPlaying) {
+        soundA.vBlankCount++;
+        if (soundA.vBlankCount > soundA.durationInVBlanks) {
+            if (soundA.looping) {
+                playSoundA(soundA.data, soundA.dataLength, 1);
+            } else {
+                ((DMAChannel*)0x040000B0)[1].ctrl = 0;
+                *(volatile unsigned short*)0x4000102 = (0<<7);
+                soundA.isPlaying = 0;
+            }
+        }
+    }
+
+    if (soundB.isPlaying) {
+        soundB.vBlankCount++;
+        if (soundB.vBlankCount > soundB.durationInVBlanks) {
+            if (soundB.looping) {
+                playSoundB(soundB.data, soundB.dataLength, 1);
+            } else {
+                ((DMAChannel*)0x040000B0)[2].ctrl = 0;
+                *(volatile unsigned short*)0x4000106 = (0<<7);
+                soundB.isPlaying = 0;
+            }
+        }
+    }
 }
 
 void pauseSounds() {
@@ -133,7 +159,6 @@ void pauseSounds() {
     *(volatile unsigned short*)0x4000102 = (0<<7);
     soundB.isPlaying = 0;
     *(volatile unsigned short*)0x4000106 = (0<<7);
-
 }
 
 void unpauseSounds() {
@@ -141,15 +166,21 @@ void unpauseSounds() {
     *(volatile unsigned short*)0x4000102 = (1<<7);
     soundB.isPlaying = 1;
     *(volatile unsigned short*)0x4000106 = (1<<7);
-
 }
 
 void stopSounds() {
     soundA.isPlaying = 0;
     *(volatile unsigned short*)0x4000102 = (0<<7);
     ((DMAChannel*)0x040000B0)[1].ctrl = 0;
+
     soundB.isPlaying = 0;
     *(volatile unsigned short*)0x4000106 = (0<<7);
     ((DMAChannel*)0x040000B0)[2].ctrl = 0;
+}
 
+void interruptHandler() {
+    if ((*(volatile unsigned short*)0x4000202) & (1 << 0)) {
+        soundUpdate();
+        (*(volatile unsigned short*)0x4000202) = (1 << 0);
+    }
 }
