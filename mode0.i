@@ -46,7 +46,7 @@ typedef volatile struct {
 # 103 "gba.h"
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 5 "mode0.h" 2
-# 32 "mode0.h"
+# 51 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;

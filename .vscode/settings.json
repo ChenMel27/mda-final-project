@@ -25,7 +25,6 @@
         "startphaseplayer.h": "c",
         "phaseoneplayer.h": "c",
         "bgone.h": "c",
-        "startinstructions.h": "c",
         "splashscreen.h": "c",
         "phasethree.h": "c",
         "phasetwo.h": "c",

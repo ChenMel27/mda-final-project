@@ -8,6 +8,7 @@
 #include "health.h"
 #include "digitalSound.h"
 #include "healthaudio.h"
+#include <stdlib.h>
 
 // Update movement every 4 frames when in slow mode (on top of snow)
 #define SLOW_DELAY 4

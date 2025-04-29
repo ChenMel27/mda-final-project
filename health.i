@@ -104,7 +104,7 @@ struct oam_attrs {
   struct attr0 attr0;
   struct attr1 attr1;
 };
-# 93 "sprites.h"
+# 94 "sprites.h"
 void hideSprites();
 
 

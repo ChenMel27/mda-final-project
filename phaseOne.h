@@ -28,6 +28,7 @@ void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
 void drawPlayer();
 void resetPlayerState();
+void cyclePaletteColors(void);
 
 typedef enum {
     PLAYER_NORMAL,

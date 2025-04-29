@@ -94,8 +94,6 @@ void updatePlayer(int* hOff, int* vOff) {
     }
     
     // Horizontal
-    int leftX = player.worldX;
-    int rightX = player.worldX + player.width - 1;
     int topY = player.worldY;
     int bottomY = player.worldY + player.height - 1;
 
@@ -135,9 +133,7 @@ void updatePlayer(int* hOff, int* vOff) {
             }
         }
     }
-
     
-
     // Gravity + vertical movement for jumping
     int grounded = 0;
 

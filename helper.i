@@ -49,13 +49,14 @@ void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int c
 
 
 
+
 u16 currentBlock[4][4];
 u16 originalBlock[4][4];
 void animateTilemapShift();
 unsigned short blendColor(unsigned short c1, unsigned short c2, int t, int max);
 # 3 "helper.c" 2
 # 1 "mode0.h" 1
-# 32 "mode0.h"
+# 51 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;
