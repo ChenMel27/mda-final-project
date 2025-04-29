@@ -191,6 +191,7 @@ int isDucking;
 int gameOver;
 int winPhaseOne;
 int movedHorizontally;
+int playHealth;
 
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);
@@ -1430,6 +1431,13 @@ void phaseOne() {
     drawPlayer();
     drawHealth();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
+
+
+    if (playHealth) {
+        playSoundB(healthaudio_data, healthaudio_length, 0);
+        playHealth = 0;
+    }
+
 
 
     if (gameOver) {

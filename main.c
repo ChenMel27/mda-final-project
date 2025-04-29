@@ -831,6 +831,12 @@ void phaseOne() {
     drawHealth();
     DMANow(3, shadowOAM, OAM, 512);
 
+    // After updating and drawing player, etc.
+    if (playHealth) {
+        playSoundB(healthaudio_data, healthaudio_length, 0);
+        playHealth = 0; // Reset flag after playing
+    }
+
     // Handle game over condition
     if (gameOver) {
         goToLose();
@@ -936,6 +942,11 @@ void phaseTwo() {
     drawSnow();
     drawHealth();
     DMANow(3, shadowOAM, OAM, 512);
+
+    if (playSound) {
+        playSoundB(healthaudio_data, healthaudio_length, 0);
+        playSound = 0;
+    }
     
     if (gameOver) {
         goToLose();

@@ -23,6 +23,7 @@ int isDucking;
 int gameOver;
 int winPhaseOne;
 int movedHorizontally;
+int playHealth;
 
 void initPlayer();
 void updatePlayer(int* hOff, int* vOff);

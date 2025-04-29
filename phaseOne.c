@@ -21,6 +21,7 @@ int fallingY;
 const int fallSpeed = 3;
 extern int cheatOn;
 int playerSubPixelX = 0;
+int playHealth = 0;
 
 // global var
 int hikerFrameDelay = 4;
@@ -226,7 +227,7 @@ void drawPlayer() {
     colorAt(rightX, bottomY) == 0x05) {
 
     if (health.active > 0) {
-    playSoundB(healthaudio_data, healthaudio_length, 0);
+    playHealth = 1;
         health.active--;
         if (health.active == 0) {
             gameOver = 1;
@@ -250,7 +251,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x06) {
         
         if (health.active > 0) {
-            playSoundB(healthaudio_data, healthaudio_length, 0);
+            playHealth = 1;
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
@@ -272,7 +273,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x07) {
         
         if (health.active > 0) {
-            playSoundB(healthaudio_data, healthaudio_length, 0);
+            playHealth = 1;
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;
@@ -294,7 +295,7 @@ void drawPlayer() {
         colorAt(rightX, bottomY) == 0x08) {
         
         if (health.active > 0) {
-            playSoundB(healthaudio_data, healthaudio_length, 0);
+            playHealth = 1;
             health.active--;
             if (health.active == 0) {
                 gameOver = 1;

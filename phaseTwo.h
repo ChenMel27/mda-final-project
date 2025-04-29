@@ -34,3 +34,4 @@ void initSnow();
 void updateSnow();
 void drawSnow();
 int winPhaseTwo;
+int playSound;

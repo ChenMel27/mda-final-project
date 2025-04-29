@@ -26,6 +26,7 @@ extern int gameOver;
 int winPhaseTwo = 0;
 extern SPRITE player;
 extern SPRITE health;
+int playSound = 0;
 
 void initPlayerTwo() {
     player.worldX = 0;
@@ -181,7 +182,7 @@ void drawPlayerTwo() {
         // Lose a life
         if (health.active > 0) {
             health.active--;
-            playSoundB(healthaudio_data, healthaudio_length, 0);
+            playSound = 1;
             // If no lives, go to lose
             if (health.active == 0) {
                 gameOver = 1;
@@ -244,7 +245,7 @@ void updateSnow() {
         // collision with snow
         if (collision(snows[i].worldX, snows[i].worldY, SNOW_WIDTH, SNOW_HEIGHT,
             player.worldX,   player.worldY,   player.width,   player.height)) {
-            playSoundB(healthaudio_data, healthaudio_length, 0);
+            playSound = 1;
             health.active--;
             // Lose if no more health
             if (health.active == 0) gameOver = 1;
