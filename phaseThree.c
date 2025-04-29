@@ -8,6 +8,7 @@
 #include "health.h"
 #include "digitalSound.h"
 #include "healthaudio.h"
+#include "bgThreeFrontCMCheat.h"
 #include <stdlib.h>
 
 // Update movement every 4 frames when in slow mode (on top of snow)
@@ -103,76 +104,150 @@ void updatePlayerThree(int* hOff, int* vOff) {
     isDucking = BUTTON_HELD(BUTTON_DOWN);
 
     // Horizontal
-    if (updateMovement) {
-        if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
-            player.isAnimating = 1;
-            player.direction = 1;
-            for (int step = 0; step <= 3; step++) {
-                if ((colorAtThree(leftX - player.xVel, topY - step) != 0x01) &&
-                    (colorAtThree(leftX - player.xVel, bottomY - step) != 0x01)) {
-                    player.worldX -= player.xVel;
-                    player.worldY -= (step > 0) ? (step - 1) : 0;
-                    break;
+    if (!leftWallTouched) {
+        if (updateMovement) {
+            if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
+                player.isAnimating = 1;
+                player.direction = 1;
+                for (int step = 0; step <= 3; step++) {
+                    if ((colorAtThree(leftX - player.xVel, topY - step) != 0x01) &&
+                        (colorAtThree(leftX - player.xVel, bottomY - step) != 0x01)) {
+                        player.worldX -= player.xVel;
+                        player.worldY -= (step > 0) ? (step - 1) : 0;
+                        break;
+                    }
+                }
+            }
+    
+            if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH - player.width) {
+                player.isAnimating = 1;
+                player.direction = 0;
+                for (int step = 0; step <= 3; step++) {
+                    if ((colorAtThree(rightX + player.xVel, topY - step) != 0x01) &&
+                        (colorAtThree(rightX + player.xVel, bottomY - step) != 0x01)) {
+                        player.worldX += player.xVel;
+                        player.worldY -= step;
+                        break;
+                    }
                 }
             }
         }
-
-        if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH - player.width) {
-            player.isAnimating = 1;
-            player.direction = 0;
-            for (int step = 0; step <= 3; step++) {
-                if ((colorAtThree(rightX + player.xVel, topY - step) != 0x01) &&
-                    (colorAtThree(rightX + player.xVel, bottomY - step) != 0x01)) {
-                    player.worldX += player.xVel;
-                    player.worldY -= step;
-                    break;
+    
+        // Gravity + vert
+        int grounded = 0;
+    
+        player.yVel += GRAVITY;
+        if (player.yVel > TERMINAL_VELOCITY) player.yVel = TERMINAL_VELOCITY;
+    
+        if (updateMovement) {
+            if (player.yVel < 0) {
+                for (int i = 0; i < -player.yVel; i++) {
+                    if (player.worldY > 0 &&
+                        colorAtThree(leftX, player.worldY - 1) != 0x01 &&
+                        colorAtThree(rightX, player.worldY - 1) != 0x01) {
+                        player.worldY--;
+                    } else {
+                        player.yVel = 0;
+                        break;
+                    }
                 }
-            }
-        }
-    }
-
-    // Gravity + vert
-    int grounded = 0;
-
-    player.yVel += GRAVITY;
-    if (player.yVel > TERMINAL_VELOCITY) player.yVel = TERMINAL_VELOCITY;
-
-    if (updateMovement) {
-        if (player.yVel < 0) {
-            for (int i = 0; i < -player.yVel; i++) {
-                if (player.worldY > 0 &&
-                    colorAtThree(leftX, player.worldY - 1) != 0x01 &&
-                    colorAtThree(rightX, player.worldY - 1) != 0x01) {
-                    player.worldY--;
-                } else {
-                    player.yVel = 0;
-                    break;
+            } else if (player.yVel > 0) {
+                for (int i = 0; i < player.yVel; i++) {
+                    bottomY = player.worldY + player.height - 1;
+                    if (bottomY + 1 < MAPHEIGHT &&
+                        colorAtThree(leftX, bottomY + 1) != 0x01 &&
+                        colorAtThree(rightX, bottomY + 1) != 0x01) {
+                        player.worldY++;
+                    } else {
+                        player.yVel = 0;
+                        grounded = 1;
+                        break;
+                    }
                 }
-            }
-        } else if (player.yVel > 0) {
-            for (int i = 0; i < player.yVel; i++) {
+            } else {
                 bottomY = player.worldY + player.height - 1;
-                if (bottomY + 1 < MAPHEIGHT &&
-                    colorAtThree(leftX, bottomY + 1) != 0x01 &&
-                    colorAtThree(rightX, bottomY + 1) != 0x01) {
-                    player.worldY++;
-                } else {
-                    player.yVel = 0;
+                if (colorAtThree(leftX, bottomY + 1) == 0x01 || colorAtThree(rightX, bottomY + 1) == 0x01) {
                     grounded = 1;
-                    break;
                 }
             }
-        } else {
-            bottomY = player.worldY + player.height - 1;
-            if (colorAtThree(leftX, bottomY + 1) == 0x01 || colorAtThree(rightX, bottomY + 1) == 0x01) {
-                grounded = 1;
+        }
+    
+        // Jumping is ONLY allowed if not slow mode and on ground
+        if (!slowModeActive && BUTTON_PRESSED(BUTTON_UP) && grounded) {
+            player.yVel = -12;
+        }
+    } else {
+        if (updateMovement) {
+            if (BUTTON_HELD(BUTTON_LEFT) && player.worldX > 0) {
+                player.isAnimating = 1;
+                player.direction = 1;
+                for (int step = 0; step <= 3; step++) {
+                    if ((colorAtThreeCheat(leftX - player.xVel, topY - step) != 0x01) &&
+                        (colorAtThreeCheat(leftX - player.xVel, bottomY - step) != 0x01)) {
+                        player.worldX -= player.xVel;
+                        player.worldY -= (step > 0) ? (step - 1) : 0;
+                        break;
+                    }
+                }
+            }
+    
+            if (BUTTON_HELD(BUTTON_RIGHT) && player.worldX < MAPWIDTH - player.width) {
+                player.isAnimating = 1;
+                player.direction = 0;
+                for (int step = 0; step <= 3; step++) {
+                    if ((colorAtThreeCheat(rightX + player.xVel, topY - step) != 0x01) &&
+                        (colorAtThreeCheat(rightX + player.xVel, bottomY - step) != 0x01)) {
+                        player.worldX += player.xVel;
+                        player.worldY -= step;
+                        break;
+                    }
+                }
             }
         }
-    }
-
-    // Jumping is ONLY allowed if not slow mode and on ground
-    if (!slowModeActive && BUTTON_PRESSED(BUTTON_UP) && grounded) {
-        player.yVel = -12;
+    
+        // Gravity + vert
+        int grounded = 0;
+    
+        player.yVel += GRAVITY;
+        if (player.yVel > TERMINAL_VELOCITY) player.yVel = TERMINAL_VELOCITY;
+    
+        if (updateMovement) {
+            if (player.yVel < 0) {
+                for (int i = 0; i < -player.yVel; i++) {
+                    if (player.worldY > 0 &&
+                        colorAtThreeCheat(leftX, player.worldY - 1) != 0x01 &&
+                        colorAtThreeCheat(rightX, player.worldY - 1) != 0x01) {
+                        player.worldY--;
+                    } else {
+                        player.yVel = 0;
+                        break;
+                    }
+                }
+            } else if (player.yVel > 0) {
+                for (int i = 0; i < player.yVel; i++) {
+                    bottomY = player.worldY + player.height - 1;
+                    if (bottomY + 1 < MAPHEIGHT &&
+                        colorAtThreeCheat(leftX, bottomY + 1) != 0x01 &&
+                        colorAtThreeCheat(rightX, bottomY + 1) != 0x01) {
+                        player.worldY++;
+                    } else {
+                        player.yVel = 0;
+                        grounded = 1;
+                        break;
+                    }
+                }
+            } else {
+                bottomY = player.worldY + player.height - 1;
+                if (colorAtThreeCheat(leftX, bottomY + 1) == 0x01 || colorAtThreeCheat(rightX, bottomY + 1) == 0x01) {
+                    grounded = 1;
+                }
+            }
+        }
+    
+        // Jumping is ONLY allowed if not slow mode and on ground
+        if (!slowModeActive && BUTTON_PRESSED(BUTTON_UP) && grounded) {
+            player.yVel = -12;
+        }
     }
 
     // Animation
@@ -223,6 +298,9 @@ inline unsigned char colorAtThree(int x, int y) {
     return ((unsigned char*) bgThreeFrontCMBitmap)[OFFSET(x, y, MAPWIDTH)];
 }
 
+inline unsigned char colorAtThreeCheat(int x, int y) {
+    return ((unsigned char*) bgThreeFrontCMCheatBitmap)[OFFSET(x, y, MAPWIDTH)];
+}
 
 // ============================= [TIMER LOGIC] ===============================
 void initCountdownTimer(void)

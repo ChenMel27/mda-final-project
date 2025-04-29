@@ -223,6 +223,7 @@ int playSound;
 # 1 "phaseThree.h" 1
 # 19 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
+unsigned char colorAtThreeCheat(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
@@ -237,7 +238,7 @@ void initSnowThree();
 void updateSnowThree();
 void drawSnowThree();
 void resetSnowThree(int i);
-# 44 "phaseThree.h"
+# 45 "phaseThree.h"
 SPRITE snows[3];
 # 29 "main.c" 2
 # 1 "start.h" 1
@@ -1029,6 +1030,23 @@ void goToStart() {
             int col = 20 + x;
             originalBlock[y][x] = ((SB*) 0x6000000)[21].tilemap[row * 32 + col];
             currentBlock[y][x] = originalBlock[y][x];
+        }
+    }
+
+
+    for (int y = 0; y < 4; y++) {
+        for (int x = 0; x < 4; x++) {
+            currentBlock[y][x] = originalBlock[y][x];
+        }
+    }
+    for (int y = 0; y < 4; y++) {
+        for (int x = 0; x < 4; x++) {
+            int row = 3 + y;
+            int col = 20 + x;
+            int blk = 21 + (row / 32) * 2 + (col / 32);
+            int localRow = row % 32;
+            int localCol = col % 32;
+            ((SB*) 0x6000000)[blk].tilemap[localRow * 32 + localCol] = currentBlock[y][x];
         }
     }
 
@@ -1993,10 +2011,26 @@ void resetGameState() {
     isFlashing = 0;
     flashFrame = 0;
 
+    int rowStart = 3;
+    int colStart = 20;
 
-    u8* tileData = (u8*)&((CB*) 0x6000000)[1];
-    for (int i = 0; i < 64; i++) {
-        originalTile358[i] = tileData[(358 * 64) + i];
+    for (int y = 0; y < 4; y++) {
+        for (int x = 0; x < 4; x++) {
+
+            currentBlock[y][x] = originalBlock[y][x];
+        }
+    }
+
+
+    for (int y = 0; y < 4; y++) {
+        for (int x = 0; x < 4; x++) {
+            int row = rowStart + y;
+            int col = colStart + x;
+            int blk = 21 + (row / 32) * 2 + (col / 32);
+            int localRow = row % 32;
+            int localCol = col % 32;
+            ((SB*) 0x6000000)[blk].tilemap[localRow * 32 + localCol] = currentBlock[y][x];
+        }
     }
 
 

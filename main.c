@@ -428,6 +428,23 @@ void goToStart() {
         }
     }
 
+    // 🧹 Restore the bush tiles (RESET SHIFTED BLOCK):
+    for (int y = 0; y < TILEMAP_SHIFT_ROWS; y++) {
+        for (int x = 0; x < TILEMAP_SHIFT_COLS; x++) {
+            currentBlock[y][x] = originalBlock[y][x];
+        }
+    }
+    for (int y = 0; y < TILEMAP_SHIFT_ROWS; y++) {
+        for (int x = 0; x < TILEMAP_SHIFT_COLS; x++) {
+            int row = SHIFT_TILEMAP_START_ROW + y;
+            int col = SHIFT_TILEMAP_START_COL + x;
+            int blk = SHIFT_SCREENBLOCK_INDEX + (row / 32) * 2 + (col / 32);
+            int localRow = row % 32;
+            int localCol = col % 32;
+            SCREENBLOCK[blk].tilemap[localRow * 32 + localCol] = currentBlock[y][x];
+        }
+    }
+
     // Save original tiles for flashing
     int tileIds[4] = {84, 85, 116, 117};
     for (int t = 0; t < 4; t++) {
@@ -1388,13 +1405,29 @@ void resetGameState() {
     tileFadeStep = 0;
     isFlashing = 0;
     flashFrame = 0;
-    
-    // Re-save the original bush tile 358 pixels
-    u8* tileData = (u8*)&CHARBLOCK[1];
-    for (int i = 0; i < 64; i++) {
-        originalTile358[i] = tileData[TILE358_OFFSET + i];
+
+    int rowStart = SHIFT_TILEMAP_START_ROW;
+    int colStart = SHIFT_TILEMAP_START_COL;
+
+    for (int y = 0; y < TILEMAP_SHIFT_ROWS; y++) {
+        for (int x = 0; x < TILEMAP_SHIFT_COLS; x++) {
+            // Restore each tile to its og value
+            currentBlock[y][x] = originalBlock[y][x];
+        }
     }
 
+    // Restore bush
+    for (int y = 0; y < TILEMAP_SHIFT_ROWS; y++) {
+        for (int x = 0; x < TILEMAP_SHIFT_COLS; x++) {
+            int row = rowStart + y;
+            int col = colStart + x;
+            int blk = SHIFT_SCREENBLOCK_INDEX + (row / 32) * 2 + (col / 32);
+            int localRow = row % 32;
+            int localCol = col % 32;
+            SCREENBLOCK[blk].tilemap[localRow * 32 + localCol] = currentBlock[y][x];
+        }
+    }
+    
     // Reset splash menu selection
     splashSelection = MENU_START;
 }

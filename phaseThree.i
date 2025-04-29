@@ -130,6 +130,7 @@ typedef struct {
 # 1 "phaseThree.h" 1
 # 19 "phaseThree.h"
 unsigned char colorAtThree(int x, int y);
+unsigned char colorAtThreeCheat(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
@@ -144,7 +145,7 @@ void initSnowThree();
 void updateSnowThree();
 void drawSnowThree();
 void resetSnowThree(int i);
-# 44 "phaseThree.h"
+# 45 "phaseThree.h"
 SPRITE snows[3];
 # 7 "phaseThree.c" 2
 # 1 "player.h" 1
@@ -196,6 +197,10 @@ extern const unsigned int healthaudio_sampleRate;
 extern const unsigned int healthaudio_length;
 extern const signed char healthaudio_data[];
 # 11 "phaseThree.c" 2
+# 1 "bgThreeFrontCMCheat.h" 1
+# 20 "bgThreeFrontCMCheat.h"
+extern const unsigned char bgThreeFrontCMCheatBitmap[131072];
+# 12 "phaseThree.c" 2
 # 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 1 3
 # 10 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
 # 1 "/opt/devkitpro/devkitARM/arm-none-eabi/include/machine/ieeefp.h" 1 3
@@ -1004,14 +1009,14 @@ extern long double _strtold_r (struct _reent *, const char *restrict, char **res
 extern long double strtold (const char *restrict, char **restrict);
 # 336 "/opt/devkitpro/devkitARM/arm-none-eabi/include/stdlib.h" 3
 
-# 12 "phaseThree.c" 2
+# 13 "phaseThree.c" 2
 
 
 
 
 
 
-# 17 "phaseThree.c"
+# 18 "phaseThree.c"
 extern int hikerFrameDelay;
 extern int hikerFrameCounter;
 extern int hikerFrame;
@@ -1101,76 +1106,150 @@ void updatePlayerThree(int* hOff, int* vOff) {
     isDucking = (~(buttons) & ((1<<7)));
 
 
-    if (updateMovement) {
-        if ((~(buttons) & ((1<<5))) && player.worldX > 0) {
-            player.isAnimating = 1;
-            player.direction = 1;
-            for (int step = 0; step <= 3; step++) {
-                if ((colorAtThree(leftX - player.xVel, topY - step) != 0x01) &&
-                    (colorAtThree(leftX - player.xVel, bottomY - step) != 0x01)) {
-                    player.worldX -= player.xVel;
-                    player.worldY -= (step > 0) ? (step - 1) : 0;
-                    break;
+    if (!leftWallTouched) {
+        if (updateMovement) {
+            if ((~(buttons) & ((1<<5))) && player.worldX > 0) {
+                player.isAnimating = 1;
+                player.direction = 1;
+                for (int step = 0; step <= 3; step++) {
+                    if ((colorAtThree(leftX - player.xVel, topY - step) != 0x01) &&
+                        (colorAtThree(leftX - player.xVel, bottomY - step) != 0x01)) {
+                        player.worldX -= player.xVel;
+                        player.worldY -= (step > 0) ? (step - 1) : 0;
+                        break;
+                    }
+                }
+            }
+
+            if ((~(buttons) & ((1<<4))) && player.worldX < 512 - player.width) {
+                player.isAnimating = 1;
+                player.direction = 0;
+                for (int step = 0; step <= 3; step++) {
+                    if ((colorAtThree(rightX + player.xVel, topY - step) != 0x01) &&
+                        (colorAtThree(rightX + player.xVel, bottomY - step) != 0x01)) {
+                        player.worldX += player.xVel;
+                        player.worldY -= step;
+                        break;
+                    }
                 }
             }
         }
 
-        if ((~(buttons) & ((1<<4))) && player.worldX < 512 - player.width) {
-            player.isAnimating = 1;
-            player.direction = 0;
-            for (int step = 0; step <= 3; step++) {
-                if ((colorAtThree(rightX + player.xVel, topY - step) != 0x01) &&
-                    (colorAtThree(rightX + player.xVel, bottomY - step) != 0x01)) {
-                    player.worldX += player.xVel;
-                    player.worldY -= step;
-                    break;
+
+        int grounded = 0;
+
+        player.yVel += 1;
+        if (player.yVel > 4) player.yVel = 4;
+
+        if (updateMovement) {
+            if (player.yVel < 0) {
+                for (int i = 0; i < -player.yVel; i++) {
+                    if (player.worldY > 0 &&
+                        colorAtThree(leftX, player.worldY - 1) != 0x01 &&
+                        colorAtThree(rightX, player.worldY - 1) != 0x01) {
+                        player.worldY--;
+                    } else {
+                        player.yVel = 0;
+                        break;
+                    }
                 }
-            }
-        }
-    }
-
-
-    int grounded = 0;
-
-    player.yVel += 1;
-    if (player.yVel > 4) player.yVel = 4;
-
-    if (updateMovement) {
-        if (player.yVel < 0) {
-            for (int i = 0; i < -player.yVel; i++) {
-                if (player.worldY > 0 &&
-                    colorAtThree(leftX, player.worldY - 1) != 0x01 &&
-                    colorAtThree(rightX, player.worldY - 1) != 0x01) {
-                    player.worldY--;
-                } else {
-                    player.yVel = 0;
-                    break;
+            } else if (player.yVel > 0) {
+                for (int i = 0; i < player.yVel; i++) {
+                    bottomY = player.worldY + player.height - 1;
+                    if (bottomY + 1 < 256 &&
+                        colorAtThree(leftX, bottomY + 1) != 0x01 &&
+                        colorAtThree(rightX, bottomY + 1) != 0x01) {
+                        player.worldY++;
+                    } else {
+                        player.yVel = 0;
+                        grounded = 1;
+                        break;
+                    }
                 }
-            }
-        } else if (player.yVel > 0) {
-            for (int i = 0; i < player.yVel; i++) {
+            } else {
                 bottomY = player.worldY + player.height - 1;
-                if (bottomY + 1 < 256 &&
-                    colorAtThree(leftX, bottomY + 1) != 0x01 &&
-                    colorAtThree(rightX, bottomY + 1) != 0x01) {
-                    player.worldY++;
-                } else {
-                    player.yVel = 0;
+                if (colorAtThree(leftX, bottomY + 1) == 0x01 || colorAtThree(rightX, bottomY + 1) == 0x01) {
                     grounded = 1;
-                    break;
                 }
             }
-        } else {
-            bottomY = player.worldY + player.height - 1;
-            if (colorAtThree(leftX, bottomY + 1) == 0x01 || colorAtThree(rightX, bottomY + 1) == 0x01) {
-                grounded = 1;
+        }
+
+
+        if (!slowModeActive && (!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && grounded) {
+            player.yVel = -12;
+        }
+    } else {
+        if (updateMovement) {
+            if ((~(buttons) & ((1<<5))) && player.worldX > 0) {
+                player.isAnimating = 1;
+                player.direction = 1;
+                for (int step = 0; step <= 3; step++) {
+                    if ((colorAtThreeCheat(leftX - player.xVel, topY - step) != 0x01) &&
+                        (colorAtThreeCheat(leftX - player.xVel, bottomY - step) != 0x01)) {
+                        player.worldX -= player.xVel;
+                        player.worldY -= (step > 0) ? (step - 1) : 0;
+                        break;
+                    }
+                }
+            }
+
+            if ((~(buttons) & ((1<<4))) && player.worldX < 512 - player.width) {
+                player.isAnimating = 1;
+                player.direction = 0;
+                for (int step = 0; step <= 3; step++) {
+                    if ((colorAtThreeCheat(rightX + player.xVel, topY - step) != 0x01) &&
+                        (colorAtThreeCheat(rightX + player.xVel, bottomY - step) != 0x01)) {
+                        player.worldX += player.xVel;
+                        player.worldY -= step;
+                        break;
+                    }
+                }
             }
         }
-    }
 
 
-    if (!slowModeActive && (!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && grounded) {
-        player.yVel = -12;
+        int grounded = 0;
+
+        player.yVel += 1;
+        if (player.yVel > 4) player.yVel = 4;
+
+        if (updateMovement) {
+            if (player.yVel < 0) {
+                for (int i = 0; i < -player.yVel; i++) {
+                    if (player.worldY > 0 &&
+                        colorAtThreeCheat(leftX, player.worldY - 1) != 0x01 &&
+                        colorAtThreeCheat(rightX, player.worldY - 1) != 0x01) {
+                        player.worldY--;
+                    } else {
+                        player.yVel = 0;
+                        break;
+                    }
+                }
+            } else if (player.yVel > 0) {
+                for (int i = 0; i < player.yVel; i++) {
+                    bottomY = player.worldY + player.height - 1;
+                    if (bottomY + 1 < 256 &&
+                        colorAtThreeCheat(leftX, bottomY + 1) != 0x01 &&
+                        colorAtThreeCheat(rightX, bottomY + 1) != 0x01) {
+                        player.worldY++;
+                    } else {
+                        player.yVel = 0;
+                        grounded = 1;
+                        break;
+                    }
+                }
+            } else {
+                bottomY = player.worldY + player.height - 1;
+                if (colorAtThreeCheat(leftX, bottomY + 1) == 0x01 || colorAtThreeCheat(rightX, bottomY + 1) == 0x01) {
+                    grounded = 1;
+                }
+            }
+        }
+
+
+        if (!slowModeActive && (!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && grounded) {
+            player.yVel = -12;
+        }
     }
 
 
@@ -1221,6 +1300,9 @@ inline unsigned char colorAtThree(int x, int y) {
     return ((unsigned char*) bgThreeFrontCMBitmap)[((y) * (512) + (x))];
 }
 
+inline unsigned char colorAtThreeCheat(int x, int y) {
+    return ((unsigned char*) bgThreeFrontCMCheatBitmap)[((y) * (512) + (x))];
+}
 
 
 void initCountdownTimer(void)

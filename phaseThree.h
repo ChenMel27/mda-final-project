@@ -17,6 +17,7 @@
 #define MAX_VOFF (BG_HEIGHT - SCREEN_HEIGHT)
 
 unsigned char colorAtThree(int x, int y);
+unsigned char colorAtThreeCheat(int x, int y);
 void initPlayerThree();
 void updatePlayerThree(int* hOff, int* vOff);
 void drawPlayerThree();
