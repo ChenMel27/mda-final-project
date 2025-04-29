@@ -22,12 +22,12 @@ typedef unsigned long long u64;
 
 
 extern volatile unsigned short *videoBuffer;
-# 37 "gba.h"
+# 48 "gba.h"
 void waitForVBlank();
 
 
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 69 "gba.h"
+# 80 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -39,7 +39,7 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 103 "gba.h"
+# 114 "gba.h"
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 2 "gba.c" 2
 

@@ -696,7 +696,14 @@ extern const unsigned int healthaudio_sampleRate;
 extern const unsigned int healthaudio_length;
 extern const signed char healthaudio_data[];
 # 80 "main.c" 2
-# 102 "main.c"
+# 1 "fortnite.h" 1
+
+
+extern const unsigned int fortnite_sampleRate;
+extern const unsigned int fortnite_length;
+extern const signed char fortnite_data[];
+# 81 "main.c" 2
+# 103 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -1467,7 +1474,7 @@ void goToPhaseTwoInstructions() {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
 
     stopSounds();
-    playSoundA(winaudio_data, winaudio_length, 0);
+    playSoundA(fortnite_data, fortnite_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
@@ -1580,7 +1587,7 @@ void goToPhaseThreeInstructions() {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
 
     stopSounds();
-    playSoundA(winaudio_data, winaudio_length, 0);
+    playSoundA(fortnite_data, fortnite_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);

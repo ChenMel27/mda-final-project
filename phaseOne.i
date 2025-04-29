@@ -1003,6 +1003,8 @@ typedef struct{
 
 SOUND soundA;
 SOUND soundB;
+
+void interruptHandler();
 # 16 "phaseOne.c" 2
 
 

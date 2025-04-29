@@ -1012,9 +1012,9 @@ gameOver:
 	.size	playHealth, 4
 playHealth:
 	.space	4
-	.type	colorCycleTimer.4673, %object
-	.size	colorCycleTimer.4673, 4
-colorCycleTimer.4673:
+	.type	colorCycleTimer.4674, %object
+	.size	colorCycleTimer.4674, 4
+colorCycleTimer.4674:
 	.space	4
 	.type	movedHorizontally, %object
 	.size	movedHorizontally, 4

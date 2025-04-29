@@ -724,8 +724,8 @@ goToPhaseTwoInstructions:
 	.align	2
 .L59:
 	.word	stopSounds
-	.word	winaudio_length
-	.word	winaudio_data
+	.word	fortnite_length
+	.word	fortnite_data
 	.word	playSoundA
 	.word	DMANow
 	.word	largemantilesPal
@@ -944,8 +944,8 @@ goToPhaseThreeInstructions:
 	.align	2
 .L76:
 	.word	stopSounds
-	.word	winaudio_length
-	.word	winaudio_data
+	.word	fortnite_length
+	.word	fortnite_data
 	.word	playSoundA
 	.word	DMANow
 	.word	largemantilesPal
@@ -3188,9 +3188,9 @@ altIndices:
 	.word	16
 	.word	17
 	.word	18
-	.type	direction.4418, %object
-	.size	direction.4418, 4
-direction.4418:
+	.type	direction.4421, %object
+	.size	direction.4421, 4
+direction.4421:
 	.word	1
 	.type	shiftingRight, %object
 	.size	shiftingRight, 4
@@ -3243,57 +3243,57 @@ tileFadeStep:
 	.size	bridgeUncovered, 4
 bridgeUncovered:
 	.space	4
-	.type	tileAnimTimer.4501, %object
-	.size	tileAnimTimer.4501, 4
-tileAnimTimer.4501:
+	.type	tileAnimTimer.4504, %object
+	.size	tileAnimTimer.4504, 4
+tileAnimTimer.4504:
 	.space	4
-	.type	tileAnimState.4502, %object
-	.size	tileAnimState.4502, 4
-tileAnimState.4502:
+	.type	tileAnimState.4505, %object
+	.size	tileAnimState.4505, 4
+tileAnimState.4505:
 	.space	4
-	.type	swapDelayFrames.4524, %object
-	.size	swapDelayFrames.4524, 4
-swapDelayFrames.4524:
+	.type	swapDelayFrames.4527, %object
+	.size	swapDelayFrames.4527, 4
+swapDelayFrames.4527:
 	.space	4
-	.type	hasFlashedOnce.4525, %object
-	.size	hasFlashedOnce.4525, 4
-hasFlashedOnce.4525:
+	.type	hasFlashedOnce.4528, %object
+	.size	hasFlashedOnce.4528, 4
+hasFlashedOnce.4528:
 	.space	4
-	.type	swapTimer.4522, %object
-	.size	swapTimer.4522, 4
-swapTimer.4522:
+	.type	swapTimer.4525, %object
+	.size	swapTimer.4525, 4
+swapTimer.4525:
 	.space	4
-	.type	swapped.4523, %object
-	.size	swapped.4523, 4
-swapped.4523:
+	.type	swapped.4526, %object
+	.size	swapped.4526, 4
+swapped.4526:
 	.space	4
-	.type	isFlashing.4500, %object
-	.size	isFlashing.4500, 4
-isFlashing.4500:
+	.type	isFlashing.4503, %object
+	.size	isFlashing.4503, 4
+isFlashing.4503:
 	.space	4
-	.type	flashState.4497, %object
-	.size	flashState.4497, 4
-flashState.4497:
+	.type	flashState.4500, %object
+	.size	flashState.4500, 4
+flashState.4500:
 	.space	4
-	.type	flashFrame.4499, %object
-	.size	flashFrame.4499, 4
-flashFrame.4499:
+	.type	flashFrame.4502, %object
+	.size	flashFrame.4502, 4
+flashFrame.4502:
 	.space	4
-	.type	flashTimer.4498, %object
-	.size	flashTimer.4498, 4
-flashTimer.4498:
+	.type	flashTimer.4501, %object
+	.size	flashTimer.4501, 4
+flashTimer.4501:
 	.space	4
-	.type	usingAltIndices.4421, %object
-	.size	usingAltIndices.4421, 4
-usingAltIndices.4421:
+	.type	usingAltIndices.4424, %object
+	.size	usingAltIndices.4424, 4
+usingAltIndices.4424:
 	.space	4
-	.type	animatedIndices.4420, %object
-	.size	animatedIndices.4420, 4
-animatedIndices.4420:
+	.type	animatedIndices.4423, %object
+	.size	animatedIndices.4423, 4
+animatedIndices.4423:
 	.space	4
-	.type	t.4417, %object
-	.size	t.4417, 4
-t.4417:
+	.type	t.4420, %object
+	.size	t.4420, 4
+t.4420:
 	.space	4
 	.type	isFlashing, %object
 	.size	isFlashing, 4

@@ -1095,9 +1095,9 @@ timerPaused:
 	.size	leftWallTouched, 4
 leftWallTouched:
 	.space	4
-	.type	slowCounter.4665, %object
-	.size	slowCounter.4665, 4
-slowCounter.4665:
+	.type	slowCounter.4666, %object
+	.size	slowCounter.4666, 4
+slowCounter.4666:
 	.space	4
 	.type	winPhaseThree, %object
 	.size	winPhaseThree, 4
