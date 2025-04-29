@@ -317,8 +317,8 @@ void updateStartPlayer(int* hOff, int* vOff) {
                 startPlayer.worldX = newX;
             }
             if (!cheatOn &&
-                startColorAt(newX, topY) == 3 ||
-                startColorAt(newX, bottomY) == 3) {
+                (startColorAt(newX, topY) == 3 ||
+                startColorAt(newX, bottomY) == 3)) {
                     cheatOn = 1;
             }
 
@@ -333,8 +333,8 @@ void updateStartPlayer(int* hOff, int* vOff) {
                 startPlayer.worldY = newY;
             }
             if (!cheatOn &&
-                startColorAt(leftX, newY) == 3 ||
-                startColorAt(rightX, newY) == 3) {
+                (startColorAt(leftX, newY) == 3 ||
+                startColorAt(rightX, newY) == 3)) {
                     cheatOn = 1;
             }
         }
@@ -348,8 +348,8 @@ void updateStartPlayer(int* hOff, int* vOff) {
                 startPlayer.worldY = newY;
             }
             if (!cheatOn &&
-                startColorAt(leftX, newY + startPlayer.height - 1) == 3 ||
-                startColorAt(rightX, newY + startPlayer.height - 1) == 3) {
+                (startColorAt(leftX, newY + startPlayer.height - 1) == 3 ||
+                startColorAt(rightX, newY + startPlayer.height - 1) == 3)) {
                     cheatOn = 1;
             }
         }

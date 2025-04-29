@@ -11,6 +11,7 @@
 #include "phaseOne.h"
 #include "player.h"
 #include "healthaudio.h"
+#include <stdlib.h>
 #include "digitalSound.h"
 
 // y val where the falling animation ends
