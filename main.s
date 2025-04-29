@@ -21,44 +21,47 @@ goToStart:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 16
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, lr}
 	mov	r3, #0
-	mov	r5, #67108864
-	mov	r2, #4608
+	push	{r4, r5, r6, lr}
 	ldr	r1, .L12
 	ldr	r4, .L12+4
-	str	r3, [r1]
 	sub	sp, sp, #16
+	ldr	r2, .L12+8
+	str	r3, [r1]
+	mov	r5, #67108864
 	str	r3, [r4]
+	mov	lr, pc
+	bx	r2
+	mov	r2, #4608
+	ldr	r3, .L12+12
 	strh	r2, [r5]	@ movhi
-	ldr	r3, .L12+8
 	mov	lr, pc
 	bx	r3
 	mov	r2, #53760
 	mov	r3, #256
 	strh	r2, [r5, #10]	@ movhi
 	mov	r0, #3
-	ldr	r5, .L12+12
+	ldr	r5, .L12+16
 	mov	r2, #83886080
-	ldr	r1, .L12+16
+	ldr	r1, .L12+20
 	mov	lr, pc
 	bx	r5
 	mov	r3, #8192
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L12+20
+	ldr	r1, .L12+24
 	mov	lr, pc
 	bx	r5
 	mov	r3, #4096
 	mov	r0, #3
-	ldr	r2, .L12+24
-	ldr	r1, .L12+28
+	ldr	r2, .L12+28
+	ldr	r1, .L12+32
 	mov	lr, pc
 	bx	r5
 	mov	ip, #120
-	ldr	r6, .L12+32
-	ldr	r5, .L12+36
-	ldr	lr, .L12+40
+	ldr	r6, .L12+36
+	ldr	r5, .L12+40
+	ldr	lr, .L12+44
 .L2:
 	mov	r0, r5
 	mov	r1, r6
@@ -77,10 +80,10 @@ goToStart:
 	add	ip, r3, #32
 	bne	.L2
 	mov	ip, sp
-	ldr	r3, .L12+44
+	ldr	r3, .L12+48
 	ldm	r3, {r0, r1, r2, r3}
 	stm	ip, {r0, r1, r2, r3}
-	ldr	lr, .L12+48
+	ldr	lr, .L12+52
 	add	r5, sp, #16
 .L5:
 	mov	r1, lr
@@ -98,25 +101,25 @@ goToStart:
 	cmp	ip, r5
 	add	lr, lr, #32
 	bne	.L5
-	ldr	r3, .L12+52
+	ldr	r3, .L12+56
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L12+56
+	ldr	r3, .L12+60
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	mov	ip, #96
-	ldr	r1, .L12+60
+	ldr	r1, .L12+64
 	str	r3, [r4, #4]
 	mov	r2, #1
 	ldr	r1, [r1]
-	ldr	r0, .L12+64
-	ldr	r3, .L12+68
+	ldr	r0, .L12+68
+	ldr	r3, .L12+72
 	str	ip, [r4, #8]
 	mov	lr, pc
 	bx	r3
 	mov	r2, #1
-	ldr	r3, .L12+72
+	ldr	r3, .L12+76
 	strb	r2, [r3]
 	add	sp, sp, #16
 	@ sp needed
@@ -127,6 +130,7 @@ goToStart:
 .L12:
 	.word	cheatOn
 	.word	.LANCHOR0
+	.word	stopSounds
 	.word	hideSprites
 	.word	DMANow
 	.word	sTSPal
@@ -156,65 +160,76 @@ goToStartTwo:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
+	ldr	r3, .L16
+	mov	lr, pc
+	bx	r3
+	mov	r4, #0
 	mov	ip, #53760
-	mov	r5, #0
 	mov	r0, #67108864
 	mov	r1, #4608
-	ldr	r4, .L16
-	ldr	r6, .L16+4
-	str	r5, [r4]
+	ldr	r5, .L16+4
+	ldr	r6, .L16+8
+	str	r4, [r5]
 	mov	r3, #256
 	strh	r1, [r0]	@ movhi
 	mov	r2, #83886080
 	strh	ip, [r0, #10]	@ movhi
-	ldr	r1, .L16+8
+	ldr	r1, .L16+12
 	mov	r0, #3
 	mov	lr, pc
 	bx	r6
 	mov	r3, #8192
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L16+12
+	ldr	r1, .L16+16
 	mov	lr, pc
 	bx	r6
 	mov	r0, #3
-	ldr	r2, .L16+16
-	ldr	r1, .L16+20
+	ldr	r2, .L16+20
+	ldr	r1, .L16+24
 	mov	r3, #4096
 	mov	lr, pc
 	bx	r6
-	ldr	r3, .L16+24
-	mov	lr, pc
-	bx	r3
 	ldr	r3, .L16+28
 	mov	lr, pc
 	bx	r3
+	ldr	r3, .L16+32
+	mov	lr, pc
+	bx	r3
 	mov	r6, #1
-	mov	r0, #96
+	mov	r2, #96
 	mov	lr, #170
-	ldr	r2, .L16+32
-	ldr	r1, .L16+36
-	ldr	r3, .L16+40
-	ldr	ip, .L16+44
-	str	r5, [r4, #4]
-	str	r5, [r2]
-	str	r0, [r4, #8]
-	str	r6, [r4, #12]
-	mov	r2, r5
-	ldr	r4, .L16+48
+	ldr	r0, .L16+36
+	ldr	r1, .L16+40
+	ldr	r3, .L16+44
+	ldr	ip, .L16+48
+	str	r4, [r5, #4]
+	str	r4, [r0]
+	str	r2, [r5, #8]
+	str	r6, [r5, #12]
+	mov	r2, r6
 	ldr	r1, [r1]
 	ldr	r0, .L16+52
+	ldr	r5, .L16+56
 	str	lr, [r3, #20]
 	str	ip, [r3, #16]
 	mov	lr, pc
-	bx	r4
-	ldr	r3, .L16+56
+	bx	r5
+	ldr	r3, .L16+60
+	mov	r2, r4
+	ldr	r1, [r3]
+	ldr	r0, .L16+64
+	ldr	r3, .L16+68
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L16+72
 	strb	r6, [r3]
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L17:
 	.align	2
 .L16:
+	.word	stopSounds
 	.word	.LANCHOR0
 	.word	DMANow
 	.word	sTSPal
@@ -224,11 +239,14 @@ goToStartTwo:
 	.word	initStartPlayer
 	.word	initGuideSprite
 	.word	next
-	.word	action_length
+	.word	animaljam_length
 	.word	startPlayer
 	.word	430
-	.word	playSoundB
+	.word	animaljam_data
+	.word	playSoundA
+	.word	action_length
 	.word	action_data
+	.word	playSoundB
 	.word	state
 	.size	goToStartTwo, .-goToStartTwo
 	.align	2
@@ -242,62 +260,66 @@ goToStartThree:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	mov	ip, #53760
+	ldr	r3, .L20
+	mov	lr, pc
+	bx	r3
 	mov	r6, #0
+	mov	ip, #53760
 	mov	r0, #67108864
 	mov	r1, #4608
-	ldr	r4, .L20
-	ldr	r5, .L20+4
+	ldr	r4, .L20+4
+	ldr	r5, .L20+8
 	str	r6, [r4]
 	mov	r3, #256
 	strh	r1, [r0]	@ movhi
 	mov	r2, #83886080
 	strh	ip, [r0, #10]	@ movhi
-	ldr	r1, .L20+8
+	ldr	r1, .L20+12
 	mov	r0, #3
 	mov	lr, pc
 	bx	r5
 	mov	r3, #8192
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L20+12
+	ldr	r1, .L20+16
 	mov	lr, pc
 	bx	r5
 	mov	r0, #3
-	ldr	r2, .L20+16
-	ldr	r1, .L20+20
+	ldr	r2, .L20+20
+	ldr	r1, .L20+24
 	mov	r3, #4096
 	mov	lr, pc
 	bx	r5
 	mov	r5, #96
-	ldr	r3, .L20+24
-	mov	lr, pc
-	bx	r3
 	ldr	r3, .L20+28
 	mov	lr, pc
 	bx	r3
-	ldr	r2, .L20+32
+	ldr	r3, .L20+32
+	mov	lr, pc
+	bx	r3
+	ldr	r2, .L20+36
 	ldr	lr, [r4, #16]
-	ldr	r3, .L20+36
+	ldr	r3, .L20+40
 	ldr	ip, [r4, #20]
 	str	r6, [r4, #4]
 	str	r5, [r4, #8]
 	ldr	r1, [r2]
-	ldr	r4, .L20+40
+	ldr	r4, .L20+44
 	mov	r2, #1
-	ldr	r0, .L20+44
+	ldr	r0, .L20+48
 	str	lr, [r3, #16]
 	str	ip, [r3, #20]
 	mov	lr, pc
 	bx	r4
 	mov	r2, #1
-	ldr	r3, .L20+48
+	ldr	r3, .L20+52
 	strb	r2, [r3]
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L21:
 	.align	2
 .L20:
+	.word	stopSounds
 	.word	.LANCHOR0
 	.word	DMANow
 	.word	sTSPal
@@ -692,39 +714,49 @@ goToPhaseTwoInstructions:
 	mov	r2, #768
 	mov	r4, #67108864
 	mov	r5, #0
-	ldr	r6, .L63
+	ldr	r3, .L63
 	strh	r5, [r4]	@ movhi
-	mov	r3, #256
 	strh	r2, [r4]	@ movhi
-	mov	r0, #3
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L63+4
+	mov	r2, r5
+	ldr	r1, [r3]
+	ldr	r0, .L63+8
+	ldr	r3, .L63+12
+	mov	lr, pc
+	bx	r3
+	ldr	r6, .L63+16
+	mov	r3, #256
 	mov	r2, #83886080
-	ldr	r1, .L63+4
+	mov	r0, #3
+	ldr	r1, .L63+20
 	mov	lr, pc
 	bx	r6
 	mov	r3, #16384
 	mov	r0, #3
-	ldr	r2, .L63+8
-	ldr	r1, .L63+12
-	mov	lr, pc
-	bx	r6
-	ldr	r3, .L63+16
-	ldr	r2, .L63+20
-	strh	r3, [r4, #8]	@ movhi
-	mov	r0, #3
-	strh	r2, [r4, #10]	@ movhi
-	mov	r3, #1024
 	ldr	r2, .L63+24
 	ldr	r1, .L63+28
 	mov	lr, pc
 	bx	r6
-	mov	r3, #1024
-	ldr	r2, .L63+32
+	ldr	r3, .L63+32
+	ldr	r2, .L63+36
+	strh	r3, [r4, #8]	@ movhi
 	mov	r0, #3
-	ldr	r1, .L63+36
+	strh	r2, [r4, #10]	@ movhi
+	mov	r3, #1024
+	ldr	r2, .L63+40
+	ldr	r1, .L63+44
+	mov	lr, pc
+	bx	r6
+	mov	r3, #1024
+	ldr	r2, .L63+48
+	mov	r0, #3
+	ldr	r1, .L63+52
 	mov	lr, pc
 	bx	r6
 	mov	r2, #4
-	ldr	r3, .L63+40
+	ldr	r3, .L63+56
 	strh	r5, [r4, #16]	@ movhi
 	strh	r5, [r4, #18]	@ movhi
 	strh	r5, [r4, #20]	@ movhi
@@ -735,6 +767,10 @@ goToPhaseTwoInstructions:
 .L64:
 	.align	2
 .L63:
+	.word	stopSounds
+	.word	winaudio_length
+	.word	winaudio_data
+	.word	playSoundA
 	.word	DMANow
 	.word	largemantilesPal
 	.word	100679680
@@ -898,39 +934,49 @@ goToPhaseThreeInstructions:
 	mov	r2, #768
 	mov	r4, #67108864
 	mov	r5, #0
-	ldr	r6, .L80
+	ldr	r3, .L80
 	strh	r5, [r4]	@ movhi
-	mov	r3, #256
 	strh	r2, [r4]	@ movhi
-	mov	r0, #3
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L80+4
+	mov	r2, r5
+	ldr	r1, [r3]
+	ldr	r0, .L80+8
+	ldr	r3, .L80+12
+	mov	lr, pc
+	bx	r3
+	ldr	r6, .L80+16
+	mov	r3, #256
 	mov	r2, #83886080
-	ldr	r1, .L80+4
+	mov	r0, #3
+	ldr	r1, .L80+20
 	mov	lr, pc
 	bx	r6
 	mov	r3, #16384
 	mov	r0, #3
-	ldr	r2, .L80+8
-	ldr	r1, .L80+12
-	mov	lr, pc
-	bx	r6
-	ldr	r3, .L80+16
-	ldr	r2, .L80+20
-	strh	r3, [r4, #8]	@ movhi
-	mov	r0, #3
-	strh	r2, [r4, #10]	@ movhi
-	mov	r3, #1024
 	ldr	r2, .L80+24
 	ldr	r1, .L80+28
 	mov	lr, pc
 	bx	r6
-	mov	r3, #1024
-	ldr	r2, .L80+32
+	ldr	r3, .L80+32
+	ldr	r2, .L80+36
+	strh	r3, [r4, #8]	@ movhi
 	mov	r0, #3
-	ldr	r1, .L80+36
+	strh	r2, [r4, #10]	@ movhi
+	mov	r3, #1024
+	ldr	r2, .L80+40
+	ldr	r1, .L80+44
+	mov	lr, pc
+	bx	r6
+	mov	r3, #1024
+	ldr	r2, .L80+48
+	mov	r0, #3
+	ldr	r1, .L80+52
 	mov	lr, pc
 	bx	r6
 	mov	r2, #6
-	ldr	r3, .L80+40
+	ldr	r3, .L80+56
 	strh	r5, [r4, #16]	@ movhi
 	strh	r5, [r4, #18]	@ movhi
 	strh	r5, [r4, #20]	@ movhi
@@ -941,6 +987,10 @@ goToPhaseThreeInstructions:
 .L81:
 	.align	2
 .L80:
+	.word	stopSounds
+	.word	fortnite_length
+	.word	fortnite_data
+	.word	playSoundA
 	.word	DMANow
 	.word	largemantilesPal
 	.word	100679680
@@ -1847,22 +1897,12 @@ phaseOne:
 	cmp	r3, #0
 	beq	.L181
 .L213:
-	ldr	r3, .L217+108
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L217+112
-	mov	r2, #0
-	ldr	r1, [r3]
-	ldr	r0, .L217+116
-	ldr	r3, .L217+120
-	mov	lr, pc
-	bx	r3
 	bl	goToPhaseTwoInstructions
 	b	.L181
 .L173:
 	ldr	r2, .L217+28
 	ldr	r5, [r4, #72]
-	ldr	r4, .L217+124
+	ldr	r4, .L217+108
 	add	lr, r2, #64
 .L179:
 	ldrb	r3, [r2, #1]!	@ zero_extendqisi2
@@ -1886,7 +1926,7 @@ phaseOne:
 	bne	.L179
 	b	.L176
 .L215:
-	ldr	r3, .L217+128
+	ldr	r3, .L217+112
 	add	r0, r0, #64
 	cmp	r0, r3
 	bne	.L161
@@ -1895,8 +1935,8 @@ phaseOne:
 	str	r3, [r4, #80]
 	b	.L172
 .L214:
-	ldr	r2, .L217+132
-	ldr	r3, .L217+136
+	ldr	r2, .L217+116
+	ldr	r3, .L217+120
 	ldrb	r2, [r2]	@ zero_extendqisi2
 	strb	r2, [r3]
 	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
@@ -1931,10 +1971,6 @@ phaseOne:
 	.word	healthaudio_length
 	.word	healthaudio_data
 	.word	playSoundB
-	.word	stopSounds
-	.word	fortnite_length
-	.word	fortnite_data
-	.word	playSoundA
 	.word	savedFadePalette
 	.word	100722752
 	.word	state
@@ -2031,35 +2067,25 @@ phaseTwo:
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L239:
-	ldr	r3, .L241+60
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L241+64
-	mov	r2, #0
-	ldr	r1, [r3]
-	ldr	r0, .L241+68
-	ldr	r3, .L241+72
-	mov	lr, pc
-	bx	r3
 	bl	goToPhaseThreeInstructions
 	b	.L222
 .L238:
 	bl	goToLose
 	b	.L221
 .L237:
-	ldr	r3, .L241+76
+	ldr	r3, .L241+60
 	mov	r2, #0
 	ldr	r1, [r3]
-	ldr	r0, .L241+80
-	ldr	r3, .L241+84
+	ldr	r0, .L241+64
+	ldr	r3, .L241+68
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	str	r3, [r6]
 	b	.L220
 .L240:
-	ldr	r2, .L241+88
-	ldr	r3, .L241+92
+	ldr	r2, .L241+72
+	ldr	r3, .L241+76
 	ldrb	r2, [r2]	@ zero_extendqisi2
 	strb	r2, [r3]
 	pop	{r4, r5, r6, lr}
@@ -2082,10 +2108,6 @@ phaseTwo:
 	.word	winPhaseTwo
 	.word	oldButtons
 	.word	buttons
-	.word	stopSounds
-	.word	fortnite_length
-	.word	fortnite_data
-	.word	playSoundA
 	.word	healthaudio_length
 	.word	healthaudio_data
 	.word	playSoundB

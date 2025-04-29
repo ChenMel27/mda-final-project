@@ -1001,6 +1001,7 @@ void splashScreen() {
 void goToStart() {
     cheatOn = 0;
     resumingFromPause = 0;
+    stopSounds();
 
 
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
@@ -1048,6 +1049,7 @@ void goToStart() {
 
 
 void goToStartTwo() {
+    stopSounds();
     resumingFromPause = 0;
 
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
@@ -1070,6 +1072,7 @@ void goToStartTwo() {
     vOff = (256 - 160);
 
 
+    playSoundA(animaljam_data, animaljam_length, 1);
     playSoundB(action_data, action_length, 0);
 
     state = START;
@@ -1077,6 +1080,7 @@ void goToStartTwo() {
 
 
 void goToStartThree() {
+    stopSounds();
     resumingFromPause = 0;
 
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
@@ -1447,8 +1451,6 @@ void phaseOne() {
 
 
     if (winPhaseOne) {
-        stopSounds();
-        playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseTwoInstructions();
     }
 
@@ -1465,6 +1467,9 @@ void phaseOne() {
 void goToPhaseTwoInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
+
+    stopSounds();
+    playSoundA(winaudio_data, winaudio_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
@@ -1556,8 +1561,6 @@ void phaseTwo() {
     }
 
     if (winPhaseTwo) {
-        stopSounds();
-        playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseThreeInstructions();
     }
 
@@ -1574,6 +1577,9 @@ void phaseTwo() {
 void goToPhaseThreeInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
+
+    stopSounds();
+    playSoundA(fortnite_data, fortnite_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);

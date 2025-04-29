@@ -70,7 +70,6 @@
 #include "winwin.h"
 #include "bgAnimatedBack.h"
 #include "click.h"
-#include "fortnite.h"
 #include "phaseoneaudio.h"
 #include "phasetwoaudio.h"
 #include "phasethreeaudio.h"
@@ -399,6 +398,7 @@ void splashScreen() {
 void goToStart() {
     cheatOn = 0;
     resumingFromPause = 0;
+    stopSounds();
 
     // Setup Mode 0 with BG1 enabled and sprites
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
@@ -446,6 +446,7 @@ void goToStart() {
 
 // Initialize the Start Phase after first dialogue
 void goToStartTwo() {
+    stopSounds();
     resumingFromPause = 0;
 
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
@@ -468,6 +469,7 @@ void goToStartTwo() {
     vOff = MAX_VOFF;
 
     // Play bridge unlock sound
+    playSoundA(animaljam_data, animaljam_length, 1);
     playSoundB(action_data, action_length, 0);
 
     state = START;
@@ -475,6 +477,7 @@ void goToStartTwo() {
 
 // Initialize Start Phase after returning from Pause
 void goToStartThree() {
+    stopSounds();
     resumingFromPause = 0;
 
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
@@ -845,8 +848,6 @@ void phaseOne() {
 
     // Handle win condition
     if (winPhaseOne) {
-        stopSounds();
-        playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseTwoInstructions();
     }
 
@@ -863,6 +864,9 @@ void phaseOne() {
 void goToPhaseTwoInstructions() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1);
+
+    stopSounds();
+    playSoundA(winaudio_data, winaudio_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);
@@ -954,8 +958,6 @@ void phaseTwo() {
     }
     
     if (winPhaseTwo) {
-        stopSounds();
-        playSoundA(fortnite_data, fortnite_length, 0);
         goToPhaseThreeInstructions();
     }
 
@@ -972,6 +974,9 @@ void phaseTwo() {
 void goToPhaseThreeInstructions() {
     REG_DISPCTL = 0;
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1);
+
+    stopSounds();
+    playSoundA(winaudio_data, winaudio_length, 0);
 
     DMANow(3, (volatile void*)largemantilesPal, BG_PALETTE, largemantilesPalLen / 2);
     DMANow(3, (volatile void*)dialogueFontTiles, &CHARBLOCK[1], dialogueFontTilesLen / 2);

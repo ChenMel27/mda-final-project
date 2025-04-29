@@ -44,6 +44,8 @@
         "fortnite.h": "c",
         "diatwo.h": "c",
         "healthaudio.h": "c",
-        "bgtwofrontcm.h": "c"
+        "bgtwofrontcm.h": "c",
+        "phasetwoaudio.h": "c",
+        "falling.h": "c"
     }
 }
