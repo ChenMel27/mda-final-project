@@ -698,7 +698,7 @@ extern const unsigned int healthaudio_sampleRate;
 extern const unsigned int healthaudio_length;
 extern const signed char healthaudio_data[];
 # 81 "main.c" 2
-# 98 "main.c"
+# 103 "main.c"
 static int savedStartX;
 static int savedStartY;
 
@@ -848,7 +848,6 @@ int main() {
 }
 
 
-
 void initialize() {
     mgba_open();
     setupSounds();
@@ -858,6 +857,7 @@ void initialize() {
 
 
 void goToSplashScreen() {
+
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
     videoBuffer = ((unsigned short*) 0x06000000);
     stopSounds();
@@ -902,6 +902,7 @@ void goToSplashScreen() {
     u16 flickerColorsA = (((31) & 31) | ((31) & 31) << 5 | ((0) & 31) << 10);
     u16 flickerColorsB = (((24) & 31) | ((24) & 31) << 5 | ((8) & 31) << 10);
 
+
     for (int i = 0; i < totalFrames; i++) {
         waitForVBlank();
 
@@ -915,52 +916,56 @@ void goToSplashScreen() {
         }
 
 
-        if (i == revealDelays[0]) {
-            ((unsigned short *)0x5000000)[16] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
-        } else if (i == revealDelays[1]) {
-            ((unsigned short *)0x5000000)[17] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
-        } else if (i == revealDelays[2]) {
-            ((unsigned short *)0x5000000)[18] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
-        }
+        if (i == revealDelays[0]) ((unsigned short *)0x5000000)[16] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+        if (i == revealDelays[1]) ((unsigned short *)0x5000000)[17] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+        if (i == revealDelays[2]) ((unsigned short *)0x5000000)[18] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
     }
 
 
     DMANow(3, (volatile void*)splashp3Pal, ((unsigned short *)0x5000000), 256);
     drawFullscreenImage4(splashp3Bitmap);
 
+
     resetGameState();
     state = SPLASH;
 }
+
 
 void splashScreen() {
     static int t = 0;
     static int direction = 1;
     const int max = 30;
 
-    static int* animatedIndices;
+    static int* animatedIndices = 0;
     static int usingAltIndices = 0;
 
 
     if ((!(~(oldButtons) & ((1<<7))) && (~(buttons) & ((1<<7)))) && !usingAltIndices) {
         playSoundB(click_data, click_length, 0);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++) {
             ((unsigned short *)0x5000000)[primaryIndices[i]] = splashp3Pal[primaryIndices[i]];
+        }
         animatedIndices = altIndices;
         usingAltIndices = 1;
-        t = 0; direction = 1;
+        t = 0;
+        direction = 1;
     }
+
     else if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && usingAltIndices) {
         playSoundB(click_data, click_length, 0);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++) {
             ((unsigned short *)0x5000000)[altIndices[i]] = splashp3Pal[altIndices[i]];
+        }
         animatedIndices = primaryIndices;
         usingAltIndices = 0;
-        t = 0; direction = 1;
+        t = 0;
+        direction = 1;
     }
 
 
-    if (!animatedIndices)
+    if (!animatedIndices) {
         animatedIndices = primaryIndices;
+    }
 
 
     waitForVBlank();
@@ -969,31 +974,42 @@ void splashScreen() {
         int idx = animatedIndices[i];
         ((unsigned short *)0x5000000)[idx] = blendColor(splashp3Pal[idx], target, t, max);
     }
+
     t += direction;
-    if (t >= max || t <= 0)
+    if (t >= max || t <= 0) {
         direction = -direction;
+    }
 
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        if (usingAltIndices)
+        if (usingAltIndices) {
             goToGameInstructions();
-        else
+        } else {
             goToStart();
+        }
     }
 }
+
+
 
 
 
 void goToStart() {
     cheatOn = 0;
     resumingFromPause = 0;
+
+
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     hideSprites();
+
+
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
+
 
     DMANow(3, (volatile void*)sTSPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
     DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+
 
     for (int y = 0; y < 4; y++) {
         for (int x = 0; x < 4; x++) {
@@ -1004,6 +1020,7 @@ void goToStart() {
         }
     }
 
+
     int tileIds[4] = {84, 85, 116, 117};
     for (int t = 0; t < 4; t++) {
         for (int i = 0; i < 16; i++) {
@@ -1011,18 +1028,24 @@ void goToStart() {
         }
     }
 
+
     initStartPlayer();
     initGuideSprite();
+
+
     hOff = 0;
     vOff = (256 - 160);
 
+
     playSoundA(animaljam_data, animaljam_length, 1);
+
     state = START;
 }
 
 
 void goToStartTwo() {
     resumingFromPause = 0;
+
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
@@ -1033,13 +1056,15 @@ void goToStartTwo() {
     initStartPlayer();
     initGuideSprite();
 
+
     startPlayer.worldY = 170;
     startPlayer.worldX = 430;
     next = 0;
-
     talkedToGuide = 1;
+
     hOff = 0;
     vOff = (256 - 160);
+
 
     playSoundB(action_data, action_length, 0);
 
@@ -1049,6 +1074,7 @@ void goToStartTwo() {
 
 void goToStartThree() {
     resumingFromPause = 0;
+
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((18) << 8) | (3 << 14) | (0 << 7);
 
@@ -1062,22 +1088,33 @@ void goToStartThree() {
 
     startPlayer.worldX = savedStartX;
     startPlayer.worldY = savedStartY;
+
     hOff = 0;
     vOff = (256 - 160);
 
     playSoundA(animaljam_data, animaljam_length, 1);
+
     state = START;
 }
 
+
 void start() {
+
     animateTilemapShift();
+
+
     updateStartPlayer(&hOff, &vOff);
     updateGuideSprite();
+
+
     (*(volatile unsigned short*) 0x04000014) = hOff;
     (*(volatile unsigned short*) 0x04000016) = vOff;
 
+
     drawStartPlayer();
     drawGuideSprite();
+
+
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
 
@@ -1094,14 +1131,17 @@ void start() {
         bridgeUncovered = 1;
     }
 
+
     if (checkPlayerGuideCollision()) {
         goToStartInstructions();
     }
+
 
     if (next == 1 && talkedToGuide) {
         stopSounds();
         goToPhaseOne();
     }
+
 
     tileFlashTimer++;
     if (tileFlashTimer > 15) {
@@ -1112,6 +1152,7 @@ void start() {
         flashColorInTile(116, 3, 4, tileFlashState, originalTiles[2]);
         flashColorInTile(117, 3, 4, tileFlashState, originalTiles[3]);
     }
+
 
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         savedStartX = startPlayer.worldX;
@@ -1126,7 +1167,9 @@ void start() {
 
 
 
+
 void goToStartInstructions() {
+
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4)));
 
@@ -1145,21 +1188,22 @@ void goToStartInstructions() {
     DMANow(3, (volatile void*)diaOneMap, &((SB*) 0x6000000)[20], (2048) / 2);
     DMANow(3, (volatile void*)speakingManMap, &((SB*) 0x6000000)[25], (2048) / 2);
 
+
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
     (*(volatile unsigned short*) 0x04000014) = 0;
     (*(volatile unsigned short*) 0x04000016) = 0;
+
 
     startPage = 0;
     state = DIALOGUE;
 }
 
 
-
 void startInstructions() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-
         startPage++;
+
 
         switch (startPage) {
             case 1:
@@ -1189,6 +1233,7 @@ void startInstructions() {
         }
     }
 
+
     if (begin) {
         begin = 0;
         goToStartTwo();
@@ -1197,14 +1242,22 @@ void startInstructions() {
 }
 
 
+
+
 void goToPhaseOne() {
     stopSounds();
     playSoundA(phasetwoaudio_data, phasetwoaudio_length, 1);
+
+
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
+
+
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
     (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
     (*(volatile unsigned short*) 0x400000C) = ((1) << 2) | ((30) << 8) | (1 << 14) | ((2) & 3) | (1 << 7);
+
+
     DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
     DMANow(3, (volatile void*)bgOneFrontMap, &((SB*) 0x6000000)[26], (4096) / 2);
@@ -1212,7 +1265,7 @@ void goToPhaseOne() {
     DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
 
 
-    u8* tileData = (u8*) &((CB*) 0x6000000)[1];
+    u8* tileData = (u8*)&((CB*) 0x6000000)[1];
     for (int i = 0; i < 64; i++) {
         originalTile358[i] = tileData[(358 * 64) + i];
     }
@@ -1225,13 +1278,15 @@ void goToPhaseOne() {
         initPlayer();
         initHealth();
     }
-
     resumingFromPause = 0;
+
 
     hOff = 0;
     vOff = (256 - 160);
+
     state = PHASEONE;
 }
+
 
 void phaseOne() {
     static int flashState = 0;
@@ -1246,10 +1301,9 @@ void phaseOne() {
 
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
-
-
     (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff / 2;
+
 
     static int tileAnimTimer = 0;
     static int tileAnimState = 0;
@@ -1262,7 +1316,6 @@ void phaseOne() {
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
                 u16* tile = &((SB*) 0x6000000)[27].tilemap[row * 32 + col];
-
                 u16 tileId = *tile & 0x03FF;
                 u16 palRow = *tile & 0xFC00;
 
@@ -1283,8 +1336,6 @@ void phaseOne() {
 
         for (int i = 0; i < 64; i++) {
             u8 colorIndex = originalTile358[i];
-
-
             if (colorIndex == 0) continue;
 
             u16 origColor = ((unsigned short *)0x5000000)[colorIndex];
@@ -1292,6 +1343,7 @@ void phaseOne() {
             ((unsigned short *)0x5000000)[colorIndex] = newColor;
         }
     }
+
 
     static int swapTimer = 0;
     static int swapped = 0;
@@ -1335,9 +1387,9 @@ void phaseOne() {
         }
     }
 
+
     if (isFlashing) {
         flashTimer++;
-
 
         if (flashTimer > 8) {
             flashTimer = 0;
@@ -1378,9 +1430,11 @@ void phaseOne() {
     drawHealth();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 
+
     if (gameOver) {
         goToLose();
     }
+
 
     if (winPhaseOne) {
         stopSounds();
@@ -1388,12 +1442,12 @@ void phaseOne() {
         goToPhaseTwoInstructions();
     }
 
+
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         prevState = state;
         goToPause();
         return;
     }
-
 }
 
 
@@ -1652,7 +1706,9 @@ void phaseThree() {
 
 
 
+
 void goToPause() {
+
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
@@ -1667,8 +1723,6 @@ void goToPause() {
 
     DMANow(3, (volatile void*)foregroundPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)foregroundTiles, &((CB*) 0x6000000)[1], 25600 / 2);
-
-
     DMANow(3, (volatile void*)loseloseMap, &((SB*) 0x6000000)[26], (4096) / 2);
     DMANow(3, (volatile void*)bgTwoBackMap, &((SB*) 0x6000000)[28], (4096) / 2);
     DMANow(3, (volatile void*)dayTMMap, &((SB*) 0x6000000)[30], (4096) / 2);
@@ -1679,6 +1733,7 @@ void goToPause() {
     state = PAUSE;
 }
 
+
 void pause() {
 
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4)));
@@ -1686,7 +1741,9 @@ void pause() {
 
     DMANow(3, (volatile void*)startPausePal, ((unsigned short *)0x5000000), 256 | (1 << 31));
     drawFullscreenImage4(startPauseBitmap);
+
     state = PAUSE;
+
 
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
 
@@ -1706,13 +1763,17 @@ void pause() {
 
 
 
+
 void goToLose() {
     stopSounds();
     playSoundA(loseaudio_data, loseaudio_length, 1);
+
+
     (*(volatile unsigned short*)0x4000050) = 0;
     (*(volatile unsigned short*)0x4000052) = 0;
     (*(volatile unsigned short*)0x4000052) = 0;
     (*(volatile unsigned short*) 0x400004C) = 0;
+
 
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
@@ -1736,29 +1797,31 @@ void goToLose() {
 
     hOff = 0;
     vOff = (256 - 160);
+
     state = LOSE;
 }
 
+
 void lose() {
     hideSprites();
-
 
 
     hOff++;
 
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
-
     (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff / 2;
-
     (*(volatile unsigned short*) 0x04000018) = hOff / 4;
     (*(volatile unsigned short*) 0x0400001A) = vOff / 4;
+
+
     updateAnimatedPlayer();
     drawAnimatedPlayer();
 
 
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToSplashScreen();
@@ -1768,9 +1831,12 @@ void lose() {
 
 
 
+
 void goToWin() {
     stopSounds();
     playSoundA(winaudio_data, winaudio_length, 1);
+
+
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << (8 + (2 % 4))) | (1 << 12);
 
@@ -1778,6 +1844,7 @@ void goToWin() {
     initAnimatedPlayer();
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
+
 
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((26) << 8) | (1 << 14) | ((0) & 3) | (1 << 7);
     (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((28) << 8) | (1 << 14) | ((1) & 3) | (1 << 7);
@@ -1794,8 +1861,10 @@ void goToWin() {
 
     hOff = 0;
     vOff = (256 - 160);
+
     state = WIN;
 }
+
 
 void win() {
     hideSprites();
@@ -1805,12 +1874,11 @@ void win() {
 
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
-
     (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff / 2;
-
     (*(volatile unsigned short*) 0x04000018) = hOff / 4;
     (*(volatile unsigned short*) 0x0400001A) = vOff / 4;
+
 
     updateAnimatedPlayer();
     drawAnimatedPlayer();
@@ -1818,30 +1886,43 @@ void win() {
 
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
 
+
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToSplashScreen();
         state = SPLASH;
     }
 }
 
+
+
+
 void goToGameInstructions() {
     (*(volatile unsigned short *)0x4000000) = 0;
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4)));
-    DMANow(3, (volatile void*) largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, (volatile void*) dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+
+
+    DMANow(3, (volatile void*)largemantilesPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, (volatile void*)dialogueFontTiles, &((CB*) 0x6000000)[1], 32768 / 2);
+
+
     (*(volatile unsigned short*) 0x4000008) = ((1) << 2) | ((20) << 8) | (0 << 14) | ((0) & 3) | (0 << 7);
-    DMANow(3,(volatile void*) gameInstructionsMap, &((SB*) 0x6000000)[20], (2048) / 2);
+    DMANow(3, (volatile void*)gameInstructionsMap, &((SB*) 0x6000000)[20], (2048) / 2);
+
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
 
     state = GAMEINSTRUCTIONS;
 }
 
+
 void gameInstructions() {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToStart();
     }
 }
+
+
+
 
 void resetGameState() {
     hOff = 0;
@@ -1859,6 +1940,18 @@ void resetGameState() {
 
 
     next = 0;
+
+
+        tileFadeTimer = 0;
+        tileFadeStep = 0;
+        isFlashing = 0;
+        flashFrame = 0;
+
+
+        u8* tileData = (u8*)&((CB*) 0x6000000)[1];
+        for (int i = 0; i < 64; i++) {
+            originalTile358[i] = tileData[(358 * 64) + i];
+        }
 
 
     splashSelection = 0;

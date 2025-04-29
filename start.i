@@ -2,6 +2,7 @@
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "start.c"
+
 # 1 "start.h" 1
 
 
@@ -63,10 +64,10 @@ void drawGuideSprite();
 int checkPlayerGuideCollision();
 void fillTileWithColor(int tileId, u8 colorIndex);
 void flashColorInTile(int tileId, u8 targetIndex, u8 flashIndex, int flashOn, u16* originalTileData);
-# 2 "start.c" 2
+# 3 "start.c" 2
 
 # 1 "mode0.h" 1
-# 32 "mode0.h"
+# 51 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;
@@ -76,22 +77,22 @@ typedef struct {
 typedef struct {
  u16 tilemap[1024];
 } SB;
-# 4 "start.c" 2
+# 5 "start.c" 2
 # 1 "townCM.h" 1
 # 20 "townCM.h"
 extern const unsigned char townCMBitmap[262144];
-# 5 "start.c" 2
+# 6 "start.c" 2
 # 1 "townCM2.h" 1
 # 20 "townCM2.h"
 extern const unsigned char townCM2Bitmap[262144];
-# 6 "start.c" 2
+# 7 "start.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
 extern const unsigned short playerTiles[16384];
 
 
 extern const unsigned short playerPal[256];
-# 7 "start.c" 2
+# 8 "start.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
 typedef struct {
@@ -153,7 +154,7 @@ typedef struct {
     int active;
     u8 oamIndex;
 } SPRITE;
-# 8 "start.c" 2
+# 9 "start.c" 2
 
 
 int tileFlashTimer = 0;
@@ -214,27 +215,22 @@ inline unsigned char start2ColorAt(int x, int y) {
     return townCM2Bitmap[((y) * (512) + (x))];
 }
 
+
 void flashColorInTile(int tileId, u8 targetIndex, u8 flashIndex, int flashOn, u16* originalTileData) {
     volatile u16* tile = &((CB*) 0x6000000)[0].tileimg[tileId * 16];
-
     for (int i = 0; i < 16; i++) {
         u16 original = originalTileData[i];
         u16 result = 0;
-
         for (int j = 0; j < 4; j++) {
             u8 pixel = (original >> (j * 4)) & 0xF;
-
             if (pixel == targetIndex && flashOn) {
                 pixel = flashIndex;
             }
-
             result |= (pixel << (j * 4));
         }
-
         tile[i] = result;
     }
 }
-
 
 
 void fillTileWithColor(int tileId, u8 colorIndex) {
@@ -266,6 +262,7 @@ void initStartPlayer() {
     DMANow(3, (void*)playerTiles, &((CB*) 0x6000000)[4], 32768 / 2);
 }
 
+
 void initGuideSprite() {
     guide.worldX = 436;
     guide.worldY = 137;
@@ -293,6 +290,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
     int rightX = startPlayer.worldX + startPlayer.width - 1;
     int topY = startPlayer.worldY;
     int bottomY = startPlayer.worldY + startPlayer.height - 1;
+
 
     if (talkedToGuide) {
         if ((~(buttons) & ((1<<4)))) {
@@ -355,6 +353,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
                     cheatOn = 1;
             }
         }
+
     } else {
         if ((~(buttons) & ((1<<4)))) {
             startPlayer.isAnimating = 1;
@@ -468,6 +467,7 @@ void drawStartPlayer() {
     int screenY = startPlayer.worldY - vOff;
     shadowOAM[startPlayer.oamIndex].attr0 =
         ((screenY) & 0xFF) | (0<<8) | (0<<13) | (2<<14);
+
         if (cheatOn) {
             if (startPlayer.direction == RIGHT) {
                 shadowOAM[startPlayer.oamIndex].attr1 = ((screenX) & 0x1FF) | (1<<14);

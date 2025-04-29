@@ -68,8 +68,11 @@ $(ASMOBJECTS) : %.o : %.asm
 	$(AS) $(ASFLAGS) $< -o $@
 
 # -- Build .c files into .o files
-$(COBJECTS) : %.o : %.c
+%.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+%.c %.h : %.wav
+	wav2c $< $* $*
 
 # -- Build .wav files into .c and .h files
 $(AUDIOOBJECTS) : %.c : %.wav

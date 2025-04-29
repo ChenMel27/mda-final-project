@@ -248,6 +248,13 @@ int main() {
     }
 }
 
+
+void initialize() {
+    mgba_open();
+    setupSounds();
+    goToSplashScreen();
+}
+
 // ============================== [ SPLASH SCREEN ] ==============================
 
 void goToSplashScreen() {
@@ -1334,6 +1341,18 @@ void resetGameState() {
 
     // Reset dialogue/guide interaction
     next = 0;
+
+        // Reset tile animation variables
+        tileFadeTimer = 0;
+        tileFadeStep = 0;
+        isFlashing = 0;
+        flashFrame = 0;
+    
+        // Re-save the original bush tile 358 pixels
+        u8* tileData = (u8*)&CHARBLOCK[1];
+        for (int i = 0; i < 64; i++) {
+            originalTile358[i] = tileData[TILE358_OFFSET + i];
+        }
 
     // Reset splash menu selection
     splashSelection = MENU_START;

@@ -1,3 +1,4 @@
+// Start phase: top-down town exploration, player-guide interaction, and cheat activation.
 #include "start.h"
 #include "gba.h"
 #include "mode0.h"
@@ -65,33 +66,28 @@ inline unsigned char start2ColorAt(int x, int y) {
     return townCM2Bitmap[OFFSET(x, y, 512)];
 }
 
+// Function to flash color in specific tile pixels (special effect, not used here actively)
 void flashColorInTile(int tileId, u8 targetIndex, u8 flashIndex, int flashOn, u16* originalTileData) {
     volatile u16* tile = &CHARBLOCK[0].tileimg[tileId * 16];
-
     for (int i = 0; i < 16; i++) {
         u16 original = originalTileData[i];
         u16 result = 0;
-
         for (int j = 0; j < 4; j++) {
             u8 pixel = (original >> (j * 4)) & 0xF;
-
             if (pixel == targetIndex && flashOn) {
                 pixel = flashIndex;
             }
-
             result |= (pixel << (j * 4));
         }
-
         tile[i] = result;
     }
 }
 
-
-
+// Utility to fill an entire tile with a single palette color
 void fillTileWithColor(int tileId, u8 colorIndex) {
     u8 packed = (colorIndex << 4) | colorIndex;
     u16 word = (packed << 8) | packed;
-    volatile u16* tile = &CHARBLOCK[0].tileimg[tileId * 16]; // 4bpp = 16 u16s per tile
+    volatile u16* tile = &CHARBLOCK[0].tileimg[tileId * 16];
     for (int i = 0; i < 16; i++) {
         tile[i] = word;
     }
@@ -117,6 +113,7 @@ void initStartPlayer() {
     DMANow(3, (void*)playerTiles, &CHARBLOCK[4], playerTilesLen / 2);
 }
 
+// Initialize guide NPC
 void initGuideSprite() {
     guide.worldX = 436;
     guide.worldY = 137;
@@ -145,6 +142,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
     int topY    = startPlayer.worldY;
     int bottomY = startPlayer.worldY + startPlayer.height - 1;
     
+    // After player collision check
     if (talkedToGuide) {
         if (BUTTON_HELD(BUTTON_RIGHT)) {
             startPlayer.isAnimating = 1;
@@ -206,6 +204,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
                     cheatOn = 1;
             }
         }
+    // Before player collision check
     } else {
         if (BUTTON_HELD(BUTTON_RIGHT)) {
             startPlayer.isAnimating = 1;
@@ -268,7 +267,7 @@ void updateStartPlayer(int* hOff, int* vOff) {
     *hOff = startPlayer.worldX - (SCREENWIDTH / 2 - startPlayer.width / 2);
     *vOff = startPlayer.worldY - (SCREENHEIGHT / 2 - startPlayer.height / 2);
     
-    // Clamp camera
+    // Clamp cam
     if (*hOff < 0) *hOff = 0;
     if (*vOff < 0) *vOff = 0;
     if (*hOff > STARTMAPWIDTH - SCREENWIDTH) *hOff = STARTMAPWIDTH - SCREENWIDTH;
@@ -319,6 +318,7 @@ void drawStartPlayer() {
     int screenY = startPlayer.worldY - vOff;
     shadowOAM[startPlayer.oamIndex].attr0 =
         ATTR0_Y(screenY) | ATTR0_REGULAR | ATTR0_4BPP | ATTR0_TALL;
+        // Small player
         if (cheatOn) {
             if (startPlayer.direction == RIGHT) {
                 shadowOAM[startPlayer.oamIndex].attr1 = ATTR1_X(screenX) | ATTR1_SMALL;

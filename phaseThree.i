@@ -50,7 +50,7 @@ typedef volatile struct {
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
 # 3 "phaseThree.c" 2
 # 1 "mode0.h" 1
-# 52 "mode0.h"
+# 51 "mode0.h"
 typedef struct {
  u16 tileimg[8192];
 } CB;

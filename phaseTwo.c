@@ -226,11 +226,11 @@ void initSnow() {
     // seed
     srand(1234);
     for (int i = 0; i < MAX_SNOW; i++) {
-        snows[i].width    = SNOW_WIDTH;
-        snows[i].height   = SNOW_HEIGHT;
+        snows[i].width = SNOW_WIDTH;
+        snows[i].height = SNOW_HEIGHT;
         snows[i].oamIndex = 120 + i;
-        snows[i].active   = 1;
-        snows[i].yVel     = SNOW_SPEED;
+        snows[i].active = 1;
+        snows[i].yVel = SNOW_SPEED;
         resetSnow(i);
     }
 }
