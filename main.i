@@ -1005,7 +1005,6 @@ void splashScreen() {
 
 
 
-
 void goToStart() {
     cheatOn = 0;
     resumingFromPause = 0;
@@ -1097,6 +1096,20 @@ void goToStartThree() {
     DMANow(3, (volatile void*)sTSPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, (volatile void*)sTSTiles, &((CB*) 0x6000000)[0], 16384 / 2);
     DMANow(3, (volatile void*)sTMMap, &((SB*) 0x6000000)[18], (8192) / 2);
+
+
+    if (!talkedToGuide) {
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+                int r = y + 27;
+                int c = 57 + x;
+                int blk = 18 + (r / 32) * 2 + (c / 32);
+                volatile u16* m = ((SB*) 0x6000000)[blk].tilemap;
+                m[(r % 32) * 32 + (c % 32)] = ((364) & 1023) | (((0) & 15) << 12);
+            }
+        }
+        bridgeUncovered = 0;
+    }
 
     initStartPlayer();
     initGuideSprite();
@@ -1969,18 +1982,22 @@ void resetGameState() {
 
 
     next = 0;
+    bridgeUncovered = 0;
 
 
-        tileFadeTimer = 0;
-        tileFadeStep = 0;
-        isFlashing = 0;
-        flashFrame = 0;
+    leftWallTouched = 0;
 
 
-        u8* tileData = (u8*)&((CB*) 0x6000000)[1];
-        for (int i = 0; i < 64; i++) {
-            originalTile358[i] = tileData[(358 * 64) + i];
-        }
+    tileFadeTimer = 0;
+    tileFadeStep = 0;
+    isFlashing = 0;
+    flashFrame = 0;
+
+
+    u8* tileData = (u8*)&((CB*) 0x6000000)[1];
+    for (int i = 0; i < 64; i++) {
+        originalTile358[i] = tileData[(358 * 64) + i];
+    }
 
 
     splashSelection = 0;

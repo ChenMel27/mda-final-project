@@ -400,7 +400,6 @@ void splashScreen() {
 
 
 // ============================= [ START PHASE STATE ] =============================
-
 // Initialize the Start Phase from the beginning
 void goToStart() {
     cheatOn = 0;
@@ -493,6 +492,20 @@ void goToStartThree() {
     DMANow(3, (volatile void*)sTSPal, BG_PALETTE, sTSPalLen / 2);
     DMANow(3, (volatile void*)sTSTiles, &CHARBLOCK[0], sTSTilesLen / 2);
     DMANow(3, (volatile void*)sTMMap, &SCREENBLOCK[18], sTMLen / 2);
+
+    // Reapply bridge water if player hasn’t talked to the guide
+    if (!talkedToGuide) {
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+                int r = y + 27;
+                int c = 57 + x;
+                int blk = 18 + (r / 32) * 2 + (c / 32);
+                volatile u16* m = SCREENBLOCK[blk].tilemap;
+                m[(r % 32) * 32 + (c % 32)] = TILEMAP_ENTRY_TILEID(364) | TILEMAP_ENTRY_PALROW(0);
+            }
+        }
+        bridgeUncovered = 0;
+    }
 
     initStartPlayer();
     initGuideSprite();
@@ -1365,18 +1378,22 @@ void resetGameState() {
 
     // Reset dialogue/guide interaction
     next = 0;
+    bridgeUncovered = 0;
 
-        // Reset tile animation variables
-        tileFadeTimer = 0;
-        tileFadeStep = 0;
-        isFlashing = 0;
-        flashFrame = 0;
+    // Reset left wall touched flag (Phase Three)
+    leftWallTouched = 0;
+
+    // Reset tile animation variables
+    tileFadeTimer = 0;
+    tileFadeStep = 0;
+    isFlashing = 0;
+    flashFrame = 0;
     
-        // Re-save the original bush tile 358 pixels
-        u8* tileData = (u8*)&CHARBLOCK[1];
-        for (int i = 0; i < 64; i++) {
-            originalTile358[i] = tileData[TILE358_OFFSET + i];
-        }
+    // Re-save the original bush tile 358 pixels
+    u8* tileData = (u8*)&CHARBLOCK[1];
+    for (int i = 0; i < 64; i++) {
+        originalTile358[i] = tileData[TILE358_OFFSET + i];
+    }
 
     // Reset splash menu selection
     splashSelection = MENU_START;
