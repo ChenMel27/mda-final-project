@@ -168,13 +168,16 @@ void updatePlayer(int* hOff, int* vOff) {
             }
         }
     } else {
-        // Check grounded if not falling
         bottomY = player.worldY + player.height - 1;
-        if (colorAt(player.worldX, bottomY + 1) == 0x04 ||
-            colorAt(player.worldX + player.width - 1, bottomY + 1) == 0x04) {
+    
+        int groundedLeft = colorAt(player.worldX + 2, bottomY + 1) == 0x04;
+        int groundedRight = colorAt(player.worldX + player.width - 3, bottomY + 1) == 0x04;
+    
+        if (groundedLeft || groundedRight) {
             grounded = 1;
         }
     }
+    
 
     // Jumping (12 px)
     if (BUTTON_PRESSED(BUTTON_UP) && grounded) {

@@ -218,6 +218,7 @@ void initSnow();
 void updateSnow();
 void drawSnow();
 int winPhaseTwo;
+int playSound;
 # 28 "main.c" 2
 # 1 "phaseThree.h" 1
 # 21 "phaseThree.h"
@@ -852,8 +853,9 @@ int main() {
 
 void initialize() {
     mgba_open();
+    stopSounds();
     setupSounds();
-    goToSplashScreen();
+    goToPhaseOne();
 }
 
 
@@ -1439,7 +1441,6 @@ void phaseOne() {
     }
 
 
-
     if (gameOver) {
         goToLose();
     }
@@ -1544,6 +1545,11 @@ void phaseTwo() {
     drawSnow();
     drawHealth();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
+
+    if (playSound) {
+        playSoundB(healthaudio_data, healthaudio_length, 0);
+        playSound = 0;
+    }
 
     if (gameOver) {
         goToLose();

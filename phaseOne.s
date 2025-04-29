@@ -566,22 +566,22 @@ updatePlayer:
 	@ args = 0, pretend = 0, frame = 16
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r5, .L195
+	ldr	r5, .L188
 	ldrb	r3, [r5, #4]	@ zero_extendqisi2
 	cmp	r3, #1
 	sub	sp, sp, #20
-	beq	.L186
-	ldr	r4, .L195+4
+	beq	.L179
+	ldr	r4, .L188+4
 	ldr	r3, [r4]
 	cmp	r3, #0
 	mov	r6, r0
 	mov	r7, r1
-	bne	.L187
-	ldr	r2, .L195+8
+	bne	.L180
+	ldr	r2, .L188+8
 	ldrh	r2, [r2]
 	str	r2, [sp, #4]
 	mvn	r2, r2
-	ldr	r4, .L195+12
+	ldr	r4, .L188+12
 	and	r2, r2, #128
 	str	r2, [r5, #16]
 	str	r3, [r4, #40]
@@ -591,25 +591,25 @@ updatePlayer:
 	ldm	r2, {r2, r10}
 	add	r3, r2, r2, lsr #31
 	asr	r3, r3, #1
-	add	r9, r1, r10
+	add	r9, r10, r1
 	rsb	r3, r3, #120
 	str	r3, [sp, #12]
 	sub	r3, r9, #1
 	mov	r9, #8
 	str	r3, [sp, #8]
-.L115:
+.L114:
 	ldr	r3, [sp, #4]
 	ands	r3, r3, #32
 	ldr	fp, [r4, #16]
-	bne	.L118
+	bne	.L117
 	cmp	fp, #0
-	ble	.L118
+	ble	.L117
 	mov	ip, #1
 	ldr	lr, [r5]
 	ldr	r8, [sp, #8]
 	sub	lr, lr, r9
 	asr	fp, lr, #3
-	ldr	r0, .L195+16
+	ldr	r0, .L188+16
 	str	lr, [r5]
 	str	ip, [r4, #36]
 	add	lr, fp, r8, lsl #9
@@ -626,13 +626,13 @@ updatePlayer:
 	beq	.L85
 	ldrb	lr, [r0]	@ zero_extendqisi2
 	cmp	lr, #4
-	bne	.L188
+	bne	.L181
 .L85:
 	add	r3, r3, #1
 	cmp	r3, #4
 	sub	r0, r0, #512
 	bne	.L86
-.L118:
+.L117:
 	mov	r3, r1
 .L84:
 	ldr	r0, [sp, #4]
@@ -652,30 +652,30 @@ updatePlayer:
 	ble	.L92
 	mov	r1, #4
 	str	r1, [r4, #12]
-	add	r0, r10, r3
+	add	r8, r10, r3
 .L93:
 	add	r2, r2, fp
-	ldr	r9, .L195+16
+	ldr	r9, .L188+16
 	add	r2, r2, r10, lsl #9
 	sub	r2, r2, #1
 	add	r2, r9, r2
-	mov	ip, r0
+	mov	ip, r8
 	mov	r10, #0
 	add	r9, r9, fp
 	b	.L108
 .L104:
-	ldrb	lr, [r9, ip, lsl #9]	@ zero_extendqisi2
+	ldrb	r0, [r9, ip, lsl #9]	@ zero_extendqisi2
 	add	ip, ip, #1
-	cmp	lr, #4
-	sub	r8, ip, r0
+	cmp	r0, #4
+	sub	lr, ip, r8
 	beq	.L107
-	ldrb	lr, [r2, r3, lsl #9]	@ zero_extendqisi2
-	cmp	lr, #4
+	ldrb	r0, [r2, r3, lsl #9]	@ zero_extendqisi2
+	cmp	r0, #4
 	beq	.L107
-	cmp	r1, r8
+	cmp	r1, lr
 	mov	r10, #1
 	add	r3, r3, #1
-	ble	.L189
+	ble	.L182
 .L108:
 	cmp	ip, #255
 	ble	.L104
@@ -683,29 +683,29 @@ updatePlayer:
 	cmp	r10, #0
 	strne	r3, [r4, #20]
 	mov	r3, #0
-	ldr	r2, .L195+20
+	ldr	r2, .L188+20
 	ldrh	r2, [r2]
 	tst	r2, #64
 	str	r3, [r4, #12]
 	beq	.L102
-	b	.L183
-.L187:
+	b	.L178
+.L180:
 	ldr	r3, [r5, #28]
 	add	r3, r3, #1
 	ands	r8, r3, #3
 	str	r3, [r5, #28]
-	beq	.L190
-	ldr	r3, .L195+8
+	beq	.L183
+	ldr	r3, .L188+8
 	ldrh	r3, [r3]
 	str	r3, [sp, #4]
 	mvn	r3, r3
 	mov	r2, #0
-	ldr	r4, .L195+12
+	ldr	r4, .L188+12
 	and	r3, r3, #128
 	str	r3, [r5, #16]
 	str	r2, [r4, #40]
 	ldr	r1, [r4, #20]
-.L116:
+.L115:
 	mov	r3, #6
 	mov	r0, #16
 	mov	ip, #3
@@ -719,12 +719,12 @@ updatePlayer:
 	str	r0, [r4, #28]
 	str	ip, [r4, #48]
 	str	r3, [sp, #8]
-	b	.L115
+	b	.L114
 .L92:
 	cmp	r1, #0
-	bge	.L191
+	bge	.L184
 	mvn	ip, ip
-	ldr	lr, .L195+16
+	ldr	lr, .L188+16
 	add	r2, r2, fp
 	sub	r2, r2, #1
 	add	r2, r2, lr
@@ -741,7 +741,7 @@ updatePlayer:
 	beq	.L99
 	cmp	r1, ip
 	mov	r8, #1
-	beq	.L192
+	beq	.L185
 	mov	r3, r1
 .L100:
 	cmp	r3, #0
@@ -758,11 +758,11 @@ updatePlayer:
 	add	r3, r3, #1
 	cmp	r2, #0
 	str	r3, [r5, #8]
-	bne	.L193
+	bne	.L186
 	ldr	r3, [sp, #8]
 	str	r3, [r5, #12]
 	str	r3, [r5, #8]
-.L113:
+.L112:
 	ldr	r3, [sp, #12]
 	sub	r3, fp, r3
 	str	r3, [r6]
@@ -789,7 +789,7 @@ updatePlayer:
 	str	r3, [r7]
 	ldr	r3, [r4, #16]
 	ldr	r1, [r4, #24]
-	ldr	r2, .L195+24
+	ldr	r2, .L188+24
 	add	r3, r3, r1
 	cmp	r3, r2
 	movgt	r3, #1
@@ -799,13 +799,13 @@ updatePlayer:
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L193:
-	ldr	r2, .L195+28
+.L186:
+	ldr	r2, .L188+28
 	ldr	r2, [r2]
 	cmp	r3, r2
-	ble	.L113
+	ble	.L112
 	ldr	r0, [r5, #12]
-	ldr	r3, .L195+32
+	ldr	r3, .L188+32
 	ldr	r1, [r4, #48]
 	add	r0, r0, #1
 	mov	lr, pc
@@ -813,35 +813,32 @@ updatePlayer:
 	mov	r3, #0
 	str	r1, [r5, #12]
 	str	r3, [r5, #8]
-	b	.L113
-.L191:
-	add	r0, r10, r3
+	b	.L112
+.L184:
+	add	r8, r10, r3
 	bne	.L93
-	ldr	r3, .L195+16
-	add	r1, fp, r0, lsl #9
-	ldrb	r1, [r1, r3]	@ zero_extendqisi2
-	cmp	r1, #4
-	lsl	r0, r0, #9
-	beq	.L185
-	add	r2, r0, r2
+	ldr	r3, .L188+36
+	add	r2, r2, r8, lsl #9
 	add	r2, r2, fp
-	sub	r3, r3, #1
-	ldrb	r3, [r2, r3]	@ zero_extendqisi2
+	add	r8, fp, r8, lsl #9
+	add	r1, r3, #5
+	ldrb	r2, [r2, r3]	@ zero_extendqisi2
+	ldrb	r3, [r8, r1]	@ zero_extendqisi2
 	cmp	r3, #4
+	cmpne	r2, #4
 	bne	.L102
-.L185:
-	ldr	r3, .L195+20
+	ldr	r3, .L188+20
 	ldrh	r3, [r3]
 	tst	r3, #64
 	beq	.L102
-.L183:
+.L178:
 	ldr	r3, [sp, #4]
 	tst	r3, #64
 	mvneq	r3, #11
 	streq	r3, [r4, #12]
 	b	.L102
-.L186:
-	ldr	r2, .L195+36
+.L179:
+	ldr	r2, .L188+40
 	ldr	r3, [r2]
 	add	r3, r3, #3
 	cmp	r3, #400
@@ -863,7 +860,7 @@ updatePlayer:
 	rsb	ip, r1, r1, lsl #23
 	ldr	r8, [sp, #8]
 	add	r1, lr, r1, lsl #9
-	ldr	lr, .L195+16
+	ldr	lr, .L188+16
 	lsl	ip, ip, #9
 	str	fp, [r4, #16]
 	str	r9, [r5]
@@ -877,7 +874,7 @@ updatePlayer:
 	beq	.L90
 	ldrb	lr, [r8, ip]	@ zero_extendqisi2
 	cmp	lr, #4
-	bne	.L194
+	bne	.L187
 .L90:
 	add	r0, r0, #1
 	cmp	r0, #4
@@ -886,28 +883,28 @@ updatePlayer:
 	mov	r1, #1
 	str	r1, [sp, #8]
 	b	.L89
-.L190:
+.L183:
 	bl	cyclePaletteColors
-	ldr	r3, .L195+8
+	ldr	r3, .L188+8
 	ldrh	r3, [r3]
 	str	r3, [sp, #4]
 	mvn	r3, r3
 	ldr	r2, [r4]
-	ldr	r4, .L195+12
+	ldr	r4, .L188+12
 	and	r3, r3, #128
 	cmp	r2, #0
 	str	r3, [r5, #16]
 	str	r8, [r4, #40]
 	ldr	r1, [r4, #20]
-	bne	.L116
+	bne	.L115
 	b	.L83
-.L192:
+.L185:
 	str	ip, [r4, #20]
 	b	.L102
-.L189:
+.L182:
 	str	r3, [r4, #20]
 	b	.L102
-.L188:
+.L181:
 	cmp	r3, #1
 	movlt	r3, #1
 	mov	r0, #1
@@ -916,16 +913,16 @@ updatePlayer:
 	str	r3, [r4, #20]
 	str	r0, [r5, #32]
 	b	.L84
-.L194:
+.L187:
 	mov	r1, #1
 	sub	r3, r3, r0
 	str	r3, [r4, #20]
 	str	r1, [r5, #32]
 	str	r1, [sp, #8]
 	b	.L89
-.L196:
+.L189:
 	.align	2
-.L195:
+.L188:
 	.word	.LANCHOR0
 	.word	cheatOn
 	.word	buttons
@@ -935,6 +932,7 @@ updatePlayer:
 	.word	510
 	.word	.LANCHOR1
 	.word	__aeabi_idivmod
+	.word	bgOneFrontCMBitmap-3
 	.word	fallingY
 	.size	updatePlayer, .-updatePlayer
 	.global	playerState

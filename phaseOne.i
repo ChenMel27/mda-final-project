@@ -1159,13 +1159,16 @@ void updatePlayer(int* hOff, int* vOff) {
             }
         }
     } else {
-
         bottomY = player.worldY + player.height - 1;
-        if (colorAt(player.worldX, bottomY + 1) == 0x04 ||
-            colorAt(player.worldX + player.width - 1, bottomY + 1) == 0x04) {
+
+        int groundedLeft = colorAt(player.worldX + 2, bottomY + 1) == 0x04;
+        int groundedRight = colorAt(player.worldX + player.width - 3, bottomY + 1) == 0x04;
+
+        if (groundedLeft || groundedRight) {
             grounded = 1;
         }
     }
+
 
 
     if ((!(~(oldButtons) & ((1<<6))) && (~(buttons) & ((1<<6)))) && grounded) {

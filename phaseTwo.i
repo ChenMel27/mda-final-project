@@ -141,6 +141,7 @@ void initSnow();
 void updateSnow();
 void drawSnow();
 int winPhaseTwo;
+int playSound;
 # 7 "phaseTwo.c" 2
 # 1 "player.h" 1
 # 21 "player.h"
@@ -1017,6 +1018,7 @@ extern int gameOver;
 int winPhaseTwo = 0;
 extern SPRITE player;
 extern SPRITE health;
+int playSound = 0;
 
 void initPlayerTwo() {
     player.worldX = 0;
@@ -1172,7 +1174,7 @@ void drawPlayerTwo() {
 
         if (health.active > 0) {
             health.active--;
-            playSoundB(healthaudio_data, healthaudio_length, 0);
+            playSound = 1;
 
             if (health.active == 0) {
                 gameOver = 1;
@@ -1235,7 +1237,7 @@ void updateSnow() {
 
         if (collision(snows[i].worldX, snows[i].worldY, 16, 16,
             player.worldX, player.worldY, player.width, player.height)) {
-            playSoundB(healthaudio_data, healthaudio_length, 0);
+            playSound = 1;
             health.active--;
 
             if (health.active == 0) gameOver = 1;
