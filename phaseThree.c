@@ -69,8 +69,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
     int bottomY = player.worldY + player.height - 1;
 
     // Check if colliding with palette index 3 and pause timer
-    if (colorAtThree(leftX, topY) == 0x03 || colorAtThree(rightX, topY) == 0x03 ||
-    colorAtThree(leftX, bottomY) == 0x03 || colorAtThree(rightX, bottomY) == 0x03) {
+    if (colorAtThreeCheat(leftX, topY) == 0x03 || colorAtThreeCheat(rightX, topY) == 0x03 ||
+    colorAtThreeCheat(leftX, bottomY) == 0x03 || colorAtThreeCheat(rightX, bottomY) == 0x03) {
         if (!timerPaused) {
             REG_TM2CNT &= ~TIMER_ON; // Turn off timer 2 (which drives timer 3)
             timerPaused = 1;

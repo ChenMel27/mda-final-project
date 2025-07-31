@@ -1071,8 +1071,8 @@ void updatePlayerThree(int* hOff, int* vOff) {
     int bottomY = player.worldY + player.height - 1;
 
 
-    if (colorAtThree(leftX, topY) == 0x03 || colorAtThree(rightX, topY) == 0x03 ||
-    colorAtThree(leftX, bottomY) == 0x03 || colorAtThree(rightX, bottomY) == 0x03) {
+    if (colorAtThreeCheat(leftX, topY) == 0x03 || colorAtThreeCheat(rightX, topY) == 0x03 ||
+    colorAtThreeCheat(leftX, bottomY) == 0x03 || colorAtThreeCheat(rightX, bottomY) == 0x03) {
         if (!timerPaused) {
             *(volatile unsigned short*)0x400010A &= ~(1<<7);
             timerPaused = 1;
